@@ -1,0 +1,39 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <?php
+        echo $this->headTitle();
+        echo $this->headScript();
+        // add a link to the site style sheet
+        //$this->headLink()->appendStylesheet('/css/masterlayout.css');
+        $this->loadSkin($this->skin);
+        echo $this->headLink();
+?>
+</head>
+<body>
+    <div id="pageWrapper">
+        <?php echo $this->partial("_header.phtml"); ?>    
+        <div id="nav">
+            <?php echo $this->layout()->nav;?>&nbsp;
+        </div>
+        <div id="sidebar">
+            <div id="subNav">
+                <?php
+                    //echo $this->navigation()->menu();
+                    echo $this->layout()->menu;
+                ?>
+            </div>
+            <div id="adminMenu">
+                <?php echo $this->layout()->adminMenu;?>&nbsp;
+            </div>
+            <div id="userForm">
+                <?php echo $this->layout()->userForm;?>&nbsp;
+            </div>
+        </div>
+        <div id="main">
+            <?php echo $this->layout()->content;?>&nbsp;
+        </div>
+        <?php echo $this->partial("_footer.phtml"); ?>
+    </div>
+</body>
+</html>

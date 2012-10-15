@@ -1,0 +1,42 @@
+* { 
+    /*
+    margin: 5px;
+    padding: 5px;*/
+    border:#749BCE 1px solid;
+}
+p {
+    font-size: .75em;
+}
+#pageWrapper {
+    width: 80%;
+/*    margin: 1em auto ;*/
+}
+#header {
+    height: 7.5em;
+    margin: 5px;
+}
+#nav {
+    height: 2.5em;
+    margin: 5px;
+}
+#sidebar {
+    float: left;
+    width: 22%;
+    height: 40em;
+}
+#main {
+    float: right;
+    margin: 5px;
+    width: 75%;
+    /*border-width: medium;*/
+}
+#subNav,#adminMenu,#userForm {
+    width: 95%;
+    height: 10em;
+/*    margin: .25em;*/
+}
+#footer {
+    clear: both;
+    height: 2.5em;
+    margin: 0;
+}

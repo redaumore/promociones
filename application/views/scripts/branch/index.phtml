@@ -1,0 +1,13 @@
+<?php // $this->headScript()->appendScript($this->baseUrl().'/scripts/prototype.js');
+      //  echo $this->headScript();
+ ?>
+<?php
+    if(isset($this->errorMessage)){
+        echo $this->errorMessage;
+    }
+    $this->form->setAction($this->url());
+    echo $this->form;
+    
+?>
+
+

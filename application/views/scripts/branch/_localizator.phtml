@@ -1,0 +1,88 @@
+<script type="text/javascript" src="/scripts/prototype.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript">
+function SearchLocation(){
+    var street = document.getElementById("street").value.toString();
+    var number = document.getElementById("number").value.toString();    
+    var city = document.getElementById("city").options[document.getElementById("city").selectedIndex].text;
+    var province = document.getElementById("province").options[document.getElementById("province").selectedIndex].text;
+    var country = "Argentina";
+    var localaddress = street+" "+number+","+city+","+province+","+country;
+    localaddress = encodeURI(localaddress);
+    var localaddress2 = street+" "+number+","+city+","+province+","+country;
+    localaddress2 = localaddress2.replace(" ","+");
+    //localaddress2 = encodeURI(localaddress2);
+    var zoom="16";
+    var size="400x400";
+    var sensor="false";
+    
+    var urlGoogleMaps = "";
+    
+    var geocoder = new google.maps.Geocoder();
+    
+    //convert location into longitude and latitude
+    geocoder.geocode({
+        address: localaddress2
+    }, function(locResult) {
+        var lat1 = locResult[0].geometry.location.lat();
+        var lng1 = locResult[0].geometry.location.lng();
+        document.getElementById("latitude").value = lat1;
+        document.getElementById("longitude").value = lng1;
+    });
+    
+    urlGoogleMaps = "http://maps.google.com/maps/api/staticmap?center="+localaddress
+                            +"&zoom="+zoom
+                            +"&size="+size
+                            +"&markers=color:orange|" + document.getElementById("latitude").value + "," + document.getElementById("longitude").value     // label:S%7C11211%7C11206%7C11222" 
+                            +"&sensor="+sensor; 
+     
+    document.getElementById("map").src = urlGoogleMaps;
+}
+
+function ConfirmLocation(){
+    document.getElementById("lat").value = document.getElementById("latitude").value;
+    document.getElementById("lng").value = document.getElementById("longitude").value;
+    HiddeGoogleLocalizator();    
+}
+
+function ShowGoogleLocalizator(){
+    SearchLocation();
+    document.getElementById("googlemap").className = "googlemap";    
+}
+
+function HiddeGoogleLocalizator(){
+    document.getElementById("googlemap").className = "invisible";
+    document.getElementById("localization").focus();    
+}
+
+function CancelLocation(){
+    document.getElementById("lat").value = "";
+    document.getElementById("lng").value = "";
+    document.getElementById("latitude").value = "";
+    document.getElementById("longitude").value = "";
+    HiddeGoogleLocalizator();
+}
+                                     
+</script>
+
+<div id="googlemap" class="invisible">
+    <div id="gmap">
+        <img id="map" src="" alt="Tu localización">
+    </div>
+    <div id="gbuttons">
+        <table style="border:0;">
+            <tr>
+                <td style="padding: 1em;"><input type="button" class="buttons" id="btnConfirm" value="Confirmar" onclick="ConfirmLocation();"/></td>
+                <td style="padding: 1em;"><input type="button" class="buttons" id="btnCancel" value="Cancelar" onclick="CancelLocation();"/></td>
+            </tr>
+        </table>
+    </div>
+    <div id="gmessage">
+        <p id="smallfont">
+        Recuerda que es muy importante que tu localización sea la correcta. Con ella tus clientes podrán encontrarte.
+        Si el mapa no te indica tu dirección correctamente intenta cambiando alguno de los datos que cargaste para el comercio.
+        Si aún así sigues sin encontrar tu dirección avísanos por email y nosotros lo resolveremos. 
+        </p>
+    </div>
+</div>
+

@@ -1,0 +1,139 @@
+/* 
+    Document   : global
+    Created on : 22/08/2012, 13:05:51
+    Author     : rdaumas
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+root { 
+    display: block;
+}
+
+titulo{
+    font-style: normal;
+    font-family: sans-serif;
+}
+body, div{
+    background-color: #F66D34;
+    font-family: Arial, sans-serif;    
+}
+h1{
+    font-size: larger;
+    font-weight: bold;
+}
+h2{
+    font-size: medium;
+    font-weight: bold;
+}
+
+dt {
+padding: 0 0 5px 0;
+height: 1.5em;
+}
+dd {
+padding: 0 0 5px 5px;
+}
+dt label {
+font-weight: normal;
+font-size: 9px;
+}
+
+dt label.required:before {
+content: "* ";
+color: #ff0000;
+}
+ul.errors {
+padding: 5px 0 5px 25px;
+color: #ff0000;
+}
+ 
+label.leftalign {
+    display: block;
+    float: left;
+    font-weight: normal;
+    font-size: small;
+    padding-right: 5px;
+    line-height: 1.2em;
+    text-align: right;
+}
+input.leftalign{
+    display: block;
+    float: left;
+    font-weight: bold;
+    padding-right: 5px;
+    line-height: 1.6em;
+    text-align: left;
+}
+
+.invisible{
+    visibility: hidden;
+}
+
+.buttons
+{
+    margin: 2px;
+    padding: 5px;
+    color: #ffffff;
+    border: solid 2px #b6d6ff;
+    -webkit-border-radius: .5em;
+    -moz-border-radius: .5em;
+    border-radius: .5em;
+    -webkit-box-shadow: 1px 1px 1px #ccc;
+    box-shadow: 2px 2px 2px #bbb;
+    background-color: #4d5c95;
+}
+.buttons[disabled]
+{
+        background-color: #ffffff;
+}
+.buttons:hover
+{
+    cursor: pointer;
+    background-color: #6d86bf;
+    color: #000000;
+}
+
+.readonly{
+    color: #4d5c95;
+}
+
+/* BRANCH */
+
+.googlemap{
+    visibility: visible;
+    
+    position: relative;
+    top:20px;
+    left:-40px;    
+}
+
+img#logo{
+    visibility:visible;
+}
+
+/*   CATEGORIAS    */
+
+form#categoryTree{
+    width: 310px;
+}
+div#treeViewCategorias{
+    width: 300px;
+    height: 300px;
+    overflow: scroll;
+}
+
+dl.zend_form{
+   width: 100%;
+}
+dd#submit-element{
+    width: 300px;
+}
+dt#submit-label{
+    width: 300px;
+}

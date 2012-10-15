@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configdata>
+    <nav>
+        <home>
+            <label>Home</label>
+            <uri>/</uri>
+            <pages>
+                <about>
+                    <label>About</label>
+                    <uri>/index/about</uri>
+                </about>
+                <contact>
+                    <label>Contact</label>
+                    <uri>/index/contact</uri>
+                </contact>
+            </pages>
+        </home>
+        <myaccount>
+            <label>Mis Datos</label>
+            <uri>/branch/index/0</uri>
+        </myaccount>
+        <categories>
+            <label>Mis Categorias</label>
+            <uri>/branch/categories</uri>
+        </categories>
+        <promotions>
+            <label>Mis Promociones</label>
+            <uri>/promotion/index</uri>
+        </promotions>
+    </nav>
+</configdata>

@@ -1,0 +1,229 @@
+<?php
+
+class BranchController extends Zend_Controller_Action
+{
+
+    public function init()
+    {
+        /* Initialize action controller here */
+        // insert sidebar to the response object
+    }
+
+    public function indexAction()
+    {
+        $branch_order = 0;
+        $branch = new PAP_Model_Branch;
+        $form = new PAP_Form_BranchForm();
+        $this->view->form = $form;
+        $user = $this->_helper->Session->getUserSession();
+        
+        $comboProvinces = $form->getElement('province');
+        $this->loadProvinces($comboProvinces);
+        $comboProvinces->setAttrib('onChange', 'loadCities();');
+         
+        $comboCities = $form->getElement('city');
+        $this->loadCities($comboCities, 1);
+                
+        if($this->getRequest()->isPost()){
+            if($form->isValidPartial($_POST)){
+                $data = $form->getValues();
+                $this->saveBranch($data, 'update');
+            }                
+        }
+        else{
+             $branchMapper = new PAP_Model_BranchMapper();
+             $branchMapper->findByUserId($user, $branch_order, $branch);     
+             if(isset($branch)){
+                 $this->loadForm($branch, 'update');
+                 $this->_helper->Session->setBranchSession($branch);
+             }
+             else{
+                $form->name->setValue($user->getName());
+                $form->user->setValue($user->getId());
+             }
+        }    
+        
+    }
+    
+    public function newAction()
+    {
+        $form = new PAP_Form_BranchForm();
+        $this->view->form = $form;
+        if($this->getRequest()->isPost()){
+            if($form->isValid($_POST)){
+                
+                $data = $form->getValues();
+                //$fullFilePath = $form->file->getFileName();
+                $this->saveBranch($data, 'new');
+                $this->_redirect('branch/index');
+            }
+            else{
+                $dataOld = $_POST;
+                $comboProvinces = $form->getElement('province');
+                $this->loadProvinces($comboProvinces);
+                $comboProvinces->setAttrib('onChange', 'loadCities();');
+                $comboProvinces->setValue($dataOld["province"]);
+         
+                $comboCities = $form->getElement('city');
+                $this->loadCities($comboCities, $dataOld["province"]);
+                $comboCities->setValue($dataOld["city"]);
+                
+                //$form->logo->setVisibility() = false;
+            }
+        }
+        else{
+            $this->view->form = $form;
+            
+            $comboProvinces = $form->getElement('province');
+            $this->loadProvinces($comboProvinces);
+            $comboProvinces->setAttrib('onChange', 'loadCities();');
+         
+            $comboCities = $form->getElement('city');
+            $this->loadCities($comboCities, 1);
+            
+            $user = $this->_helper->Session->getUserSession();
+            $form->name->setValue($user->getName());
+            $form->user->setValue($user->getId());
+        }
+        
+    }
+    
+    private function saveBranch($data, $operation)
+    {           $user = $this->_helper->Session->getUserSession();
+                $data["user"] = $user->getId();
+                
+                if(isset($data['file'])){
+                    $relativeImageDir = '/customers/'.$data["user"];
+                    $customerImageDir = IMAGE_PATH.$relativeImageDir;
+                
+                    //Tratamiento de la imagen
+                    if(!is_dir($customerImageDir))
+                        mkdir($customerImageDir);
+                    
+                    $form = $this->view->form;
+                    $fullFilePath = $form->file->getFileName();
+                    //$fullFilePath = $data['file'];
+                    $extension = substr(strrchr($fullFilePath,'.'),1);
+                    $logoName = $customerImageDir.'/logo_'.$data["user"].'.'.$extension;
+                    
+                    $form->file->addFilter('Rename', array('target' => $logoName,
+                             'overwrite' => true));
+                    $data['logo'] =  $relativeImageDir.'/logo_'.$data["user"].'.'.$extension;
+                    /* TODO: resizing de la imagen
+                    $form->file->addFilter(new Skoch_Filter_File_Resize(array('width' => 200,'height' => 300,'keepRatio' => true,))); */
+                    if (!$form->file->receive()) {
+                        throw new Exception($form->file->getMessages());
+                    }
+                    chmod($logoName,0644);
+                }
+                
+                if($operation == 'new'){
+                    $branch = new PAP_Model_Branch;
+                    $data["branchorder"] = "0";
+                    $user->setStatus("active");
+                    $user->update();
+                }
+                else{
+                    $branch = $this->_helper->Session->getBranchSession();    
+                    $data["branchorder"] = $branch->getBranchorder();
+                }
+                
+                $branch->insert($data);
+                $this->_helper->Session->setBranchSession($branch);
+    }
+
+    public function categoriesAction()
+    {
+        $this->view->addHelperPath('ZFExt/View/Helper', 'ZFExt_View_Helper');
+ 
+        $form = new PAP_Form_Treeview();
+        $user = $this->_helper->Session->getUserSession();
+        if ($this->_request->isPost()) {
+            if ($form->isValid($_POST)) {
+                $values = $form->getValues(true);
+                $user->setCategories($values['tree']);
+            }
+        }
+        else{
+            $this->loadUserCategories($user, $form);    
+        }
+        $this->view->form = $form;
+    }
+    
+    private function loadUserCategories(PAP_Model_User $user, PAP_Form_Treeview $form){
+        $categories = $user->getCategories();
+        $categoriesArray = array();
+        foreach($categories as $cat){
+            $categoriesArray[] = $cat->getId();    
+        }
+        $form->getElement('tree')->setValue($categoriesArray);
+    }
+
+    private function loadForm(PAP_Model_Branch $branch, $formName)
+    {
+        $form = $this->view->form;
+        
+        $form->name->setValue($branch->getName());
+        $form->street->setValue($branch->getStreet());
+        $form->number->setValue($branch->getNumber());
+        $form->local->setValue($branch->getLocal());
+        $form->phone->setValue($branch->getPhone());
+        $form->zipcode->setValue($branch->getZipcode());
+        $form->lat->setValue($branch->getLatitude())
+                ->setAttrib('readonly', 'true')
+                ->setAttrib('class', 'readonly');
+        $form->latitude->setValue($branch->getLatitude());
+        $form->lng->setValue($branch->getLongitude())
+                ->setAttrib('readonly', 'true')
+                ->setAttrib('class', 'readonly');
+        $form->longitude->setValue($branch->getLongitude());
+        $form->user->setValue($branch->getUser());
+        $form->branch_id->setValue($branch->getId());
+        $form->branch_order->setValue($branch->getBranchorder());
+        $form->logo->setOptions(array('src' => '/images'.$branch->getLogo()));
+        $form->setDefault('province', $branch->getProvince());
+        //$combo->setAttrib('onChange', 'loadCities();');
+        //$combo = $form->getElement("city");
+        //$this->loadCities($combo, $branch->getProvince());
+        $form->setDefault('city', $branch->getCity());
+        
+        if($formName = 'update'){
+            $form->file->setRequired(false)
+                ->setLabel('Imagen del Comercio');
+        }
+    }
+    
+    private function loadProvinces(Zend_Form_Element_Select $combo)
+    {
+        $provinceMapper = new PAP_Model_ProvinceMapper();
+        foreach($provinceMapper->findForSelect() as $p){
+            $combo->addMultiOption($p['province_id'], $p['name']);
+        }
+        $this->view->form->setDefault('province', '1');    
+    }
+
+    private function loadCities(Zend_Form_Element_Select $combo, $province_id)
+    {
+        $cityMapper = new PAP_Model_CityMapper();
+        foreach($cityMapper->getCitiesByProvinceId($province_id) as $c){
+            $combo->addMultiOption($c['city_id'], $c['name']);
+        }
+        //$this->view->form->setDefault(array('city'=>1));    
+    }
+}
+
+/* Copia de campos editables
+    private function copyEditableFields($branch, $data)
+    {
+        $branch->setName($data['name']);
+        $branch->setLocal($data['local']);
+        $branch->setPhone($data['phone']);
+        $branch->setZipcode($data['zipcode']);
+    }
+*/
+
+
+
+
+
+

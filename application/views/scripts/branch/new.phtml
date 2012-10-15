@@ -1,0 +1,39 @@
+<?php
+    if(isset($this->errorMessage)){
+        echo $this->errorMessage;
+    }
+?>
+<div id="view-content">
+	<p>View script for controller <b>Branch</b> and script/action name <b>new</b></p>
+</div>
+<script type="text/javascript">
+function loadCities()
+{
+        var selectedValue = document.getElementById('province').options[document.getElementById('province').selectedIndex].value;
+        var myAjax = new Ajax.Request(
+        "<?=$this->url(array('controller'=>'backendAjax','action'=>'getCities'))?>",
+            {
+                method:'get',
+                parameters: {province_id: selectedValue},
+                onSuccess: FillForm
+        });
+ 
+}
+
+function FillForm(data)
+{
+        var select = document.getElementById("city");
+        select.options.length = 0;
+        var cities = eval('(' + data.responseText + ')');
+        for (var i = 0; i < cities.items.length; i++){
+            select.options[select.options.length] = new Option(cities.items[i].name, cities.items[i].city_id); 
+        } 
+}
+</script>
+<?php
+    $this->form->setAction($this->url());
+    echo $this->form;
+?>
+<?php 
+    echo $this->partial("branch/_localizator.phtml"); 
+?>

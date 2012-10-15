@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<skin>
+    <stylesheets>
+        <stylesheet>masterlayout.css</stylesheet>
+        <stylesheet>global.css</stylesheet>
+        <!-- <stylesheet>jquery-treeview.css</stylesheet> -->
+        <stylesheet>ui.jqgrid.css</stylesheet>
+        <stylesheet>jquery-ui-1.8.23.custom.css</stylesheet>
+    </stylesheets>
+</skin>
