@@ -9,7 +9,7 @@
         //'multipart/form-data'
         $this->addPrefixPath('PAP_Form_Element_', 'Pap/Form/Element/', 'Element');
         $this->addDecorators(array('FormElements', 'Form'));
-          
+        
         $decorators = array(
                 'ViewHelper',
                 'Label',
@@ -17,39 +17,30 @@
                 'requiredSuffix' => ' *',
                 'class' => 'leftalign'
                 ),*/
-                array('HtmlTag', array('tag' => 'div')),
+        //        array('HtmlTag', array('tag' => 'div')),
         );
+        $allowWhiteSpace = new Zend_Validate_Alnum(array('allowWhiteSpace' => true));
         $decoratorsButton = array(
+                array('ViewHelper'),
                 array('HtmlTag', array('tag' => 'div')),
         );
-        
-        $controlAttribs = array(
-            'readonly' => 'true',
-        );
-        
-        
+                
         $this->addElement('text', 'name', array(
             'label'      => 'Comercio:',
             'required'   => true,
             'filters'    => array('StringTrim'),
-            //'filters'    => array('StringTrim', 'HtmlEntities'),
         ));
-        $control = $this->getElement("name");
-        $control->setDecorators($decorators);
-        $validator = new Zend_Validate_Alnum(array('allowWhiteSpace' => true));
-        $control->addValidator($validator, true);
-                //->setAttrib("escape",true);
-        //$control->setAttribs($controlAttribs);
+        $this->name->addValidator($allowWhiteSpace, true)
+                    ->setDecorators($decorators)
+                    ->addDecorator('HtmlTag', array('tag' => 'div'));
         
         $this->addElement('text', 'street', array(
             'label'      => 'Calle:',
             'required'   => true,
             'filters'    => array('StringTrim', 'StringtoUpper'),
         ));
-        $control = $this->getElement("street");
-        $control->setDecorators($decorators);
-        $validator = new Zend_Validate_Alnum(array('allowWhiteSpace' => true));
-        $control->addValidator($validator, true);
+        $this->street->setDecorators($decorators)
+            ->addValidator($allowWhiteSpace, true);
         
         $this->addElement('text', 'number', array(
             'label'      => 'Número:',
@@ -60,16 +51,14 @@
                 'Digits',
             ),
         ));
-        $control = $this->getElement("number");
-        $control->setDecorators($decorators);
+        $this->number->setDecorators($decorators);
         
         $this->addElement('text', 'local', array(
             'label'      => 'Local:',
             'required'   => false,
             'filters'    => array('StringTrim'),
         ));
-        $control = $this->getElement("local");
-        $control->setDecorators($decorators);
+        $this->local->setDecorators($decorators);
         
         $this->addElement('text', 'phone', array(
             'label'      => 'Teléfono:',
@@ -78,24 +67,21 @@
             'maxlength' => 50,
             'filters'    => array('StringTrim'),
         ));
-        $control = $this->getElement("phone");
-        $control->setDecorators($decorators);
+        $this->phone->setDecorators($decorators);
         
         $this->addElement('select', 'province', array(
             'label'      => 'Provincia:',
             'required'   => true,
         ));
-        $control = $this->getElement("province");
-        $control->setRegisterInArrayValidator(false);
-        $control->setDecorators($decorators);
+        $this->province->setRegisterInArrayValidator(false)
+                ->setDecorators($decorators);
         
         $this->addElement('select', 'city', array(
             'label'      => 'Ciudad:',
             'required'   => true,
         ));
-        $control = $this->getElement("city");
-        $control->setRegisterInArrayValidator(false);
-        $control->setDecorators($decorators);
+        $this->city->setRegisterInArrayValidator(false)
+                ->setDecorators($decorators);
         
         $this->addElement('text', 'zipcode', array(
             'label'      => 'CP:',
@@ -106,8 +92,7 @@
                 'alnum',
             ),
         ));
-        $control = $this->getElement("zipcode");
-        $control->setDecorators($decorators);
+        $this->zipcode->setDecorators($decorators);
         
         $this->addElement('text', 'lat', array(
             'label'      => 'Latitud:',
@@ -117,9 +102,8 @@
                 'Float',
             ),
         ));
-        $control = $this->getElement("lat");
-        $control->setDecorators($decorators);
-        $control->setAttribs($controlAttribs);
+        $this->lat->setDecorators($decorators)
+                ->setAttribs(array('readonly' => 'true',));
                 
         $this->addElement('text', 'lng', array(
             'label'      => 'Longitud:',
@@ -129,33 +113,28 @@
                 'Float',
             ),
         ));
-        $control = $this->getElement("lng");
-        $control->setDecorators($decorators);
-        $control->setAttribs($controlAttribs);
+        $this->lng->setDecorators($decorators)
+                ->setAttribs(array('readonly' => 'true',));
         
         $this->addElement('button', 'localization', array(
             'ignore'   => true,
             'label'      => 'Localizarme',
         ));
-        $control = $this->getElement("localization");
-        $control->setDecorators($decoratorsButton);
-        $control->class = "buttons";
-        $control->setAttrib("onClick", "ShowGoogleLocalizator();");
+        $this->localization->setDecorators($decoratorsButton)
+                    ->setAttrib('class', 'buttons')
+                    ->setAttrib("onClick", "ShowGoogleLocalizator();");
         
         $file = new Zend_Form_Element_File('file');
-        $file->setLabel('Cambiar Logo')
-            ->setDestination(PUBLIC_PATH.'\\images\\tmp')
-            ->setRequired(true)
-            ->setValueDisabled(true);
-        // ensure only one file
-        $file->addValidator('Count', false, 1);
-        // max 2MB
-        $file->addValidator('Size', false, 1048576)
-            ->setMaxFileSize(1048576);
-        // only JPEG, PNG, or GIF
-        $file->addValidator('Extension', false, 'jpg,png,gif');
         $this->addElement($file);
-        
+        $this->file->setLabel('Cambiar Logo')
+                ->setDestination(PUBLIC_PATH.'\\images\\tmp')
+                ->setRequired(true)
+                ->setValueDisabled(true)
+                ->addValidator('Count', false, 1)// ensure only one file
+                ->addValidator('Size', false, 1048576)// max 2MB
+                ->setMaxFileSize(1048576)
+                ->addValidator('Extension', false, 'jpg,png,gif');// only JPEG, PNG, or GIF
+                
         $this->addElement('img', 'logo', array(
             'ignore'   => true,
             'width' => '100', 
@@ -166,21 +145,19 @@
             'ignore'   => true,
             'label'      => 'Guardar',
         ));
-        $control = $this->getElement("save");
-        $control->setDecorators($decoratorsButton);
-        $control->class = "buttons";
+        $this->save->setDecorators($decoratorsButton)
+                ->setAttrib('class', 'buttons');
         
         $this->addElement('hidden', 'user');
-        $this->addElement('hidden', 'branch_id', array(
-            'ignore' => true,
-            )
-        );
-        $this->addElement('hidden', 'branch_order', array(
-            'ignore' => true,
-            )
-        );
-        $this->addElement('hidden', 'latitude');
-        $this->addElement('hidden', 'longitude');
+        $this->user->setDecorators(array('ViewHelper'));
+        $this->addElement('hidden', 'branch_id', array('ignore' => true,));
+        $this->branch_id->setDecorators(array('ViewHelper'));
+        $this->addElement('hidden', 'branch_order', array('ignore' => true,));
+        $this->branch_order->setDecorators(array('ViewHelper'));
+        $this->addElement('hidden', 'latitude', array('disableLoadDefaultDecorators' => true));
+        $this->latitude->setDecorators(array('ViewHelper'));
+        $this->addElement('hidden', 'longitude', array('disableLoadDefaultDecorators' => true));
+        $this->longitude->setDecorators(array('ViewHelper'));
         
         $this->addDisplayGroup(array(
                     'name',
@@ -191,6 +168,45 @@
                     'city',
                     'province',
                     'zipcode',
-            ),'contact',array('legend' => 'Información del Comercio'));
+                    'user'
+            ),'branch_contact',array('legend' => 'Información del Comercio'));
+        $contact = $this->getDisplayGroup('branch_contact');
+        $contact->setDecorators(array(
+                    'FormElements',
+                    'Fieldset',
+                    array('HtmlTag',array('tag'=>'div','style'=>'width:50%;;float:left;')),
+                    array(array('fstag'=>'HtmlTag'),'options'=>array('tag'=>'fieldset','openOnly'=>true)),
+        ));
+        
+        $this->addDisplayGroup(array(
+                'file',
+                'logo',
+        ),'branch_picture',array('legend' => 'Imagen del Comercio'));
+        $contact = $this->getDisplayGroup('branch_picture');
+        $contact->setDecorators(array(
+                    'FormElements',
+                    'Fieldset',
+                    array('HtmlTag',array('tag'=>'div','style'=>'width:45%;;float:right;')),
+                    array(array('fstag'=>'HtmlTag'),'options'=>array('tag'=>'fieldset')),
+        ));
+            
+        $this->addDisplayGroup(array(
+                'lat',
+                'lng',
+                'localization',
+                'latitude',
+                'longitude'
+        ),'branch_location',array('legend' => 'Localización geográfica'));
+        $contact = $this->getDisplayGroup('branch_location');
+        $contact->setDecorators(array(
+                    'FormElements',
+                    'Fieldset',
+                    array('HtmlTag',array('tag'=>'div','style'=>'width:50%;;float:left;')),
+                    array(array('fstag'=>'HtmlTag'),'options'=>array('tag'=>'fieldset','closeOnly'=>true)),
+        ));
+        
+        
+            
+            
       }
   }

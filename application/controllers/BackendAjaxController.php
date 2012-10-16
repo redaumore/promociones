@@ -6,6 +6,12 @@ class backendAjaxController extends Zend_Controller_Action
         $this->view->baseUrl = $this->_request->getBaseUrl();
         Zend_Loader::loadClass('Zend_Debug');
         
+        $action = $this->_getParam('action');
+        $this->_helper->getHelper('contextSwitch')
+            ->addActionContext($action, 'json')
+            ->initContext();
+            
+        
         /*
         $ajaxContext = $this->_helper->getHelper('AjaxContext');
         $ajaxContext->addActionContext('getCities', 'json');
@@ -26,15 +32,28 @@ class backendAjaxController extends Zend_Controller_Action
         $cities = new PAP_Model_CityMapper();
         $this->_view->result = $cities->getCitiesByProvinceId($id);
          */
+        $cities = new PAP_Model_CityMapper();
         
         $this->_helper->layout()->disableLayout();
-        $cities = new PAP_Model_CityMapper();
         $this->_helper->viewRenderer->setNoRender();
+        
         if ($this->getRequest()->isXmlHttpRequest()) {
             $id = $this->_getParam('province_id');
             $citiesData = $cities->getCitiesByProvinceId($id);
-            $dojoData= new Zend_Dojo_Data('city_id',$citiesData);
-            echo $dojoData->toJson();
+            //echo json_encode($citiesData);
+            $this->_helper->json($citiesData);
+            //$dojoData= new Zend_Dojo_Data('city_id',$citiesData);
+            //echo $dojoData->toJson();
         }
+        
+        /*
+        if ($this->getRequest()->isXmlHttpRequest()) {
+            $id = $this->_getParam('province_id');
+            $citiesData = $cities->getCitiesByProvinceId($id);
+            //$dojoData= new Zend_Dojo_Data('city_id',$citiesData);
+            //echo $dojoData->toJson();
+            echo json_encode($citiesData);
+        }
+        */
     }
 }

@@ -1,13 +1,37 @@
-<?php // $this->headScript()->appendScript($this->baseUrl().'/scripts/prototype.js');
-      //  echo $this->headScript();
+<?php  //$this->headScript()->appendScript($this->baseUrl().'/scripts/regions.js');
+       //echo $this->headScript();
  ?>
+ <script type="text/javascript">
+function loadCities()
+{
+        var selectedValue = document.getElementById('province').options[document.getElementById('province').selectedIndex].value;
+        var myAjax = new Ajax.Request(
+        "<?=$this->url(array('controller'=>'backendAjax','action'=>'getCities'))?>",
+            {
+                method:'get',
+                parameters: {province_id: selectedValue},
+                onSuccess: FillForm
+        });
+ 
+}
+
+function FillForm(data)
+{       debugger;
+        var select = document.getElementById("city");
+        select.options.length = 0;
+        var cities = eval('(' + data.responseText + ')');
+        for (var i = 0; i < cities.length; i++){
+            select.options[select.options.length] = new Option(cities[i].name, cities[i].city_id); 
+        } 
+}
+</script>
 <?php
     if(isset($this->errorMessage)){
         echo $this->errorMessage;
     }
     $this->form->setAction($this->url());
     echo $this->form;
-    
+    echo $this->partial("branch/_localizator.phtml"); 
 ?>
 
 
