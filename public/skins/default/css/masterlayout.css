@@ -8,7 +8,9 @@ p {
     font-size: .75em;
 }
 #pageWrapper {
-    width: 80%;
+    width: 900px;
+    margin: auto; 
+    position: relative;
 /*    margin: 1em auto ;*/
 }
 #header {
@@ -21,13 +23,12 @@ p {
 }
 #sidebar {
     float: left;
-    width: 22%;
+    width: 176px;
     height: 40em;
 }
 #main {
     float: right;
-    margin: 5px;
-    width: 75%;
+    width: 720px;
     /*border-width: medium;*/
 }
 #subNav,#adminMenu,#userForm {
@@ -39,4 +40,17 @@ p {
     clear: both;
     height: 2.5em;
     margin: 0;
+}
+
+input[type="submit"]{
+    margin: 2px;
+    padding: 5px;
+    color: #ffffff;
+    border: solid 2px #b6d6ff;
+    -webkit-border-radius: .5em;
+    -moz-border-radius: .5em;
+    border-radius: .5em;
+    -webkit-box-shadow: 1px 1px 1px #ccc;
+    box-shadow: 2px 2px 2px #bbb;
+    background-color: #4d5c95;
 }

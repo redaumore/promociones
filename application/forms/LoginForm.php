@@ -6,6 +6,13 @@
         
         $this->setMethod('post');
         //$this->setAction('/login/login');
+        $decorators = array(
+                'ViewHelper',
+                'Label', 
+                //array('requiredSuffix' => ' *', 'class' => 'leftalign')
+                //),
+                array('HtmlTag', array('tag' => 'div')),
+        );
  
         // Add an email element
         $this->addElement('text', 'email', array(
@@ -16,6 +23,7 @@
                 'EmailAddress',
             ),
         ));
+        $this->email->setDecorators($decorators);
         
         // Add a password element
         $this->addElement('password', 'password', array(
@@ -26,6 +34,7 @@
                 'alnum',
             ),
         ));
+        $this->password->setDecorators($decorators);
         
         $this->addElement('submit', 'login', array(
             'ignore'   => true,

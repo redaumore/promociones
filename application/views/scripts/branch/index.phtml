@@ -16,13 +16,21 @@ function loadCities()
 }
 
 function FillForm(data)
-{       debugger;
-        var select = document.getElementById("city");
+{       var select = document.getElementById("city");
         select.options.length = 0;
         var cities = eval('(' + data.responseText + ')');
         for (var i = 0; i < cities.length; i++){
             select.options[select.options.length] = new Option(cities[i].name, cities[i].city_id); 
         } 
+}
+
+function clickFile(){
+        document.getElementById("file").click();
+}
+function sub(obj){
+    var file = obj.value;
+    var fileName = file.split("\\");
+    document.getElementById("yourBtn").innerHTML = fileName[fileName.length-1];
 }
 </script>
 <?php

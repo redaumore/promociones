@@ -169,8 +169,7 @@ class PAP_Form_PromotionForm extends Zend_Form
             'required'   => false,
             'size' => 25, 
         ));
-        $control = $this->getElement("visited");
-        $control->setAttrib('readonly', true);
+        $this->visited->setAttrib('readonly', true);
         
         $file = new Zend_Form_Element_File('images');
         $file->setLabel('Imagenes Promo')
@@ -186,8 +185,10 @@ class PAP_Form_PromotionForm extends Zend_Form
             ->setMaxFileSize(1048576);
         // only JPEG, PNG, or GIF
         $file->addValidator('Extension', false, 'jpg,png,gif');
+        //$file->setAttribs(array('style' => 'width:50px;')
         $this->addElement($file);
-         //@todo Hacerlo para 3 imàgenes
+        //@todo Hacerlo para 3 imàgenes
+        
         $this->addElement('img', 'imagePromo1', array(
             'ignore'   => true,
             'width' => '100', 

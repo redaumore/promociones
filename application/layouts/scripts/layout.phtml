@@ -10,26 +10,21 @@
         echo $this->headLink();
 ?>
 </head>
-<body>
-    <div id="pageWrapper">
+<body style="background-color: white;">
+    <div id="pageWrapper" style="margin: auto; position: relative;">
         <?php echo $this->partial("_header.phtml"); ?>    
-        <div id="nav">
-            <?php echo $this->layout()->nav;?>&nbsp;
-        </div>
-        <div id="sidebar">
+        <div id="sidebar" style="width: 176px; border-bottom-color: black;">
             <div id="subNav">
-                <?php
-                    echo $this->layout()->menu;
-                ?>
+                <?php echo $this->layout()->menu; ?>
             </div>
             <div id="adminMenu">
-                <?php echo $this->layout()->adminMenu;?>&nbsp;
+                <?php echo $this->layout()->adminMenu;?>
             </div>
             <div id="userForm">
-                <?php echo $this->layout()->userForm;?>&nbsp;
+                <?php echo $this->layout()->userForm;?>
             </div>
         </div>
-        <div id="main">
+        <div id="main" style="width: 720px; right:0px; float: right; position: absolute">
             <?php echo $this->layout()->content;?>&nbsp;
         </div>
         <?php echo $this->partial("_footer.phtml"); ?>

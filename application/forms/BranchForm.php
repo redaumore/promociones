@@ -12,12 +12,10 @@
         
         $decorators = array(
                 'ViewHelper',
-                'Label',
-                /*array(
-                'requiredSuffix' => ' *',
-                'class' => 'leftalign'
-                ),*/
-        //        array('HtmlTag', array('tag' => 'div')),
+                'Label', 
+                //array('requiredSuffix' => ' *', 'class' => 'leftalign')
+                //),
+                array('HtmlTag', array('tag' => 'div')),
         );
         $allowWhiteSpace = new Zend_Validate_Alnum(array('allowWhiteSpace' => true));
         $decoratorsButton = array(
@@ -98,9 +96,9 @@
             'label'      => 'Latitud:',
             'size' => 12,
             'required'   => true,
-            'validators' => array(
-                'Float',
-            ),
+            //'validators' => array(
+            //    'Float',
+            //),
         ));
         $this->lat->setDecorators($decorators)
                 ->setAttribs(array('readonly' => 'true',));
@@ -109,9 +107,9 @@
             'label'      => 'Longitud:',
             'size' => 12,
             'required'   => true,
-            'validators' => array(
-                'Float',
-            ),
+            //'validators' => array(
+            //    'Float',
+            //),
         ));
         $this->lng->setDecorators($decorators)
                 ->setAttribs(array('readonly' => 'true',));
@@ -124,6 +122,12 @@
                     ->setAttrib('class', 'buttons')
                     ->setAttrib("onClick", "ShowGoogleLocalizator();");
         
+        $this->addElement('img', 'logo', array(
+            'ignore'   => true,
+            'width' => '100', 
+            'height' => '100'
+        ));
+        
         $file = new Zend_Form_Element_File('file');
         $this->addElement($file);
         $this->file->setLabel('Cambiar Logo')
@@ -133,13 +137,19 @@
                 ->addValidator('Count', false, 1)// ensure only one file
                 ->addValidator('Size', false, 1048576)// max 2MB
                 ->setMaxFileSize(1048576)
+                //->setDecorators($decoratorsButton)
+                ->setDecorators(array(
+                    'File',
+                    array('HtmlTag', array('tag'=>'div','style'=>'height:0px; width:0px; overflow:hidden;')),
+                ))
                 ->addValidator('Extension', false, 'jpg,png,gif');// only JPEG, PNG, or GIF
-                
-        $this->addElement('img', 'logo', array(
+        
+        $this->addElement('button', 'fakefile', array(
             'ignore'   => true,
-            'width' => '100', 
-            'height' => '100'
+            'label'      => 'Cargar Imagen',
         ));
+        $this->fakefile->setAttrib('class', 'buttons')
+            ->setAttrib("onClick", "clickFile();");
         
         $this->addElement('submit', 'save', array(
             'ignore'   => true,
@@ -169,19 +179,20 @@
                     'province',
                     'zipcode',
                     'user'
-            ),'branch_contact',array('legend' => 'Información del Comercio'));
+            ),'branch_contact',array('legend' => 'Información del Comercio', 'disableDefaultDecorators' => true));
         $contact = $this->getDisplayGroup('branch_contact');
         $contact->setDecorators(array(
                     'FormElements',
                     'Fieldset',
-                    array('HtmlTag',array('tag'=>'div','style'=>'width:50%;;float:left;')),
-                    array(array('fstag'=>'HtmlTag'),'options'=>array('tag'=>'fieldset','openOnly'=>true)),
+                    array('HtmlTag',array('tag'=>'div','style'=>'width:50%;float:left;')),
+                    //array(array('fstag'=>'HtmlTag'),'options'=>array('tag'=>'fieldset','openOnly'=>true)),
         ));
         
         $this->addDisplayGroup(array(
                 'file',
                 'logo',
-        ),'branch_picture',array('legend' => 'Imagen del Comercio'));
+                'fakefile'
+        ),'branch_picture',array('legend' => 'Imagen del Comercio', 'disableDefaultDecorators' => true));
         $contact = $this->getDisplayGroup('branch_picture');
         $contact->setDecorators(array(
                     'FormElements',
@@ -196,13 +207,13 @@
                 'localization',
                 'latitude',
                 'longitude'
-        ),'branch_location',array('legend' => 'Localización geográfica'));
+        ),'branch_location',array('legend' => 'Localización geográfica', 'disableDefaultDecorators' => true,));
         $contact = $this->getDisplayGroup('branch_location');
         $contact->setDecorators(array(
                     'FormElements',
                     'Fieldset',
                     array('HtmlTag',array('tag'=>'div','style'=>'width:50%;;float:left;')),
-                    array(array('fstag'=>'HtmlTag'),'options'=>array('tag'=>'fieldset','closeOnly'=>true)),
+                    //array(array('fstag'=>'HtmlTag'),'options'=>array('tag'=>'fieldset','closeOnly'=>true)),
         ));
         
         
