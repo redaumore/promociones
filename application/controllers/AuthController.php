@@ -2,6 +2,10 @@
 class AuthController extends Zend_Controller_Action
 {
 
+    public function init(){
+    
+    }
+    
     public function indexAction()
     {
         $this->_redirect('auth/login');        
@@ -25,9 +29,7 @@ class AuthController extends Zend_Controller_Action
                 if($result->isValid()){
                     $user = new PAP_Model_User();
                     $user->loadByEmail($data['email']);
-                    
                     $this->_helper->Session->setUserSession($user);
-                    
                     if($user->getStatus() == 'pending')
                         $this->_redirect('auth/resendemail');
                     $storage = $auth->getStorage();
@@ -126,7 +128,12 @@ class AuthController extends Zend_Controller_Action
 
     public function resendemailAction()
     {
-        // action body
+        $this->view->form = new PAP_Form_ResendEmailForm();
+        $user = $this->_helper->Session->getUserSession();
+        if(isset($user))
+            $this->view->form->email = $user->email;
+        else
+            $this->_redirect('/');
     }
 
 

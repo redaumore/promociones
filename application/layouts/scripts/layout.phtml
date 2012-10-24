@@ -11,20 +11,20 @@
 ?>
 </head>
 <body style="background-color: white;">
-    <div id="pageWrapper" style="margin: auto; position: relative;">
+    <div id="pageWrapper">
         <?php echo $this->partial("_header.phtml"); ?>    
-        <div id="sidebar" style="width: 176px; border-bottom-color: black;">
-            <div id="subNav">
+        <div id="sidebar">
+            <div id="subNav" style="background-color: inherit;">
                 <?php echo $this->layout()->menu; ?>
             </div>
-            <div id="adminMenu">
+            <div id="adminMenu" style="background-color: inherit;">
                 <?php echo $this->layout()->adminMenu;?>
             </div>
-            <div id="userForm">
+            <div id="userForm" style="background-color: inherit;">
                 <?php echo $this->layout()->userForm;?>
             </div>
         </div>
-        <div id="main" style="width: 720px; right:0px; float: right; position: absolute">
+        <div id="main">
             <?php echo $this->layout()->content;?>&nbsp;
         </div>
         <?php echo $this->partial("_footer.phtml"); ?>

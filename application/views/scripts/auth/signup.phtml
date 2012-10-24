@@ -3,9 +3,52 @@
     {
         echo $this->errorMessage;
     }
-?>
-<h4>Sign up</h4>
-<?
     $this->form->setAction($this->url());
-    echo $this->form;
+    $form = $this->form;
 ?>
+<form method="<?php echo $form->getMethod() ?>" action="<?php echo $form->getAction()?>">
+<div align="center">
+    <table>
+        <tr>
+            <td colspan="2" align="center" valign="middle" height="100px">
+                <div style="background-image: url(/images/backend/tit-registrarse.png); background-repeat:no-repeat; background-position: center; height: 50px">&nbsp;</div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <span class=info>
+                    <p>Luego de registrarte se te enviará un e-mail en el cual encontrarás un link para activa tu cuenta.</p>
+                    <p>Una vez que hayas activado tu cuenta, podrás cargar los datos de tu comercio y luego tus promociones.</p>
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <td align="right"><?php echo $form->email->renderLabel(); ?></td>
+            <td><?php echo $form->email->renderViewHelper(); ?></td>
+        </tr>
+        <tr>
+            <td align="right"><?php echo $form->name->renderLabel(); ?></td>
+            <td><?php echo $form->name->renderViewHelper(); ?></td>
+        </tr>
+        <tr>
+            <td align="right"><?php echo $form->cuit->renderLabel(); ?></td>
+            <td><?php echo $form->cuit->renderViewHelper(); ?></td>
+        </tr>
+        <tr>
+            <td align="right"><?php echo $form->email->renderLabel(); ?></td>
+            <td><?php echo $form->email->renderViewHelper(); ?></td>
+        </tr>
+        <tr>
+            <td align="right"><?php echo $form->password->renderLabel(); ?></td>
+            <td><?php echo $form->password->renderViewHelper(); ?></td>
+        </tr>
+        <tr>
+            <td align="right"><?php echo $form->confirmPassword->renderLabel(); ?></td>
+            <td><?php echo $form->confirmPassword->renderViewHelper(); ?></td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center"><?php echo $form->registrarse->renderViewHelper(); ?></td>
+        </tr>
+    </table>
+</div>
+</form>

@@ -16,7 +16,7 @@
  
         // Add an email element
         $this->addElement('text', 'email', array(
-            'label'      => 'Usuario (email):',
+            'label'      => 'Usuario (email)',
             'required'   => true,
             'filters'    => array('StringTrim'),
             'validators' => array(
@@ -27,7 +27,7 @@
         
         // Add a password element
         $this->addElement('password', 'password', array(
-            'label'      => 'Contraseña:',
+            'label'      => 'Contraseña',
             'required'   => true,
             'filters'    => array('StringTrim', 'StringtoUpper'),
             'validators' => array(
@@ -40,5 +40,10 @@
             'ignore'   => true,
             'label'      => 'Ingresar',
         ));
+        $decoratorsButton = array(
+                array('ViewHelper'),
+                array('HtmlTag', array('tag' => 'div')),
+        );
+        $this->login->setDecorators($decoratorsButton);
       }
   }

@@ -1,13 +1,23 @@
-<div id="header" style="height: 70px;">
-    <div id="header-logo" style="float: left">
-        <h1>Promos al paso - Backend</h1>
-    </div>
-    <div id="header-navigation" style="float: right">
-        <?php if($this->identity == null) { ?>
-            <p>To log in <a href='/auth/login'>click here</a></p>
-        <?php }else{ ?>
-            <p>Welcome back <?php echo $this->identity->name;?></p>
-            <p>To log out <a href='/auth/logout'>click here</a></p>
-        <?php } ?>
-    </div>
+<div style="background-color: EF642A;">
+    <table width="100%" style="background-color: inherit;">
+        <tr>
+            <td align="right"> <div style="background-image: url(/images/backend/logo-promosalpaso70.png); 
+                       background-repeat:no-repeat; 
+                       background-position: center right; 
+                       width: 100%; 
+                       height: 90px;
+                       background-color: inherit;">&nbsp;</div>
+            </td>
+            <td align="center">
+                <div id="header" style="width: 100%; height: 90px; background-image: url(/images/backend/tit-promosalpaso.png); background-repeat:no-repeat; background-position: center center">
+            </td>
+            <td align="left"> <div style="background-image: url(/images/backend/logo-promosalpaso70.png); 
+                       background-repeat:no-repeat; 
+                       background-position: center left; 
+                       width: 100%; 
+                       height: 90px;
+                       background-color: inherit;">&nbsp;</div>
+            </td>
+        </tr>
+    </table>
 </div>

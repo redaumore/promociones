@@ -2,11 +2,14 @@
 
 class BranchController extends Zend_Controller_Action
 {
-
+    public $user;
     public function init()
     {
         /* Initialize action controller here */
         // insert sidebar to the response object
+        $this->user = $this->_helper->Session->getUserSession();
+        if(!isset($this->user))
+            $this->_redirect('/auth/login');
     }
 
     public function indexAction()
@@ -15,7 +18,7 @@ class BranchController extends Zend_Controller_Action
         $branch = new PAP_Model_Branch;
         $form = new PAP_Form_BranchForm();
         $this->view->form = $form;
-        $user = $this->_helper->Session->getUserSession();
+        //$user = $this->_helper->Session->getUserSession();
         
         $comboProvinces = $form->getElement('province');
         $this->loadProvinces($comboProvinces);
@@ -32,14 +35,14 @@ class BranchController extends Zend_Controller_Action
         }
         else{
              $branchMapper = new PAP_Model_BranchMapper();
-             $branchMapper->findByUserId($user, $branch_order, $branch);     
+             $branchMapper->findByUserId($this->user, $branch_order, $branch);     
              if(isset($branch)){
                  $this->loadForm($branch, 'update');
                  $this->_helper->Session->setBranchSession($branch);
              }
              else{
-                $form->name->setValue($user->getName());
-                $form->user->setValue($user->getId());
+                $form->name->setValue($this->user->getName());
+                $form->user->setValue($this->user->getId());
              }
         }    
         
@@ -81,15 +84,15 @@ class BranchController extends Zend_Controller_Action
             $comboCities = $form->getElement('city');
             $this->loadCities($comboCities, 1);
             
-            $user = $this->_helper->Session->getUserSession();
-            $form->name->setValue($user->getName());
-            $form->user->setValue($user->getId());
+            //$user = $this->_helper->Session->getUserSession();
+            $form->name->setValue($this->user->getName());
+            $form->user->setValue($this->user->getId());
         }
         
     }
     
     private function saveBranch($data, $operation)
-    {           $user = $this->_helper->Session->getUserSession();
+    {           //$user = $this->_helper->Session->getUserSession();
                 $data["user"] = $user->getId();
                 
                 if(isset($data['file'])){
@@ -120,8 +123,8 @@ class BranchController extends Zend_Controller_Action
                 if($operation == 'new'){
                     $branch = new PAP_Model_Branch;
                     $data["branchorder"] = "0";
-                    $user->setStatus("active");
-                    $user->update();
+                    $this->user->setStatus("active");
+                    $this->user->update();
                 }
                 else{
                     $branch = $this->_helper->Session->getBranchSession();    
@@ -137,15 +140,15 @@ class BranchController extends Zend_Controller_Action
         $this->view->addHelperPath('ZFExt/View/Helper', 'ZFExt_View_Helper');
  
         $form = new PAP_Form_Treeview();
-        $user = $this->_helper->Session->getUserSession();
+        
         if ($this->_request->isPost()) {
             if ($form->isValid($_POST)) {
                 $values = $form->getValues(true);
-                $user->setCategories($values['tree']);
+                $this->user->setCategories($values['tree']);
             }
         }
         else{
-            $this->loadUserCategories($user, $form);    
+            $this->loadUserCategories($this->user, $form);    
         }
         $this->view->form = $form;
     }

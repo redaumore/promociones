@@ -1,15 +1,18 @@
 <?php
   class PromotionController extends Zend_Controller_Action
 {
-
+    private $user;
     public function init()
     {
         /*$session = new Zend_Session_Namespace('PAP');
         echo $session->user->getName();*/
+        $user = $this->_helper->Session->getUserSession();
+        if(!isset($user))
+            $this->_redirect('/auth/login');
     }
     
     public function newAction(){
-        $user = $this->_helper->Session->getUserSession();
+        //$user = $this->_helper->Session->getUserSession();
         $form = new PAP_Form_PromotionForm();
         $this->view->form = $form;
         $this->loadPriceRules($user);
