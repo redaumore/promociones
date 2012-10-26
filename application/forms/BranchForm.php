@@ -24,7 +24,7 @@
         );
                 
         $this->addElement('text', 'name', array(
-            'label'      => 'Comercio:',
+            'label'      => 'Nombre',
             'required'   => true,
             'filters'    => array('StringTrim'),
         ));
@@ -33,7 +33,7 @@
                     ->addDecorator('HtmlTag', array('tag' => 'div'));
         
         $this->addElement('text', 'street', array(
-            'label'      => 'Calle:',
+            'label'      => 'Calle',
             'required'   => true,
             'filters'    => array('StringTrim', 'StringtoUpper'),
         ));
@@ -41,7 +41,7 @@
             ->addValidator($allowWhiteSpace, true);
         
         $this->addElement('text', 'number', array(
-            'label'      => 'Número:',
+            'label'      => 'Número',
             'required'   => true,
             'size' => 8,
             'filters'    => array('Digits'),
@@ -52,14 +52,14 @@
         $this->number->setDecorators($decorators);
         
         $this->addElement('text', 'local', array(
-            'label'      => 'Local:',
+            'label'      => 'Local',
             'required'   => false,
             'filters'    => array('StringTrim'),
         ));
         $this->local->setDecorators($decorators);
         
         $this->addElement('text', 'phone', array(
-            'label'      => 'Teléfono:',
+            'label'      => 'Teléfono',
             'required'   => false,
             'size' => 30, 
             'maxlength' => 50,
@@ -68,21 +68,21 @@
         $this->phone->setDecorators($decorators);
         
         $this->addElement('select', 'province', array(
-            'label'      => 'Provincia:',
+            'label'      => 'Provincia',
             'required'   => true,
         ));
         $this->province->setRegisterInArrayValidator(false)
                 ->setDecorators($decorators);
         
         $this->addElement('select', 'city', array(
-            'label'      => 'Ciudad:',
+            'label'      => 'Ciudad',
             'required'   => true,
         ));
         $this->city->setRegisterInArrayValidator(false)
                 ->setDecorators($decorators);
         
         $this->addElement('text', 'zipcode', array(
-            'label'      => 'CP:',
+            'label'      => 'CP',
             'required'   => false,
             'size' => 8,
             'filters'    => array('StringTrim'),
@@ -93,7 +93,7 @@
         $this->zipcode->setDecorators($decorators);
         
         $this->addElement('text', 'lat', array(
-            'label'      => 'Latitud:',
+            'label'      => 'Lat.',
             'size' => 12,
             'required'   => true,
             //'validators' => array(
@@ -104,7 +104,7 @@
                 ->setAttribs(array('readonly' => 'true',));
                 
         $this->addElement('text', 'lng', array(
-            'label'      => 'Longitud:',
+            'label'      => 'Long.',
             'size' => 12,
             'required'   => true,
             //'validators' => array(
@@ -124,8 +124,9 @@
         
         $this->addElement('img', 'logo', array(
             'ignore'   => true,
-            'width' => '100', 
-            'height' => '100'
+            'width' => '75', 
+            'height' => '75',
+            'src' => '/images/backend/img-comercio.png',
         ));
         
         $file = new Zend_Form_Element_File('file');

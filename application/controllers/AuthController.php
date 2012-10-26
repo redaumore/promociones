@@ -73,7 +73,7 @@ class AuthController extends Zend_Controller_Action
                 $data["status"] = 'pending';
                 $data["rol"] = 2; //1:reseler, 2:customer, 3:admin
                 $users->insert($data);
-                $this->_redirect('auth/showValidationMessage');
+                $this->_redirect('auth/showvalidationmessage');
             }
         }        
 }
