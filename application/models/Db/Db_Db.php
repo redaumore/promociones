@@ -8,7 +8,7 @@
                             "port" => "3306", 
                             "username" => "magento",
                             "password" => "magento",
-                            "dbname" = "promosalpaso");
+                            "dbname" => "promosalpaso");
         $db = new Zend_Db_Adapter_Pdo_Mysql($connParams);
         return $db;
         

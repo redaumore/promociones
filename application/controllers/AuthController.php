@@ -129,14 +129,28 @@ class AuthController extends Zend_Controller_Action
     public function resendemailAction()
     {
         $this->view->form = new PAP_Form_ResendEmailForm();
+        $form = $this->view->form;
         $user = $this->_helper->Session->getUserSession();
-        if(isset($user))
-            $this->view->form->email = $user->email;
+        
+        if($this->getRequest()->isPost()){
+            if($form->isValid($_POST)){
+                $data = $form->getValues();
+                $this->sendValidationEmail($data['email']);
+                $this->_redirect('auth/showvalidationmessage');
+            }
+        }
+        else{
+            if(isset($user))
+            $this->view->form->email->setValue($user->email);
         else
-            $this->_redirect('/');
+            $this->_redirect('/');    
+        }
     }
-
-
+    
+    private function sendValidationEmail($email)
+    {
+        //TODO -o RED:  Envìo de email de validaciòn.    
+    }
 }
 
 

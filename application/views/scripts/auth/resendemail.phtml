@@ -2,25 +2,31 @@
     if(isset($this->errorMessage)){
         echo $this->errorMessage;
     }
-    //$this->form->setAction($this->url());
+    $this->form->setAction($this->url());
     //echo $this->form;
-    //$form = $this->form;
+    $form = $this->form;
 ?>
-<div align="center">
-    <table>
-        <tr>
-            <td colspan="2" align="center" valign="middle" height="100px">
-                <div style="background-image: url(/images/backend/tit-activacion.png); background-repeat:no-repeat; background-position: center; height: 50px;">&nbsp;</div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div id="view-content">
-                    <p>Aún no has activado tu cuenta. Si quieres que se te re-envíe el email de activación, pulsa el trebol.</p>
-                    <a id="linkresendemail"><img src="/images/backend/shamrock.png"></a>
-                </div>
-            </td>
-        </tr>
-    </table>
-</div>
-
+<form method="<?php echo $form->getMethod() ?>" action="<?php echo $form->getAction()?>">
+    <div align="center">
+        <table>
+            <tr>
+                <td align="center" valign="middle" height="100px">
+                    <div style="background-image: url(/images/backend/tit-activacion.png); background-repeat:no-repeat; background-position: center; height: 50px;">&nbsp;</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div id="view-content">
+                        <p>Aún no has activado tu cuenta. Si quieres que se te re-envíe el email de activación, pulsa el trebol.</p>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    <?php echo $form->submit->renderViewHelper(); ?>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <?php echo $form->email->renderViewHelper(); ?>
+</form>
