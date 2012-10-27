@@ -26,6 +26,15 @@ function FillForm(data)
             select.options[select.options.length] = new Option(cities[i].name, cities[i].city_id); 
         } 
 }
+
+function clickFile(){
+        document.getElementById("file").click();
+}
+function sub(obj){
+    var file = obj.value;
+    var fileName = file.split("\\");
+    document.getElementById("yourFile").innerHTML = "<p>" + fileName[fileName.length-1] + "</p>";
+}
 </script>
 <?php
     $this->form->setAction($this->url());
@@ -41,87 +50,86 @@ legend{
     <div align="center">
         <table width="95%">
             <tr>
-                <td colspan="2" align="center" valign="middle" height="75px">
+                <td colspan="2" align="center" valign="middle" height="65px">
                     <div style="background-image: url(/images/backend/tit-misdatos.png); background-repeat:no-repeat; background-position: center; height: 50px; width: 100%">&nbsp;</div>
                 </td>
             </tr>
             <tr>
-                <td width="70%" rowspan="2">
+                <td width="100%" colspan="2">
                     <fieldset>
                         <legend><b>Domicilio</b></legend>
-                        <table width="100%" style= 'border:1px solid black;'>
+                        <table width="100%">
                             <tr>
                                 <td><?php echo $form->name->renderLabel(); ?></td>
-                                <td><?php echo $form->name->renderViewHelper(); ?></td>
+                                <td colspan="3"><?php echo $form->name->renderViewHelper(); ?></td>
                             </tr>
                             <tr>
                                 <td><?php echo $form->street->renderLabel(); ?></td>
-                                <td><?php echo $form->street->renderViewHelper(); ?></td>
-                            </tr>
-                            <tr>
+                                <td colspan="3"><?php echo $form->street->renderViewHelper(); ?></td>
                                 <td><?php echo $form->number->renderLabel(); ?></td>
                                 <td><?php echo $form->number->renderViewHelper(); ?></td>
                             </tr>
                             <tr>
                                 <td><?php echo $form->local->renderLabel(); ?></td>
                                 <td><?php echo $form->local->renderViewHelper(); ?></td>
-                            </tr>
-                            <tr>
                                 <td><?php echo $form->phone->renderLabel(); ?></td>
                                 <td><?php echo $form->phone->renderViewHelper(); ?></td>
+                                <td align="right"><?php echo $form->zipcode->renderLabel(); ?></td>
+                                <td><?php echo $form->zipcode->renderViewHelper(); ?></td>
                             </tr>
                             <tr>
                                 <td><?php echo $form->province->renderLabel(); ?></td>
                                 <td><?php echo $form->province->renderViewHelper(); ?></td>
-                            </tr>
-                            <tr>
                                 <td><?php echo $form->city->renderLabel(); ?></td>
                                 <td><?php echo $form->city->renderViewHelper(); ?></td>
                             </tr>
                             <tr>
-                                <td><?php echo $form->zipcode->renderLabel(); ?></td>
-                                <td><?php echo $form->zipcode->renderViewHelper(); ?></td>
+                               <td><?php echo $form->lat->renderLabel(); ?></td>
+                               <td><?php echo $form->lat->renderViewHelper(); ?></td>
+                               <td><?php echo $form->lng->renderLabel(); ?></td>
+                               <td><?php echo $form->lng->renderViewHelper(); ?></td>
+                               <td align="right" colspan="2" valign="top"><?php echo $form->localization->renderViewHelper(); ?></td> 
                             </tr>
                         </table>
-                    </fieldset>
-                    
-                </td>
-                <td valign="top">
-                    <fieldset>
-                        <legend align="left"><b>Imagen Comercio</b></legend>
-                        <table width="100%">
-                            <tr>
-                                <td align="center"><?php echo $form->logo->renderViewHelper(); ?></td>
-                            </tr>
-                            <tr>
-                                <td align="center"><?php echo $form->fakefile->renderViewHelper(); ?></td>
-                            </tr>
-                        </table>    
                     </fieldset>
                 </td>
             </tr>
             <tr>
                 <td valign="top">
                     <fieldset>
-                        <legend align="left"><b>Localización</b></legend>
+                        <legend align="left"><b>Imagen Comercio</b></legend>
                         <table width="100%">
                             <tr>
-                                <td><?php echo $form->lat->renderLabel(); ?></td>
-                                <td align="center"><?php echo $form->lat->renderViewHelper(); ?></td>
+                                <td align="center" rowspan="2" style="padding-right: 10px"><?php echo $form->logo->renderViewHelper(); ?></td>
+                                <td colspan="2">
+                                    <p>La imagen del Comercio es de suma importancia. Aparte de ser tu presentación en tu página de negocio, será 
+                                    la imagen por defecto de todas aquellas promociones sin foto que publiques.</p>
+                                </td>
                             </tr>
                             <tr>
-                                <td><?php echo $form->lng->renderLabel(); ?></td>
-                                <td align="center"><?php echo $form->lng->renderViewHelper(); ?></td>
-                            </tr>
-                            <tr>
-                                <td align="center"><?php echo $form->localization->renderViewHelper(); ?></td>
+                                <td><div id='yourFile'><p>nombre archivo</p></div></td>
+                                <td align="right" valign="top"><?php echo $form->fakefile->renderViewHelper(); ?></td>
                             </tr>
                         </table>    
                     </fieldset>
                 </td>
             </tr>
+            <tr>
+                <td valign="top" align="right" colspan="2"><?php echo $form->save->renderViewHelper(); ?></td>
+            </tr>
             
         </table>
+    </div>
+    <div>
+        <?php
+            echo $form->user;
+            echo $form->branch_id;
+            echo $form->branch_order;
+            echo $form->latitude;
+            echo $form->longitude;
+            echo $form->file;
+            
+        ?>
     </div>
 </form>
 <?php 

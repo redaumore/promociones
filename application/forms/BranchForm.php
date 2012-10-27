@@ -25,6 +25,7 @@
                 
         $this->addElement('text', 'name', array(
             'label'      => 'Nombre',
+            'size' => 50,
             'required'   => true,
             'filters'    => array('StringTrim'),
         ));
@@ -34,6 +35,7 @@
         
         $this->addElement('text', 'street', array(
             'label'      => 'Calle',
+            'size' => 40,
             'required'   => true,
             'filters'    => array('StringTrim', 'StringtoUpper'),
         ));
@@ -61,7 +63,7 @@
         $this->addElement('text', 'phone', array(
             'label'      => 'Teléfono',
             'required'   => false,
-            'size' => 30, 
+            'size' => 15, 
             'maxlength' => 50,
             'filters'    => array('StringTrim'),
         ));
@@ -143,6 +145,7 @@
                     'File',
                     array('HtmlTag', array('tag'=>'div','style'=>'height:0px; width:0px; overflow:hidden;')),
                 ))
+                ->setAttrib('onChange', 'sub(this)')
                 ->addValidator('Extension', false, 'jpg,png,gif');// only JPEG, PNG, or GIF
         
         $this->addElement('button', 'fakefile', array(

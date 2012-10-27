@@ -23,6 +23,10 @@ body, div{
     background-color: #F19027;
     font-family: Arial, sans-serif;    
 }
+/*give the body height:100% so that its child
+    elements can have percentage heights*/
+body{ height:100% }
+  
 #header{
     background-color: #EF642A;
 }
@@ -138,10 +142,15 @@ input.leftalign{
 
 .googlemap{
     visibility: visible;
+    width: 420px;
+    display:block;
     
-    position: relative;
-    top:20px;
-    left:-40px;    
+    border: 5px solid #EF642A;
+
+    /*set the div in the center of the screen*/
+    position:absolute;
+    top:5%;
+    left:25%;
 }
 
 img#logo{
@@ -167,4 +176,32 @@ dd#submit-element{
 }
 dt#submit-label{
     width: 300px;
+}
+
+  /*this is what we want the div to look like*/
+div.fullscreen{
+    display:block;
+
+    /*set the div in the top-left corner of the screen*/
+    position:absolute;
+    top:0;
+    left:0;
+
+    /*set the width and height to 100% of the screen*/
+    width:100%;
+    height:100%;
+}
+
+.alpha60 {
+    /* Fallback for web browsers that doesn't support RGBa */
+    background: rgb(0, 0, 0);
+
+    /* RGBa with 0.6 opacity */
+    background: rgba(0, 0, 0, 0.6);
+
+    /* For IE 5.5 - 7*/
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);
+
+    /* For IE 8*/
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";
 }

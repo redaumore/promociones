@@ -46,11 +46,17 @@ function ConfirmLocation(){
 }
 
 function ShowGoogleLocalizator(){
+    if(document.getElementById("street").value == "" || document.getElementById("number").value == "" ){
+        alert("La calle y el número son datos requeridos");
+        return;
+    }
     SearchLocation();
+    document.getElementById("background").className = "fullscreen alpha60";
     document.getElementById("googlemap").className = "googlemap";    
 }
 
 function HiddeGoogleLocalizator(){
+    document.getElementById("background").className = "invisible";
     document.getElementById("googlemap").className = "invisible";
     document.getElementById("localization").focus();    
 }
@@ -64,25 +70,29 @@ function CancelLocation(){
 }
                                      
 </script>
-
-<div id="googlemap" class="invisible">
-    <div id="gmap">
-        <img id="map" src="" alt="Tu localización">
-    </div>
-    <div id="gbuttons">
-        <table style="border:0;">
+<div id="background" class="invisible">
+    <div id="googlemap">
+        <table style="width: 100%;">
             <tr>
-                <td style="padding: 1em;"><input type="button" class="buttons" id="btnConfirm" value="Confirmar" onclick="ConfirmLocation();"/></td>
-                <td style="padding: 1em;"><input type="button" class="buttons" id="btnCancel" value="Cancelar" onclick="CancelLocation();"/></td>
+                <td colspan="2">
+                    <p id="smallfont" style="margin: 5px;">
+                    Recuerda que es muy importante que tu localización sea la correcta. Con ella tus clientes podrán encontrarte.
+                    Si el mapa no te indica tu dirección correctamente intenta cambiando alguno de los datos que cargaste para el comercio.
+                    Si aún así sigues sin encontrar tu dirección avísanos por email y nosotros lo resolveremos. 
+                    </p>        
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <div id="gmap">
+                        <img id="map" src="" alt="Tu localización">
+                    </div>            
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 1em;" align="right"><input type="button" class="buttons" id="btnConfirm" value="Confirmar" onclick="ConfirmLocation();"/></td>
+                <td style="padding: 1em;" align="left"><input type="button" class="buttons" id="btnCancel" value="Cancelar" onclick="CancelLocation();"/></td>
             </tr>
         </table>
     </div>
-    <div id="gmessage">
-        <p id="smallfont">
-        Recuerda que es muy importante que tu localización sea la correcta. Con ella tus clientes podrán encontrarte.
-        Si el mapa no te indica tu dirección correctamente intenta cambiando alguno de los datos que cargaste para el comercio.
-        Si aún así sigues sin encontrar tu dirección avísanos por email y nosotros lo resolveremos. 
-        </p>
-    </div>
 </div>
-
