@@ -6,8 +6,8 @@
     {
         /*$session = new Zend_Session_Namespace('PAP');
         echo $session->user->getName();*/
-        $user = $this->_helper->Session->getUserSession();
-        if(!isset($user))
+        $this->user = $this->_helper->Session->getUserSession();
+        if(!isset($this->user))
             $this->_redirect('/auth/login');
     }
     
@@ -278,7 +278,7 @@
     
     private function loadPriceRules($user){
         $form = $this->view->form;
-        $rule = $user->getPriceRulesItems();
+        $rule = $this->user->getPriceRulesItems();
         $rule = $rule[0];
         if(isset($rule)){
             $comboPrices = $form->getElement('promoCost');

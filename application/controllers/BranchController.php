@@ -23,20 +23,23 @@ class BranchController extends Zend_Controller_Action
         $comboProvinces = $form->getElement('province');
         $this->loadProvinces($comboProvinces);
         $comboProvinces->setAttrib('onChange', 'loadCities();');
-         
         $comboCities = $form->getElement('city');
-        $this->loadCities($comboCities, 1);
+        $branchMapper = new PAP_Model_BranchMapper();
+        $branchMapper->findByUserId($this->user, $branch_order, $branch);     
                 
         if($this->getRequest()->isPost()){
             if($form->isValidPartial($_POST)){
                 $data = $form->getValues();
-                $this->saveBranch($data, 'update');
+                $branch = $this->saveBranch($data, 'update');
+                $this->loadForm($branch, 'update');
+                $this->loadCities($comboCities, $branch->getProvince(), $branch->getCity());
             }                
         }
         else{
-             $branchMapper = new PAP_Model_BranchMapper();
-             $branchMapper->findByUserId($this->user, $branch_order, $branch);     
+             
              if(isset($branch)){
+                 $this->loadProvinces($comboProvinces, $branch->getProvince());
+                 $this->loadCities($comboCities, $branch->getProvince(), $branch->getCity());
                  $this->loadForm($branch, 'update');
                  $this->_helper->Session->setBranchSession($branch);
              }
@@ -93,9 +96,9 @@ class BranchController extends Zend_Controller_Action
     
     private function saveBranch($data, $operation)
     {           //$user = $this->_helper->Session->getUserSession();
-                $data["user"] = $user->getId();
+                $data["user"] = $this->user->getId();
                 
-                if(isset($data['file'])){
+                if(isset($data['filebranch'])){
                     $relativeImageDir = '/customers/'.$data["user"];
                     $customerImageDir = IMAGE_PATH.$relativeImageDir;
                 
@@ -104,18 +107,18 @@ class BranchController extends Zend_Controller_Action
                         mkdir($customerImageDir);
                     
                     $form = $this->view->form;
-                    $fullFilePath = $form->file->getFileName();
+                    $fullFilePath = $form->filebranch->getFileName();
                     //$fullFilePath = $data['file'];
                     $extension = substr(strrchr($fullFilePath,'.'),1);
                     $logoName = $customerImageDir.'/logo_'.$data["user"].'.'.$extension;
                     
-                    $form->file->addFilter('Rename', array('target' => $logoName,
+                    $form->filebranch->addFilter('Rename', array('target' => $logoName,
                              'overwrite' => true));
                     $data['logo'] =  $relativeImageDir.'/logo_'.$data["user"].'.'.$extension;
                     /* TODO: resizing de la imagen
                     $form->file->addFilter(new Skoch_Filter_File_Resize(array('width' => 200,'height' => 300,'keepRatio' => true,))); */
-                    if (!$form->file->receive()) {
-                        throw new Exception($form->file->getMessages());
+                    if (!$form->filebranch->receive()) {
+                        throw new Exception($form->filebranch->getMessages());
                     }
                     chmod($logoName,0644);
                 }
@@ -133,6 +136,7 @@ class BranchController extends Zend_Controller_Action
                 
                 $branch->insert($data);
                 $this->_helper->Session->setBranchSession($branch);
+                return $branch;
     }
 
     public function categoriesAction()
@@ -191,27 +195,31 @@ class BranchController extends Zend_Controller_Action
         $form->setDefault('city', $branch->getCity());
         
         if($formName = 'update'){
-            $form->file->setRequired(false)
+            $form->filebranch->setRequired(false)
                 ->setLabel('Imagen del Comercio');
         }
     }
     
-    private function loadProvinces(Zend_Form_Element_Select $combo)
+    private function loadProvinces(Zend_Form_Element_Select $combo, $province_id = 0)
     {
         $provinceMapper = new PAP_Model_ProvinceMapper();
         foreach($provinceMapper->findForSelect() as $p){
             $combo->addMultiOption($p['province_id'], $p['name']);
         }
-        $this->view->form->setDefault('province', '1');    
+        if($idProvince == 0)            
+            $this->view->form->setDefault('province', '1');
+        else
+            $this->view->form->setDefault('province', $province_id);    
     }
 
-    private function loadCities(Zend_Form_Element_Select $combo, $province_id)
+    private function loadCities(Zend_Form_Element_Select $combo, $province_id, $city_id = 0)
     {
         $cityMapper = new PAP_Model_CityMapper();
         foreach($cityMapper->getCitiesByProvinceId($province_id) as $c){
             $combo->addMultiOption($c['city_id'], $c['name']);
         }
-        //$this->view->form->setDefault(array('city'=>1));    
+        if($city_id != 0)
+            $this->view->form->setDefault('city', $city_id);    
     }
 }
 

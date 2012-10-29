@@ -40,7 +40,8 @@
             'filters'    => array('StringTrim', 'StringtoUpper'),
         ));
         $this->street->setDecorators($decorators)
-            ->addValidator($allowWhiteSpace, true);
+            ->addValidator($allowWhiteSpace, true)
+            ->setAttrib('onChange', 'clearCoord();');
         
         $this->addElement('text', 'number', array(
             'label'      => 'Número',
@@ -51,7 +52,8 @@
                 'Digits',
             ),
         ));
-        $this->number->setDecorators($decorators);
+        $this->number->setDecorators($decorators)
+            ->setAttrib('onChange', 'clearCoord();');
         
         $this->addElement('text', 'local', array(
             'label'      => 'Local',
@@ -81,7 +83,8 @@
             'required'   => true,
         ));
         $this->city->setRegisterInArrayValidator(false)
-                ->setDecorators($decorators);
+                ->setDecorators($decorators)
+                ->setAttrib('onChange', 'clearCoord();');
         
         $this->addElement('text', 'zipcode', array(
             'label'      => 'CP',
@@ -131,9 +134,9 @@
             'src' => '/images/backend/img-comercio.png',
         ));
         
-        $file = new Zend_Form_Element_File('file');
+        $file = new Zend_Form_Element_File('filebranch');
         $this->addElement($file);
-        $this->file->setLabel('Cambiar Logo')
+        $this->filebranch->setLabel('Cambiar Logo')
                 ->setDestination(PUBLIC_PATH.'\\images\\tmp')
                 ->setRequired(true)
                 ->setValueDisabled(true)
@@ -143,6 +146,7 @@
                 //->setDecorators($decoratorsButton)
                 ->setDecorators(array(
                     'File',
+                    'Errors',
                     array('HtmlTag', array('tag'=>'div','style'=>'height:0px; width:0px; overflow:hidden;')),
                 ))
                 ->setAttrib('onChange', 'sub(this)')
@@ -160,6 +164,13 @@
             'label'      => 'Guardar',
         ));
         $this->save->setDecorators($decoratorsButton)
+                ->setAttrib('class', 'buttons');
+        
+        $this->addElement('submit', 'cancel', array(
+            'ignore'   => true,
+            'label'      => 'Cancelar',
+        ));
+        $this->cancel->setDecorators($decoratorsButton)
                 ->setAttrib('class', 'buttons');
         
         $this->addElement('hidden', 'user');
@@ -193,7 +204,7 @@
         ));
         
         $this->addDisplayGroup(array(
-                'file',
+                'filebranch',
                 'logo',
                 'fakefile'
         ),'branch_picture',array('legend' => 'Imagen del Comercio', 'disableDefaultDecorators' => true));

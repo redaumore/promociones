@@ -6,6 +6,7 @@
 <script type="text/javascript">
 function loadCities()
 {
+        clearCoord();
         var selectedValue = document.getElementById('province').options[document.getElementById('province').selectedIndex].value;
         var myAjax = new Ajax.Request(
         "<?=$this->url(array('controller'=>'backendAjax','action'=>'getCities'))?>",
@@ -28,17 +29,23 @@ function FillForm(data)
 }
 
 function clickFile(){
-        document.getElementById("file").click();
+        document.getElementById("filebranch").click();
 }
 function sub(obj){
     var file = obj.value;
     var fileName = file.split("\\");
     document.getElementById("yourFile").innerHTML = "<p>" + fileName[fileName.length-1] + "</p>";
 }
+
+function clearCoord(){
+    document.getElementById("lat").value = "";
+    document.getElementById("latitude").value = "";
+    document.getElementById("lng").value = "";
+    document.getElementById("longitude").value = "";
+}
 </script>
 <?php
     $this->form->setAction($this->url());
-    //echo $this->form;
     $form = $this->form;
 ?>
 <style type="text/css">
@@ -46,7 +53,7 @@ legend{
     font-size: small;
 }
 </style>
-<form method="<?php echo $form->getMethod() ?>" action="<?php echo $form->getAction()?>">
+<form method="<?php echo $form->getMethod() ?>" action="<?php echo $form->getAction()?>" enctype="multipart/form-data">
     <div align="center">
         <table width="95%">
             <tr>
@@ -127,7 +134,7 @@ legend{
             echo $form->branch_order;
             echo $form->latitude;
             echo $form->longitude;
-            echo $form->file;
+            echo $form->filebranch;
             
         ?>
     </div>
