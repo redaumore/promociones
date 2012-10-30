@@ -206,7 +206,7 @@ class BranchController extends Zend_Controller_Action
         foreach($provinceMapper->findForSelect() as $p){
             $combo->addMultiOption($p['province_id'], $p['name']);
         }
-        if($idProvince == 0)            
+        if($province_id == 0)            
             $this->view->form->setDefault('province', '1');
         else
             $this->view->form->setDefault('province', $province_id);    

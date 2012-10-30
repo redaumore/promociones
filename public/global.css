@@ -21,7 +21,7 @@ root {
 }
 body, div{
     background-color: #F19027;
-    font-family: Tahoma,Verdana,Arial,sans-serif;
+    font-family: Arial, sans-serif;    
 }
 /*give the body height:100% so that its child
     elements can have percentage heights*/
@@ -114,18 +114,14 @@ input.leftalign{
 {
     margin: 2px;
     padding: 5px;
-    color: black;
+    color: #ffff00;
     border: solid 2px #b6d6ff;
     -webkit-border-radius: .5em;
     -moz-border-radius: .5em;
     border-radius: .5em;
     -webkit-box-shadow: 1px 1px 1px #ccc;
     box-shadow: 2px 2px 2px #bbb;
-    background-color: #FFFF00;
-    text-decoration: none;
-    font-family: 'Arial Narrow', sans-serif;
-    font-size: medium;
-    font-weight: bold;
+    background-color: #4d5c95;
 }
 .buttons[disabled]
 {
@@ -134,7 +130,7 @@ input.leftalign{
 .buttons:hover
 {
     cursor: pointer;
-    background-color: #F38000;
+    background-color: #6d86bf;
     color: #000000;
 }
 

@@ -5,6 +5,6 @@
         <stylesheet>global.css</stylesheet>
         <!-- <stylesheet>jquery-treeview.css</stylesheet> -->
         <stylesheet>ui.jqgrid.css</stylesheet>
-        <stylesheet>jquery-ui-1.8.23.custom.css</stylesheet>
+        <stylesheet>jquery-ui-1.9.1.custom.css</stylesheet>
     </stylesheets>
 </skin>

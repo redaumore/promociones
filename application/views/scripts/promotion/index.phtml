@@ -8,20 +8,30 @@
       */
 ?>
 <div align="center">
-    <div style="background-image: url(/images/backend/tit-promociones.png); background-repeat:no-repeat; background-position: center; height: 50px;">&nbsp;</div>
-    <div>
-        <table id="list2"></table>
-        <div id="pager2"></div>
-    </div>
-    <div>
-    <?php 
-        echo $this->partial("promotion/_botonera.phtml"); 
-    ?> 
-    </div>
+    <table width="100%">
+        <tr>
+            <td><div style="background-image: url(/images/backend/tit-promociones.png); background-repeat:no-repeat; background-position: center; height: 50px;">&nbsp;</div></td>
+        </tr>
+        <tr>
+            <td align="center">
+                <div>
+                    <table id="list2"></table>
+                    <div id="pager2"></div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td align="center" height="75px">
+                <div>
+                    <?php echo $this->partial("promotion/_botonera.phtml"); ?> 
+                </div>        
+            </td>
+        </tr>
+    </table>
  </div>
  
 <script type="text/javascript" src='/scripts/jquery-1.8.2.js'></script>
-<script type="text/javascript" src='/scripts/jquery-ui-1.9.0.custom.min.js'></script>
+<script type="text/javascript" src='/scripts/jquery-ui-1.9.1.custom.js'></script>
 <script type="text/javascript" src='/scripts/grid.locale-es.js'></script>
 <script type="text/javascript" src='/scripts/jquery.jqGrid.min.js'></script>
 <script type="text/javascript">
@@ -54,6 +64,6 @@
             }    
     },
      })
-     //$("#list2").jqGrid('navGrid','#pager2',{edit:false,add:false,del:false});
+     jQuery("#list2").jqGrid('GridNav','#pager2',{edit:false,add:false,del:false});
 </script>
  
