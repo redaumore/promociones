@@ -11,10 +11,10 @@
         $this->addDecorators(array('FormElements', 'Form'));
         
         $decorators = array(
-                'ViewHelper',
-                'Label', 
-                //array('requiredSuffix' => ' *', 'class' => 'leftalign')
-                //),
+                array('ViewHelper'),
+                array('Label', array(
+                'class' => 'leftalign ui-button-text'
+                )),
                 array('HtmlTag', array('tag' => 'div')),
         );
         $allowWhiteSpace = new Zend_Validate_Alnum(array('allowWhiteSpace' => true));

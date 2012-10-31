@@ -102,9 +102,11 @@ protected $_dbTable;
          $select->where('parent_id = ?', $id);
          $select->where('parent_type = "P"');
          $images = $imageTable->fetchAll($select);
+         $oimages = array();
          foreach($images as $img){
-            $promotion->setImage(new PAP_Model_Image($img['path']));    
+            $oimages[] = new PAP_Model_Image($img['path']);    
          }
+         $promotion->setImages($oimages);
     }
  
     public function fetchAll($userId = null)
@@ -168,7 +170,7 @@ protected $_dbTable;
     
     public function setImages(PAP_Model_Promotion $promo, $images)
     {
-        //$this->deleteAllImages($promo);
+        $this->deleteAllImages($promo);
         $imageTable = new PAP_Model_DbTable_Image();
         for($i = 0; $i < count($images); ++$i) {
            $row = array(
@@ -178,14 +180,18 @@ protected $_dbTable;
            );
            $image[$i]=$imageTable->insert($row);
         }
-        $promo->setImages($images);
+        $oimages = array();
+        foreach($images as $img){
+            $oimages[] = new PAP_Model_Image($img);    
+         }
+        $promo->setImages($oimages);
     }
     
     public function deleteAllImages(PAP_Model_Promotion $promo)
     {
          $imageTable = new PAP_Model_DbTable_Image();
-         $where[] = 'parent_id = '.$promo->getId();
-         $where[] = 'parent_type = "P"';
+         $where[] = $imageTable->getAdapter()->quoteInto('parent_id = ?', $promo->getId());
+         $where[] = $imageTable->getAdapter()->quoteInto('parent_type = ?', 'P');
          $imageTable->delete($where);
     }
     
@@ -194,13 +200,13 @@ protected $_dbTable;
         $imageTable = new PAP_Model_DbTable_Image();
         $images = array();
         $select = $imageTable->select();
-        $select->where('parent_id = ?', $promo)
-                ->where('parent_type', 'P');
+        $select->where('parent_id = ?', $promo->getId())
+                ->where('parent_type = ?', 'P');
                
         $result = $imageTable->fetchAll($select);
         $i=0;
         foreach ($result as $r) {
-            $images[] = $r->path;
+            $images[] = new PAP_Model_Image($r->path);
         }
         $promo->setImages($images);
     }

@@ -44,7 +44,8 @@
                 $newPromotion = new PAP_Model_Promotion();
                 $newPromotion->update($data);
                 $this->saveImages($data, $newPromotion);
-                $this->_redirect('promotion/index');
+                $this->loadForm($newPromotion, 'update');
+                //$this->_redirect('promotion/index');
             }                
         }
         else{
@@ -184,11 +185,11 @@
         $control->setValue($promo->getVisited());
                                          
         $control = $form->getElement('imagePromo');
-        $img = $promo->getImages();
+        $img = $promo->getImage();
         if(isset($img))
             $control->setOptions(array('src' => '/images'.$img->getPath()));
         else
-            $control->setOptions(array('src' => '/images/'.$this->user->getBranch()->getLogo()));
+            $control->setOptions(array('src' => '/images'.$this->user->getBranch()->getLogo()));
     }
     
     private function saveImages($data, $promo)
@@ -252,6 +253,9 @@
                 $i++;    
             } */
             $promo->saveImages($images);
+        }
+        else{
+            $promo->loadImages();
         }
     }
     

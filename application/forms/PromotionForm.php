@@ -16,7 +16,7 @@ class PAP_Form_PromotionForm extends Zend_Form
                 array('ViewHelper'),
                 array('Errors'),
                 array('Label', array(
-                'class' => 'leftalign'
+                'class' => 'leftalign ui-button-text'
                 )),
                 array('HtmlTag', array('tag' => 'div')),
         );

@@ -25,11 +25,7 @@ body, div{
 }
 /*give the body height:100% so that its child
     elements can have percentage heights*/
-body{ height:100% }
-  
-#header{
-    background-color: #EF642A;
-}
+
 #sidebar{
     background-color: #EF642A;
 }
@@ -72,11 +68,6 @@ background-repeat:no-repeat;
 padding-right:10px;
 }
 
-label{
-    font-family: Arial,Verdana,sans-serif; /*Comic Sans, Comic Sans MS, cursive;*/
-    font-size: small;
-}
-
 .info{
     font-family: Arial,Verdana,sans-serif; /*Comic Sans, Comic Sans MS, cursive;*/
     font-size: small;
@@ -93,7 +84,6 @@ label.leftalign {
     float: left;
     font-weight: normal;
     font-size: small;
-    padding-right: 5px;
     line-height: 1.2em;
     text-align: right;
 }

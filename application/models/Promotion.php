@@ -67,6 +67,7 @@ class PAP_Model_Promotion
     }
     
     public function update(array $options){
+        $this->setId($options['promoId']);
         $this->insert($options);
     }
     
@@ -227,7 +228,7 @@ class PAP_Model_Promotion
     }
     
     public function setImages($img){
-        $this->_images[] = $img;    
+        $this->_images = $img;    
     }
     
     public function getImageCount(){
