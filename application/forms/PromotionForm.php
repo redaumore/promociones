@@ -16,7 +16,6 @@ class PAP_Form_PromotionForm extends Zend_Form
                 array('ViewHelper'),
                 array('Errors'),
                 array('Label', array(
-                'requiredSuffix' => ' *',
                 'class' => 'leftalign'
                 )),
                 array('HtmlTag', array('tag' => 'div')),
@@ -27,14 +26,16 @@ class PAP_Form_PromotionForm extends Zend_Form
         );
         
         $this->addElement('text', 'promoCode', array(
-            'label'      => 'Código Promoción:',
+            'label'      => 'Código ',
             'required'   => false,
+            'size'       => 16,
+            'maxsize'    => 50,
         ));
         $control = $this->getElement("promoCode");
         $control->setDecorators($decorators);
         
-        $this->addElement('text', 'shortDescription', array(
-            'label'      => 'Descripción corta:',
+        $this->addElement('textArea', 'shortDescription', array(
+            'label'      => 'Texto ',
             'required'   => true,
             'size' => 60, 
             'maxlength' => 60,
@@ -44,6 +45,7 @@ class PAP_Form_PromotionForm extends Zend_Form
         $validator = new Zend_Validate_Alnum(array('allowWhiteSpace' => true));
         $control->addValidator($validator, true);
         $control->setDecorators($decorators);
+        $control->setOptions(array('rows' => '2','cols' => '30'));
         
         /*
         $this->addElement('textarea', 'long_description', array(
@@ -60,7 +62,7 @@ class PAP_Form_PromotionForm extends Zend_Form
         
         $allowWhiteSpace = new Zend_Validate_Alnum(array('allowWhiteSpace' => true));
         $control = new Zend_Form_Element_TextArea('longDescription');
-        $control->setLabel('Descripción larga:')
+        $control->setLabel('Desc. larga ')
             ->setOptions(array('rows' => '5','cols' => '30'))
             ->setRequired(true)
             //->addFilter('HTMLEntities', 'UTF-8')
@@ -72,7 +74,7 @@ class PAP_Form_PromotionForm extends Zend_Form
         
         
         $this->addElement('text', 'starts', array(
-            'label'      => 'Desde:',
+            'label'      => 'Desde ',
             'required'   => true,
             'size' => 10, 
             'maxlength' => 10,
@@ -82,7 +84,7 @@ class PAP_Form_PromotionForm extends Zend_Form
         $control->setDecorators($decorators);
                 
         $control = $this->addElement('text', 'ends', array(
-            'label'      => 'Hasta:',
+            'label'      => 'Hasta ',
             'required'   => true,
             'size' => 10, 
             'maxlength' => 10,
@@ -92,10 +94,11 @@ class PAP_Form_PromotionForm extends Zend_Form
         $control->setDecorators($decorators);
         
         $this->addElement('text', 'promoValue', array(
-            'label'      => 'Valor mostrado:',
+            'label'      => 'Valor ',
             'required'   => true,
             'size' => 8, 
             'maxlength' => 8,
+            'style' => 'text-align:right;',
             'validators' => array(
                 array('Float', true, array('locale' => 'en_US')),
             ),
@@ -104,9 +107,9 @@ class PAP_Form_PromotionForm extends Zend_Form
         $control->setDecorators($decorators);
         
         $this->addElement('text', 'quantity', array(
-            'label'      => 'Cantidad unidades:',
+            'label'      => 'Unidades ',
             'required'   => false,
-            'size' => 8, 
+            'size' => 4, 
             'maxlength' => 8,
             'validators' => array(
                 'Int',
@@ -116,7 +119,7 @@ class PAP_Form_PromotionForm extends Zend_Form
         $control->setDecorators($decorators);
         
         $this->addElement('select', 'promoType', array(
-            'label'      => 'Tipo Promo',        //P=producto S=Servicio
+            'label'      => 'Tipo Promo ',        //P=producto S=Servicio
             'required'   => true,
         ));
         $control = $this->getElement('promoType');
@@ -125,7 +128,7 @@ class PAP_Form_PromotionForm extends Zend_Form
         $control->setDecorators($decorators);
         
         $control = $this->addElement('text', 'displayedText', array(
-            'label'      => 'Texto Promo',      //2x1, Liquidación, etc
+            'label'      => 'Título ',      //2x1, Liquidación, etc
             'required'   => true,
             'size' => 25, 
             'validators' => array(
@@ -137,7 +140,7 @@ class PAP_Form_PromotionForm extends Zend_Form
         $control->setDecorators($decorators);
         
         $control = new Zend_Form_Element_Radio('alertType');
-        $control->setLabel('Tipos de Alertas:')
+        $control->setLabel('Alertas')
                 ->setMultiOptions(array(
                 'D' => 'Mostror por días',
                 'Q' => 'Mostrar por cantidad',
@@ -158,20 +161,22 @@ class PAP_Form_PromotionForm extends Zend_Form
         $control->setDecorators($decorators);
         
         $this->addElement('select', 'promoCost', array(
-            'label'      => 'Costo Promo',
+            'label'      => 'Costo',
             'required'   => true,
         ));
         $control = $this->getElement('promoCost');
         $control->setRegisterInArrayValidator(false);
+        $control->setDecorators($decorators);
         
         $this->addElement('text', 'visited', array(
             'label'      => 'Visitas',      //2x1, Liquidación, etc
             'required'   => false,
-            'size' => 25, 
+            'size' => 5, 
         ));
-        $this->visited->setAttrib('readonly', true);
+        $this->visited->setAttrib('readonly', true)
+                ->setDecorators($decorators);
         
-        $file = new Zend_Form_Element_File('images');
+        $file = new Zend_Form_Element_File('filePromo');
         $file->setLabel('Imagenes Promo')
             ->setDestination(PUBLIC_PATH.'\\images\\tmp')
             ->setRequired(false)
@@ -183,18 +188,29 @@ class PAP_Form_PromotionForm extends Zend_Form
         // max 2MB
         $file->addValidator('Size', false, 1048576)
             ->setMaxFileSize(1048576);
-        // only JPEG, PNG, or GIF
-        $file->addValidator('Extension', false, 'jpg,png,gif');
-        //$file->setAttribs(array('style' => 'width:50px;')
+        $file->addValidator('Extension', false, 'jpg,png,gif')
+            ->setAttrib('onChange', 'sub(this)')
+            ->setDecorators(array(
+                    'File',
+                    'Errors',
+                    array('HtmlTag', array('tag'=>'div','style'=>'height:0px; width:0px; overflow:hidden;'))));
         $this->addElement($file);
         //@todo Hacerlo para 3 imàgenes
         
-        $this->addElement('img', 'imagePromo1', array(
+        $this->addElement('button', 'fakefile', array(
             'ignore'   => true,
-            'width' => '100', 
-            'height' => '100',
-            'style' => 'invisible',
+            'label'      => 'Cambiar',
         ));
+        $this->fakefile->setAttrib('class', 'buttons')
+            ->setAttrib("onClick", "clickFile();");
+        
+        $this->addElement('img', 'imagePromo', array(
+            'label'     => 'Imagen',
+            'ignore'   => true,
+            'width' => '75', 
+            'height' => '75',
+        ));
+        $this->imagePromo->setDecorators($decorators);
         
         $this->addElement('hidden', 'userId');
         $this->addElement('hidden', 'promoId');
@@ -205,7 +221,7 @@ class PAP_Form_PromotionForm extends Zend_Form
         ));
         $control = $this->getElement("save");
         $control->setDecorators($decoratorsButton);
-        $control->setAttrib('class', 'ui-button ui-state-default ui-corner-all');
+        $control->setAttrib('class', 'buttons');
     }
 }
 

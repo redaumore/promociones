@@ -21,7 +21,7 @@ root {
 }
 body, div{
     background-color: #F19027;
-    font-family: Tahoma,Verdana,Arial,sans-serif;
+    font-family: Arial,Verdana,sans-serif;
 }
 /*give the body height:100% so that its child
     elements can have percentage heights*/
@@ -73,17 +73,17 @@ padding-right:10px;
 }
 
 label{
-    font-family: Tahoma, Geneva, sans-serif; /*Comic Sans, Comic Sans MS, cursive;*/
+    font-family: Arial,Verdana,sans-serif; /*Comic Sans, Comic Sans MS, cursive;*/
     font-size: small;
 }
 
 .info{
-    font-family: Tahoma, Geneva, sans-serif; /*Comic Sans, Comic Sans MS, cursive;*/
+    font-family: Arial,Verdana,sans-serif; /*Comic Sans, Comic Sans MS, cursive;*/
     font-size: small;
 }
 
-leyend{
-    font: Tahoma, Geneva, sans-serif;
+legend{
+    font: Arial,Verdana,sans-serif;
     font-size: x-small;
     font-weight: bold;
 } 

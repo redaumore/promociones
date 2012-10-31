@@ -77,6 +77,13 @@ class PAP_Model_User
         return $rules;   
     }
     
+    public function getBranch($branch_order = 0){
+        $branch = new PAP_Model_Branch();
+        $branchMapper = new PAP_Model_BranchMapper();
+        $branchMapper->findByUserId($this, $branch_order, $branch);
+        return $branch;
+    }
+    
     public function getCategories(){
         $userMap = new PAP_Model_UserMapper();
         $categories = $userMap->getCategories($this);
@@ -187,6 +194,5 @@ class PAP_Model_User
     {
         return $this->_rol;
     }
-
 }
 

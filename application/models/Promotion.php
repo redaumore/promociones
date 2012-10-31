@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once 'Zend/Locale.php';
 
 class PAP_Model_Promotion
@@ -73,6 +73,11 @@ class PAP_Model_Promotion
     public function saveImages($images){
         $promoMapper = new PAP_Model_PromotionMapper();
         $promoMapper->setImages($this, $images);
+    }
+    
+    public function loadImages(){
+        $promoMapper = new PAP_Model_PromotionMapper();
+        $promoMapper->loadImages($this);    
     }
     
     /* PROPERTIES */
@@ -221,7 +226,7 @@ class PAP_Model_Promotion
         return $this->_images[$img];    
     }
     
-    public function setImage($img){
+    public function setImages($img){
         $this->_images[] = $img;    
     }
     

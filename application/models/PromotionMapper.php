@@ -71,6 +71,7 @@ protected $_dbTable;
         $where = $table->getAdapter()->quoteInto('promotion_id = ?', $promotion->getId());
         $table->delete($where);   
     }
+    
     public function find($id, PAP_Model_Promotion $promotion)
     {
         $result = $this->getDbTable()->find($id);
@@ -140,7 +141,8 @@ protected $_dbTable;
         return $entries;
     }
     
-    public function getByUserId($user_id, $colord, $ord, $start, $limit){
+    public function getByUserId($user_id, $colord, $ord, $start, $limit)
+    {
         $select = $this->getDbTable()->select();
         $select->distinct()
                ->where('user_id = ?', $user_id)
@@ -155,7 +157,8 @@ protected $_dbTable;
         return $result;
     }
     
-    public function countPromos($user_id){
+    public function countPromos($user_id)
+    {
         $select = $this->getDbTable()->select();
         $select->distinct()
             ->where('user_id = ?', $user_id);
@@ -163,7 +166,8 @@ protected $_dbTable;
         return count($rowset);        
     }
     
-    public function setImages(PAP_Model_Promotion $promo, $images){
+    public function setImages(PAP_Model_Promotion $promo, $images)
+    {
         //$this->deleteAllImages($promo);
         $imageTable = new PAP_Model_DbTable_Image();
         for($i = 0; $i < count($images); ++$i) {
@@ -174,16 +178,35 @@ protected $_dbTable;
            );
            $image[$i]=$imageTable->insert($row);
         }
+        $promo->setImages($images);
     }
     
-    public function deleteAllImages(PAP_Model_Promotion $promo){
+    public function deleteAllImages(PAP_Model_Promotion $promo)
+    {
          $imageTable = new PAP_Model_DbTable_Image();
          $where[] = 'parent_id = '.$promo->getId();
          $where[] = 'parent_type = "P"';
          $imageTable->delete($where);
     }
     
-    private function getFormatedStringDate($date){
+    public function loadImages(PAP_Model_Promotion $promo)
+    {
+        $imageTable = new PAP_Model_DbTable_Image();
+        $images = array();
+        $select = $imageTable->select();
+        $select->where('parent_id = ?', $promo)
+                ->where('parent_type', 'P');
+               
+        $result = $imageTable->fetchAll($select);
+        $i=0;
+        foreach ($result as $r) {
+            $images[] = $r->path;
+        }
+        $promo->setImages($images);
+    }
+    
+    private function getFormatedStringDate($date)
+    {
         $dStarts = new DateTime($date);
         return $dStarts->format("d/m/Y");    
     }

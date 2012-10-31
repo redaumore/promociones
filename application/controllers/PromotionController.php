@@ -43,6 +43,7 @@
                 $data['userId'] = $user->getId();
                 $newPromotion = new PAP_Model_Promotion();
                 $newPromotion->update($data);
+                $this->saveImages($data, $newPromotion);
                 $this->_redirect('promotion/index');
             }                
         }
@@ -182,23 +183,23 @@
         $control = $form->getElement('visited');
         $control->setValue($promo->getVisited());
                                          
-        $control = $form->getElement('imagePromo1');
-        $img = $promo->getImage();
+        $control = $form->getElement('imagePromo');
+        $img = $promo->getImages();
         if(isset($img))
             $control->setOptions(array('src' => '/images'.$img->getPath()));
-        //else @todo agregar foto genèrica 
-            
+        else
+            $control->setOptions(array('src' => '/images/'.$this->user->getBranch()->getLogo()));
     }
     
     private function saveImages($data, $promo)
     {
-        if(isset($data['images']))
+        if(isset($data['filePromo']))
         {
             $relativeImageDir = '/customers/'.$data["userId"];
             $customerImageDir = IMAGE_PATH.$relativeImageDir;
 
             $form = $this->view->form;            
-            $adapter = $form->images->getTransferAdapter();
+            $adapter = $form->filePromo->getTransferAdapter();
             //create directory where files would be hold
             if(!is_dir($customerImageDir))
                 mkdir($customerImageDir, 0666, 1);
@@ -222,7 +223,7 @@
                 /* TODO: resizing de la imagen
                 $form->file->addFilter(new Skoch_Filter_File_Resize(array('width' => 200,'height' => 300,'keepRatio' => true,))); */
                 if (!$adapter->receive($file)) {
-                    $mensajes = $form->images->getMessages();
+                    $mensajes = $form->filePromo->getMessages();
                     throw new Exception('Error!!');
                 }
                 chmod($logoName,0666);
