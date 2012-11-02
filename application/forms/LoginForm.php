@@ -8,9 +8,9 @@
         //$this->setAction('/login/login');
         $decorators = array(
                 'ViewHelper',
-                'Label', 
-                //array('requiredSuffix' => ' *', 'class' => 'leftalign')
-                //),
+                array('Label', array(
+                'class' => 'rightalign ui-button-text'
+                )), 
                 array('HtmlTag', array('tag' => 'div')),
         );
  
@@ -44,6 +44,7 @@
                 array('ViewHelper'),
                 array('HtmlTag', array('tag' => 'div')),
         );
-        $this->login->setDecorators($decoratorsButton);
+        $this->login->setDecorators($decoratorsButton)
+                ->setAttrib('class', 'buttons');
       }
   }

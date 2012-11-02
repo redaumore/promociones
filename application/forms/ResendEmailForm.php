@@ -12,6 +12,8 @@
             'decorators' => array('ViewHelper')
         ));
         $this->addElement($submit);
+        $this->submit->setAttrib('class', 'buttons');
+        
         $this->addElement('hidden', 'email');
       }
   }

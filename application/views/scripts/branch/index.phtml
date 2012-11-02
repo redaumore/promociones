@@ -1,7 +1,5 @@
 <?php
-    if(isset($this->errorMessage)){
-        echo $this->errorMessage;
-    }
+    $messages = $this->form->getMessages();
 ?>
 <script type="text/javascript">
 function loadCities()
@@ -61,6 +59,8 @@ legend{
             <tr>
                 <td colspan="2" align="center" valign="middle" height="65px">
                     <div style="background-image: url(/images/backend/tit-misdatos.png); background-repeat:no-repeat; background-position: center; height: 50px; width: 100%">&nbsp;</div>
+                    <hr/>
+                    <?php echo $this->errorMessage($this->form, $messages); ?>
                 </td>
             </tr>
             <tr>
@@ -109,12 +109,14 @@ legend{
                         <legend align="left"><b>Imagen Comercio</b></legend>
                         <table width="100%">
                             <tr>
-                                <td align="center" rowspan="2" style="padding-right: 10px">
+                                <td align="center" valign="top" rowspan="2" style="padding-right: 10px">
                                     <?php echo $form->logo->renderViewHelper(); ?>
                                 </td>
                                 <td colspan="2">
+                                    <div class="ui-widget-content ui-corner-all" style="padding-left: 5px">
                                     <p>La imagen del Comercio es de suma importancia. Aparte de ser tu presentación en tu página de negocio, será 
                                     la imagen por defecto de todas aquellas promociones sin foto que publiques.</p>
+                                    </div>
                                 </td>
                             </tr>
                             <tr>

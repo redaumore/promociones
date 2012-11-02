@@ -20,8 +20,12 @@ root {
     font-family: sans-serif;
 }
 body, div{
-    background-color: #F19027;
-    font-family: Arial,Verdana,sans-serif;
+    background-color: #F5E192;
+    font-family: 'Trebuchet MS',Arial,Verdana,sans-serif;
+}
+
+hr{
+    border-color: green;
 }
 /*give the body height:100% so that its child
     elements can have percentage heights*/
@@ -87,6 +91,13 @@ label.leftalign {
     line-height: 1.2em;
     text-align: right;
 }
+label.rightalign {
+    display: block;
+    font-weight: normal;
+    font-size: small;
+    line-height: 1.2em;
+    text-align: right;
+}
 input.leftalign{
     display: block;
     float: left;
@@ -98,24 +109,49 @@ input.leftalign{
 
 .invisible{
     visibility: hidden;
+    height: 0;
+}
+
+input, textarea, select{
+    border-radius: 5px;
+    border: 1px solid #FA6400;
+    background: #FFFABD url(/skins/default/css/images/ui-bg_glass_65_fffabd_1x400.png) 50% 50% repeat-x;
+    color: #42962F;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+select{
+    padding-right: 0;
 }
 
 .buttons
 {
-    margin: 2px;
-    padding: 5px;
-    color: black;
-    border: solid 2px #b6d6ff;
-    -webkit-border-radius: .5em;
-    -moz-border-radius: .5em;
-    border-radius: .5em;
-    -webkit-box-shadow: 1px 1px 1px #ccc;
-    box-shadow: 2px 2px 2px #bbb;
-    background-color: #FFFF00;
-    text-decoration: none;
-    font-family: 'Arial Narrow', sans-serif;
-    font-size: medium;
+    border-radius: 5px;
+    outline: 0 !important;
+    border: 1px solid #CCC;
+    background: #FFFABD url(/skins/default/css/images/ui-bg_glass_65_fffabd_1x400.png) 50% 50% repeat-x;
     font-weight: bold;
+    color: #42962F;
+    font-family: 'Trebuchet MS',Tahoma,Verdana,sans-serif;
+    font-size: 75%;
+    font: -webkit-small-control;
+    font-weight: bold;
+    display: inline-block;
+    position: relative;
+    margin-right: .1em;
+    cursor: pointer;
+    text-align: center;
+    line-height: 1.4;
+    zoom: 1;
+    overflow: visible;
+    margin: 0em;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    -webkit-appearance: button;
 }
 .buttons[disabled]
 {
@@ -123,9 +159,10 @@ input.leftalign{
 }
 .buttons:hover
 {
-    cursor: pointer;
-    background-color: #F38000;
-    color: #000000;
+    border: 1px solid #FA6400; 
+    background: #ffff00 url(images/ui-bg_glass_100_ffff00_1x400.png) 50% 50% repeat-x; 
+    font-weight: bold; 
+    color: #42962f;
 }
 
 .readonly{
@@ -160,7 +197,7 @@ div#treeViewCategorias{
     width: 300px;
     height: 300px;
     overflow: scroll;
-    background-color: white;
+    background-color: #FFFABD;
 }
 ul#tree{
     
@@ -202,4 +239,21 @@ div.fullscreen{
 
     /* For IE 8*/
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";
+}
+
+div p{
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+/*[for^=tree]{
+    color: #42962F;
+    font-size: 0.75em;
+    background-color: #FFFABD;
+}*/
+
+ul[id=tree] li{
+    color: #42962F;
+    font-size: 11;
+    background-color: #FFFABD;
 }

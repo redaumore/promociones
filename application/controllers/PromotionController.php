@@ -15,7 +15,7 @@
         //$user = $this->_helper->Session->getUserSession();
         $form = new PAP_Form_PromotionForm();
         $this->view->form = $form;
-        $this->loadPriceRules($user);
+        $this->loadPriceRules($this->user);
         if($this->getRequest()->isPost()){
             if($form->isValid($_POST)){
                 $data = $form->getValues();

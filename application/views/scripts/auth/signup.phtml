@@ -1,8 +1,5 @@
 <?php
-    if(isset($this->errorMessage))
-    {
-        echo $this->errorMessage;
-    }
+    $messages = $this->form->getMessages();
     $this->form->setAction($this->url());
     $form = $this->form;
 ?>
@@ -10,16 +7,19 @@
 <div align="center">
     <table>
         <tr>
-            <td colspan="2" align="center" valign="middle" height="100px">
+            <td colspan="2" align="center" valign="middle" height="75px">
                 <div style="background-image: url(/images/backend/tit-registrarse.png); background-repeat:no-repeat; background-position: center; height: 50px">&nbsp;</div>
+                <hr/>
+                <?php echo $this->errorMessage($this->form, $messages); ?>
             </td>
         </tr>
         <tr>
             <td colspan="2">
-                <span class=info>
+                <div class="ui-widget-content ui-corner-all">
                     <p>Luego de registrarte se te enviará un e-mail en el cual encontrarás un link para activa tu cuenta.</p>
                     <p>Una vez que hayas activado tu cuenta, podrás cargar los datos de tu comercio y luego tus promociones.</p>
-                </span>
+                </div>
+                <br />
             </td>
         </tr>
         <tr>

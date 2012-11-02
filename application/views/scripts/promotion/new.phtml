@@ -1,43 +1,180 @@
 <script type="text/javascript" src="/scripts/jquery-1.8.2.js"></script>
-<script type="text/javascript" src="/scripts/jquery-ui-1.9.1.min.js"></script>
+<script type="text/javascript" src="/scripts/jquery-ui-1.9.1.custom.min.js"></script>
 
 <?php
-      //echo $this->headLink()->appendStylesheet($this->baseUrl().'/skins/default/css/jquery-ui-1.9.1.custom.css');
-      //echo $this->headScript()->appendScript($this->baseUrl().'/scripts/jquery-1.8.0.min.js')
-      //                          ->appendScript($this->baseUrl().'/scripts/jquery-ui-1.8.23.custom.min.js');
-?>
-<?php
-    if(isset($this->errorMessage)){
-        echo $this->errorMessage;
-    }
-?>
-<?
+    $messages = $this->form->getMessages();
     $this->form->setAction($this->url());
-    echo $this->form;
     $form = $this->form;
 ?>
+<script type="text/javascript">
+function clickFile(){
+        document.getElementById("filePromo").click();
+}
+function sub(obj){
+    var file = obj.value;
+    var fileName = file.split("\\");
+    document.getElementById("yourFile").innerHTML = "<p>" + fileName[fileName.length-1] + "</p>";
+}
+</script>
+<style type="text/css">
+table td{
+    border-collapse:collapse;
+    /*border: solid 1px black;*/
+}
+table,th, td
+{
+    /*border: 1px solid black;*/
+    padding: 0;
+    margin: 0;
+}
+</style>
+
 <form method="<?php echo $form->getMethod() ?>" action="<?php echo $form->getAction()?>" enctype="multipart/form-data">
     <div align="center">
         <table width="95%">
             <tr>
-                    <td colspan="2" align="center" valign="middle" height="65px">
-                        <div style="background-image: url(/images/backend/tit-promocion.png); background-repeat:no-repeat; background-position: center; height: 50px; width: 100%">&nbsp;</div>
-                    </td>
-                </tr>
+                <td align="center" valign="middle" height="65px" colspan="2">
+                    <div style="background-image: url(/images/backend/tit-promocion.png); background-repeat:no-repeat; background-position: center; height: 50px; width: 100%">&nbsp;</div>
+                    <hr/>
+                    <?php echo $this->errorMessage($this->form, $messages); ?>
+                </td>
+            </tr>
             <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>
+                    <fieldset>
+                        <legend>Portada de Promoción</legend>
+                        <table>
+                            <tr>
+                                <td width="20px">
+                                    <?php echo $form->displayedText->renderLabel(); ?>
+                                </td>
+                                <td>
+                                    <?php echo $form->displayedText->renderViewHelper(); ?>
+                                    <img src="/images/backend/icon-info.gif" title="Descripción de la descripción." />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><?php echo $form->shortDescription->renderLabel(); ?></td>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td><?php echo $form->shortDescription->renderViewHelper(); ?></td>
+                                            <td><img src="/images/backend/icon-info.gif" title="Descripcin de la descripci." /></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><?php echo $form->promoValue->renderLabel(); ?></td>
+                                <td>
+                                    <?php echo $form->promoValue->renderViewHelper(); ?>
+                                    <img src="/images/backend/icon-info.gif" title="Descripción de la descripción." />
+                                </td>
+                            </tr>
+                        </table>
+                    </fieldset>
+                </td>
+                <td>
+                    <fieldset>
+                        <legend>Imagen</legend>
+                        <table>
+                            <tr>
+                                <td style="text-align: center;">
+                                    <?php echo $form->imagePromo->renderViewHelper(); ?>
+                                    <img src="/images/backend/icon-info.gif" title="Descripción de la descripción." />
+                                </td>
+                                <td style="text-align: center;">
+                                    <?php echo $form->fakefile->renderViewHelper(); ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div id='yourFile' style="width: 100%; text-align: center;"><p>Imagen por defecto</p></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </fieldset>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <fieldset>
+                        <legend>Detalle de Promoción</legend>
+                        <table width="100%">
+                            <tr>
+                                <td><?php echo $form->promoCode->renderLabel(); ?></td>
+                                <td><?php echo $form->promoCode->renderViewHelper(); ?></td>
+                                <td><?php echo $form->longDescription->renderLabel(); ?></td>
+                            </tr>
+                            <tr>
+                                <td><?php echo $form->promoType->renderLabel(); ?></td>
+                                <td><?php echo $form->promoType->renderViewHelper(); ?></td>
+                                <td rowspan="3"><?php echo $form->longDescription->renderViewHelper(); ?></td>
+                            </tr>
+                            <tr>
+                                <td><?php echo $form->starts->renderLabel(); ?></td>
+                                <td><?php echo $form->starts->renderViewHelper(); ?></td>
+                            </tr>
+                            <tr>
+                                <td><?php echo $form->ends->renderLabel(); ?></td>
+                                <td><?php echo $form->ends->renderViewHelper(); ?></td>
+                            </tr>
+                            <tr>
+                                <td><?php echo $form->quantity->renderLabel(); ?></td>
+                                <td><?php echo $form->quantity->renderViewHelper(); ?></td>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td><?php echo $form->state->renderLabel(); ?></td>
+                                            <td><?php echo $form->state->renderViewHelper(); ?></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td rowspan="2"><?php echo $form->alertType->renderLabel(); ?></td>
+                                <td rowspan="2"><?php echo $form->alertType->renderViewHelper(); ?></td>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td><?php echo $form->promoCost->renderLabel(); ?></td>
+                                            <td><?php echo $form->promoCost->renderViewHelper(); ?></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td><?php echo $form->visited->renderLabel(); ?></td>
+                                            <td><?php echo $form->visited->renderViewHelper(); ?></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </fieldset>
+                </td>
+            </tr>
+            <tr>
+                <td align="right" colspan="2">
+                    <?php echo $form->save->renderViewHelper(); ?>
+                </td>
             </tr>
         </table>
     </div>
+    <?php 
+        echo $form->filePromo;
+        echo $form->promoId;
+        echo $form->userId;
+    ?>
 </form>
-
 <script>
   $(document).ready(function() {
-    $(".datepicker").datepicker();
+    $("#starts").datepicker({ dateFormat: "dd/mm/yy" });
+  });
+  $(document).ready(function() {
+    $("#ends").datepicker({ dateFormat: "dd/mm/yy" });
   });
  </script>
-<div id="dateStarts" class="datepicker"></div>
-<div id="dateEnds" class="datepicker"></div>

@@ -1,17 +1,16 @@
 <?php
-    if(isset($this->errorMessage)){
-        echo $this->errorMessage;
-    }
+    $messages = $this->form->getMessages();
     $this->form->setAction($this->url());
-    //echo $this->form;
     $form = $this->form;
 ?>
 <form method="<?php echo $form->getMethod() ?>" action="<?php echo $form->getAction()?>">
 <div align="center">
     <table>
         <tr>
-            <td colspan="2" align="center" valign="middle" height="100px">
+            <td colspan="2" align="center" valign="middle" height="75px">
                 <div style="background-image: url(/images/backend/tit-login.png); background-repeat:no-repeat; background-position: center; height: 50px;">&nbsp;</div>
+                <hr/>
+                <?php echo $this->errorMessage($this->form, $messages); ?>
             </td>
         </tr>
         <tr>
@@ -25,11 +24,21 @@
         <tr>
             <td colspan="2" align="center"><?php echo $form->login->renderViewHelper(); ?></td>
         </tr>
+        <tr>
+            <td colspan="2">
+                <br/>
+                <div class="ui-widget-content ui-corner-all">
+                    <p>¿Aún no sos anunciante en Promos al Paso?. Si querés serlo regístrate pulsando el 
+                        <a href="<?=$this->url(array('controller'=>'auth','action'=>'signup'))?>">
+                            <img src="/images/backend/shamrock.png" width="20px" height="20px"></img>
+                        </a> 
+                    </p>
+                </div>
+            </td>
+        </tr>
     </table>
 </div>
 </form>
-    <span class="info">¿Aún no sos anunciante de Promos al Paso?. Si querés serlo regístrate pulsando el trébol -> 
-        <a href="<?=$this->url(array('controller'=>'auth','action'=>'signup'))?>">
-            <img src="/images/backend/shamrock.png" width="20px" height="20px"></img>
-        </a> 
+    
+    <span class="info">
     </span>

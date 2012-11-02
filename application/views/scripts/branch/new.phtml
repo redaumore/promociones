@@ -1,7 +1,5 @@
 <?php
-    if(isset($this->errorMessage)){
-        echo $this->errorMessage;
-    }
+    $messages = $this->form->getMessages();
 ?>
 <script type="text/javascript">
 function loadCities()
@@ -59,6 +57,8 @@ legend{
             <tr>
                 <td colspan="2" align="center" valign="middle" height="65px">
                     <div style="background-image: url(/images/backend/tit-misdatos.png); background-repeat:no-repeat; background-position: center; height: 50px; width: 100%">&nbsp;</div>
+                    <hr/>
+                    <?php echo $this->errorMessage($this->form, $messages); ?>
                 </td>
             </tr>
             <tr>

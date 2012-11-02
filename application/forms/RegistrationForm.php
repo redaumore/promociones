@@ -7,13 +7,16 @@
         $this->setAttrib('enctype', Zend_Form::ENCTYPE_MULTIPART);
  
         $decorators = array(
+                'Errors',
                 'ViewHelper',
-                'Label', 
+                array('Label', array(
+                'class' => 'rightalign'
+                )), 
                 array('HtmlTag', array('tag' => 'div')),
         );
         // Add an email element
         $this->addElement('text', 'email', array(
-            'label'      => 'Email:',
+            'label'      => 'Email',
             'required'   => true,
             'filters'    => array('StringTrim'),
             'maxlength' => 50,
@@ -25,7 +28,7 @@
         
         // Nombre del comercio
         $this->addElement('text', 'name', array(
-            'label'      => 'Nombre del Comercio:',
+            'label'      => 'Nombre del Comercio',
             'required'   => true,
             'filters'    => array('StringTrim'),
             'maxlength' => 50,
@@ -37,7 +40,7 @@
         
         // Nombre del comercio
         $this->addElement('text', 'cuit', array(
-            'label'      => 'CUIT:',
+            'label'      => 'CUIT',
             'required'   => false,
             'filters'    => array('StringTrim'),
             'maxlength' => 13,
@@ -49,7 +52,7 @@
         
         // Contraseña
         $this->addElement('password', 'password', array(
-            'label'      => 'Contraseña:',
+            'label'      => 'Contraseña',
             'required'   => true,
             'filters'    => array('StringTrim', 'StringtoUpper'),
             'maxlength' => 50,
@@ -61,7 +64,7 @@
         
         // Repita Contraseña
         $this->addElement('password', 'confirmPassword', array(
-            'label'      => 'Repita Contraseña:',
+            'label'      => 'Repita Contraseña',
             'required'   => true,
             'filters'    => array('StringTrim', 'StringtoUpper'),
             'maxlength' => 50,
@@ -79,7 +82,8 @@
                 array('ViewHelper'),
                 array('HtmlTag', array('tag' => 'div')),
         );
-        $this->registrarse->setDecorators($decoratorsButton);
+        $this->registrarse->setDecorators($decoratorsButton)
+                ->setAttrib('class', 'buttons');
         
         $this->addElement('hidden', 'rol');
       }

@@ -25,7 +25,7 @@
                 
         $this->addElement('text', 'name', array(
             'label'      => 'Nombre',
-            'size' => 50,
+            'size' => 40,
             'required'   => true,
             'filters'    => array('StringTrim'),
         ));
@@ -57,6 +57,7 @@
         
         $this->addElement('text', 'local', array(
             'label'      => 'Local',
+            'size' => 12,
             'required'   => false,
             'filters'    => array('StringTrim'),
         ));
@@ -65,7 +66,7 @@
         $this->addElement('text', 'phone', array(
             'label'      => 'Teléfono',
             'required'   => false,
-            'size' => 15, 
+            'size' => 12, 
             'maxlength' => 50,
             'filters'    => array('StringTrim'),
         ));

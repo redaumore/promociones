@@ -1,14 +1,7 @@
 <?php 
-//$this->headScript()->appendScript("/scripts/jquery-latest.js");
-//$this->headScript()->appendScript("/scripts/jquery.cookie.js");
-//$this->headScript()->appendScript("/scripts/jquery.treeview.js");
-if(isset($this->errorMessage)){
-        echo $this->errorMessage;
-    }
-$this->form->setAction($this->url());
-//echo $this->form;
-$form = $this->form;
-
+    $messages = $this->form->getMessages();
+    $this->form->setAction($this->url());
+    $form = $this->form;
 ?>
 <!--<script type="text/javascript" src="/scripts/jquery-latest.js"></script>
 <script type="text/javascript" src="/scripts/jquery.cookie.js"></script>
@@ -30,11 +23,13 @@ $form = $this->form;
             <tr>
                 <td align="center" valign="middle" height="75px">
                     <div style="background-image: url(/images/backend/tit-categorias.png); background-repeat:no-repeat; background-position: center; height: 50px;">&nbsp;</div>
+                    <hr/>
+                    <?php echo $this->errorMessage($this->form, $messages); ?>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <div id="view-content">
+                    <div id="view-content" class="ui-widget-content ui-corner-all ui-widget-p">
                         <p>Selecciona tus categorías. Es importante establecer las mismas para que tus potenciales clientes puedan buscar rapidamente tus promociones.</p>
                         <p>Esta selecciòn aplica a nivel de Comercio. Oséa que todas las promociones que publiques estarán asociadas a estas categorías.</p>
                     </div>
