@@ -84,6 +84,13 @@ class PAP_Model_User
         return $branch;
     }
     
+    public function getBranches(){
+        $branches = array();
+        $branchMapper = new PAP_Model_BranchMapper();
+        $branches = $branchMapper->findAllByUserId($this);
+        return $branches;
+    }
+    
     public function getCategories(){
         $userMap = new PAP_Model_UserMapper();
         $categories = $userMap->getCategories($this);

@@ -5,14 +5,11 @@
         // Set the method for the display form to POST
         $this->setMethod('post');
         //$this->addElement('hidden', 'email', array('disableLoadDefaultDecorators' => true));
-        $submit = new Zend_Form_Element_Image('submit', array(
-            'ignore' => true,
-            'label'  => 'Enviar Email',
-            'src'    => '/images/backend/shamrock.png',
-            'decorators' => array('ViewHelper')
+        $this->addElement('submit', 'reenviar', array(
+            'ignore'   => true,
+            'label'      => 'Enviar Email',
         ));
-        $this->addElement($submit);
-        $this->submit->setAttrib('class', 'buttons');
+        $this->reenviar->setAttrib('class', 'buttons');
         
         $this->addElement('hidden', 'email');
       }

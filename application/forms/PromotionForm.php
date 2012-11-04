@@ -30,6 +30,7 @@ class PAP_Form_PromotionForm extends Zend_Form
             'required'   => false,
             'size'       => 16,
             'maxsize'    => 50,
+            'readonly'   => 'true',
         ));
         $control = $this->getElement("promoCode");
         $control->setDecorators($decorators);
@@ -148,6 +149,7 @@ class PAP_Form_PromotionForm extends Zend_Form
                 ))
                 ->setOptions(array('id' => 'alertType'));
         $this->addElement($control);
+        $this->alertType->setAttrib('class', 'leftalign ui-button-text');
                 
         $this->addElement('select', 'state', array(
             'label'      => 'Estado',
@@ -211,6 +213,14 @@ class PAP_Form_PromotionForm extends Zend_Form
             'height' => '75',
         ));
         $this->imagePromo->setDecorators($decorators);
+        
+        $this->addElement('multiselect', 'branches', array(
+            'label'     => 'Sucursales',
+            'ignore'   => true,
+        ));
+        $this->branches->setRegisterInArrayValidator(false)
+                ->setDecorators($decorators)
+                ->setAttrib('class', 'invisible');
         
         $this->addElement('hidden', 'userId');
         $this->addElement('hidden', 'promoId');

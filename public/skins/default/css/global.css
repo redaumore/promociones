@@ -257,3 +257,12 @@ ul[id=tree] li{
     font-size: 11;
     background-color: #FFFABD;
 }
+
+dt[id=alertType-label] label{
+    display: block;
+    float: left;
+    font-weight: normal;
+    font-size: small;
+    line-height: 1.2em;
+    text-align: right;
+}

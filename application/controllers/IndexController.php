@@ -17,7 +17,9 @@ class IndexController extends Zend_Controller_Action
     
     public function menuAction()
     {
-        $mainMenu = array(array('title'=>'Home', 'url'=>$this->view->url(array(), null, true)),
+        $mainMenu = array(array('title'=>'Inicio', 'url'=>$this->view->url(array(), null, true)),
+                          array('title'=>'Buscar', 
+                                'url'=>$this->view->url(array('controller'=>'promotion', 'action'=>'search'),null, true)),
                           array('title'=>'Login', 
                                 'url'=>$this->view->url(array('controller'=>'auth', 'action'=>'login'),null, true)),
                           array('title'=>'Mis Datos', 

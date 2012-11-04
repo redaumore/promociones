@@ -76,6 +76,19 @@ class PAP_Model_BranchMapper
         $this->load($result->current(), $branch);
     }
     
+    public function findAllByUserId($user){
+        $branches = array();
+        $select = $this->getDbTable()->select();
+        $select->where('user_id = ?', $user->getId());
+        $result = $this->getDbTable()->fetchAll($select);
+        foreach($result as $row){
+            $branch = new PAP_Model_Branch();
+            $this->load($row, $branch);
+            $branches[] = $branch;
+        }
+        return $branches;
+    }
+    
     private function load($row, PAP_Model_Branch $branch){
         $branch->setId($row->branch_id)
                   ->setUser($row->user_id)

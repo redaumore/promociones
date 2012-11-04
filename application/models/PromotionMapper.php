@@ -24,7 +24,7 @@ protected $_dbTable;
         return $this->_dbTable;
     }
  
-    public function save(PAP_Model_Promotion $promotion)
+    public function save(PAP_Model_Promotion $promotion, $branches)
     {
         $startsDate = strtotime( $promotion->getStarts());
         $startsDate = date( 'Y-m-d H:i:s', $startsDate );
@@ -56,7 +56,25 @@ protected $_dbTable;
         } else {
             $this->getDbTable()->update($data, array('promotion_id = ?' => $id));
         }
+        
+        $this->relateBranches($id, $branches);
+        
         return $id;
+    }
+    
+    private function relateBranches($promotion_id, $branches){
+        $promotionBrancheTable = new PAP_Model_DbTable_PromotionBranch();
+        
+        $where[] = $promotionBrancheTable->getAdapter()->quoteInto('promotion_id = ?', $promotion_id);
+        $promotionBrancheTable->delete($where);
+        
+        for($i = 0; $i < count($branches); ++$i) {
+           $row = array(
+                'branch_id' => $branches[$i],
+                'promotion_id' => $promotion_id,
+           );
+           $promotionBrancheTable->insert($row);
+        }
     }
  
     public function delete(PAP_Model_Promotion $promotion)
@@ -157,6 +175,10 @@ protected $_dbTable;
             $r->ends = $this->getFormatedStringDate($r->ends);
         }
         return $result;
+    }
+    
+    public function getByLocation($lat, $long){
+        
     }
     
     public function countPromos($user_id)

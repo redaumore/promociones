@@ -38,7 +38,7 @@ class AuthController extends Zend_Controller_Action
                         $this->_redirect('branch/new');
                     $this->_redirect('promotion/index');
                 } else {
-                    $this->view->errorMessage = "Invalid username or password. Please try again.";
+                    $form->addError("Invalid username or password. Please try again.");
                 }         
             }
         }

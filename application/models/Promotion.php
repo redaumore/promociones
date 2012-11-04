@@ -62,7 +62,7 @@ class PAP_Model_Promotion
     public function insert(array $options){
         $this->setOptions($options);
         $promoMapper = new PAP_Model_PromotionMapper();
-        $id = $promoMapper->save($this);
+        $id = $promoMapper->save($this, $options['branches']);
         $this->setId($id);
     }
     

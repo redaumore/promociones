@@ -15,14 +15,16 @@
             </tr>
             <tr>
                 <td>
-                    <div id="view-content" class="ui-widget-content ui-corner-all">
-                        <p>Aún no has activado tu cuenta. Si quieres que se te re-envíe el email de activación, pulsa el trebol.</p>
+                    <div id="view-content" class="ui-widget-content ui-corner-all" style="text-align: center;">
+                        <p>Aún no has activado tu cuenta. Si quieres que se te re-envíe el email de activación, pulsa el botón de abajo.</p>
                     </div>
                 </td>
             </tr>
             <tr>
                 <td align="center">
-                    <?php echo $form->submit->renderViewHelper(); ?>
+                    <?php
+                        echo $form->reenviar->renderViewHelper();
+                    ?>
                 </td>
             </tr>
         </table>

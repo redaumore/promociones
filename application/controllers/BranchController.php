@@ -128,6 +128,7 @@ class BranchController extends Zend_Controller_Action
                     $data["branchorder"] = "0";
                     $this->user->setStatus("active");
                     $this->user->update();
+                    //TODO Luego de activar la cuenta, mostrar un cartel indicando que se deben cargar las categorias.
                 }
                 else{
                     $branch = $this->_helper->Session->getBranchSession();    

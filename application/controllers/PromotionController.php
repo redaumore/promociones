@@ -19,13 +19,25 @@
         if($this->getRequest()->isPost()){
             if($form->isValid($_POST)){
                 $data = $form->getValues();
-                $data['userId'] = $user->getId();
+                $data['userId'] = $this->user->getId();
+                $data['branches'] = $_POST['branches'];
                 $newPromotion = new PAP_Model_Promotion();
                 $newPromotion->insert($data);
                 $this->saveImages($data, $newPromotion);
                 $this->_redirect('promotion/index'); 
+            }
+            else{
+                $this->loadUserBranches($this->user);
             }                
         }
+        else{
+            $this->loadUserBranches($this->user);
+        }
+        $form->imagePromo->setOptions(array('src' => '/images'.$this->user->getBranch()->getLogo()));
+        $form->promoCode->setValue($this->getAutoPromoCode());
+        
+        //TODO En la descripcion larga cambiar el estilo
+        //TODO Descripcion larga no permite puntos.
     }
     
     public function indexAction(){
@@ -38,14 +50,15 @@
         $user = $this->_helper->Session->getUserSession();
         $this->loadPriceRules($user);
         if($this->getRequest()->isPost()){
-            if($form->isValidPartial($_POST)){
+            if($form->isValid($_POST)){
                 $data = $form->getValues();
                 $data['userId'] = $user->getId();
+                $data['branches'] = $_POST['branches'];
                 $newPromotion = new PAP_Model_Promotion();
                 $newPromotion->update($data);
                 $this->saveImages($data, $newPromotion);
-                $this->loadForm($newPromotion, 'update');
-                //$this->_redirect('promotion/index');
+                //$this->loadForm($newPromotion, 'update');
+                $this->_redirect('promotion/index');
             }                
         }
         else{
@@ -55,12 +68,14 @@
             $promotionMapper->find($promo_id, $promotion);     
             if(isset($promotion)){
                  $this->loadForm($promotion, 'update');
+                  //TODO Modificar la carga de Branches cuando sean màs de uno.
                  //$this->_helper->Session->setBranchSession($branch);
              }
              else{
                 //@todo Mostrar mensaje de que no se encontrò la promo.
              }
-        } 
+        }
+        $this->loadUserBranches($this->user); 
     }
     
     public function deleteAction(){
@@ -69,7 +84,7 @@
         $promotion = new PAP_Model_Promotion();
         $promoMapper->find($promo_id, $promotion);
         if($this->dateDiff($promotion->getStarts(), null) >= 0 ){
-            // @todo Borrado lògico de las promociones y permitir borrar las promos del dìa actual
+            //TODO Borrado lògico de las promociones y permitir borrar las promos del dìa actual
             $promoMapper->delete($promotion);
         }
         $this->_redirect('promotion/index'); 
@@ -133,6 +148,10 @@
             $result = $promoMapper->getByUserId($user->getId());    
         }
         */
+    }
+    
+    public function searchAction(){
+        
     }
     
     private function loadForm(PAP_Model_Promotion $promo, $formName = null)
@@ -293,6 +312,29 @@
             $comboPrices->addMultioption($rule['price_rule_code'].'-'.$rule['value3'], $rule['value3']);
             $comboPrices->addMultioption($rule['price_rule_code'].'-'.$rule['value4'], $rule['value4']);
         }    
+    }
+    
+    private function loadUserBranches($user){
+        $form = $this->view->form;
+        $branches = $this->user->getBranches();
+        if(count($branches)>0){
+            $comboBranches = $form->getElement('branches');
+            foreach($branches as $branch){
+                $comboBranches->addMultioption($branch->getId(), $branch->getName());
+                $idBranch = $branch->getId();
+                if(count($branches) == 1){
+                    $selected = array();
+                    $selected[] = $idBranch;
+                    $comboBranches->setValue($selected);
+                }
+            }
+        }    
+    }
+    
+    private function getAutoPromoCode(){
+        $f = getDate();
+        $auto = 'C'.$this->user->getId().'-'.$f['yday'].$f['hours'].$f['minutes'].$f['seconds'];
+        return $auto;
     }  
 }
 

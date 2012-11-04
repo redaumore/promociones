@@ -56,4 +56,17 @@ class backendAjaxController extends Zend_Controller_Action
         }
         */
     }
+    
+    public function getprovincesAction(){
+         $cities = new PAP_Model_ProvinceMapper();
+        
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        
+        if ($this->getRequest()->isXmlHttpRequest()) {
+            $id = $this->_getParam('province_id');
+            $citiesData = $cities->getCitiesByProvinceId($id);
+            $this->_helper->json($citiesData);
+        }
+    }
 }

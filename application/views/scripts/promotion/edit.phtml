@@ -21,8 +21,14 @@ function sub(obj){
 }
 </script>
 <style type="text/css">
-table td{
-    /*border: solid 1px black;*/
+table,th, td
+{
+    /*border: 1px solid black;*/
+    padding: 0;
+    margin: 0;
+}
+label[for=branches]{
+    visibility: hidden;
 }
 </style>
 
@@ -163,6 +169,7 @@ table td{
         echo $form->filePromo;
         echo $form->promoId;
         echo $form->userId;
+        echo $form->branches;
     ?>
 </form>
 <script>
