@@ -35,7 +35,9 @@ class PAP_Form_SearchForm extends Zend_Form
             'ignore'   => true,
             'label'      => 'Buscar',
         ));
-        $this->search->setAttrib('onChange', 'getPromotions();');
+        $this->search->setAttrib('onClick', 'getPromotions();')
+            ->setAttrib('class', 'buttons');
+            //->setDecorators($decoratorsButton);
       }
   }
 ?>

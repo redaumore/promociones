@@ -248,7 +248,14 @@ class PAP_Model_Promotion
         $lngS = $lng + $klng;
         
         $branches = $branchmapper->getBranchesByRange($latE, $latO, $lngN, $lngS);
+        if(count($branches) == 0)
+            return array();
+        
         $promotions = $promomapper->getPromotionsByBranches($branches);
+        
+        foreach($promotions as $promo){
+            
+        }
         
         return $promotions;
     }

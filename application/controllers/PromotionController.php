@@ -6,13 +6,17 @@
     {
         /*$session = new Zend_Session_Namespace('PAP');
         echo $session->user->getName();*/
+    }
+    
+    private function checkLogin(){
         $this->user = $this->_helper->Session->getUserSession();
         if(!isset($this->user))
-            $this->_redirect('/auth/login');
+            $this->_redirect('/auth/login');    
     }
     
     public function newAction(){
         //$user = $this->_helper->Session->getUserSession();
+        $this->checkLogin();
         $form = new PAP_Form_PromotionForm();
         $this->view->form = $form;
         $this->loadPriceRules($this->user);
@@ -45,6 +49,7 @@
     }
     
     public function editAction(){
+        $this->checkLogin();
         $form = new PAP_Form_PromotionForm();
         $this->view->form = $form;
         $user = $this->_helper->Session->getUserSession();
@@ -79,6 +84,7 @@
     }
     
     public function deleteAction(){
+        $this->checkLogin();
         $promo_id = $this->getParam('id');
         $promoMapper = new PAP_Model_PromotionMapper();
         $promotion = new PAP_Model_Promotion();
@@ -92,6 +98,8 @@
     }
     
     public function datosAction(){
+        $this->checkLogin();
+        
         $user = $this->_helper->Session->getUserSession();
         
         $promoMapper = new PAP_Model_PromotionMapper();
@@ -160,7 +168,7 @@
             $limit = $_POST['rows']; // get how many rows we want to have into the grid
             $sidx = $_POST['sidx']; // get index row - i.e. user click to sort
             $sord = $_POST['sord'];
-            $city_id = $_POST['city'];
+            $city_id = $this->getParam('city');
         }
         else{
             $page = 0; // get the requested page
@@ -194,7 +202,7 @@
         
         foreach ($promotions as $r) {
             $response['rows'][$i]['id']=$r['promotion_id']; //id
-            $response['rows'][$i]['cell']=array('',$r['promo_code'],$r['starts'],$r['ends'],$r['short_description'],$r['promo_value'],$r['state'],$r['visited']);
+            $response['rows'][$i]['cell']=array('',$r['name'],$r['displayed_text'],$r['short_description'],$r['promo_value']); //,$r['distance']);
         $i++;
         }
         echo $this->_helper->json($response);        
