@@ -48,7 +48,9 @@ protected $_dbTable;
         $row = $result->current();
         $city->setId($row->city_id)
                   ->setName($row->name)
-                  ->setProvinceId($row->province_id);
+                  ->setProvinceId($row->province_id)
+                  ->setLatitude($row->latitude)
+                  ->setLongitude($row->longitude);
     }
  
     public function fetchAll()

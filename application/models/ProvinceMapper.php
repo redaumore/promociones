@@ -26,7 +26,7 @@ protected $_dbTable;
     
     public function findForSelect(){
         $adapter = Zend_Db_Table::getDefaultAdapter();
-        $statement = "SELECT p.province_id, p.name FROM province p INNER JOIN city c ON (p.province_id = c.province_id) WHERE c.status = 'A' ORDER BY name";
+        $statement = "SELECT DISTINCT p.* FROM province p INNER JOIN city c ON (p.province_id = c.province_id) WHERE c.status = 'A' ORDER BY name";
         $results = $adapter->fetchAll($statement);
         return $results;
     }
@@ -69,6 +69,5 @@ protected $_dbTable;
         }
         return $entries;
     }
-
 }
 

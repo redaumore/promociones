@@ -94,52 +94,50 @@
     public function datosAction(){
         $user = $this->_helper->Session->getUserSession();
         
-        //if($this->getRequest()->isPost()){
-        //    if($form->isValid($_POST)){
-        //        $data = $form->getValues();
-                $promoMapper = new PAP_Model_PromotionMapper();
-                
-                $this->_helper->viewRenderer->setNoRender();
-                $this->_helper->getHelper('layout')->disableLayout();
-                if($this->getRequest()->isPost()){
-                        $page = $_POST['page']; // get the requested page
-                        $limit = $_POST['rows']; // get how many rows we want to have into the grid
-                        $sidx = $_POST['sidx']; // get index row - i.e. user click to sort
-                        $sord = $_POST['sord']; // get the direction
-                }
-                else{
-                    $page = 0; // get the requested page
-                    $limit = 10; // get how many rows we want to have into the grid
-                    $sidx = 0; // get index row - i.e. user click to sort
-                    $sord =  'starts';
-                }
-                if(!$sidx) $sidx =1;
-                
-                $count =  $promoMapper->countPromos($user->getId());
- 
-                if( $count > 0 ) {
-                $total_pages = ceil($count/$limit);
-                } else {
-                $total_pages = 0;
-                }
-                if ($page > $total_pages)
-                $page=$total_pages;
+        $promoMapper = new PAP_Model_PromotionMapper();
+        
+        $this->_helper->viewRenderer->setNoRender();
+        $this->_helper->getHelper('layout')->disableLayout();
+        if($this->getRequest()->isPost()){
+            $page = $_POST['page']; // get the requested page
+            $limit = $_POST['rows']; // get how many rows we want to have into the grid
+            $sidx = $_POST['sidx']; // get index row - i.e. user click to sort
+            $sord = $_POST['sord']; // get the direction
+        }
+        else{
+            $page = 0; // get the requested page
+            $limit = 10; // get how many rows we want to have into the grid
+            $sidx = 0; // get index row - i.e. user click to sort
+            $sord =  'starts';
+        }
+        
+        if(!$sidx) $sidx =1;
+        
+        $count =  $promoMapper->countPromos($user->getId());
 
-                $start = $limit * $page - $limit;
-                if ($start<0)            
-                    $start=0;
-                $row = $promoMapper->getByUserId($user->getId(), $sidx, $sord, $start, $limit);
+        if( $count > 0 ) {$total_pages = ceil($count/$limit);} 
+        else{$total_pages = 0;}
+        
+        if ($page > $total_pages)
+            $page=$total_pages;
 
-                $response['page'] = $page;
-                $response['total'] = $total_pages;
-                $response['records'] = $count;
-                $i=0;
-                foreach ($row as $r) {
-                    $response['rows'][$i]['id']=$r['promotion_id']; //id
-                    $response['rows'][$i]['cell']=array('',$r['promo_code'],$r['starts'],$r['ends'],$r['short_description'],$r['promo_value'],$r['state'],$r['visited']);
-                $i++;
-                }
-                echo $this->_helper->json($response);
+        $start = $limit * $page - $limit;
+        
+        if ($start<0) $start=0;
+        
+        $row = $promoMapper->getByUserId($user->getId(), $sidx, $sord, $start, $limit);
+
+        $response['page'] = $page;
+        $response['total'] = $total_pages;
+        $response['records'] = $count;
+        $i=0;
+        
+        foreach ($row as $r) {
+            $response['rows'][$i]['id']=$r['promotion_id']; //id
+            $response['rows'][$i]['cell']=array('',$r['promo_code'],$r['starts'],$r['ends'],$r['short_description'],$r['promo_value'],$r['state'],$r['visited']);
+        $i++;
+        }
+        echo $this->_helper->json($response);
 
         /*    }                
         }
@@ -152,6 +150,54 @@
     
     public function searchAction(){
         
+        $form = new PAP_Form_SearchForm();
+        $this->view->form = $form;
+        
+        if($this->getRequest()->isPost()){
+            $this->_helper->viewRenderer->setNoRender();
+            $this->_helper->getHelper('layout')->disableLayout();
+            $page = $_POST['page']; // get the requested page
+            $limit = $_POST['rows']; // get how many rows we want to have into the grid
+            $sidx = $_POST['sidx']; // get index row - i.e. user click to sort
+            $sord = $_POST['sord'];
+            $city_id = $_POST['city'];
+        }
+        else{
+            $page = 0; // get the requested page
+            $limit = 10; // get how many rows we want to have into the grid
+            $sidx = 0; // get index row - i.e. user click to sort
+            $sord =  'starts';
+            $city_id = 150;
+            return;
+        }
+        
+        if(!$sidx) $sidx =1;
+        $promo = new PAP_Model_Promotion(); 
+        $promotions = $promo->getPromotionsByCity($city_id);
+        $count = count($promotions);
+        if( $count > 0 ) {$total_pages = ceil($count/$limit);} 
+        else{$total_pages = 0;}
+        
+        if ($page > $total_pages)
+            $page=$total_pages;
+
+        $start = $limit * $page - $limit;
+        
+        if ($start<0) $start=0;
+        
+        //$row = $promoMapper->getByUserId($user->getId(), $sidx, $sord, $start, $limit);
+
+        $response['page'] = $page;
+        $response['total'] = $total_pages;
+        $response['records'] = $count;
+        $i=0;
+        
+        foreach ($promotions as $r) {
+            $response['rows'][$i]['id']=$r['promotion_id']; //id
+            $response['rows'][$i]['cell']=array('',$r['promo_code'],$r['starts'],$r['ends'],$r['short_description'],$r['promo_value'],$r['state'],$r['visited']);
+        $i++;
+        }
+        echo $this->_helper->json($response);        
     }
     
     private function loadForm(PAP_Model_Promotion $promo, $formName = null)

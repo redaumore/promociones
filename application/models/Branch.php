@@ -66,6 +66,12 @@ class PAP_Model_Branch
     public function getCategories(){
         
     }
+    
+    public static function getBranchesByRange($latE, $latO, $lngN, $lngS){
+        $mapper = new PAP_Model_BranchMapper();
+        $branches = $mapper->getBranchesByRange($latE, $latO, $lngN, $lngS);
+        return $branches;
+    }
     /* PROPERTIES */
  
     public function setId($text)

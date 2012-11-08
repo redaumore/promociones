@@ -238,6 +238,29 @@ protected $_dbTable;
         $dStarts = new DateTime($date);
         return $dStarts->format("d/m/Y");    
     }
+    
+    public function getPromotionsByBranches($branches){
+        $in = '';
+        $select = $this->getDbTable()->select();
+        $select->where('starts >= ?', date('Y-m-d'));
+        foreach($branches as $branch){
+            $in .= $branch->getId().',';
+        }
+        $in = '('.substr($in, 0, strlen($in)-1).')';
+        
+        $adapter = Zend_Db_Table::getDefaultAdapter();
+        $statement = "SELECT DISTINCT p.* FROM promotion p ".
+                     "INNER JOIN promotion_branch pb ON pb.promotion_id = p.promotion_id ".
+                     "WHERE p.starts >= ".date('Y-m-d')." AND pb.branch_id IN ".$in;
+        $results = $adapter->fetchAll($statement);
+        return $results;
+        
+        /*PROBLEMA AL ARMAR EL "IN" $select->where('starts <= ?', date('Y-m-d'));
+        $select->where('branch_id IN ?', $in);
+        $rowset = $select->query()->fetchAll();
+        return $rowset;    */
+    }
+    
 
 
 }

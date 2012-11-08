@@ -134,5 +134,21 @@ class PAP_Model_BranchMapper
         }
         return $entries;
     }
+    
+     public function getBranchesByRange($latE, $latO, $lngN, $lngS){
+        $branches = array();
+        $select = $this->getDbTable()->select();
+        $select->where('latitude < ?', $latO)
+                ->where('latitude > ?', $latE)
+                ->where('longitude < ?', $lngS)
+                ->where('longitude > ?', $lngN);
+        $result = $this->getDbTable()->fetchAll($select);
+        foreach($result as $row){
+            $branch = new PAP_Model_Branch();
+            $this->load($row, $branch);
+            $branches[] = $branch;
+        }
+        return $branches;
+     }
 }
 

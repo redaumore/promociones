@@ -234,6 +234,35 @@ class PAP_Model_Promotion
     public function getImageCount(){
         return count($this->_images);
     }
+    
+    public function getPromotionsByCoords($lat, $lng, $radius = 1){
+        $promomapper = new PAP_Model_PromotionMapper();
+        $branchmapper = new PAP_Model_BranchMapper();
+        
+        $klat = 0.009003753 * $radius;
+        $klng = 0.01093571 * $radius;
+        
+        $latE = $lat - $klat;
+        $latO = $lat + $klat;
+        $lngN = $lng - $klng;
+        $lngS = $lng + $klng;
+        
+        $branches = $branchmapper->getBranchesByRange($latE, $latO, $lngN, $lngS);
+        $promotions = $promomapper->getPromotionsByBranches($branches);
+        
+        return $promotions;
+    }
+    
+    public function getPromotionsByCity($city_id){
+        
+        $city = new PAP_Model_City();
+        $cityMapper = new PAP_Model_CityMapper();
+        $cityMapper->find($city_id, $city);
+        
+        $promotions = $this->getPromotionsByCoords($city->getLatitude(), $city->getLongitude());
+        
+        return $promotions;
+    }
 }
 
 

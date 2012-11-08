@@ -40,10 +40,7 @@ class backendAjaxController extends Zend_Controller_Action
         if ($this->getRequest()->isXmlHttpRequest()) {
             $id = $this->_getParam('province_id');
             $citiesData = $cities->getCitiesByProvinceId($id);
-            //echo json_encode($citiesData);
             $this->_helper->json($citiesData);
-            //$dojoData= new Zend_Dojo_Data('city_id',$citiesData);
-            //echo $dojoData->toJson();
         }
         
         /*
@@ -57,16 +54,30 @@ class backendAjaxController extends Zend_Controller_Action
         */
     }
     
+    public function getpromotionsAction(){
+        
+        $promo = new PAP_Model_Promotion();
+        
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        
+        if ($this->getRequest()->isXmlHttpRequest()){
+            $lat = $this->_getParam('lat');
+            $lng = $this->_getParam('lng');
+            $promosData = $promo->getPromotionsByCoords($lat, $lng, $radius); //TODO Incluir radio para cuando las promos sean muchas.
+            $this->_helper->json($promosData);
+        }    
+    }
+    
     public function getprovincesAction(){
-         $cities = new PAP_Model_ProvinceMapper();
+        $provinces = new PAP_Model_ProvinceMapper();
         
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
         
         if ($this->getRequest()->isXmlHttpRequest()) {
-            $id = $this->_getParam('province_id');
-            $citiesData = $cities->getCitiesByProvinceId($id);
-            $this->_helper->json($citiesData);
+            $provincesData = $provinces->findForSelect();
+            $this->_helper->json($provincesData);
         }
     }
 }
