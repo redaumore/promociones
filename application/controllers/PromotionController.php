@@ -143,7 +143,7 @@
         foreach ($row as $r) {
             $response['rows'][$i]['id']=$r['promotion_id']; //id
             $response['rows'][$i]['cell']=array('',$r['promo_code'],$r['starts'],$r['ends'],$r['short_description'],$r['promo_value'],$r['state'],$r['visited']);
-        $i++;
+            $i++;
         }
         echo $this->_helper->json($response);
 
@@ -202,8 +202,9 @@
         
         foreach ($promotions as $r) {
             $response['rows'][$i]['id']=$r['promotion_id']; //id
-            $response['rows'][$i]['cell']=array('',$r['name'],$r['displayed_text'],$r['short_description'],$r['promo_value']); //,$r['distance']);
-        $i++;
+            $r['path'] = 'images'.$r['path'];
+            $response['rows'][$i]['cell']=array($r['path'],$r['name'],$r['displayed_text'],$r['short_description'],$r['promo_value'],isset($r['distance'])?(string)$r['distance']:'N/D');
+            $i++;
         }
         echo $this->_helper->json($response);        
     }

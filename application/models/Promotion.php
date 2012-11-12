@@ -235,12 +235,16 @@ class PAP_Model_Promotion
         return count($this->_images);
     }
     
-    public function getPromotionsByCoords($lat, $lng, $radius = 1){
+    public function getPromotionsByCoords($lat, $lng, $categories = ''){
         $promomapper = new PAP_Model_PromotionMapper();
         $branchmapper = new PAP_Model_BranchMapper();
         
-        $klat = 0.009003753 * $radius;
-        $klng = 0.01093571 * $radius;
+        $kmlat = 0.009003753;
+        $kmlng = 0.01093571;
+        $radius = 2;  //TODO: Hacer configurable el radio de busqueda
+        
+        $klat = $kmlat * $radius;
+        $klng = $kmlng * $radius;
         
         $latE = $lat - $klat;
         $latO = $lat + $klat;
@@ -251,24 +255,44 @@ class PAP_Model_Promotion
         if(count($branches) == 0)
             return array();
         
-        $promotions = $promomapper->getPromotionsByBranches($branches);
+        $promotions = $promomapper->getPromotionsByBranches($branches, $categories);
+        $i = 0;
         
         foreach($promotions as $promo){
-            
+            $plat = $promo['latitude'];
+            $deltalat = (($lat-$plat)*1000)/$kmlat;
+            $plng = $promo['longitude'];
+            $deltalng = (($lng-$plng)*1000)/$kmlng;
+            $distance = round(sqrt(pow($deltalat, 2) + pow($deltalng, 2)));
+            $valor = substr($promo['promo_cost'], strrpos($promo['promo_cost'], '-')+1);
+            $valor = ($valor == '0.00')?1.00:floatval($valor);
+            $indiceord = abs(($distance*$valor*1000)/(1-$distance)+(($valor -1)*1000))-1000;
+            $promotions[$i]['distance'] = $distance;
+            $promotions[$i]['ord'] = $indiceord;
+            $i = $i + 1;
         }
-        
+        $promotions = $this->sortPromotions($promotions);
         return $promotions;
     }
     
-    public function getPromotionsByCity($city_id){
+    public function getPromotionsByCity($city_id, $categories = ''){
         
         $city = new PAP_Model_City();
         $cityMapper = new PAP_Model_CityMapper();
         $cityMapper->find($city_id, $city);
         
-        $promotions = $this->getPromotionsByCoords($city->getLatitude(), $city->getLongitude());
+        $promotions = $this->getPromotionsByCoords($city->getLatitude(), $city->getLongitude(), $categories);
         
         return $promotions;
+    }
+    
+    private function sortPromotions($promotions){
+        foreach ($promotions as $key => $row) {
+            $indice[$key]  = $row['ord'];
+        }
+        // Add $data as the last parameter, to sort by the common key
+        array_multisort($indice, SORT_DESC, $promotions);
+        return $promotions;    
     }
 }
 

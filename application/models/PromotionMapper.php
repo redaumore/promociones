@@ -239,7 +239,7 @@ protected $_dbTable;
         return $dStarts->format("d/m/Y");    
     }
     
-    public function getPromotionsByBranches($branches){
+    public function getPromotionsByBranches($branches, $categories = ''){
         $in = '';
         $select = $this->getDbTable()->select();
         $select->where('starts >= ?', date('Y-m-d'));
@@ -249,10 +249,13 @@ protected $_dbTable;
         $in = '('.substr($in, 0, strlen($in)-1).')';
         
         $adapter = Zend_Db_Table::getDefaultAdapter();
-        $statement = "SELECT DISTINCT b.name, b.latitude, b.longitude, p.* FROM promotion p ".
+        $statement = "SELECT DISTINCT b.name, b.latitude, b.longitude, p.*, i.path FROM promotion p ".
                      "INNER JOIN promotion_branch pb ON pb.promotion_id = p.promotion_id ".
                      "INNER JOIN branch b ON pb.branch_id = b.branch_id ".
-                     "WHERE p.starts >= ".date('Y-m-d')." AND pb.branch_id IN ".$in;
+                     "INNER JOIN image i ON (p.promotion_id = i.parent_id AND i.parent_type = 'P') ".
+                     (($categories == '')?'':"INNER JOIN category_user cu ON (b.user_id = cu.user_id)").
+                     "WHERE p.starts <= '".date('Y-m-d')."' AND pb.branch_id IN ".$in. " ".
+                     (($categories == '')?'':"AND cu.category_id IN (".$categories.")");
         $results = $adapter->fetchAll($statement);
         //$result[
         return $results;
