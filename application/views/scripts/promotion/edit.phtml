@@ -2,11 +2,7 @@
 <script type="text/javascript" src="/scripts/jquery-ui-1.9.1.custom.min.js"></script>
 
 <?php
-    if(isset($this->errorMessage)){
-        echo $this->errorMessage;
-    }
-?>
-<?
+    $messages = $this->form->getMessages();
     $this->form->setAction($this->url());
     $form = $this->form;
 ?>
@@ -38,6 +34,8 @@ label[for=branches]{
             <tr>
                 <td align="center" valign="middle" height="65px" colspan="2">
                     <div style="background-image: url(/images/backend/tit-promocion.png); background-repeat:no-repeat; background-position: center; height: 50px; width: 100%">&nbsp;</div>
+                    <hr/>
+                    <?php echo $this->errorMessage($this->form, $messages); ?>
                 </td>
             </tr>
             <tr>
@@ -174,9 +172,9 @@ label[for=branches]{
 </form>
 <script>
   $(document).ready(function() {
-    $("#starts").datepicker({ dateFormat: "dd/mm/yy" });
+    $("#starts").datepicker({ dateFormat: "dd-mm-yy" });
   });
   $(document).ready(function() {
-    $("#ends").datepicker({ dateFormat: "dd/mm/yy" });
+    $("#ends").datepicker({ dateFormat: "dd-mm-yy" });
   });
  </script>

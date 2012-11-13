@@ -76,9 +76,15 @@ class PAP_Model_Promotion
         $promoMapper->setImages($this, $images);
     }
     
-    public function loadImages(){
+    public function loadImages($user = null){
         $promoMapper = new PAP_Model_PromotionMapper();
-        $promoMapper->loadImages($this);    
+        $loaded = $promoMapper->loadImages($this);    
+        if ($loaded == false){
+            $images = array();
+            $branches = $promoMapper->getBranches($this->getId());
+            $images[] = new PAP_Model_Image($branches[0]->getLogo());
+            $this->setImages($images);
+        }
     }
     
     /* PROPERTIES */
@@ -108,7 +114,7 @@ class PAP_Model_Promotion
     }
 
     public function setStarts($text){
-        $this->_starts = (string) $text;
+        $this->_starts = str_replace("/", "-", $text);
         //$this->_starts = new Zend_Date($text, null, 'es_AR');
         return $this;
     }
@@ -117,7 +123,7 @@ class PAP_Model_Promotion
     }
 
     public function setEnds($text){
-        $this->_ends = (string) $text;
+        $this->_ends = str_replace("/", "-", $text);
         //$this->_ends = new Zend_Date($text, null, 'es_AR');
         return $this;
     }

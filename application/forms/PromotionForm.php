@@ -42,7 +42,7 @@ class PAP_Form_PromotionForm extends Zend_Form
             'maxlength' => 60,
             'filters'    => array('StringTrim', 'StripTags'),
             'validators' => array(
-                array('regex', false, '/^[\w.-]*$/')),
+                array('regex', false, '/^[a-zA-Z0-9 áéíóúñÁÉÍÓÚÑ.!*+¡¿?$@,;:-]+$/')),
         ));
         $control = $this->getElement('shortDescription');
         $validator = new Zend_Validate_Alnum(array('allowWhiteSpace' => true));
@@ -72,7 +72,8 @@ class PAP_Form_PromotionForm extends Zend_Form
             ->addFilter('StripTags')
             ->addFilter('StringTrim')
             ->addValidator('NotEmpty', true)
-            ->addValidator('regex', false, '/^[\w.-]*$/')
+            ->addValidator($allowWhiteSpace)
+            ->addValidator('regex', false, '/^[a-zA-Z0-9 áéíóúñÁÉÍÓÚÑ.!*+¡¿?$@,;:-]+$/')
             ->addDecorators($decorators);
         $this->addElement($control);
         

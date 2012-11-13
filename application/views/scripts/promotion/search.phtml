@@ -60,24 +60,27 @@ function FillFormProvinces(data)
     <div align="center">
         <table width="100%">
             <tr>
-                <td>
+                <td colspan="3">
                     <div style="background-image: url(/images/backend/tit-busqueda.png); background-repeat:no-repeat; background-position: center; height: 50px;">&nbsp;</div>
                     <hr/>
                     <?php echo $this->errorMessage($this->form, $messages); ?>
                 </td>
             </tr>
             <tr>
-                <td><?php echo $form->province->renderLabel(); ?></td>
-                <td><?php echo $form->province->renderViewHelper(); ?></td>
-                <td><?php /*echo $form->categories->renderLabel();*/ ?></td>
+                <td valign="top"><?php echo $form->province->renderLabel(); 
+                          echo $form->province->renderViewHelper(); ?>
+                </td>
+                <td valign="top">
+                    <?php echo $form->city->renderLabel(); ?>
+                    <?php echo $form->city->renderViewHelper(); ?>
+                </td>
+                <td valign="top" rowspan="2">
+                    <?php echo $form->category->renderLabel(); ?>
+                    <?php echo $form->category->renderViewHelper(); ?>
+                </td>
             </tr>
             <tr>
-                <td><?php echo $form->city->renderLabel(); ?></td>
-                <td><?php echo $form->city->renderViewHelper(); ?></td>
-                <td><?php /*echo $form->catogories->renderViewHelper(); */?></td>
-            </tr>
-            <tr>
-                <td align="center" height="75px" colspan="3">
+                <td align="center" height="75px" colspan="2">
                     <div>
                         <?php echo $form->search->renderViewHelper(); ?> 
                     </div>        
@@ -106,7 +109,15 @@ var firstClick = true;
 function getPromotions(){
     
     var city = document.getElementById('city').options[document.getElementById('city').selectedIndex].value;
-    var _url = 'http://promosalpaso.local/promotion/search/city/' + city;
+    var categories = document.getElementById('category').options;
+    var categoriesString = '';
+    for (x=0; x<categories.length; x++){
+      if(categories[x].selected)
+        categoriesString += categories[x].value + ",";   
+    }
+    if(categoriesString != '')
+        categoriesString = categoriesString.substring(0, categoriesString.length-1);
+    var _url = 'http://promosalpaso.local/promotion/search/city/' + city + '/categories/' + categoriesString;
     if (!firstClick){
         $("#list2").jqGrid('setGridParam', { url: _url }).trigger("reloadGrid");
     }

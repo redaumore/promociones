@@ -76,6 +76,22 @@ protected $_dbTable;
            $promotionBrancheTable->insert($row);
         }
     }
+    
+    public function getBranches($promotion_id){
+        $promotionBrancheTable = new PAP_Model_DbTable_PromotionBranch();
+        $select = $promotionBrancheTable->select();
+        $select->where('promotion_id = ?', $promotion_id);
+        $rows = $promotionBrancheTable->fetchAll($select);
+        $branches = array();
+        $branchMapper = new PAP_Model_BranchMapper();
+        foreach($rows as $row){
+            $branch = new PAP_Model_Branch();
+            $branchMapper->find($row['branch_id'], $branch);
+            $branches[] = $branch;
+        }
+        return $branches;
+        
+    }
  
     public function delete(PAP_Model_Promotion $promotion)
     {
@@ -114,7 +130,7 @@ protected $_dbTable;
                   ->setPromoCost($row->promo_cost)
                   ->setVisited($row->visited)
                   ->setCreated($row->created);
-                  
+         /*         
          $imageTable = new PAP_Model_DbTable_Image();
          $select = $imageTable->select();
          $select->where('parent_id = ?', $id);
@@ -124,7 +140,8 @@ protected $_dbTable;
          foreach($images as $img){
             $oimages[] = new PAP_Model_Image($img['path']);    
          }
-         $promotion->setImages($oimages);
+         $promotion->setImages($oimages);*/
+         $promotion->loadImages();
     }
  
     public function fetchAll($userId = null)
@@ -226,11 +243,14 @@ protected $_dbTable;
                 ->where('parent_type = ?', 'P');
                
         $result = $imageTable->fetchAll($select);
+        if(count($result)==0)
+            return false;
         $i=0;
         foreach ($result as $r) {
             $images[] = new PAP_Model_Image($r->path);
         }
         $promo->setImages($images);
+        return true;
     }
     
     private function getFormatedStringDate($date)
@@ -253,7 +273,7 @@ protected $_dbTable;
                      "INNER JOIN promotion_branch pb ON pb.promotion_id = p.promotion_id ".
                      "INNER JOIN branch b ON pb.branch_id = b.branch_id ".
                      "INNER JOIN image i ON (p.promotion_id = i.parent_id AND i.parent_type = 'P') ".
-                     (($categories == '')?'':"INNER JOIN category_user cu ON (b.user_id = cu.user_id)").
+                     (($categories == '')?'':"INNER JOIN category_user cu ON (b.user_id = cu.user_id) ").
                      "WHERE p.starts <= '".date('Y-m-d')."' AND pb.branch_id IN ".$in. " ".
                      (($categories == '')?'':"AND cu.category_id IN (".$categories.")");
         $results = $adapter->fetchAll($statement);

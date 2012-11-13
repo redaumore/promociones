@@ -169,6 +169,7 @@
             $sidx = $_POST['sidx']; // get index row - i.e. user click to sort
             $sord = $_POST['sord'];
             $city_id = $this->getParam('city');
+            $categories = ''.$this->getParam('categories');
         }
         else{
             $page = 0; // get the requested page
@@ -181,7 +182,7 @@
         
         if(!$sidx) $sidx =1;
         $promo = new PAP_Model_Promotion(); 
-        $promotions = $promo->getPromotionsByCity($city_id);
+        $promotions = $promo->getPromotionsByCity($city_id, $categories);
         $count = count($promotions);
         if( $count > 0 ) {$total_pages = ceil($count/$limit);} 
         else{$total_pages = 0;}
@@ -329,7 +330,7 @@
             $promo->saveImages($images);
         }
         else{
-            $promo->loadImages();
+            $promo->loadImages($this->user);
         }
     }
     

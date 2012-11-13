@@ -30,6 +30,55 @@ class PAP_Form_SearchForm extends Zend_Form
         ));
         $this->city->setRegisterInArrayValidator(false)
                 ->setDecorators($decorators);
+        
+        $this->addElement('select', 'category', array(
+            'label'      => 'Categorias',
+            'required'   => false,
+            'multiple'   => 'multiple',
+        ));
+        $this->category->setRegisterInArrayValidator(false)
+                ->setDecorators($decorators)
+                ->addMultiOption(1000, 'Automotor')    
+                ->addMultiOption(1001, '►Accesorios y repuestos')
+                ->addMultiOption(1002, '►Servicios')
+                ->addMultiOption(1100, 'Bebes')    
+                ->addMultiOption(1200, 'Bebidas y Delicatessen')    
+                ->addMultiOption(1300, 'Calzados')    
+                ->addMultiOption(1301, '►Hombre')
+                ->addMultiOption(1302, '►Dama')
+                ->addMultiOption(1303, '►Niños')
+                ->addMultiOption(1400, 'Cocina')    
+                ->addMultiOption(1401, '►Restaurant')
+                ->addMultiOption(1402, '►Delivery')
+                ->addMultiOption(1403, '►Articulos comestibles')
+                ->addMultiOption(1500, 'Computación')    
+                ->addMultiOption(1600, 'Construcción y Ferretería')    
+                ->addMultiOption(1700, 'Deportes')    
+                ->addMultiOption(1701, '►Indumentaria')
+                ->addMultiOption(1702, '►Artículos deportivos')
+                ->addMultiOption(1800, 'Electrónica y Electrodomésticos')
+                ->addMultiOption(1900, 'Entretenimientos')    
+                ->addMultiOption(2000, 'Hogar')    
+                ->addMultiOption(2001, '►Muebles')
+                ->addMultiOption(2002, '►Decoración')
+                ->addMultiOption(2100, 'Indumentaria')    
+                ->addMultiOption(2101, '►Hombre')
+                ->addMultiOption(2102, '►Dama')
+                ->addMultiOption(2103, '►Niños')
+                ->addMultiOption(2200, 'Joyas y Relojes')    
+                ->addMultiOption(2300, 'Juguetes')    
+                ->addMultiOption(2400, 'Libros y Librería')    
+                ->addMultiOption(2500, 'Marroquinería y Bolsos')    
+                ->addMultiOption(2600, 'Mascotas')    
+                ->addMultiOption(2601, 'Musica')    
+                ->addMultiOption(2602, '►Instrumentos')
+                ->addMultiOption(2700, '►Producciones musicales')
+                ->addMultiOption(2800, 'Optica')    
+                ->addMultiOption(2900, 'Perfumeria y Cosmética')    
+                ->addMultiOption(3000, 'Pinturas')    
+                ->addMultiOption(3100, 'Regalos')    
+                ->addMultiOption(3200, 'Servicios Varios')    
+                ->addMultiOption(3300, 'Telefonía');
                 
         $this->addElement('button', 'search', array(
             'ignore'   => true,
@@ -39,70 +88,6 @@ class PAP_Form_SearchForm extends Zend_Form
             ->setAttrib('class', 'buttons');
         
         /*CATEGORIAS*/
-        $this->addPrefixPath('ZFExt_Form_Element', 'ZFExt/Form/Element/', 'Element');
-        
-        //$this->setAttrib('id', 'categoryTree');
-        /*
-        $this->setOptions(array(
-        'elements' => array(
-            'categories' => array(
-                'type' => 'treeview',
-                'options' => array(
-                    'label' => 'Tree:',
-                    'multioptions' => array(
-                        1000 => array('title'=>'Automotor', 'children'=>array(    
-                            1001 => array('title'=>'Accesorios y repuestos', 'children'=>array()),
-                            1002 => array('title'=>'Servicios', 'children'=>array()),
-                            )),
-                        1100 => array('title'=>'Bebes', 'children'=>array()),    
-                        1200 => array('title'=>'Bebidas y Delicatessen', 'children'=>array()),    
-                        1300 => array('title'=>'Calzados', 'children'=>array(    
-                            1301 => array('title'=>'Hombre', 'children'=>array()),
-                            1302 => array('title'=>'Dama', 'children'=>array()),
-                            1303 => array('title'=>'Niños', 'children'=>array()),
-                            )),
-                        1400 => array('title'=>'Cocina', 'children'=>array(    
-                            1401 => array('title'=>'Restaurant', 'children'=>array()),
-                            1402 => array('title'=>'Delivery', 'children'=>array()),
-                            1403 => array('title'=>'Artículos comestibles', 'children'=>array()),
-                            )),
-                        1500 => array('title'=>'Computación', 'children'=>array()),    
-                        1600 => array('title'=>'Construcción y Ferretería', 'children'=>array()),    
-                        1700 => array('title'=>'Deportes', 'children'=>array(    
-                            1701 => array('title'=>'Indumentaria', 'children'=>array()),
-                            1702 => array('title'=>'Artículos deportivos', 'children'=>array()),
-                            )),
-                        1800 => array('title'=>'Electrónica y Electrodomésticos', 'children'=>array()),    
-                        1900 => array('title'=>'Entretenimientos', 'children'=>array()),    
-                        2000 => array('title'=>'Hogar', 'children'=>array(    
-                            2001 => array('title'=>'Muebles', 'children'=>array()),
-                            2002 => array('title'=>'Decoración', 'children'=>array()),
-                            )),
-                        2100 => array('title'=>'Indumentaria', 'children'=>array(    
-                            2101 => array('title'=>'Hombre', 'children'=>array()),
-                            2102 => array('title'=>'Dama', 'children'=>array()),
-                            2103 => array('title'=>'Niños', 'children'=>array()),
-                            )),
-                        2200 => array('title'=>'Joyas y Relojes', 'children'=>array()),    
-                        2300 => array('title'=>'Juguetes', 'children'=>array()),    
-                        2400 => array('title'=>'Libros y Librería', 'children'=>array()),    
-                        2500 => array('title'=>'Marroquinería y Bolsos', 'children'=>array()),    
-                        2600 => array('title'=>'Mascotas', 'children'=>array()),    
-                        2700 => array('title'=>'Musica', 'children'=>array(    
-                            2701 => array('title'=>'Instrumentos', 'children'=>array()),
-                            2702 => array('title'=>'Producciones musicales', 'children'=>array()),
-                            )),
-                        2800 => array('title'=>'Optica', 'children'=>array()),    
-                        2900 => array('title'=>'Perfumeria y Cosmética', 'children'=>array()),    
-                        3000 => array('title'=>'Pinturas', 'children'=>array()),    
-                        3100 => array('title'=>'Regalos', 'children'=>array()),    
-                        3200 => array('title'=>'Servicios Varios', 'children'=>array()),    
-                        3300 => array('title'=>'Telefonía', 'children'=>array()),
-                    )
-                )
-            ),
-        )));
-        */
-      }
+        }
   }
 ?>
