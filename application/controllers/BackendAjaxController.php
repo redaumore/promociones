@@ -54,7 +54,7 @@ class backendAjaxController extends Zend_Controller_Action
         */
     }
     
-    public function getpromotionsAction(){
+    /*public function getpromotionsAction(){
         
         $promo = new PAP_Model_Promotion();
         
@@ -67,6 +67,19 @@ class backendAjaxController extends Zend_Controller_Action
             $promosData = $promo->getPromotionsByCoords($lat, $lng, $radius); //TODO Incluir radio para cuando las promos sean muchas.
             $this->_helper->json($promosData);
         }    
+    }*/
+    
+    public function getpromotionAction(){
+        
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        
+        if ($this->getRequest()->isXmlHttpRequest()){
+            $promotion_id = $this->_getParam('promotion_id');
+            $promotion = new PAP_Model_Promotion();
+            $data = $promotion->getViewRecord($promotion_id);
+            $this->_helper->json($data);
+        }    
     }
     
     public function getprovincesAction(){
@@ -75,9 +88,22 @@ class backendAjaxController extends Zend_Controller_Action
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
         
-        if ($this->getRequest()->isXmlHttpRequest()) {
+        //if ($this->getRequest()->isXmlHttpRequest()) {
             $provincesData = $provinces->findForSelect();
             $this->_helper->json($provincesData);
-        }
+        //}
+    }
+    
+    public function getprovAction(){
+        $provinces = new PAP_Model_ProvinceMapper();
+        
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        
+        //if ($this->getRequest()->isXmlHttpRequest()) {
+            $provincesData = $provinces->findForSelect();
+            $this->_helper->json($provincesData);
+            //echo '{"items":'. $this->_helper->json($provincesData) .'}';
+        //}
     }
 }

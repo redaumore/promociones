@@ -157,6 +157,17 @@ function getPromotions(){
 }
 
 function loadPromotion(promotion_id){
-    alert(promotion_id);    
+    var myAjax = new Ajax.Request(
+        "<?=$this->url(array('controller'=>'backendAjax','action'=>'getPromotion'))?>",
+            {
+                method:'get',
+                parameters: {promotion_id: promotion_id},
+                onSuccess: FillPromotion
+        });    
+}
+
+function FillPromotion(data){
+    var promotion = eval('(' + data.responseText + ')');
+    alert(data.responseText);    
 }
 </script>

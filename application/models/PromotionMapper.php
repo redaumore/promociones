@@ -92,6 +92,19 @@ protected $_dbTable;
         return $branches;
         
     }
+    
+    public function getViewRecord($promotion_id){
+        $adapter = Zend_Db_Table::getDefaultAdapter();
+        $statement = "SELECT DISTINCT b.name, b.street, b.number, b.logo, b.latitude, b.longitude, c.name, p.*, i.path FROM promotion p ".
+                     "INNER JOIN promotion_branch pb ON pb.promotion_id = p.promotion_id ".
+                     "INNER JOIN branch b ON pb.branch_id = b.branch_id ".
+                     "INNER JOIN city c ON b.city_id = c.city_id ".
+                     "INNER JOIN image i ON (p.promotion_id = i.parent_id AND i.parent_type = 'P') ".
+                     "WHERE p.promotion_id = ".$promotion_id. " ";
+                     
+        $results = $adapter->fetchAll($statement);
+        return $results;   
+    }
  
     public function delete(PAP_Model_Promotion $promotion)
     {
@@ -261,30 +274,39 @@ protected $_dbTable;
     
     public function getPromotionsByBranches($branches, $categories = ''){
         $in = '';
-        $select = $this->getDbTable()->select();
-        $select->where('starts >= ?', date('Y-m-d'));
         foreach($branches as $branch){
             $in .= $branch->getId().',';
         }
         $in = '('.substr($in, 0, strlen($in)-1).')';
         
         $adapter = Zend_Db_Table::getDefaultAdapter();
-        $statement = "SELECT DISTINCT b.name, b.latitude, b.longitude, p.*, i.path FROM promotion p ".
+        //$statement = (($origin=='')?"SELECT DISTINCT b.name, b.latitude, b.longitude, p.*, i.path FROM promotion p ":
+        //$statement = "SELECT DISTINCT b.name, b.latitude, b.longitude, p.*, i.path FROM promotion p ".
+        $statement = "SELECT DISTINCT b.name, b.latitude, b.longitude, b.street, b.number, c.name as city, p.short_description, p.displayed_text, p.promotion_id, p.promo_value, p.promo_cost, i.path FROM promotion p ".
                      "INNER JOIN promotion_branch pb ON pb.promotion_id = p.promotion_id ".
                      "INNER JOIN branch b ON pb.branch_id = b.branch_id ".
-                     "INNER JOIN image i ON (p.promotion_id = i.parent_id AND i.parent_type = 'P') ".
+                     "INNER JOIN city c ON b.city_id = c.city_id ".
+                     "LEFT JOIN image i ON (p.promotion_id = i.parent_id AND i.parent_type = 'P') ".
                      (($categories == '')?'':"INNER JOIN category_user cu ON (b.user_id = cu.user_id) ").
-                     "WHERE p.starts <= '".date('Y-m-d')."' AND pb.branch_id IN ".$in. " ".
+                     "WHERE p.starts <= '".date('Y-m-d')."' AND p.ends >= '".date('Y-m-d')."' AND pb.branch_id IN ".$in. " ".
                      (($categories == '')?'':"AND cu.category_id IN (".$categories.")");
         $results = $adapter->fetchAll($statement);
-        //$result[
         return $results;
-        
-        /*PROBLEMA AL ARMAR EL "IN" $select->where('starts <= ?', date('Y-m-d'));
-        $select->where('branch_id IN ?', $in);
-        $rowset = $select->query()->fetchAll();
-        return $rowset;    */
     }
+    
+    public function getPromotionById($promotion_id){
+        $adapter = Zend_Db_Table::getDefaultAdapter();
+        $statement = "SELECT DISTINCT b.name, b.latitude, b.longitude, b.street, b.number, b.phone, b.local, b.logo, b.branch_id, c.name as city, p.*, i.path FROM promotion p ".
+                     "INNER JOIN promotion_branch pb ON pb.promotion_id = p.promotion_id ".
+                     "INNER JOIN branch b ON pb.branch_id = b.branch_id ".
+                     "INNER JOIN city c ON b.city_id = c.city_id ".
+                     "LEFT JOIN image i ON (p.promotion_id = i.parent_id AND i.parent_type = 'P') ".
+                     "WHERE p.promotion_id = ".$promotion_id;
+        $results = $adapter->fetchAll($statement);
+        return $results;    
+    }
+    
+    
     
 
 

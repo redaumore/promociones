@@ -21,6 +21,7 @@ class PAP_Model_Promotion
     protected $_created;
     protected $_updated;
     protected $_images;
+    protected $_radius = 2;
     
     public function __construct(array $options = null)
     {
@@ -85,6 +86,16 @@ class PAP_Model_Promotion
             $images[] = new PAP_Model_Image($branches[0]->getLogo());
             $this->setImages($images);
         }
+    }
+    
+    public function loadById($promotion_id){
+        $promoMapper = new PAP_Model_PromotionMapper();
+        $promoMapper->find($promotion_id, $this);
+    }
+    
+    public function getViewRecord($promotion_id){
+        $promoMapper = new PAP_Model_PromotionMapper();
+        return $promoMapper->getViewRecord($promotion_id);
     }
     
     /* PROPERTIES */
@@ -247,21 +258,21 @@ class PAP_Model_Promotion
         
         $kmlat = 0.009003753;
         $kmlng = 0.01093571;
-        $radius = 2;  //TODO: Hacer configurable el radio de busqueda
         
-        $klat = $kmlat * $radius;
-        $klng = $kmlng * $radius;
+        $klat = $kmlat * $this->_radius;
+        $klng = $kmlng * $this->_radius;
         
-        $latE = $lat - $klat;
-        $latO = $lat + $klat;
-        $lngN = $lng - $klng;
-        $lngS = $lng + $klng;
+        $latO = $lat - $klat;
+        $latE = $lat + $klat;
+        $lngS = $lng - $klng;
+        $lngN = $lng + $klng;
         
         $branches = $branchmapper->getBranchesByRange($latE, $latO, $lngN, $lngS);
         if(count($branches) == 0)
             return array();
         
         $promotions = $promomapper->getPromotionsByBranches($branches, $categories);
+        
         $i = 0;
         
         foreach($promotions as $promo){
@@ -275,9 +286,19 @@ class PAP_Model_Promotion
             $indiceord = abs(($distance*$valor*1000)/(1-$distance)+(($valor -1)*1000))-1000;
             $promotions[$i]['distance'] = $distance;
             $promotions[$i]['ord'] = $indiceord;
-            $i = $i + 1;
+            unset($promotions[$i]['promo_cost']);
+            $i += 1;
         }
-        $promotions = $this->sortPromotions($promotions);
+        if(count($promotions)!=0)
+            $promotions = $this->sortPromotions($promotions);
+        else{
+            if($this->_radius != 4){
+                $this->_radius = 4;
+                $promotions = $this->getPromotionsByCoords($lat, $lng, $categories);
+            }
+        }
+        
+        
         return $promotions;
     }
     
@@ -292,6 +313,20 @@ class PAP_Model_Promotion
         return $promotions;
     }
     
+    public function getPromotionById($promotion_id, $lat = '', $lng = ''){
+        $promomapper = new PAP_Model_PromotionMapper();
+        $promo = $promomapper->getPromotionById($promotion_id);
+        if(isset($promo[0])){
+            $promo = $promo[0];
+            $distance = $this->getDistance($lat, $lng, $promo['latitude'], $promo['longitude']);
+            $valor = substr($promo['promo_cost'], strrpos($promo['promo_cost'], '-')+1);
+            $valor = ($valor == '0.00')?1.00:floatval($valor);
+            $promo['distance'] = $distance;
+            unset($promo['promo_cost']);    
+        }
+        return $promo;    
+    }
+    
     private function sortPromotions($promotions){
         foreach ($promotions as $key => $row) {
             $indice[$key]  = $row['ord'];
@@ -300,6 +335,17 @@ class PAP_Model_Promotion
         array_multisort($indice, SORT_DESC, $promotions);
         return $promotions;    
     }
+    
+    private function getDistance($lat1, $lng1, $lat2, $lng2){
+        $kmlat = 0.009003753;
+        $kmlng = 0.01093571;
+        
+        $deltalat = (($lat1-$lat2)*1000)/$kmlat;
+        $deltalng = (($lng1-$lng2)*1000)/$kmlng;
+        $distance = round(sqrt(pow($deltalat, 2) + pow($deltalng, 2)));
+        return $distance;
+    }
+    
 }
 
 
