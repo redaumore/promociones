@@ -286,6 +286,8 @@ class PAP_Model_Promotion
             $indiceord = abs(($distance*$valor*1000)/(1-$distance)+(($valor -1)*1000))-1000;
             $promotions[$i]['distance'] = $distance;
             $promotions[$i]['ord'] = $indiceord;
+            if(!isset($promo['path']))
+                $promotions[$i]['path'] = $this->getBranchImage($promo['promotion_id']);
             unset($promotions[$i]['promo_cost']);
             $i += 1;
         }
@@ -344,6 +346,16 @@ class PAP_Model_Promotion
         $deltalng = (($lng1-$lng2)*1000)/$kmlng;
         $distance = round(sqrt(pow($deltalat, 2) + pow($deltalng, 2)));
         return $distance;
+    }
+    
+    private function getBranchImage($promotion_id){
+        //devuelve el path de la imagen
+        $promo_mapper = new PAP_Model_PromotionMapper();
+        $branches = $promo_mapper->getBranches($promotion_id);
+        $image = '';
+        if(count($branches) != 0)
+            $image = $branches[0]->getLogo();
+        return $image;
     }
     
 }

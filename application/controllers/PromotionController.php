@@ -288,12 +288,33 @@
             foreach($files as $file => $fileInfo) {
                 $extension = substr(strrchr($fileInfo['name'],'.'),1);
                 $promoImageDir = $customerImageDir.'/'.$promo->getId();
-                if(!is_dir($promoImageDir))
-                    mkdir($promoImageDir, 0666, 1);
-                
+               
                 $imageName = $promoImageDir.'/image_'.$i.'.'.$extension;
-                        
+                $imageName2 = $promoImageDir.'/thumb/image_'.$i.'.'.$extension;
+                
+                 if(!is_dir($promoImageDir))
+                    mkdir($promoImageDir, 0666, 1);
+                    
+                if(!is_dir($promoImageDir.'/thumb'))
+                    mkdir($promoImageDir.'/thumb', 0666, 1);
+                    
                 $adapter->addFilter('Rename', array('target'=>$imageName, 'overwrite'=>true));
+                
+                $filterChain = new Zend_Filter();
+                $filterChain->appendFilter(new Skoch_Filter_File_Resize(array(
+                        'width' => 300,
+                        'height' => 300,
+                        'keepRatio' => true,
+                )));
+                
+                $filterChain->appendFilter(new Skoch_Filter_File_Resize(array(
+                        'directory' => $promoImageDir.'/thumb',
+                        'width' => 60,
+                        'height' => 60,
+                        'keepRatio' => true,
+                )));
+                
+                $adapter->addFilter($filterChain);
                 
                 $images[] =  $relativeImageDir.'/'.$promo->getId().'/image_'.$i.'.'.$extension;
                 /* TODO: resizing de la imagen

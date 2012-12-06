@@ -4,6 +4,11 @@
     -lastSearch
 */
 
+/*RAMOS MEJIA
+var _lat = "-34.6463";
+var _lng = "-58.5648";
+*/
+
 /*SAN JUSTO*/
 var _lat = "-34.681774410598"; //"-34.6463";
 var _lng = "-58.561710095183" ; //"-58.5648";
@@ -34,6 +39,9 @@ $(document).delegate( "#page-map", "pageshow", function(event){
 });
 
 $(document).ready(function(){
+    
+    $(document).ajaxStart(function () { showProgress() }).ajaxStop(function () { hideProgress() });
+    setFullScreen();
     loadPromoList();    
 });
 
@@ -77,7 +85,7 @@ function getPromoRecord(promo){
     liString = liString.replace("#COMERCIO#", promo.name);
     liString = liString.replace("#DESCRIPCION#", promo.short_description);        
     liString = liString.replace("#PROMO#", promo.displayed_text);
-    liString = liString.replace("#PRECIO#", promo.promo_value);
+    liString = liString.replace("#PRECIO#", formatPrice(promo.promo_value));
     liString = liString.replace("#DISTANCIA#", promo.distance);
     return liString;
 }
@@ -136,7 +144,7 @@ function loadPromoDetail(item){
     $("#det-long_description").html(item.long_description);
     $("#det-displayed_text").html(item.displayed_text);
     $("#det-short_description").html(item.short_description);
-    $("#det-promo_value").html(item.promo_value);
+    $("#det-promo_value").html(formatPrice(item.promo_value));
     $("#det-distance").html(item.distance);
     $("#det-direccion").html(item.street + ' ' + item.number + ' - ' + item.city);
     $("#det-img-comercio").attr("src",item.logo);
@@ -163,9 +171,22 @@ function loadPromoDetail(item){
     _promo_lng = item.longitude;
 }
 
-$(document).ready(function () {
-    $(document).ajaxStart(function () { showProgress() }).ajaxStop(function () { hideProgress() });
-});
+function saveFavorite(){
+    alert("Favorito!!");
+}
+
+// Function called when phonegap is ready
+function setFullScreen() {
+    //All pages at least 100% of viewport height
+    var viewPortHeight = $(window).height();
+    var headerHeight = $('div[data-role="header"]').height();
+    var footerHeight = $('div[data-role="footer"]').height();
+    var contentHeight = viewPortHeight - headerHeight - footerHeight;
+
+    // Set all pages with class="page-content" to be at least contentHeight
+    $('div[class="ui-content"]').css({'min-height': contentHeight + 'px'});
+ }
+ 
 function showProgress() {
     $('body').append('<div id="progress"><img src="/css/images/ajax-loader.gif" alt="" width="16" height="11" /> Loading...</div>');
     $('#progress').center();
@@ -179,7 +200,6 @@ jQuery.fn.center = function () {
     this.css("left", ($(window).width() - this.width()) / 2 + $(window).scrollLeft() + "px");
     return this;
 }
-
 
 function getLiString(){
 var liString = new String();
@@ -210,4 +230,15 @@ liString += '               </table>';
 liString += '            </a></div></div></li>';
 
     return liString;
+}
+
+function formatPrice(price){
+    var formatedPrice = "";
+    point = price.indexOf(".00");
+    if(point == -1)
+        formatedPrice = price.substring(0, price.indexOf(".")) + price.substring(price.indexOf(".")+1, price.length).sup();
+    else
+        formatedPrice = price.substring(0, price.indexOf("."));
+    
+    return formatedPrice;
 }

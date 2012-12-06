@@ -29,7 +29,6 @@ function init(){
 </head>
 <body>
     <div data-role="page" id="one">
-
         <div data-role="header">
             <div class="ui-controlgroup-controls">
                 <table style="width: 100%; border-collapse:collapse;">
@@ -58,70 +57,59 @@ function init(){
             </div>
         </div><!-- /header -->
         <style type="text/css">
-            div{
-                border: 1px solid red;
-            }
+            /*td, table{border: 1px solid red;}*/
         </style>
         <div data-role="content" style="padding: 0px;" >
             <div style="border-bottom: solid 1px #9CAAC6; width: 100%;">
-                <div style="float: left;"><img id="det-img-comercio" src="images/trebol.png" style="width: 3.5em; height: 3.5em; padding-top: 3px; padding-left: 3px;"/></div>
-                <div id="det-name" class="det-comercio" style="width: 100%; text-align: center; padding-left: 3.1em;">Nombre Comercio</div>
-                <div id="det-direccion" class="comercio" style="width: 100%; text-align: center; padding-left: 3.1em;">Av de Mayo 25448 - Ramos Mejía</div>
+                <div style="float: left;"><img id="det-img-comercio" src="images/trebol.png" style="width: 3.5em; height: 3.5em; padding: 3px;"/></div>
+                <div id="det-name" class="det-comercio" style="width: 100%; text-align: center; margin-left: 2.5em;">Nombre Comercio</div>
+                <div id="det-direccion" class="comercio" style="width: 100%; text-align: center; padding-left: 2.5em;">Av de Mayo 25448 - Ramos Mejía</div>
             </div>
             <div id="det-long_description" class="descripcion" style="width: 100%; font-size: 1.2em; padding: 0.5em;">Descripcion larga</div>
             <div id="det-displayed_text" class="det-comercio" style="width: 100%; background-color: #E6E6E6; color:gray;">2X1 de Lunes a Viernes</div>
-        <table style="width: 100%; padding: 0px; margin: 0px; border-collapse:collapse;">
-            <tr>
-                <td>
-                    <table style="width: 100%;">
-                        <tr>
-                            <td style="width: 60px;"><img id="det-img-promo" src="images/trebol.png" class="shadow image" style="width: 60px; height: 60px;"/></td>
-                            <td>
-                                <div id="det-precio">
-                                    <div id="det-short_description" class="comercio">Torta de Frutillas</div>
-                                    <div id="det-promo_value" class="precio" style="font-size: 2.5em;">2390</div>
-                                </div>
-                            </td>
-                            <td style="width: 40px;">
-                                <div id="det-alarma" style="background-image: url(images/alert-icon.png); background-repeat: no-repeat; float: right; height: 40px; width: 40px;">
-                                    <div id="det-alarm_num" style="padding-top: 5px; font-size: 1.3em; color: white; text-align: center; height: 15px;">29</div>
-                                    <div id="det-alarm_type" style="font-size: 1em; color: white; text-align: center; height: 18px; vertical-align: top;">unid.</div>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div style="background-color: #E6E6E6;">
-                        <a href="#page-map">
-                            <div style="height: 75px; float: left; padding-left: 4px; border-right: solid 1px #9CAAC6;">
-                                <div style="float: left;">
-                                    <img id="det-img-mapa" src="images/map-icon.png" class="shadow image" style="width: 70px; height: 70px;">
-                                </div>
-                                <div style="font-size: 1em; margin-left: 75px; width:60px; text-align: center; padding: 1em 0 0.8em 0;">VER MAPA</div>
-                                <div id="det-distance" class="det-distancia" style="font-size: 1.5em;  margin-left: 75px; width:60px; text-align: center; padding: 0.5em 0 0.5em 0; font-weight: bold;">200 mts</div>
-                            </div>
+            <div style="width: 100%; min-height: 70px;">
+                <div style="float: left; width: 66px;">
+                    <img id="det-img-promo" src="images/trebol.png" class="shadow image" style="padding: 3px; width: 60px; height: 60px;"/>
+                </div>
+                <div id="det-alarma" style="background-image: url(images/alert-icon.png); background-repeat: no-repeat; background-position: center center; float: right; height: 100%; min-height: 70px; width: 40px;">
+                    <div id="det-alarm_num" style="padding-top: 20px; font-size: 1.3em; color: white; text-align: center; height: 15px;">29</div>
+                    <div id="det-alarm_type" style="font-size: 1em; color: white; text-align: center; height: 18px; vertical-align: top;">unid.</div>
+                </div>
+                <div id="det-precio">
+                    <div id="det-short_description" class="comercio" style="padding-left: 70px;">Torta de Frutillas</div>
+                    <div id="det-promo_value" class="precio" style="font-size: 2.5em;">2390</div>
+                </div>
+            </div>
+            <div style="background-color: #E6E6E6;">
+                <div style="height: 65px; float: left; border-right: solid 1px #9CAAC6;">
+                    <a href="#page-map" class="ui-button" style="text-decoration: none; color: black; font-weight: bold;">
+                        <div style="float: left;">
+                            <img id="det-img-mapa" src="images/map-icon.png" class="shadow image" style="padding: 3px; width: 60px; height: 60px;">
+                        </div>
+                        <div style="font-size: 1em; margin-left: 75px; width:60px; text-align: center; padding: 2em 0 0.8em 0;">VER MAPA</div>
+                        <div id="det-distance" class="det-distancia" style="font-size: 1.5em;  margin-left: 75px; width:60px; text-align: center; padding-bottom: 1em;">200 mts</div>
+                    </a>
+                </div>
+                <div style="float: right; padding: 3px 3px 0 0;">
+                    <div id="det-web"><a id="det-link" href="www.clarin.com" target="new"><img src="images/web-icon.png"/></a></div>
+                    <div id="det-tel"><a id="det-phone" href="#" onclick="makeacall();" ><img src="images/phone-icon.png"/></a></div>
+                    <div id="det-email"><a id="det-msg" href="#" onclick="sendmessage();" ><img src="images/mail-icon.png"/></a></div>
+                </div>
+                <div style="height: 75px; margin-left: 145px; margin-right: 25px;">
+                    <div style="height: 100%; width: 100%; vertical-align: center; text-align: center;">
+                        <a href="#" class="ui-button" onclick="saveFavorite();">
+                            <table style="width: 100%; height: 100%;">
+                                <tr>
+                                    <td style="width: 30px; text-align: right;"><img src="images/trebol.png" style="height: 30px; width: 30px;"></td>
+                                    <td style="width: 70px; text-align: left;"><div style="text-align: left; font-size: 1.1em; font-weight: bold; color: #42962F">Agregar a Favoritos</div></td>
+                                </tr>
+                            </table>
                         </a>
-                        <div style="float: right; padding: 3px 3px 0 0;">
-                            <div id="det-web"><a id="det-link" href="www.clarin.com" target="new"><img src="images/web-icon.png"/></a></div>
-                            <div id="det-tel"><a id="det-phone" href="#" onclick="makeacall();" ><img src="images/phone-icon.png"/></a></div>
-                            <div id="det-email"><a id="det-msg" href="#" onclick="sendmessage();" ><img src="images/mail-icon.png"/></a></div>
-                        </div>
-                        <div style="height: 75px; margin-left: 145px; margin-right: 25px;">
-                            <div style="width: 100%;">
-                                <img src="images/trebol.png" style="text-align: right; float: left; padding: 20px 0 0 7px; height: 30px;">
-                                <div style="text-align: center; height: 20px; font-size: 1.1em; font-weight: bold; padding-top: 22px; color: #42962F">Agregar a Favoritos</div>
-                            </div>
-                        </div>
                     </div>
-                    
-                </td>
-            </tr>
-           </table>
-           <div id="maspromos" style="width: 100%;">
-                <div class="ui-bar-a" style="height: 2.5em; color: white; font-size: 1.2em; padding: 0.3em 0 0.5em 0; text-shadow: 0 0 0;"><span id="barmaspromos" style="padding-left: 5px;">+ promos de #NOMBRECOMERCIO#</span></div>
+                </div>
+            </div>
+           <div id="maspromos" style="width: 100%; height: 3em;">
+                <div class="ui-bar-a" style="height: 1.6em; color: white; font-size: 1.2em; padding: 0.4em 0 0.4em 0; text-shadow: 0 0 0;"><span id="barmaspromos" style="padding-left: 5px;">+ promos de #NOMBRECOMERCIO#</span></div>
                 <ul id="promolist" data-role="listview" class="ui-listview"></ul>     
            </div>
         </div>

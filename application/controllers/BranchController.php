@@ -114,9 +114,20 @@ class BranchController extends Zend_Controller_Action
                     
                     $form->filebranch->addFilter('Rename', array('target' => $logoName,
                              'overwrite' => true));
+                    $form->filebranch->addFilter(new Skoch_Filter_File_Resize(array(
+                        'width' => 60,
+                        'height' => 60,
+                        'keepRatio' => true,
+                    )));
                     $data['logo'] =  $relativeImageDir.'/logo_'.$data["user"].'.'.$extension;
-                    /* TODO: resizing de la imagen
-                    $form->file->addFilter(new Skoch_Filter_File_Resize(array('width' => 200,'height' => 300,'keepRatio' => true,))); */
+                    /* TODO: Permitir "-" entre otros en el campo nombre del comercio */
+                    
+                    foreach(glob("logo_*.*") as $filename){
+                        try{
+                            unlink($filename);
+                        }catch(Exception $e){}
+                    }
+                    
                     if (!$form->filebranch->receive()) {
                         throw new Exception($form->filebranch->getMessages());
                     }
