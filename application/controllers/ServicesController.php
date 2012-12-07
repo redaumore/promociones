@@ -37,7 +37,7 @@ class servicesController extends Zend_Controller_Action
         
         $i = 0;
         foreach($data as $item){
-            $data[$i]["path"] = $this->getDataURI("./images".$item["path"]);
+            $data[$i]["path"] = $this->getDataURI("./images".$this->getThumb($item["path"]));
             $i = $i + 1;
         }
         
@@ -49,6 +49,10 @@ class servicesController extends Zend_Controller_Action
         $response = $this->getFrontController()->getResponse();
         $response->appendBody($callback.'('.json_encode($data).')');
         $this->getFrontController()->setResponse($response);
+    }
+    
+    private function getThumb($path){
+        return str_replace('/image_', '/thumb/image_', $path);
     }
     
     public function getpromodetailAction(){
@@ -68,7 +72,8 @@ class servicesController extends Zend_Controller_Action
         $promotion = new PAP_Model_Promotion();
         $data = $promotion->getPromotionById($promotion_id, $lat, $lng);
         $data["logo"] = $this->getDataURI("./images".$data["logo"]);
-        $data["path"] = $this->getDataURI("./images".$data["path"]);  
+        $data["path"] = $this->getDataURI("./images".$this->getThumb($data["path"]));
+        $data["image"] = "./images".$data["path"];
         
         $response = $this->getFrontController()->getResponse();
         $response->appendBody($callback.'('.json_encode($data).')');
