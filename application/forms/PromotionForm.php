@@ -9,7 +9,7 @@ class PAP_Form_PromotionForm extends Zend_Form
         $this->setMethod('post');
         $this->setAttrib('enctype', Zend_Form::ENCTYPE_MULTIPART);
         //'multipart/form-data'
-        $this->addPrefixPath('PAP_Form_Element_', 'Pap/Form/Element/', 'Element');
+        $this->addPrefixPath('PAP_Form_Element_', 'PAP/Form/Element/', 'Element');
         
           
         $decorators = array(
@@ -35,7 +35,7 @@ class PAP_Form_PromotionForm extends Zend_Form
         $control = $this->getElement("promoCode");
         $control->setDecorators($decorators);
         
-        $this->addElement('textArea', 'shortDescription', array(
+        $this->addElement('textarea', 'shortDescription', array(
             'label'      => 'Texto ',
             'required'   => true,
             'size' => 60, 
@@ -184,7 +184,7 @@ class PAP_Form_PromotionForm extends Zend_Form
         
         $file = new Zend_Form_Element_File('filePromo');
         $file->setLabel('Imagenes Promo')
-            ->setDestination(PUBLIC_PATH.'\\images\\tmp')
+            ->setDestination(PUBLIC_PATH.'/images/tmp')
             ->setRequired(false)
             //->setIsArray(true)
             //->setMultiFile(3)

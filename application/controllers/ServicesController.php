@@ -73,7 +73,7 @@ class servicesController extends Zend_Controller_Action
         $data = $promotion->getPromotionById($promotion_id, $lat, $lng);
         $data["logo"] = $this->getDataURI("./images".$data["logo"]);
         $data["path"] = $this->getDataURI("./images".$this->getThumb($data["path"]));
-        $data["image"] = "./images".$data["path"];
+        $data["promo_photo"] = "./images".$data["path"];
         
         $response = $this->getFrontController()->getResponse();
         $response->appendBody($callback.'('.json_encode($data).')');

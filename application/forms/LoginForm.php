@@ -29,7 +29,7 @@
         $this->addElement('password', 'password', array(
             'label'      => 'Contraseña',
             'required'   => true,
-            'filters'    => array('StringTrim', 'StringtoUpper'),
+            'filters'    => array('StringTrim', 'StringToUpper'),
             'validators' => array(
                 'alnum',
             ),

@@ -1,5 +1,5 @@
 <?php
-class backendAjaxController extends Zend_Controller_Action
+class BackendajaxController extends Zend_Controller_Action
 {
     public function init(){
         $this->initView();

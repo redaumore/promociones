@@ -21,7 +21,9 @@ var _lng = "-58.561710095183" ; //"-58.5648";
  
 var _promo_lat;
 var _promo_lng;
-var _baseServUri = "http://192.168.1.33/services/";
+//var _baseServUri = "http://192.168.1.33/services/";
+var _baseServUri = _baseUri + "services/";
+var _baseAjaxUri = _baseUri + "Backendajax/";
 var _activePromo;
 
 $(document).delegate( "#detail", "pagebeforeshow", function(event){
@@ -68,8 +70,6 @@ function loadPromoList(){
                 });
         },
         error: function(jqXHR, textStatus, errorThrown){
-            alert('error');
-            debugger;
             navigator.notification.alert(
             'Something went wrong...',
             null,
@@ -128,7 +128,6 @@ function callPromoDetail(promotion_id){
                 loadPromoDetail(data);
         },
         error: function(jqXHR, textStatus, errorThrown){
-            alert('error');
             debugger;
             navigator.notification.alert(
             'Something went wrong...',

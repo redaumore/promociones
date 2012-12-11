@@ -8,6 +8,11 @@
             ->appendScript($this->baseUrl().'/scripts/jquery.jqGrid.min.js');
       */
 ?>
+<script type="text/javascript" src='/scripts/jquery-1.8.2.js'></script>
+<script type="text/javascript" src='/scripts/jquery-ui-1.9.1.custom.js'></script>
+<script type="text/javascript" src='/scripts/grid.locale-es.js'></script>
+<script type="text/javascript" src='/scripts/jquery.jqGrid.min.js'></script>
+<script type="text/javascript" src="/scripts/promosalpaso.js"></script>
 <div align="center">
     <table width="100%">
         <tr>
@@ -34,13 +39,8 @@
         </tr>
     </table>
  </div>
- 
-<script type="text/javascript" src='/scripts/jquery-1.8.2.js'></script>
-<script type="text/javascript" src='/scripts/jquery-ui-1.9.1.custom.js'></script>
-<script type="text/javascript" src='/scripts/grid.locale-es.js'></script>
-<script type="text/javascript" src='/scripts/jquery.jqGrid.min.js'></script>
 <script type="text/javascript">
-    jQuery("#list2").jqGrid({url:'http://promosalpaso.local/promotion/datos',datatype: "json",
+    jQuery("#list2").jqGrid({url:_baseUri + 'promotion/datos',datatype: "json",
          colNames:['Acción', 'Código','Inicio', 'Fin', 'Descripción', 'Valor', 'Estado', 'Visitas'],
          colModel:[ {name:'act',index:'act', width:50,sortable:false},
                     {name:'Código',index:'promo_code', width:50}, 
@@ -69,6 +69,6 @@
             }    
     },
      })
-     jQuery("#list2").jqGrid('GridNav','#pager2',{edit:false,add:false,del:false});
+     //jQuery("#list2").jqGrid('GridNav','#pager2',{edit:false,add:false,del:false});
 </script>
  

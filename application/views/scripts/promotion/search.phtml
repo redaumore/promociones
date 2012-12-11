@@ -11,12 +11,17 @@
       */
 ?>
 <script type="text/javascript" src="/scripts/prototype.js"></script>
+<script type="text/javascript" src='/scripts/jquery-1.8.2.js'></script>
+<script type="text/javascript" src='/scripts/jquery-ui-1.9.1.custom.js'></script>
+<script type="text/javascript" src='/scripts/grid.locale-es.js'></script>
+<script type="text/javascript" src='/scripts/jquery.jqGrid.min.js'></script>
+<script type="text/javascript" src="/scripts/promosalpaso.js"></script>
 <script type="text/javascript">
 function loadCities()
 {
         var selectedValue = document.getElementById('province').options[document.getElementById('province').selectedIndex].value;
         var myAjax = new Ajax.Request(
-        "<?=$this->url(array('controller'=>'backendAjax','action'=>'getCities'))?>",
+        "<?=$this->url(array('controller'=>'Backendajax','action'=>'getCities'))?>",
             {
                 method:'get',
                 parameters: {province_id: selectedValue},
@@ -27,7 +32,7 @@ function loadCities()
 
 function loadProvinces()
 {       var myAjax = new Ajax.Request(
-        "<?=$this->url(array('controller'=>'backendAjax','action'=>'getProvinces'))?>",
+        "<?=$this->url(array('controller'=>'Backendajax','action'=>'getprovinces'))?>",
             {
                 method:'get',
                 onSuccess: FillFormProvinces
@@ -97,10 +102,6 @@ function FillFormProvinces(data)
         </table>
     </div>
 </form>
-<script type="text/javascript" src='/scripts/jquery-1.8.2.js'></script>
-<script type="text/javascript" src='/scripts/jquery-ui-1.9.1.custom.js'></script>
-<script type="text/javascript" src='/scripts/grid.locale-es.js'></script>
-<script type="text/javascript" src='/scripts/jquery.jqGrid.min.js'></script>
 <script type="text/javascript">
 
 loadProvinces();
@@ -117,7 +118,7 @@ function getPromotions(){
     }
     if(categoriesString != '')
         categoriesString = categoriesString.substring(0, categoriesString.length-1);
-    var _url = 'http://promosalpaso.local/promotion/search/city/' + city + '/categories/' + categoriesString;
+    var _url = _baseUri + '/promotion/search/city/' + city + '/categories/' + categoriesString;
     if (!firstClick){
         $("#list2").jqGrid('setGridParam', { url: _url }).trigger("reloadGrid");
     }
@@ -158,7 +159,7 @@ function getPromotions(){
 
 function loadPromotion(promotion_id){
     var myAjax = new Ajax.Request(
-        "<?=$this->url(array('controller'=>'backendAjax','action'=>'getPromotion'))?>",
+        "<?=$this->url(array('controller'=>'Backendajax','action'=>'getPromotion'))?>",
             {
                 method:'get',
                 parameters: {promotion_id: promotion_id},

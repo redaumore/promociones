@@ -7,7 +7,7 @@
         $this->setMethod('post');
         $this->setAttrib('enctype', Zend_Form::ENCTYPE_MULTIPART);
         //'multipart/form-data'
-        $this->addPrefixPath('PAP_Form_Element_', 'Pap/Form/Element/', 'Element');
+        $this->addPrefixPath('PAP_Form_Element_', 'PAP/Form/Element/', 'Element');
         $this->addDecorators(array('FormElements', 'Form'));
         
         $decorators = array(
@@ -37,7 +37,7 @@
             'label'      => 'Calle',
             'size' => 40,
             'required'   => true,
-            'filters'    => array('StringTrim', 'StringtoUpper'),
+            'filters'    => array('StringTrim', 'StringToUpper'),
         ));
         $this->street->setDecorators($decorators)
             ->addValidator($allowWhiteSpace, true)
@@ -138,7 +138,7 @@
         $file = new Zend_Form_Element_File('filebranch');
         $this->addElement($file);
         $this->filebranch->setLabel('Cambiar Logo')
-                ->setDestination(PUBLIC_PATH.'\\images\\tmp')
+                ->setDestination(PUBLIC_PATH.'/images/tmp')
                 ->setRequired(true)
                 ->setValueDisabled(true)
                 ->addValidator('Count', false, 1)// ensure only one file

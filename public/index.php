@@ -9,8 +9,12 @@ defined('APPLICATION_ENV')
     || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production'));
 
 // Define path to application directory
+//defined('PUBLIC_PATH')
+//    || define('PUBLIC_PATH', realpath(dirname(__FILE__) . '.'));
+
 defined('PUBLIC_PATH')
-    || define('PUBLIC_PATH', realpath(dirname(__FILE__) . '.'));
+    || define('PUBLIC_PATH', realpath(dirname(__FILE__)));
+
 
 // Define path to customer_image directory
 defined('IMAGE_PATH')
