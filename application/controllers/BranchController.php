@@ -104,7 +104,7 @@ class BranchController extends Zend_Controller_Action
                 
                     //Tratamiento de la imagen
                     if(!is_dir($customerImageDir))
-                        mkdir($customerImageDir);
+                        mkdir($customerImageDir, 0777, 1);
                     
                     $form = $this->view->form;
                     $fullFilePath = $form->filebranch->getFileName();
@@ -131,7 +131,7 @@ class BranchController extends Zend_Controller_Action
                     if (!$form->filebranch->receive()) {
                         throw new Exception($form->filebranch->getMessages());
                     }
-                    chmod($logoName,0644);
+                    chmod($logoName,0777);
                 }
                 
                 if($operation == 'new'){

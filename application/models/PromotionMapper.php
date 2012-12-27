@@ -39,6 +39,7 @@ protected $_dbTable;
             'short_description' => $promotion->getShortDescription(),
             'long_description' => $promotion->getLongDescription(),
             'promo_value' => $promotion->getPromoValue(),
+            'value_since' => $promotion->getValueSince(),
             'promo_type' => $promotion->getPromoType(),
             'displayed_text' => $promotion->getDisplayedText(),
             'alert_type' => $promotion->getAlertType(),
@@ -135,6 +136,7 @@ protected $_dbTable;
                   ->setShortDescription($row->short_description)        
                   ->setLongDescription($row->long_description)
                   ->setPromoValue($row->promo_value)
+                  ->setValueSince($row->value_since)
                   ->setQuantity($row->quantity)
                   ->setPromoType($row->promo_type)
                   ->setDisplayedText($row->displayed_text)
@@ -178,6 +180,7 @@ protected $_dbTable;
                   ->setShortDescription($row->short_description)        
                   ->setLongDescription($row->long_description)
                   ->setPromoValue($row->promo_value)
+                  ->setValueSince($row->value_since)
                   ->setQuantity($row->quantity)
                   ->setPromoType($row->type)
                   ->setDisplayedText($row->displayed_text)
@@ -282,7 +285,7 @@ protected $_dbTable;
         $adapter = Zend_Db_Table::getDefaultAdapter();
         //$statement = (($origin=='')?"SELECT DISTINCT b.name, b.latitude, b.longitude, p.*, i.path FROM promotion p ":
         //$statement = "SELECT DISTINCT b.name, b.latitude, b.longitude, p.*, i.path FROM promotion p ".
-        $statement = "SELECT DISTINCT b.name, b.latitude, b.longitude, b.street, b.number, c.name as city, p.short_description, p.displayed_text, p.promotion_id, p.promo_value, p.promo_cost, i.path FROM promotion p ".
+        $statement = "SELECT DISTINCT b.name, b.latitude, b.longitude, b.street, b.number, c.name as city, p.short_description, p.displayed_text, p.promotion_id, p.promo_value, p.promo_cost, i.path, p.value_since FROM promotion p ".
                      "INNER JOIN promotion_branch pb ON pb.promotion_id = p.promotion_id ".
                      "INNER JOIN branch b ON pb.branch_id = b.branch_id ".
                      "INNER JOIN city c ON b.city_id = c.city_id ".
@@ -290,6 +293,21 @@ protected $_dbTable;
                      (($categories == '')?'':"INNER JOIN category_user cu ON (b.user_id = cu.user_id) ").
                      "WHERE p.starts <= '".date('Y-m-d')."' AND p.ends >= '".date('Y-m-d')."' AND pb.branch_id IN ".$in. " ".
                      (($categories == '')?'':"AND cu.category_id IN (".$categories.")");
+        $results = $adapter->fetchAll($statement);
+        return $results;
+    }
+    
+    public function getPromotionsByIds($ids){
+        $in = '';
+        $adapter = Zend_Db_Table::getDefaultAdapter();
+        //$statement = (($origin=='')?"SELECT DISTINCT b.name, b.latitude, b.longitude, p.*, i.path FROM promotion p ":
+        //$statement = "SELECT DISTINCT b.name, b.latitude, b.longitude, p.*, i.path FROM promotion p ".
+        $statement = "SELECT DISTINCT b.name, b.latitude, b.longitude, b.street, b.number, c.name as city, p.short_description, p.displayed_text, p.promotion_id, p.promo_value, p.promo_cost, i.path, p.value_since FROM promotion p ".
+                     "INNER JOIN promotion_branch pb ON pb.promotion_id = p.promotion_id ".
+                     "INNER JOIN branch b ON pb.branch_id = b.branch_id ".
+                     "INNER JOIN city c ON b.city_id = c.city_id ".
+                     "LEFT JOIN image i ON (p.promotion_id = i.parent_id AND i.parent_type = 'P') ".
+                     "WHERE p.starts <= '".date('Y-m-d')."' AND p.ends >= '".date('Y-m-d')."' AND p.promotion_id IN (".$ids.")";
         $results = $adapter->fetchAll($statement);
         return $results;
     }
@@ -303,12 +321,9 @@ protected $_dbTable;
                      "LEFT JOIN image i ON (p.promotion_id = i.parent_id AND i.parent_type = 'P') ".
                      "WHERE p.promotion_id = ".$promotion_id;
         $results = $adapter->fetchAll($statement);
+        if(isset($results))
+             $this->getDbTable()->update(array('visited' => new Zend_Db_Expr( 'visited+1' ) ), '`promotion_id` ='.$results[0]['promotion_id']);
         return $results;    
     }
-    
-    
-    
-
-
 }
 

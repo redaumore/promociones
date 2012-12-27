@@ -11,6 +11,7 @@ class PAP_Model_Promotion
     protected $_shortDescription;
     protected $_longDescription;
     protected $_promoValue;
+    protected $_valueSince;
     protected $_quantity;
     protected $_promoType;
     protected $_displayedText;
@@ -165,6 +166,14 @@ class PAP_Model_Promotion
     public function getPromoValue(){
         return $this->_promoValue;
     }
+    
+    public function setValueSince($text){
+        $this->_valueSince = (int)$text;
+        return $this;
+    }
+    public function getValueSince(){
+        return $this->_valueSince;
+    }
 
     public function setQuantity($text){
         $this->_quantity = (string) $text;
@@ -300,6 +309,39 @@ class PAP_Model_Promotion
             }
         }
         
+        
+        return $promotions;
+    }
+    
+    public function getPromotionsByIds($ids, $lat, $lng){
+        $promomapper = new PAP_Model_PromotionMapper();
+        $branchmapper = new PAP_Model_BranchMapper();
+        
+        $kmlat = 0.009003753;
+        $kmlng = 0.01093571;
+        
+        $promotions = $promomapper->getPromotionsByIds($ids);
+        
+        $i = 0;
+        
+        foreach($promotions as $promo){
+            $plat = $promo['latitude'];
+            $deltalat = (($lat-$plat)*1000)/$kmlat;
+            $plng = $promo['longitude'];
+            $deltalng = (($lng-$plng)*1000)/$kmlng;
+            $distance = round(sqrt(pow($deltalat, 2) + pow($deltalng, 2)));
+            $valor = substr($promo['promo_cost'], strrpos($promo['promo_cost'], '-')+1);
+            $valor = ($valor == '0.00')?1.00:floatval($valor);
+            $indiceord = abs(($distance*$valor*1000)/(1-$distance)+(($valor -1)*1000))-1000;
+            $promotions[$i]['distance'] = $distance;
+            $promotions[$i]['ord'] = $indiceord;
+            if(!isset($promo['path']))
+                $promotions[$i]['path'] = $this->getBranchImage($promo['promotion_id']);
+            unset($promotions[$i]['promo_cost']);
+            $i += 1;
+        }
+        if(count($promotions)!=0)
+            $promotions = $this->sortPromotions($promotions);
         
         return $promotions;
     }

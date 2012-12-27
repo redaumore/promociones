@@ -68,9 +68,13 @@ label[for=branches]{
                                 </td>
                             </tr>
                             <tr>
-                                <td><?php echo $form->promoValue->renderLabel(); ?></td>
-                                <td>
+                                <td><?php echo $form->promoValue->renderLabel(); ?>
                                     <?php echo $form->promoValue->renderViewHelper(); ?>
+                                    <img src="/images/backend/icon-info.gif" title="Descripción de la descripción." />
+                                </td>
+                                <td>
+                                    <?php echo $form->valueSince->renderLabel(); ?>
+                                    <?php echo $form->valueSince->renderViewHelper(); ?>
                                     <img src="/images/backend/icon-info.gif" title="Descripción de la descripción." />
                                 </td>
                             </tr>

@@ -51,6 +51,34 @@ class servicesController extends Zend_Controller_Action
         $this->getFrontController()->setResponse($response);
     }
     
+    public function getpromolistbyidsAction(){
+        $this->_helper->layout->setLayout('json');  
+
+        $callback = $this->getRequest()->getParam('jsoncallback');
+        if ($callback != "")
+        {
+            // strip all non alphanumeric elements from callback
+            $callback = preg_replace('/[^a-zA-Z0-9_]/', '', $callback);
+        }  
+        $this->view->callback = $callback;
+
+        $lat  = $this->_getParam('lat'); //$_GET['lat'];
+        $lng = $this->_getParam('lng');
+        $ids  = $this->_getParam('ids'); //$_GET['lat'];
+        $promotion = new PAP_Model_Promotion();
+        $data = $promotion->getPromotionsByIds($ids, $lat, $lng);
+        
+        $i = 0;
+        foreach($data as $item){
+            $data[$i]["path"] = $this->getDataURI("./images".$this->getThumb($item["path"]));
+            $i = $i + 1;
+        }
+        
+        $response = $this->getFrontController()->getResponse();
+        $response->appendBody($callback.'('.json_encode($data).')');
+        $this->getFrontController()->setResponse($response);
+    }
+    
     private function getThumb($path){
         return str_replace('/image_', '/thumb/image_', $path);
     }

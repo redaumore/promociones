@@ -41,8 +41,8 @@ class PAP_Form_PromotionForm extends Zend_Form
             'size' => 60, 
             'maxlength' => 60,
             'filters'    => array('StringTrim', 'StripTags'),
-            'validators' => array(
-                array('regex', false, '/^[a-zA-Z0-9 áéíóúñÁÉÍÓÚÑ.!*+¡¿?$@,;:-]+$/')),
+            //'validators' => array(
+            //    array('regex', false, '/^[a-zA-Z0-9 áéíóúñÁÉÍÓÚÑ.!*+¡¿?$@,;:-]+$/')),
         ));
         $control = $this->getElement('shortDescription');
         $validator = new Zend_Validate_Alnum(array('allowWhiteSpace' => true));
@@ -72,8 +72,8 @@ class PAP_Form_PromotionForm extends Zend_Form
             ->addFilter('StripTags')
             ->addFilter('StringTrim')
             ->addValidator('NotEmpty', true)
-            ->addValidator($allowWhiteSpace)
-            ->addValidator('regex', false, '/^[a-zA-Z0-9 áéíóúñÁÉÍÓÚÑ.!*+¡¿?$@,;:-]+$/')
+            //->addValidator($allowWhiteSpace)
+            //->addValidator('regex', false, '/^[a-zA-Z0-9 áéíóúñÁÉÍÓÚÑ.!*+¡¿?$@,;:-]+$/')
             ->addDecorators($decorators);
         $this->addElement($control);
         
@@ -109,6 +109,14 @@ class PAP_Form_PromotionForm extends Zend_Form
             ),
         ));
         $control = $this->getElement('promoValue');
+        $control->setDecorators($decorators);
+        
+        $this->addElement('checkbox', 'valueSince', array(
+          'label'   => 'Precio "desde" ',
+          'required'=> false, 
+          'value'   => 0,  
+        ));
+        $control = $this->getElement('valueSince');
         $control->setDecorators($decorators);
         
         $this->addElement('text', 'quantity', array(

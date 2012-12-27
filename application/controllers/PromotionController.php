@@ -238,6 +238,9 @@
         $control = $form->getElement('promoValue');
         $control->setValue($promo->getPromoValue());
         
+        $control = $form->getElement('valueSince');
+        $control->setValue($promo->getValueSince());
+        
         $control = $form->getElement('quantity');
         $control->setValue($promo->getQuantity());
         
@@ -278,7 +281,7 @@
             $adapter = $form->filePromo->getTransferAdapter();
             //create directory where files would be hold
             if(!is_dir($customerImageDir))
-                mkdir($customerImageDir, 0666, 1);
+                mkdir($customerImageDir, 0777, 1);
             $i=0;
             $images= array();
 
@@ -293,10 +296,10 @@
                 $imageName2 = $promoImageDir.'/thumb/image_'.$i.'.'.$extension;
                 
                  if(!is_dir($promoImageDir))
-                    mkdir($promoImageDir, 0666, 1);
+                    mkdir($promoImageDir, 0777, 1);
                     
                 if(!is_dir($promoImageDir.'/thumb'))
-                    mkdir($promoImageDir.'/thumb', 0666, 1);
+                    mkdir($promoImageDir.'/thumb', 0777, 1);
                     
                 $adapter->addFilter('Rename', array('target'=>$imageName, 'overwrite'=>true));
                 
@@ -323,7 +326,7 @@
                     $mensajes = $form->filePromo->getMessages();
                     throw new Exception('Error!!');
                 }
-                chmod($logoName,0666);
+                chmod($logoName,0777);
                 $i++;    
             }
             /*foreach ($adapter->getFileInfo() as $info)
