@@ -1,6 +1,8 @@
 <?php
 class AuthController extends Zend_Controller_Action
 {
+    // Secret key to encrypt/decrypt with 
+    protected $_key='promosalpasoclavesecretisima'; // 8-32 characters without spaces 
 
     public function init(){
     
@@ -103,10 +105,13 @@ class AuthController extends Zend_Controller_Action
     public function activateAction()
     {
         $request = $this->getRequest();
-        $email = $request->getParam("user");
+        $param = $request->getParam("key");
+        $email = $this->convert($param, $_key);
         if(isset($email)){
             $user = new PAP_Model_User();
             $user->loadByEmail($email);
+            if(isset($user))
+                $this->_redirect('auth/notexist');    
             if($user->getStatus() == 'pending'){
                 $user->setStatus('validated');
                 $user->update();
@@ -150,8 +155,69 @@ class AuthController extends Zend_Controller_Action
     
     private function sendValidationEmail($email)
     {
-        //TODO -o RED:  Envìo de email de validaciòn.    
+        //TODO -o RED:  Envìo de email de validaciòn.
+        $to = $email;
+        $subject = "Activar tu cuenta en Promos al Paso";
+
+        // compose headers
+        $headers = "From: activaciones@promosalpaso.com\r\n";
+        $headers .= "Reply-To: activaciones@promosalpaso.com\r\n";
+        $headers .= "X-Mailer: PHP/".phpversion()."\r\n";
+        // To send HTML mail, the Content-type header must be set
+        $headers .= "MIME-Version: 1.0\r\n";
+        $headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
+
+
+        // compose message
+        $message = "
+        <html>
+          <head>
+            <title>Promos al Paso</title>
+          </head>
+          <body>
+            <h1>Activá tu cuenta en Promos al Paso</h1>
+            <p>
+                Debes activar tu cuenta de Promos al paso para seguir cargando tus datos de Comercio y Promociones<br/>
+                Para activarla solo tienes que hacer click en el siguiente link: 
+                <a href=\"http://promosalpaso.com/auth/activate/key/"+$this->convert($email, $_key)+"\">Promos al Paso</a>
+            </p>
+            <p>
+                Una vez que hayas activado tu cuenta, debes dar de alta los restantes datos de tu Comercio, por ejemplo dirección, teléfono, logo, etc.
+            </p>
+            <p>
+                Si consideras que este email fue enviado por error y quieres contarnoslo, por favor hazlo a soporte@promosalpaso.com.
+            </p>
+            <p>
+                Gracias!!
+            </p>
+          </body>
+        </html>
+        ";
+
+        // send email
+        mail($to, $subject, $message, $headers);    
     }
+    
+    // String EnCrypt + DeCrypt function 
+    // Author: halojoy, July 2006 
+    private function convert($str,$ky=''){ 
+        if($ky=='')return $str; 
+        $ky=str_replace(chr(32),'',$ky); 
+        if(strlen($ky)<8)exit('key error'); 
+        $kl=strlen($ky)<32?strlen($ky):32; 
+        $k=array();
+        for($i=0;$i<$kl;$i++){ 
+            $k[$i]=ord($ky{$i})&0x1F;
+        } 
+        $j=0;
+        for($i=0;$i<strlen($str);$i++){ 
+            $e=ord($str{$i}); 
+            $str{$i}=$e&0xE0?chr($e^$k[$j]):chr($e); 
+            $j++;
+            $j=$j==$kl?0:$j;
+        } 
+        return $str; 
+    } 
 }
 
 
