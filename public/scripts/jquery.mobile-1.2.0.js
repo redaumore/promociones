@@ -2721,16 +2721,16 @@ var createHandler = function( sequential ) {
 
 				// Prevent flickering in phonegap container: see comments at #4024 regarding iOS
 				$to.css( "z-index", -10 );
+                
+                // Set to page height
+                $to.height( screenHeight + toScroll );
+                
+                scrollPage();
 
 				$to.addClass( $.mobile.activePageClass + toPreClass );
 
 				// Send focus to page as it is now display: block
 				$.mobile.focusPage( $to );
-
-				// Set to page height
-				$to.height( screenHeight + toScroll );
-
-				scrollPage();
 
 				// Restores visibility of the new page: added together with $to.css( "z-index", -10 );
 				$to.css( "z-index", "" );

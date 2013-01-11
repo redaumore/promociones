@@ -111,5 +111,35 @@ class servicesController extends Zend_Controller_Action
     private function getDataURI($image, $mime = '') {
         return 'data: '.(function_exists('mime_content_type') ? mime_content_type($image) : $mime).';base64,'.base64_encode(file_get_contents($image));
     }
+    
+    public function getregionsAction(){
+        
+        $this->_helper->layout->setLayout('json');  
+        
+        $callback = $this->getRequest()->getParam('jsoncallback');
+        if ($callback != "")
+        {
+            // strip all non alphanumeric elements from callback
+            $callback = preg_replace('/[^a-zA-Z0-9_]/', '', $callback);
+        }  
+        $this->view->callback = $callback;
+        
+        $req_version  = $this->_getParam('region_version');
+        $config = new PAP_Model_Config();
+        $current_version = $config->getCurrentRegionVersion(); 
+        $response = $this->getFrontController()->getResponse();
+        if($req_version == $current_version)
+            $response->appendBody($callback.'()');
+        else{
+            $result = $config->getRegions($req_version, $current_version);
+            if(count($result) == 0)        
+                $response->appendBody($callback.'()');
+            else{
+                $result['version'] = $current_version;
+                $response->appendBody($callback.'('.json_encode($result).')');
+            }
+        }
+        $this->getFrontController()->setResponse($response);
+    }
 }
 
