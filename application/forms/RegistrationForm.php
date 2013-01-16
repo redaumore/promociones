@@ -54,7 +54,7 @@
         $this->addElement('password', 'password', array(
             'label'      => 'Contraseña',
             'required'   => true,
-            'filters'    => array('StringTrim', 'StringtoUpper'),
+            'filters'    => array('StringTrim', 'StringToUpper'),
             'maxlength' => 50,
             'validators' => array(
                 'alnum'
@@ -66,7 +66,7 @@
         $this->addElement('password', 'confirmPassword', array(
             'label'      => 'Repita Contraseña',
             'required'   => true,
-            'filters'    => array('StringTrim', 'StringtoUpper'),
+            'filters'    => array('StringTrim', 'StringToUpper'),
             'maxlength' => 50,
             'validators' => array(
                 'alnum'
