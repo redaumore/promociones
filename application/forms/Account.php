@@ -47,7 +47,7 @@ class PAP_Form_Account extends Zend_Form
         $this->addElement('password', 'password', array(
             'label'      => 'Contraseña:',
             'required'   => true,
-            'filters'    => array('StringTrim', 'StringtoUpper'),
+            'filters'    => array('StringTrim', 'StringToUpper'),
             'maxlength' => 50,
             'validators' => array(
                 'alnum'
@@ -58,7 +58,7 @@ class PAP_Form_Account extends Zend_Form
         $this->addElement('password', 'repassword', array(
             'label'      => 'Repita Contraseña:',
             'required'   => true,
-            'filters'    => array('StringTrim', 'StringtoUpper'),
+            'filters'    => array('StringTrim', 'StringToUpper'),
             'maxlength' => 50,
             'validators' => array(
                 'alnum'
