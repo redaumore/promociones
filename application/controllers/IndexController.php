@@ -12,11 +12,10 @@ class IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        // action body
     }
     
     public function menuAction()
-    {
+    {   
         $mainMenu = array(array('title'=>'Inicio', 'url'=>$this->view->url(array(), null, true)),
                           array('title'=>'Buscar', 
                                 'url'=>$this->view->url(array('controller'=>'promotion', 'action'=>'search'),null, true)),

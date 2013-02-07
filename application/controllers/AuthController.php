@@ -169,8 +169,7 @@ class AuthController extends Zend_Controller_Action
 
 
         // compose message
-        $message = "
-        <html>
+        $message = "<html>
           <head>
             <title>Promos al Paso</title>
           </head>
@@ -179,7 +178,7 @@ class AuthController extends Zend_Controller_Action
             <p>
                 Debes activar tu cuenta de Promos al paso para seguir cargando tus datos de Comercio y Promociones<br/>
                 Para activarla solo tienes que hacer click en el siguiente link: 
-                <a href=\"http://promosalpaso.com/auth/activate/key/"+$this->convert($email, $_key)+"\">Promos al Paso</a>
+                <a href='http://".$_SERVER['SERVER_NAME']."/auth/activate/key/".$this->convert($email, $this->_key)."'>Promos al Paso</a>
             </p>
             <p>
                 Una vez que hayas activado tu cuenta, debes dar de alta los restantes datos de tu Comercio, por ejemplo dirección, teléfono, logo, etc.
