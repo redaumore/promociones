@@ -72,6 +72,24 @@
         ));
         $this->phone->setDecorators($decorators);
         
+        $website = $this->createElement('text', 'website');
+        $website->setLabel('Sitio Web');
+        $website->addValidator(new PAP_Validate_Uri());
+        $website->addDecorators($decorators);
+        $this->addElement($website);
+        
+        // Add an email element
+        $this->addElement('text', 'email', array(
+            'label'      => 'Email contacto:',
+            'required'   => true,
+            'filters'    => array('StringTrim'),
+            'maxlength' => 100,
+            'validators' => array(
+                'EmailAddress', 
+            )
+        ));
+        $this->email->setDecorators($decorators);
+        
         $this->addElement('select', 'province', array(
             'label'      => 'Provincia',
             'required'   => true,

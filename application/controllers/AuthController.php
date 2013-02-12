@@ -76,6 +76,7 @@ class AuthController extends Zend_Controller_Action
                 $data["status"] = 'pending';
                 $data["rol"] = 2; //1:reseler, 2:customer, 3:admin
                 $users->insert($data);
+                $this->sendValidationEmail($data['email']);
                 $this->_redirect('auth/showvalidationmessage');
             }
         }        
@@ -106,11 +107,11 @@ class AuthController extends Zend_Controller_Action
     {
         $request = $this->getRequest();
         $param = $request->getParam("key");
-        $email = $this->convert($param, $_key);
+        $email = $this->convert($param, $this->_key);
         if(isset($email)){
             $user = new PAP_Model_User();
             $user->loadByEmail($email);
-            if(isset($user))
+            if(!isset($user))
                 $this->_redirect('auth/notexist');    
             if($user->getStatus() == 'pending'){
                 $user->setStatus('validated');
@@ -155,6 +156,7 @@ class AuthController extends Zend_Controller_Action
     
     private function sendValidationEmail($email)
     {
+        try {
         //TODO -o RED:  Envìo de email de validaciòn.
         $to = $email;
         $subject = "Activar tu cuenta en Promos al Paso";
@@ -194,7 +196,12 @@ class AuthController extends Zend_Controller_Action
         ";
 
         // send email
+        ZC_FileLogger::info("Activando anunciante: ".$to);
         mail($to, $subject, $message, $headers);    
+        }
+        catch(Exception $ex){
+            ZC_FileLogger::error($ex);
+        }
     }
     
     // String EnCrypt + DeCrypt function 

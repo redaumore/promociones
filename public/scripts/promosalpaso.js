@@ -44,7 +44,13 @@ $(document).ready(function(){
 });
 
 function refreshPromoList(){
-    loadPromoList(); 
+	if(_lat == null || _lng == null){
+		showMessage('No se encontraron promos. Intenta nuestra búsqueda manual.', 'Info', 'Ok');
+        gotoSearch();
+        return;
+	}
+	showMessage(_lat, 'Info', 'Ok');
+	loadPromoList(); 
 }
 
 function setLastUpdate(timestamp){
@@ -218,10 +224,26 @@ function loadPromoDetail(item){
     $("#det-distance").html(item.distance);
     $("#det-direccion").html(item.street + ' ' + item.number + ' - ' + item.city);
     $("#det-img-comercio").attr("src",item.logo);
+    if(item.branch_website != null && item.branch_website != "" )
+        $("#det-link").attr("href", item.website);
+    else
+        $("#det-web").hide();
+    
+    if(item.phone != null && item.phone != "")
+        $("#det-phone").attr("onclick", "makeacall('"+item.phone+"')");
+    else
+        $("#det-tel").hide();
+    
+    if(item.branch_email != null && item.branch_email != "")
+        $("#det-msg").attr("onclick", "sendamessage('"+item.branch_email+"')");
+    else
+        $("#det-email").hide();
+    
     if(item.path != "NOPIC")
     	$("#det-img-promo").attr("src",item.path);
     else
     	$("#det-img-promo").attr("src","images/photo_error.png");
+    
     if(item.alert_type == "N"){
         $("#det-alarma").hide();
     }
@@ -401,7 +423,7 @@ function formatPrice(price){
 var onSuccess = function(position) {
     _lat = position.coords.latitude;
 	_lng = position.coords.longitude;
-    console.log("onSuccess")
+    console.log("onSuccess");
 };
 
 function onError_highAccuracy(error) {

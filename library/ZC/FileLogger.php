@@ -28,5 +28,15 @@ class ZC_FileLogger{
     public static function info($message){
         self::getInstance()->getLog()->info($message);
     }
+    public static function debug($message){
+        self::getInstance()->getLog()->debug($message);
+    }
+    public static function warning($message){
+        self::getInstance()->getLog()->warn($message);
+    }
+    public static function error($ex){
+        self::getInstance()->getLog()->err($ex);
+    }
+    
     
 }

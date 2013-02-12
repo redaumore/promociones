@@ -30,6 +30,8 @@ class PAP_Model_BranchMapper
         $data = array(
             'user_id'   => $branch->getUser(),
             'branch_order' => $branch->getBranchorder(),
+            'branch_email' => $branch->getEmail(),
+            'branch_website' => $branch->getWebsite(),
             'latitude' => $branch->getLatitude(),
             'longitude' => $branch->getLongitude(),
             'name' => $branch->getName(),
@@ -93,6 +95,8 @@ class PAP_Model_BranchMapper
         $branch->setId($row->branch_id)
                   ->setUser($row->user_id)
                   ->setBranchorder($row->branch_order)
+                  ->setEmail($row->branch_email)
+                  ->setWebsite($row->branch_website)
                   ->setLatitude($row->latitude)
                   ->setLongitude($row->longitude)
                   ->setName($row->name)
@@ -117,6 +121,8 @@ class PAP_Model_BranchMapper
             $entry->setId($row->branch_id)
                   ->setUser($row->user_id)
                   ->setBranchorder($row->branch_order)
+                  ->setEmail($row->branch_email)
+                  ->setWebsite($row->branch_website)
                   ->setLatitude($row->latitude)
                   ->setLongitude($row->longitude)
                   ->setName($row->name)
