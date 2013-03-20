@@ -1,5 +1,6 @@
 <script type="text/javascript" src="/scripts/jquery-1.8.2.js"></script>
 <script type="text/javascript" src="/scripts/jquery-ui-1.9.1.custom.min.js"></script>
+<script type="text/javascript" src="/scripts/backend.js"></script>
 
 <?php
     $messages = $this->form->getMessages();
@@ -15,6 +16,9 @@ function sub(obj){
     var fileName = file.split("\\");
     document.getElementById("yourFile").innerHTML = "<p>" + fileName[fileName.length-1] + "</p>";
 }
+$(function () {
+    showPromoTotalCost();
+});
 </script>
 <style type="text/css">
 table td{
@@ -165,6 +169,11 @@ label[for=branches]{
                 </td>
             </tr>
             <tr>
+                <td colspan="2">
+                    <div><span>Costo de la Promo: $</span><span id="totalPromoCost"></span></div>
+                </td>
+            </tr>
+            <tr>
                 <td align="right" colspan="2">
                     <?php echo $form->save->renderViewHelper(); ?>
                 </td>
@@ -181,9 +190,17 @@ label[for=branches]{
 </form>
 <script>
   $(document).ready(function() {
-    $("#starts").datepicker({ dateFormat: "dd-mm-yy" });
+    $("#starts").datepicker({
+    dateFormat: "dd-mm-yy", 
+    onSelect: function() { showPromoTotalCost(); }
+    });
+    
+    $("#ends").datepicker({
+    dateFormat: "dd-mm-yy",
+    onSelect: function() { showPromoTotalCost(); }
+    });
+    
+    $("#promoCost").change(function(){ showPromoTotalCost();})
   });
-  $(document).ready(function() {
-    $("#ends").datepicker({ dateFormat: "dd-mm-yy" });
-  });
+
  </script>

@@ -1,8 +1,7 @@
 <?php
-
 class PAP_Model_PromotionMapper
 {
-protected $_dbTable;
+    protected $_dbTable;
  
     public function setDbTable($dbTable)
     {
@@ -142,8 +141,8 @@ protected $_dbTable;
                   ->setDisplayedText($row->displayed_text)
                   ->setAlertType($row->alert_type)
                   ->setState($row->state)
-                  ->setPromoCost($row->promo_cost)
                   ->setVisited($row->visited)
+                  ->setPromoCost($row->visited)
                   ->setCreated($row->created);
          /*         
          $imageTable = new PAP_Model_DbTable_Image();

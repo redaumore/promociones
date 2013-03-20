@@ -214,7 +214,6 @@ class PAP_Model_Promotion
     public function getState(){
         return $this->_state;
     }
-
     public function setPromoCost($text){
         $this->_promoCost = (string) $text;
         return $this;
@@ -259,6 +258,10 @@ class PAP_Model_Promotion
     
     public function getImageCount(){
         return count($this->_images);
+    }
+    
+    public function getTotalPromoCost(){
+        return PAP_Model_Payment::getGrandTotal($this);    
     }
     
     public function getPromotionsByCoords($lat, $lng, $categories = ''){
