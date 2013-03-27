@@ -84,6 +84,7 @@ class AuthController extends Zend_Controller_Action
 
     public function logoutAction()
     {
+        $this->_helper->Session->setUserSession(null);
         $storage = new Zend_Auth_Storage_Session();
         $storage->clear();
         $this->_redirect('auth/login');

@@ -1,6 +1,9 @@
 html{ font-size: 125%; }
 
-body{ font-size: .5em; }
+body{ 
+    font-size: .5em;
+    background-image: url(images/bodybgr.png);
+    background-repeat: repeat;}
 
 .registro{
     padding: 0px;
