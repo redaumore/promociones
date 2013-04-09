@@ -98,7 +98,7 @@ class PAP_Form_Treeview extends Zend_Form
         $this->submit->setDecorators($decorators);
  
         $this->setDecorators(array('FormElements',
-                                    array(array('data'=>'HtmlTag'),array('tag'=>'table', 'width' => '575px')),
+                                    array(array('data'=>'HtmlTag'),array('tag'=>'table', 'width' => '740px')),
                                     'Form',));                                       
     }
  //TODO Agregar Agencias de viaje.

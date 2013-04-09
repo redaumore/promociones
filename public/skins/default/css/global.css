@@ -19,7 +19,13 @@ root {
     font-style: normal;
     font-family: sans-serif;
 }
-body, div{
+body{
+    background-image:url('/images/mm_bg_red.gif'); 
+    background-color: #FF6100; 
+    height:100%;
+    font-family: 'Trebuchet MS',Arial,Verdana,sans-serif;
+}
+div{
     background-color: #F5E192;
     font-family: 'Trebuchet MS',Arial,Verdana,sans-serif;
 }
@@ -194,9 +200,8 @@ form#categoryTree{
     width: 310px;
 }
 div#treeViewCategorias{
-    width: 300px;
     height: 300px;
-    overflow: scroll;
+    overflow-y: scroll;
     background-color: #FFFABD;
 }
 ul#tree{

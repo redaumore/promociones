@@ -126,22 +126,23 @@ function getPromotions(){
         firstClick = false;
         
         jQuery("#list2").jqGrid({url: _url, datatype: "json",
-             colNames:['Imagen', 'Comercio','Titulo', 'Texto', 'Valor', 'Mts.'],
+             colNames:['Imagen', 'Comercio','Promoción', 'Dirección', 'Precio'],
              colModel:[ {name:'img',index:'path', width:50,sortable:false},
-                        {name:'Comercio',index:'name', width:120}, 
-                        {name:'Titulo',index:'displayed_text', width:120},
-                        {name:'Texto',index:'short_description', width:180},
-                        {name:'Valor',index:'promo_value', width:40},
-                        {name:'Mts.',index:'distance', width:40},
+                        {name:'Comercio',index:'name', width:150}, 
+                        {name:'Promoción',index:'displayed_text', width:200},
+                        {name:'Dirección',index:'short_description', width:250},
+                        {name:'Valor',index:'promo_value', width:45},
+                        /*{name:'Mts.',index:'distance', width:30},*/
              ],
-             rowNum:10,
+             rowNum:5,
              rowList:[10,20,30],
              pager: '#pager2',
              sortname: 'starts',
              viewrecords: true,
              sortorder: "desc",
+             height: "100%",
              mtype:"POST",
-             caption:"Grilla de Promociones",
+             caption:"Promociones",
              gridComplete: function(){
              var ids = jQuery("#list2").jqGrid('getDataIDs');
              for(var i=0;i < ids.length;i++){
