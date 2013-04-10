@@ -35,7 +35,8 @@
         
         $this->addElement('text', 'street', array(
             'label'      => 'Calle',
-            'size' => 40,
+            'size' => 50,
+            'maxlength' => 50,
             'required'   => true,
             'filters'    => array('StringTrim', 'StringToUpper'),
         ));
@@ -46,7 +47,8 @@
         $this->addElement('text', 'number', array(
             'label'      => 'Número',
             'required'   => true,
-            'size' => 8,
+            'size' => 5,
+            'maxlength' => 5,
             'filters'    => array('Digits'),
             'validators' => array(
                 'Digits',
@@ -57,7 +59,8 @@
         
         $this->addElement('text', 'local', array(
             'label'      => 'Local',
-            'size' => 12,
+            'size' => 30,
+            'maxlength' => 50,
             'required'   => false,
             'filters'    => array('StringTrim'),
         ));
@@ -71,6 +74,35 @@
             'filters'    => array('StringTrim'),
         ));
         $this->phone->setDecorators($decorators);
+        
+        /*$website = $this->createElement('text', 'website');
+        $website->setLabel('Sitio Web');
+        $website->addValidator(new PAP_Validate_Uri());
+        $website->addDecorators($decorators);
+        $this->addElement($website);*/
+        
+        $this->addElement('text', 'website', array(
+            'label'      => 'Sitio Web:',
+            'required'   => false,
+            'filters'    => array('StringTrim'),
+            'size'      => 40,
+            'maxlength' => 100,
+        ));
+        $this->website->addValidator(new PAP_Validate_Uri());
+        $this->website->setDecorators($decorators);
+        
+        // Add an email element
+        $this->addElement('text', 'email', array(
+            'label'      => 'Email contacto:',
+            'required'   => true,
+            'filters'    => array('StringTrim'),
+            'size'      => 30,
+            'maxlength' => 100,
+            'validators' => array(
+                'EmailAddress', 
+            )
+        ));
+        $this->email->setDecorators($decorators);
         
         $this->addElement('select', 'province', array(
             'label'      => 'Provincia',
@@ -231,9 +263,5 @@
                     array('HtmlTag',array('tag'=>'div','style'=>'width:50%;;float:left;')),
                     //array(array('fstag'=>'HtmlTag'),'options'=>array('tag'=>'fieldset','closeOnly'=>true)),
         ));
-        
-        
-            
-            
       }
   }

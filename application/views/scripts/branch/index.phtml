@@ -94,6 +94,20 @@ legend{
                                 <td><?php echo $form->city->renderViewHelper(); ?></td>
                             </tr>
                             <tr>
+                                <td><?php echo $form->website->renderLabel(); ?></td>
+                                <td colspan="2"><?php echo $form->website->renderViewHelper(); ?></td>
+                                <td><?php echo $form->email->renderLabel(); ?></td>
+                                <td colspan="2"><?php echo $form->email->renderViewHelper(); ?></td>
+                            </tr>
+                            <tr>
+                                <td colspan="6">
+                                    <div class="ui-widget-content ui-corner-all" style="padding-left: 5px;">
+                                    <p>Luego de que hayas ingresado los datos requeridos de tu comercio (nombre del comercio, calle, número, localidad y provincia) debes ubicarlo geograficamente
+                                    pulsando el botón "Localizarme". Al hacerlo el sistema te mosrtará un mapa indicando el lugar en donde se encuentra tu comercio.</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
                                <td><?php echo $form->lat->renderLabel(); ?></td>
                                <td><?php echo $form->lat->renderViewHelper(); ?></td>
                                <td><?php echo $form->lng->renderLabel(); ?></td>

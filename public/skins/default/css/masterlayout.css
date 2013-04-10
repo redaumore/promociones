@@ -8,7 +8,7 @@ p {
     font-size: .75em;
 }
 #pageWrapper {
-    width: 800px;
+    width: 960px;
     margin: auto; 
     position: relative;
 /*    margin: 1em auto ;*/
@@ -23,12 +23,12 @@ p {
 }
 #sidebar {
     float: left;
-    width: 176px;
+    width: 180px;
     height: 40em;
 }
 #main {
     float: right;
-    width: 620px;
+    width: 780px;
     right:0px; 
     /*border-width: medium;*/
 }

@@ -46,6 +46,7 @@ class BranchController extends Zend_Controller_Action
              else{
                 $form->name->setValue($this->user->getName());
                 $form->user->setValue($this->user->getId());
+                $form->email->setValue($this->user->getEmail());
              }
         }    
         
@@ -90,6 +91,7 @@ class BranchController extends Zend_Controller_Action
             //$user = $this->_helper->Session->getUserSession();
             $form->name->setValue($this->user->getName());
             $form->user->setValue($this->user->getId());
+            $form->email->setValue($this->user->getEmail());
         }
         
     }
@@ -187,6 +189,8 @@ class BranchController extends Zend_Controller_Action
         $form->number->setValue($branch->getNumber());
         $form->local->setValue($branch->getLocal());
         $form->phone->setValue($branch->getPhone());
+        $form->email->setValue($branch->getEmail());
+        $form->website->setValue($branch->getWebsite());
         $form->zipcode->setValue($branch->getZipcode());
         $form->lat->setValue($branch->getLatitude())
                 ->setAttrib('readonly', 'true')

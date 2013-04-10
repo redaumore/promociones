@@ -1,5 +1,6 @@
 <script type="text/javascript" src="/scripts/jquery-1.8.2.js"></script>
 <script type="text/javascript" src="/scripts/jquery-ui-1.9.1.custom.min.js"></script>
+<script type="text/javascript" src="/scripts/backend.js"></script>
 
 <?php
     $messages = $this->form->getMessages();
@@ -159,6 +160,11 @@ label[for=branches]{
                             </tr>
                         </table>
                     </fieldset>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div><span>Costo de la Promo: $</span><span id="promoCost"></span></div>
                 </td>
             </tr>
             <tr>

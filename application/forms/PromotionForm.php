@@ -226,6 +226,10 @@ class PAP_Form_PromotionForm extends Zend_Form
         ));
         $this->imagePromo->setDecorators($decorators);
         
+        //$div = new PAP_Form_Element_Div('totalCost');
+        //$div->setValue('Costo de la promo')->setAttrib('class', 'costo');
+        //$this->addElement($div);
+        
         $this->addElement('multiselect', 'branches', array(
             'label'     => 'Sucursales',
             'ignore'   => true,

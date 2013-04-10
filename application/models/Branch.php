@@ -5,6 +5,8 @@ class PAP_Model_Branch
     protected $_branch_id;
     protected $_user_id;
     protected $_branch_order;
+    protected $_branch_email;
+    protected $_branch_website;
     protected $_latitude;
     protected $_longitude;
     protected $_name;
@@ -227,6 +229,28 @@ class PAP_Model_Branch
     public function getUpdated()
     {
         return $this->_updated;
+    }
+    
+    public function setEmail($text)
+    {
+        $this->_branch_email = (string) $text;
+        return $this;
+    }
+ 
+    public function getEmail()
+    {
+        return $this->_branch_email;
+    }
+    
+    public function setWebsite($text)
+    {
+        $this->_branch_website = (string) $text;
+        return $this;
+    }
+ 
+    public function getWebsite()
+    {
+        return $this->_branch_website;
     }
     
     public function setPhone($text)

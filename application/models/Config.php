@@ -23,39 +23,26 @@ Class PAP_Model_Config{
         return $this->_dbTable;
     }
     
-    public function getCurrentRegionVersion(){
-        $select =  $this->getDbTable()->select();
-        $select->where('element = ?', 'regions');
-       $result = $this->getDbTable()->fetchAll($select);
-        if (0 == count($result)) {
-            return 0;
-        }
-        $version = $result[0]->version;
-        return $version;
-    }
-    
-    public function getRegions($from, $to){
+    public function getRegions($from){
         $data = array();
         $provinceTable = new PAP_Model_DbTable_Province();
         $query = $provinceTable->select();
-        $query->where('version > ? ', $from);
-        $query->where('version <= ? ', $to);
+        $query->where('updated > ? ', $from);
         $query->where('status = ?', 'A');
         $result = $provinceTable->fetchAll($query);
         $data = array();
         foreach($result as $row) {
-            $data["province"][] = array("province_id"=>$row->province_id, "name"=>$row->name);
+            $data["province"][] = array("province_id"=>$row->province_id, "name"=>$row->name, "updated"=>$row->updated);
         }
         
 
         $cityTable = new PAP_Model_DbTable_City();
         $query = $cityTable->select();
-        $query->where('version > ? ', $from);
-        $query->where('version <= ? ', $to);
+        $query->where('updated > ? ', $from);
         $query->where('status = ?', 'A');
         $result = $cityTable->fetchAll($query);
         foreach ($result as $row) {
-            $data["city"][] = array("city_id"=>$row->city_id, "name"=>$row->name, "latitude"=>$row->latitude, "longitude"=>$row->longitude, "province_id"=>$row->province_id);
+            $data["city"][] = array("city_id"=>$row->city_id, "name"=>$row->name, "latitude"=>$row->latitude, "longitude"=>$row->longitude, "province_id"=>$row->province_id, "updated"=>$row->updated);
         }
         return $data;
     }

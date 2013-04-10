@@ -11,7 +11,8 @@
 	margin:0px;
 	padding:0px;
 	list-style:none;
-	}
+    display: inline;
+    }
 	
 	#cssmenu li a {
 		height: 32px;
@@ -22,7 +23,7 @@
 		display: block;
 		background: url(images/menu4.gif);
 		padding: 8px 0 0 30px;
-		}
+        }
 		
 	#cssmenu li a:hover {
 		color: #fff;

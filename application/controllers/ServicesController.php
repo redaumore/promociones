@@ -1,6 +1,8 @@
 <?php
 class servicesController extends Zend_Controller_Action
 {
+    protected $_return;
+    
     public function init(){
         /*
         $this->initView();
@@ -109,7 +111,14 @@ class servicesController extends Zend_Controller_Action
     }
     
     private function getDataURI($image, $mime = '') {
-        return 'data: '.(function_exists('mime_content_type') ? mime_content_type($image) : $mime).';base64,'.base64_encode(file_get_contents($image));
+        if(file_exists($image))
+            $_return = 'data: '.(function_exists('mime_content_type') ? mime_content_type($image) : $mime).';base64,'.base64_encode(file_get_contents($image));
+        else{
+            //$noimage = './images/backend/photo_error.png';
+            //$_return = 'data: '.(function_exists('mime_content_type') ? mime_content_type($noimage) : 'image/png').';base64,'.base64_encode(file_get_contents($noimage));        
+            $_return = "NOPIC";
+        }
+        return $_return;
     }
     
     public function getregionsAction(){
@@ -124,20 +133,14 @@ class servicesController extends Zend_Controller_Action
         }  
         $this->view->callback = $callback;
         
-        $req_version  = $this->_getParam('region_version');
+        $req_version  = $this->_getParam('lastupdate');
         $config = new PAP_Model_Config();
-        $current_version = $config->getCurrentRegionVersion(); 
         $response = $this->getFrontController()->getResponse();
-        if($req_version == $current_version)
+        $result = $config->getRegions($req_version);
+        if(count($result) == 0)        
             $response->appendBody($callback.'()');
         else{
-            $result = $config->getRegions($req_version, $current_version);
-            if(count($result) == 0)        
-                $response->appendBody($callback.'()');
-            else{
-                $result['version'] = $current_version;
-                $response->appendBody($callback.'('.json_encode($result).')');
-            }
+            $response->appendBody($callback.'('.json_encode($result).')');
         }
         $this->getFrontController()->setResponse($response);
     }

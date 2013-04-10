@@ -1,8 +1,7 @@
 <?php
-
 class PAP_Model_PromotionMapper
 {
-protected $_dbTable;
+    protected $_dbTable;
  
     public function setDbTable($dbTable)
     {
@@ -96,7 +95,7 @@ protected $_dbTable;
     
     public function getViewRecord($promotion_id){
         $adapter = Zend_Db_Table::getDefaultAdapter();
-        $statement = "SELECT DISTINCT b.name, b.street, b.number, b.logo, b.latitude, b.longitude, c.name, p.*, i.path FROM promotion p ".
+        $statement = "SELECT DISTINCT b.name, b.street, b.number, b.logo, b.latitude, b.longitude, b.branch_website, b.branch_email, b.phone, c.name, p.*, i.path FROM promotion p ".
                      "INNER JOIN promotion_branch pb ON pb.promotion_id = p.promotion_id ".
                      "INNER JOIN branch b ON pb.branch_id = b.branch_id ".
                      "INNER JOIN city c ON b.city_id = c.city_id ".
@@ -142,8 +141,8 @@ protected $_dbTable;
                   ->setDisplayedText($row->displayed_text)
                   ->setAlertType($row->alert_type)
                   ->setState($row->state)
-                  ->setPromoCost($row->promo_cost)
                   ->setVisited($row->visited)
+                  ->setPromoCost($row->visited)
                   ->setCreated($row->created);
          /*         
          $imageTable = new PAP_Model_DbTable_Image();
@@ -285,7 +284,7 @@ protected $_dbTable;
         $adapter = Zend_Db_Table::getDefaultAdapter();
         //$statement = (($origin=='')?"SELECT DISTINCT b.name, b.latitude, b.longitude, p.*, i.path FROM promotion p ":
         //$statement = "SELECT DISTINCT b.name, b.latitude, b.longitude, p.*, i.path FROM promotion p ".
-        $statement = "SELECT DISTINCT b.name, b.latitude, b.longitude, b.street, b.number, c.name as city, p.short_description, p.displayed_text, p.promotion_id, p.promo_value, p.promo_cost, i.path, p.value_since FROM promotion p ".
+        $statement = "SELECT DISTINCT b.name, b.latitude, b.longitude, b.street, b.number, b.branch_website, b.branch_email, b.phone, c.name as city, p.short_description, p.displayed_text, p.promotion_id, p.promo_value, p.promo_cost, i.path, p.value_since FROM promotion p ".
                      "INNER JOIN promotion_branch pb ON pb.promotion_id = p.promotion_id ".
                      "INNER JOIN branch b ON pb.branch_id = b.branch_id ".
                      "INNER JOIN city c ON b.city_id = c.city_id ".
@@ -302,7 +301,7 @@ protected $_dbTable;
         $adapter = Zend_Db_Table::getDefaultAdapter();
         //$statement = (($origin=='')?"SELECT DISTINCT b.name, b.latitude, b.longitude, p.*, i.path FROM promotion p ":
         //$statement = "SELECT DISTINCT b.name, b.latitude, b.longitude, p.*, i.path FROM promotion p ".
-        $statement = "SELECT DISTINCT b.name, b.latitude, b.longitude, b.street, b.number, c.name as city, p.short_description, p.displayed_text, p.promotion_id, p.promo_value, p.promo_cost, i.path, p.value_since FROM promotion p ".
+        $statement = "SELECT DISTINCT b.name, b.latitude, b.longitude, b.street, b.number, b.branch_website, b.branch_email, b.phone, c.name as city, p.short_description, p.displayed_text, p.promotion_id, p.promo_value, p.promo_cost, i.path, p.value_since FROM promotion p ".
                      "INNER JOIN promotion_branch pb ON pb.promotion_id = p.promotion_id ".
                      "INNER JOIN branch b ON pb.branch_id = b.branch_id ".
                      "INNER JOIN city c ON b.city_id = c.city_id ".
@@ -314,7 +313,7 @@ protected $_dbTable;
     
     public function getPromotionById($promotion_id){
         $adapter = Zend_Db_Table::getDefaultAdapter();
-        $statement = "SELECT DISTINCT b.name, b.latitude, b.longitude, b.street, b.number, b.phone, b.local, b.logo, b.branch_id, c.name as city, p.*, i.path FROM promotion p ".
+        $statement = "SELECT DISTINCT b.name, b.latitude, b.longitude, b.street, b.number, b.phone, b.local, b.logo, b.branch_id, b.branch_website, b.branch_email, b.phone, c.name as city, p.*, i.path FROM promotion p ".
                      "INNER JOIN promotion_branch pb ON pb.promotion_id = p.promotion_id ".
                      "INNER JOIN branch b ON pb.branch_id = b.branch_id ".
                      "INNER JOIN city c ON b.city_id = c.city_id ".
