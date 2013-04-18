@@ -324,5 +324,14 @@ class PAP_Model_PromotionMapper
              $this->getDbTable()->update(array('visited' => new Zend_Db_Expr( 'visited+1' ) ), '`promotion_id` ='.$results[0]['promotion_id']);
         return $results;    
     }
+    
+    public function getPromotionByDates($from, $to, $user_id = 0){
+        $adapter = Zend_Db_Table::getDefaultAdapter();
+        $statement = "SELECT p.promo_cost, p.starts, p.ends ".
+                      "FROM promotion AS p ".
+                      "WHERE p.ends > str_to_date('".$from."','%Y-%m-%d') AND p.starts < str_to_date('".$to."','%Y-%m-%d')".(($user_id == 0)?" ":" AND p.user_id = ".$user_id). 
+                      "ORDER BY p.promo_cost";
+        $results = $adapter->fetchAll($statement);
+    }
 }
 

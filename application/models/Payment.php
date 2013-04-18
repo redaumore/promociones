@@ -48,8 +48,17 @@ class PAP_Model_Payment
         return $workingDays; 
     }
     
-    public static function getPayments($user_id){
+    public static function getPayments($user, $periods){
+        $payments = array();
         
+        foreach($periods as $period){
+            $payment = array();
+            $payment['periodo'] = $period->getCode();
+            $payment['desde'] = $period->getFrom();
+            $payment['hasta'] = $period->getTo();
+            $promoObject = new PAP_Model_Promotion();
+            $promoObject->
+        }    
     }
     
     public static function getGrandTotal($promo){

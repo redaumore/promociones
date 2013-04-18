@@ -50,7 +50,7 @@ class IndexController extends Zend_Controller_Action
                 array_push($mainMenu, array('title'=>'Mis Datos', 'url'=>$this->view->url(array('controller'=>'branch', 'action'=>'index'),null, true)));   
                 array_push($mainMenu, array('title'=>'Mis Categorias', 'url'=>$this->view->url(array('controller'=>'branch', 'action'=>'categories'),null, true)));
                 array_push($mainMenu, array('title'=>'Mis Promos', 'url'=>$this->view->url(array('controller'=>'promotion', 'action'=>'index'),null, true)));
-                array_push($mainMenu, array('title'=>'Mis Costos', 'url'=>$this->view->url(array('controller'=>'promotion', 'action'=>'index'),null, true)));
+                array_push($mainMenu, array('title'=>'Mis Costos', 'url'=>$this->view->url(array('controller'=>'payment', 'action'=>'index'),null, true)));
             }
             array_push($mainMenu, array('title'=>'Contactenos', 'url'=>$this->view->url(array('controller'=>'index', 'action'=>'contact'),null, true)));
             array_push($mainMenu, array('title'=>'Buscar Promos', 'url'=>$this->view->url(array('controller'=>'promotion', 'action'=>'search'),null, true)));

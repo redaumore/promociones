@@ -159,7 +159,8 @@ class PAP_Form_PromotionForm extends Zend_Form
                 'Q' => 'Mostrar por cantidad',
                 'N' => 'No mostrar'
                 ))
-                ->setOptions(array('id' => 'alertType'));
+                ->setOptions(array('id' => 'alertType'))
+                ->setAttrib('label_class', 'leftalign ui-button-text');
         $this->addElement($control);
         $this->alertType->setAttrib('class', 'leftalign ui-button-text');
                 

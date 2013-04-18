@@ -374,6 +374,12 @@ class PAP_Model_Promotion
         return $promo;    
     }
     
+    public static function getPromotionsByDates($from, $to, $user = null){
+        $promomapper = new PAP_Model_PromotionMapper();
+        $promos = $promomapper->getPromotionByDates($from, $to, $user);
+             
+    }
+    
     private function sortPromotions($promotions){
         foreach ($promotions as $key => $row) {
             $indice[$key]  = $row['ord'];
