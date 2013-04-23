@@ -30,6 +30,7 @@ protected $_dbTable;
             'user_id'   => $charge->getuserId(),
             'period' => $charge->getPeriod(),
             'amount' => $charge->getAmount(),
+            'final_amount' => $charge->getFinalAmount(),
             'discount' => $charge->getDiscount(),
             'paid_off' => $charge->getPaidOff(),
             'created' => date('Y-m-d H:i:s'),
@@ -51,9 +52,10 @@ protected $_dbTable;
         }
         $row = $result->current();
         $charge->setId($row->charge_id)
-                  ->setuserId($row->user_id)
+                  ->setUserId($row->user_id)
                   ->setPeriod($row->period)
                   ->setAmount($row->amount)
+                  ->setFinalAmount($row->final_amount)
                   ->setDiscount($row->discount)
                   ->setPaidOff($row->paid_off)
                   ->setCreated($row->created);
@@ -66,9 +68,10 @@ protected $_dbTable;
         foreach ($resultSet as $row) {
             $entry = new PAP_Model_Charge();
             $entry->setId($row->charge_id)
-                  ->setuserId($row->user_id)
+                  ->setUserId($row->user_id)
                   ->setPeriod($row->period)
                   ->setAmount($row->amount)
+                  ->setFinalAmount($row->final_amount)
                   ->setDiscount($row->discount)
                   ->setPaidOff($row->paid_off)
                   ->setCreated($row->created);

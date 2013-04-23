@@ -2,7 +2,7 @@
 
 class PAP_Model_Payment
 {
-    public static function  getWorkingDays($startDate, $endDate, $holidays = null){ 
+    public static function  getWorkingDays($startDate, $endDate, $holidays = array()){ 
 
         // Calculate weekday number. Monday is 1, Sunday is 7 
         $firstWeekdayNumber = date("N", strtotime($startDate)); 
@@ -50,15 +50,23 @@ class PAP_Model_Payment
     
     public static function getPayments($user, $periods){
         $payments = array();
-        
+        $grandtotal = 0;
         foreach($periods as $period){
-            $payment = array();
-            $payment['periodo'] = $period->getCode();
-            $payment['desde'] = $period->getFrom();
-            $payment['hasta'] = $period->getTo();
             $promoObject = new PAP_Model_Promotion();
-            $promoObject->
-        }    
+            $promos = $promoObject->getPromotionsByDates($period->getFrom(), $period->getTo(), $user);
+            if(isset($promos)){
+                $payment = array();
+                $payment['periodo'] = $period->getCode();
+                $payment['desde'] = $period->getFrom();
+                $payment['hasta'] = $period->getTo();    
+                $total = PAP_Model_Payment::getPeriodsRecords($period, $promos, $promoscost);
+                $payment['costos'] = $promoscost;
+                $payment['total'] = $total;
+                $payments[] = $payment;
+                $grandtotal += $total;
+            }
+        }
+        return $payments;    
     }
     
     public static function getGrandTotal($promo){
@@ -75,6 +83,49 @@ class PAP_Model_Payment
         else
             return 0;
     } 
+    
+    private static function getPeriodsRecords($period, $promos, &$promoscost){
+        $promocost = '';
+        $cost = 0;
+        $promoscounter = 0;
+        $cost_row = array();
+        $promos_rows = array();
+        $first = true;
+        $cantdias = 0;
+        foreach ($promos as $promo){
+            if(!($promocost == $promo['promo_cost'])){
+                $promocost = $promo['promo_cost'];
+                if($first)
+                    $first = false;    
+                else{
+                    $cost_row['cost'] = $cost;
+                    $cost_row['promo_count'] = $promoscounter;
+                    $cost_row['cant_dias'] = $cantdias;
+                    $cost_row['subtotal'] = $cost * $cantdias;
+                    $promos_rows[] = $cost_row;
+                    $total =+ $cost * $cantdias;   
+                    $promoscounter = 0;
+                    $cantdias = 0;
+                }    
+            }
+            $a_cost = explode('-', $promo['promo_cost']);
+            $cost = (float)$a_cost[1];
+            $promoscounter += 1;
+            //Dejamos que el limite derecho lo calcule el controlador modificando 'ends' $today = date("Y-m-d H:i:s");
+            $datefrom = ($period->getFrom()>$promo['starts'])?$period->getFrom():$promo['starts'];
+            $dateto = ($period->getTo()>$promo['ends'])?$promo['ends']:$period->getTo();
+            
+            $cantdias += round(PAP_Model_Payment::getWorkingDays($datefrom, $dateto));
+        }
+        $cost_row['cost'] = $cost;
+        $cost_row['promo_count'] = $promoscounter;
+        $cost_row['cant_dias'] = $cantdias;
+        $cost_row['subtotal'] = $cost * $cantdias;
+        $promos_rows[] = $cost_row;
+        $total += $cost * $cantdias;
+        $promoscost = $promos_rows;
+        return $total;
+    }
 
 }
 

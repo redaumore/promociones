@@ -89,6 +89,6 @@ class PAP_Model_Period
                 $ids[] = $idpivot;
             $numperiods--;
         }
-        $periods = $periodMapper->getPeriodsByIds($ids);
+        return $periodMapper->getPeriodsByIds($ids);
     }
 }

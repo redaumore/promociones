@@ -28,7 +28,7 @@ class PAP_Model_PromotionMapper
         $startsDate = strtotime( $promotion->getStarts());
         $startsDate = date( 'Y-m-d H:i:s', $startsDate );
         $endsDate = strtotime( $promotion->getEnds());
-        $endsDate = date( 'Y-m-d H:i:s', $endsDate );
+        $endsDate = date( 'Y-m-d H:i:s', $endsDate.' 23:59:59');
         
         $data = array(
             'promo_code'   => $promotion->getPromoCode(),
@@ -106,6 +106,17 @@ class PAP_Model_PromotionMapper
         return $results;   
     }
  
+     public function getPromotionByPeriod($period, $user_id=null){
+        $adapter = Zend_Db_Table::getDefaultAdapter();
+        $statement = "SELECT DISTINCT pro.user_id, pro.promo_cost, pro.starts, pro.ends, per.code ".
+                     "FROM promotion pro, periods per ".
+                     "WHERE (pro.starts <= per.date_to AND pro.ends >= per.date_from) ".(isset($user_id))?"AND pro.user_id = 1 ":"".
+                     "AND per.code IN ('".$period."') ".
+                     "ORDER BY pro.user_id, pro.promo_cost";
+                     
+        $results = $adapter->fetchAll($statement);
+        return $results;   
+    }
     public function delete(PAP_Model_Promotion $promotion)
     {
         $table = new PAP_Model_DbTable_Image();
@@ -330,8 +341,9 @@ class PAP_Model_PromotionMapper
         $statement = "SELECT p.promo_cost, p.starts, p.ends ".
                       "FROM promotion AS p ".
                       "WHERE p.ends > str_to_date('".$from."','%Y-%m-%d') AND p.starts < str_to_date('".$to."','%Y-%m-%d')".(($user_id == 0)?" ":" AND p.user_id = ".$user_id). 
-                      "ORDER BY p.promo_cost";
+                      " ORDER BY p.promo_cost;";
         $results = $adapter->fetchAll($statement);
+        return $results;
     }
 }
 

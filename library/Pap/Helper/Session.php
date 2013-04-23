@@ -40,4 +40,3 @@ class PAP_Helper_Session extends Zend_Controller_Action_Helper_Abstract
     }
     
 }
-?>

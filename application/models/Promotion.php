@@ -311,8 +311,6 @@ class PAP_Model_Promotion
                 $promotions = $this->getPromotionsByCoords($lat, $lng, $categories);
             }
         }
-        
-        
         return $promotions;
     }
     
@@ -376,8 +374,16 @@ class PAP_Model_Promotion
     
     public static function getPromotionsByDates($from, $to, $user = null){
         $promomapper = new PAP_Model_PromotionMapper();
-        $promos = $promomapper->getPromotionByDates($from, $to, $user);
+        $promos = $promomapper->getPromotionByDates($from, $to, $user->getId());
+        return $promos;
              
+    }
+    
+    public static function getPromotionsByPeriod($period, $user = null){
+        if(isset($user))
+            return PAP_Model_PromotionMapper::getPromotionByPeriod($period, $user->getId());
+        else
+            return PAP_Model_PromotionMapper::getPromotionByPeriod($period);
     }
     
     private function sortPromotions($promotions){
