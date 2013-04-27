@@ -374,9 +374,11 @@ class PAP_Model_Promotion
     
     public static function getPromotionsByDates($from, $to, $user = null){
         $promomapper = new PAP_Model_PromotionMapper();
-        $promos = $promomapper->getPromotionByDates($from, $to, $user->getId());
+        if(isset($user))
+            $promos = $promomapper->getPromotionByDates($from, $to, $user->getId());
+        else
+            $promos = $promomapper->getPromotionByDates($from, $to);
         return $promos;
-             
     }
     
     public static function getPromotionsByPeriod($period, $user = null){

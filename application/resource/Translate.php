@@ -14,4 +14,4 @@ class PAP_Application_Resource_Translate extends Zend_Application_Resource_Resou
         return $translate;
    }
 }
-?>
+

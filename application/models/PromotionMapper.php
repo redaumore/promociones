@@ -106,13 +106,13 @@ class PAP_Model_PromotionMapper
         return $results;   
     }
  
-     public function getPromotionByPeriod($period, $user_id=null){
+     public static function getPromotionByPeriod($period, $user_id=null){
         $adapter = Zend_Db_Table::getDefaultAdapter();
-        $statement = "SELECT DISTINCT pro.user_id, pro.promo_cost, pro.starts, pro.ends, per.code ".
-                     "FROM promotion pro, periods per ".
-                     "WHERE (pro.starts <= per.date_to AND pro.ends >= per.date_from) ".(isset($user_id))?"AND pro.user_id = 1 ":"".
-                     "AND per.code IN ('".$period."') ".
-                     "ORDER BY pro.user_id, pro.promo_cost";
+        $statement = "SELECT DISTINCT pro.user_id, pro.promo_cost, pro.starts, pro.ends, per.code ";
+        $statement .= "FROM promotion pro, periods per ";
+        $statement .= "WHERE (pro.starts <= per.date_to AND pro.ends >= per.date_from) AND per.code IN ('".$period."') ";
+        $statement .= (isset($user_id))?" AND pro.user_id = 1 ":" ";
+        $statement .= "ORDER BY pro.user_id, pro.promo_cost ";
                      
         $results = $adapter->fetchAll($statement);
         return $results;   
@@ -338,10 +338,10 @@ class PAP_Model_PromotionMapper
     
     public function getPromotionByDates($from, $to, $user_id = 0){
         $adapter = Zend_Db_Table::getDefaultAdapter();
-        $statement = "SELECT p.promo_cost, p.starts, p.ends ".
+        $statement = "SELECT p.user_id, p.promo_cost, p.starts, p.ends ".
                       "FROM promotion AS p ".
-                      "WHERE p.ends > str_to_date('".$from."','%Y-%m-%d') AND p.starts < str_to_date('".$to."','%Y-%m-%d')".(($user_id == 0)?" ":" AND p.user_id = ".$user_id). 
-                      " ORDER BY p.promo_cost;";
+                      "WHERE p.ends > str_to_date('".$from."','%Y-%m-%d') AND p.starts < str_to_date('".$to."','%Y-%m-%d')".(($user_id == 0)?" ":" AND p.user_id = ".$user_id)." ". 
+                      "ORDER BY p.user_id, p.promo_cost;";
         $results = $adapter->fetchAll($statement);
         return $results;
     }

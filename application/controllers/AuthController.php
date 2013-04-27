@@ -158,7 +158,7 @@ class AuthController extends Zend_Controller_Action
     private function sendValidationEmail($email)
     {
         try {
-        //TODO -o RED:  Envìo de email de validaciòn.
+        //DONE -o RED:  Envìo de email de validaciòn.
         $to = $email;
         $subject = "Activar tu cuenta en Promos al Paso";
 

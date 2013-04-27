@@ -15,6 +15,7 @@ class PaymentController extends Zend_Controller_Action
                         $payments = $this->getCurrentPeriod($user, true);
                         break;    
                     case 'pendientes':
+                        $payments = $this->getPendingPayments($user);
                         break;
                     case 'rango':
                         break;
@@ -33,17 +34,38 @@ class PaymentController extends Zend_Controller_Action
     
     
     public function createchargesAction(){
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(TRUE);
         $config = new PAP_Helper_Config();
         $lastPeriod = $config->getLastPeriod();
+        //$lastPeriod = "2MAR13";
         $currentPeriod = $this->getCurrentPeriodCode();
-        if(!($lastPeriod == $currentPeriod)){
+        //$currentPeriod = "1ABR13";
+        if($lastPeriod <> $currentPeriod){
             if($lastPeriod <> ""){
+                $payments = null;
                 $promos = PAP_Model_Promotion::getPromotionsByPeriod($lastPeriod);
-                    
+                
+                $period = new PAP_Model_Period();
+                $period->loadByCode($lastPeriod);
+                $periods = array();
+                $periods[] = $period;
+                
+                $payments = PAP_Model_Payment::getAllPayments($periods);
+                foreach($payments as $payment){
+                    $charge = new PAP_Model_Charge();
+                    $charge->setAmount($payment["total"])
+                            ->setDiscount(0)
+                            ->setPeriod($payment["periodo"])
+                            ->setPaidOff('N')
+                            ->setUserId($payment["user_id"])
+                            ->setFinalAmount($payment["total"]);
+                    if($payment["total"] == "0.00")
+                        $charge->setPaidOff('S');
+                    $charge->save();
+                }
             }
             $config->setLastPeriod($currentPeriod);
-            
-                    
         }  
     }
     /***
@@ -52,14 +74,14 @@ class PaymentController extends Zend_Controller_Action
     * @param mixed $user_id
     * @param mixed $periods
     */
-    public function getLastPayments($user, $numperiods = 6){
+    public function getLastPayments(PAP_Model_User $user, $numperiods = 6){
         $date = date('Y-m-d');
         $periods = PAP_Model_Period::getPeriodsOffset($date, $numperiods);
         $payments = PAP_Model_Payment::getPayments($user, $periods);
         return $payments;
     }
     
-    private function getCurrentPeriod($user, $untiltoday){
+    private function getCurrentPeriod(PAP_Model_User $user, $untiltoday){
         $dates = array(array(date('Y-m-d')),array(date('Y-m-d')));
         $periods = PAP_Model_Period::getPeriods($dates);
         if($untiltoday){
@@ -79,6 +101,22 @@ class PaymentController extends Zend_Controller_Action
         $code =$code.$month_mini[$date['mon']];
         $code =$code.substr($date['year'], -2);
         return $code;
+    }
+    
+    private function getPendingPayments(PAP_Model_User $user = null){
+        $payments = array();
+        $unpaidCharges = PAP_Model_Charge::getUnpaidCharges($user);
+        $periods = array();
+        foreach($unpaidCharges as $charge){
+            $period = new PAP_Model_Period();
+            $period->loadByCode($charge->getPeriod());
+            $periods[] = $period;    
+        }
+        if(!isset($user)){
+            $payments = PAP_Model_Payment::getAllPayments($periods);}
+        else{
+            $payments = PAP_Model_Payment::getPayments($user, $periods);}
+        return $payments;    
     }
     
     private function checkLogin(){

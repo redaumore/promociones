@@ -69,6 +69,54 @@ class PAP_Model_Payment
         return $payments;    
     }
     
+    public static function getAllPayments($periods){
+        $payments = array();
+        $grandtotal = 0;
+        $i = 0;
+        $userpromos = array();
+        $current_user = '';
+        foreach($periods as $period){
+            $promoObject = new PAP_Model_Promotion();
+            $allpromos = $promoObject->getPromotionsByDates($period->getFrom(), $period->getTo(), null);
+            $countpromos = count($allpromos);
+            foreach($allpromos as $promo){
+                $i += 1;
+                if(!($current_user == $promo['user_id'] || $current_user == '')){
+                    if(isset($userpromos)){
+                        $payment = array();
+                        $payment['user_id'] = $current_user;
+                        $payment['periodo'] = $period->getCode();
+                        $payment['desde'] = $period->getFrom();
+                        $payment['hasta'] = $period->getTo();    
+                        $total = PAP_Model_Payment::getPeriodsRecords($period, $userpromos, $promoscost);
+                        $payment['costos'] = $promoscost;
+                        $payment['total'] = $total;
+                        $payments[] = $payment;
+                        $grandtotal += $total;
+                    }
+                    $userpromos = array();
+                    $total = 0;
+                }
+                $userpromos[] = $promo;
+                $current_user = $promo['user_id'];
+                if($countpromos == $i){
+                    //proceso ultima promoción.
+                    $payment = array();
+                    $payment['user_id'] = $current_user;
+                    $payment['periodo'] = $period->getCode();
+                    $payment['desde'] = $period->getFrom();
+                    $payment['hasta'] = $period->getTo();    
+                    $total = PAP_Model_Payment::getPeriodsRecords($period, $userpromos, $promoscost);
+                    $payment['costos'] = $promoscost;
+                    $payment['total'] = $total;
+                    $payments[] = $payment;
+                    $grandtotal += $total;    
+                }
+            }
+        }
+        return $payments;    
+    }
+    
     public static function getGrandTotal($promo){
         return PAP_Model_Payment::getTotal($promo, $promo->getStarts(), $promo->getEnds());    
     }
@@ -84,16 +132,18 @@ class PAP_Model_Payment
             return 0;
     } 
     
-    private static function getPeriodsRecords($period, $promos, &$promoscost){
+    public static function getPeriodsRecords($period, $promos, &$promoscost){
         $promocost = '';
         $cost = 0;
+        $total = 0;
         $promoscounter = 0;
         $cost_row = array();
         $promos_rows = array();
         $first = true;
         $cantdias = 0;
+        $current_user = '';
         foreach ($promos as $promo){
-            if(!($promocost == $promo['promo_cost'])){
+            if($promocost <> $promo['promo_cost']){
                 $promocost = $promo['promo_cost'];
                 if($first)
                     $first = false;    

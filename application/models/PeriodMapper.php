@@ -43,6 +43,35 @@ class PAP_Model_PeriodMapper
         return $periods;        
     }
     
+    public function loadPeriodByCode($code, PAP_Model_Period $period){
+        $per = null;
+        $select = $this->getDbTable()->select();
+        $select->where('code IN (?)', $code);
+        $result = $this->getDbTable()->fetchAll($select);
+        if(isset($result)){
+            $period->setId($result[0]->period_id)
+                ->setFrom($result[0]->date_from)
+                ->setTo($result[0]->date_to)
+                ->setCode($result[0]->code);
+        }
+    }
+    
+    public function getPeriodsByCode($codes){
+        //$strids = implode(",", $ids);
+        $select = $this->getDbTable()->select();
+        $select->where('period_id IN (?)', $codes);
+        $result = $this->getDbTable()->fetchAll($select);
+        foreach($result as $period){
+            $per = new PAP_Model_Period();
+            $per->setId($period->period_id)
+                ->setFrom($period->date_from)
+                ->setTo($period->date_to)
+                ->setCode($period->code);
+            $periods[] = $per;        
+        }
+        return $periods;        
+    }
+    
     public function getPeriodsByIds($ids){
         //$strids = implode(",", $ids);
         $select = $this->getDbTable()->select();
@@ -57,8 +86,6 @@ class PAP_Model_PeriodMapper
             $periods[] = $per;        
         }
         return $periods;        
-        
-        
     }    
     
  

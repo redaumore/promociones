@@ -71,6 +71,12 @@ class PAP_Model_Period
         return $this->_code;
     }
     
+    public function loadByCode($code){
+        $mapper = new PAP_Model_PeriodMapper();
+        $mapper->loadPeriodByCode($code, $this);
+        return;
+    }
+    
     public static function getPeriods($dates){
         $periodMapper = new PAP_Model_PeriodMapper();
         return $periodMapper->getPeriods($dates);

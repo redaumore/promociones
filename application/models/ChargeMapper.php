@@ -27,7 +27,7 @@ protected $_dbTable;
     public function save(PAP_Model_Charge $charge)
     {
         $data = array(
-            'user_id'   => $charge->getuserId(),
+            'user_id'   => $charge->getUserId(),
             'period' => $charge->getPeriod(),
             'amount' => $charge->getAmount(),
             'final_amount' => $charge->getFinalAmount(),
@@ -36,11 +36,16 @@ protected $_dbTable;
             'created' => date('Y-m-d H:i:s'),
         );
  
-        if (null === ($id = $branch->getId())) {
+        try{
+        if (null === ($id = $charge->getId())) {
             unset($data['charge_id']);
             $this->getDbTable()->insert($data);
         } else {
             $this->getDbTable()->update($data, array('charge_id = ?' => $id));
+        }
+        }
+        catch(Exception $ex){
+            //TODO 6: Loguear intento de inserción duplicado   
         }
     }
  
@@ -78,6 +83,13 @@ protected $_dbTable;
             $entries[] = $entry;
         }
         return $entries;
+    }
+    
+    public function getUnpaidCharges($user_id = 0){
+        $adapter = Zend_Db_Table::getDefaultAdapter();
+        $statement = "SELECT * FROM charge WHERE paid_off <> 'S' " .(($user_id == 0)?";":" AND user_id = ".$user_id).";";
+        $results = $adapter->fetchAll($statement);
+        return $results;
     }
   }
 
