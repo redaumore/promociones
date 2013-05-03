@@ -1,15 +1,22 @@
 <?php
 class PaymentController extends Zend_Controller_Action
 {
+     public function init(){
+      $form = new PAP_Form_PaymentForm();
+      $this->view->form = $form;      
+     }
+     
      public function indexAction(){
         $this->checkLogin();
         $form = new PAP_Form_PaymentForm();
-        $this->view->form = $form;
+        $this->view->form = $form; 
         if($this->getRequest()->isPost()){
+            //$this->_helper->viewRenderer->setNoRender();
+            //$this->_helper->getHelper('layout')->disableLayout();
             if($form->isValid($_POST)){
-                $data = $form->getValues();
+                $data = $this->getParam('reportType');
                 $user = $this->_helper->Session->getUserSession();
-                switch($data['reportType']){
+                switch($data){
                     case 'actual':
                         //true: corta en el día de hoy
                         $payments = $this->getCurrentPeriod($user, true);
@@ -23,14 +30,14 @@ class PaymentController extends Zend_Controller_Action
                         //devulve los últimos 6 períodos
                         $payments = $this->getLastPayments($user);
                         break;
-                } 
-                echo var_dump($payments);
+                }
+                $control = $form->getElement('data');
+                $valor = json_encode($payments);
+                $control->setValue($valor);
+                //echo $this->_helper->json($payments);
             }
         }
-        else{
-               
-        }
-    }
+     }
     
     
     public function createchargesAction(){
@@ -86,7 +93,7 @@ class PaymentController extends Zend_Controller_Action
         $periods = PAP_Model_Period::getPeriods($dates);
         if($untiltoday){
             $per = $periods[0];
-            $per->setTo(date('Y-m-d'));
+            $per->setTo(date('Y-m-d H:i:s'));
             $periods[0] = $per;
         }
         $payments = PAP_Model_Payment::getPayments($user, $periods);
@@ -110,7 +117,7 @@ class PaymentController extends Zend_Controller_Action
         foreach($unpaidCharges as $charge){
             $period = new PAP_Model_Period();
             $period->loadByCode($charge->getPeriod());
-            $periods[] = $period;    
+            $periods[$charge->getId()] = $period;    
         }
         if(!isset($user)){
             $payments = PAP_Model_Payment::getAllPayments($periods);}

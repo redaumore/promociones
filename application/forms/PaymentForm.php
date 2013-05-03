@@ -35,9 +35,12 @@
                 ->setDecorators($decorators);
         $this->addElement($control);
         
-        $this->addElement('submit', 'save', array(
+        $this->addElement('submit', 'search', array(
             'ignore'   => true,
             'label'      => 'Buscar',
         ));
+        $this->search->setAttrib('class', 'buttons');
+            
+        $this->addElement('hidden', 'data');
       }
   }

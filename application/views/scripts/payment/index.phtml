@@ -1,3 +1,46 @@
 <?php
-    //$this->form->setAction($this->url());
-    echo $this->form;
+    $messages = $this->errorMessage;
+      /*echo $this->headLink()->appendStylesheet($this->baseUrl().'/skins/default/css/jquery-ui-1.8.23.custom.css')
+            ->appendStylesheet($this->baseUrl().'/skins/default/css/ui.jqgrid.css');
+      echo $this->headScript()->appendScript($this->baseUrl().'/scripts/jquery-1.8.0.min.js')
+            ->appendScript($this->baseUrl().'/scripts/jquery-ui-1.8.23.custom.min.js')
+            ->appendScript($this->baseUrl().'scripts/grid.locale-es.js')
+            ->appendScript($this->baseUrl().'/scripts/jquery.jqGrid.min.js');
+      */
+?>
+<script type="text/javascript" src='/scripts/jquery-1.8.2.js'></script>
+<script type="text/javascript" src='/scripts/jquery-ui-1.9.1.custom.js'></script>
+<script type="text/javascript" src='/scripts/grid.locale-es.js'></script>
+<script type="text/javascript" src='/scripts/jquery.jqGrid.min.js'></script>
+<script type="text/javascript" src='/scripts/jquery.jqGrid.src.js'></script>
+<script type="text/javascript" src="/scripts/backend.js"></script>
+<div align="center">
+    <table width="100%">
+        <tr>
+            <td>
+                <div style="background-image: url(/images/backend/tit-promociones.png); background-repeat:no-repeat; background-position: center; height: 50px;">&nbsp;</div>
+                <hr/>
+                <?php echo $this->errorMessage($this->form, $messages); ?>
+            </td>
+        </tr>
+        <tr>
+            <td><?php echo $this->form; ?></td>
+        </tr>
+        <tr>
+            <td align="center">
+                <div>
+                    <table id="list2"></table>
+                    <div id="pager2"></div>
+                </div>
+            </td>
+        </tr>
+    </table>
+ </div>
+
+ <script type="text/javascript">
+$(document).ready(function(){
+    if($('input#data').val() != ""){
+        getPayments();
+    }         
+});
+ </script>

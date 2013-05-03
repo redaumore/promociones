@@ -51,11 +51,12 @@ class PAP_Model_Payment
     public static function getPayments($user, $periods){
         $payments = array();
         $grandtotal = 0;
-        foreach($periods as $period){
+        foreach($periods as $key => $period){
             $promoObject = new PAP_Model_Promotion();
             $promos = $promoObject->getPromotionsByDates($period->getFrom(), $period->getTo(), $user);
             if(isset($promos)){
                 $payment = array();
+                $payment['charge_id'] = $key;
                 $payment['periodo'] = $period->getCode();
                 $payment['desde'] = $period->getFrom();
                 $payment['hasta'] = $period->getTo();    
@@ -75,7 +76,7 @@ class PAP_Model_Payment
         $i = 0;
         $userpromos = array();
         $current_user = '';
-        foreach($periods as $period){
+        foreach($periods as $key => $period){
             $promoObject = new PAP_Model_Promotion();
             $allpromos = $promoObject->getPromotionsByDates($period->getFrom(), $period->getTo(), null);
             $countpromos = count($allpromos);
@@ -85,6 +86,7 @@ class PAP_Model_Payment
                     if(isset($userpromos)){
                         $payment = array();
                         $payment['user_id'] = $current_user;
+                        $payment['charge_id'] = $key;
                         $payment['periodo'] = $period->getCode();
                         $payment['desde'] = $period->getFrom();
                         $payment['hasta'] = $period->getTo();    
@@ -103,6 +105,7 @@ class PAP_Model_Payment
                     //proceso ultima promoción.
                     $payment = array();
                     $payment['user_id'] = $current_user;
+                    $payment['charge_id'] = $key;
                     $payment['periodo'] = $period->getCode();
                     $payment['desde'] = $period->getFrom();
                     $payment['hasta'] = $period->getTo();    
