@@ -144,5 +144,59 @@ class servicesController extends Zend_Controller_Action
         }
         $this->getFrontController()->setResponse($response);
     }
+    
+    public function sendpaymentAction(){
+        $this->_helper->layout->setLayout('json');  
+        
+        $callback = $this->getRequest()->getParam('jsoncallback');
+        if ($callback != "")
+        {
+            // strip all non alphanumeric elements from callback
+            $callback = preg_replace('/[^a-zA-Z0-9_]/', '', $callback);
+        }  
+        $this->view->callback = $callback; 
+        
+        $data = $this->_getParam("data");
+        $payment_json = $data['data'][0];
+        $charges = $payment_json['charges_ids'];
+        $charges = explode(',', $charges);
+        
+        try{
+            foreach($charges as $charge_id){
+                $charge = new PAP_Model_Charge();
+                $charge->loadById($charge_id);
+                $payment = new PAP_Model_Payment();
+                $payment->setAmount($charge->getAmount())
+                        ->setChargeId($charge->getId())
+                        ->setControl($payment_json['nro_tx'])
+                        ->setMethodId($payment_json['operacion'])
+                        ->setPaymentDate($payment_json['fecha']);
+                if($payment_json['operacion'] == "T"){
+                    $payment->setEntity($payment_json['banco_origen']);
+                }
+                else
+                    $payment->setEntity($payment_json['banco_destino']);
+                $payment->save();
+                $charge->setPaidOff('S');
+                $charge->save();                            
+            }
+            
+            $data = array();
+            $data['result_code'] = '0';
+            $data['result_message'] = 'Información del pago informada guardada con éxito.';        
+            $response = $this->getFrontController()->getResponse();
+            $response->appendBody($callback.'('.json_encode($data).')');
+            $this->getFrontController()->setResponse($response);   
+        }
+        catch(Exception $ex){
+            $data = array();
+            $data['result_code'] = $ex->getCode();
+            $data['result_message'] = 'Hubo un error guardando la información del pago. Por favor envíe un email a soporte@promosalpaso.com con dicha información.';
+            $response = $this->getFrontController()->getResponse();
+            $response->appendBody($callback.'('.json_encode($data).')');
+            $this->getFrontController()->setResponse($response);    
+        }
+    }
 }
+
 

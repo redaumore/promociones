@@ -2,6 +2,98 @@
 
 class PAP_Model_Payment
 {
+    protected $_payment_id;
+    protected $_charge_id;
+    protected $_amount;
+    protected $_method_id;
+    protected $_entity;
+    protected $_payment_date;
+    protected $_control;
+    protected $_created;
+    
+     public function setId($text){
+        $this->_payment_id = (string) $text;
+        return $this;}
+    public function getId(){
+        return $this->_payment_id;}
+    
+    public function setChargeId($text){
+        $this->_charge_id = (string) $text;
+        return $this;}
+    public function getChargeId(){
+        return $this->_charge_id;}
+        
+    public function setAmount($text){
+        $this->_amount = (string) $text;
+        return $this;}
+    public function getAmount(){
+        return $this->_amount;}
+        
+    public function setMethodId($text){
+        $this->_method_id = (string) $text;
+        return $this;}
+    public function getMethodId(){
+        return $this->_method_id;}
+    
+    public function setEntity($text){
+        $this->_entity = (string) $text;
+        return $this;}
+    public function getEntity(){
+        return $this->_entity;}
+    
+    public function setCreated($text){
+        $this->_created_id = (string) $text;
+        return $this;}
+    public function getCreated(){
+        return $this->_created;}
+    
+    public function setPaymentDate($text){
+        $this->_payment_date = (string) $text;
+        return $this;}
+    public function getPaymentDate(){
+        return $this->_payment_date;}
+    
+    public function setControl($text){
+        $this->_control = (string) $text;
+        return $this;}
+    public function getControl(){
+        return $this->_control;}
+        
+    
+    public function __construct(array $options = null){
+        if (is_array($options)) 
+            $this->setOptions($options);
+    } 
+    
+    public function __set($name, $value){
+        $method = 'set' . $name;
+        if (('mapper' == $name) || !method_exists($this, $method))
+            throw new Exception('Invalid charge property');
+        $this->$method($value);
+    }
+ 
+    public function __get($name){
+        $method = 'get' . $name;
+        if (('mapper' == $name) || !method_exists($this, $method))
+            throw new Exception('Invalid charge property');
+        return $this->$method();
+    }
+    
+    public function save(){
+        $mapper = new PAP_Model_PaymentMapper();
+        $mapper->save($this);
+    }
+ 
+    public function setOptions(array $options){
+        $methods = get_class_methods($this);
+        foreach ($options as $key => $value) {
+            $method = 'set' . ucfirst($key);
+            if (in_array($method, $methods))
+                $this->$method($value);
+        }
+        return $this;
+    }
+    
     public static function  getWorkingDays($startDate, $endDate, $holidays = array()){ 
 
         // Calculate weekday number. Monday is 1, Sunday is 7 
@@ -179,6 +271,5 @@ class PAP_Model_Payment
         $promoscost = $promos_rows;
         return $total;
     }
-
 }
 

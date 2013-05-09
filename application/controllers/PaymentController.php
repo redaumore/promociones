@@ -24,8 +24,6 @@ class PaymentController extends Zend_Controller_Action
                     case 'pendientes':
                         $payments = $this->getPendingPayments($user);
                         break;
-                    case 'rango':
-                        break;
                     case 'ultimos':
                         //devulve los últimos 6 períodos
                         $payments = $this->getLastPayments($user);

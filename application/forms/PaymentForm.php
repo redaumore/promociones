@@ -26,7 +26,7 @@
         $control->setLabel('Tipo de Reporte')
                 ->setMultiOptions(array(
                 'actual' => 'Período Actual',
-                'pendientes' => 'Pendientes',
+                'pendientes' => 'Cargos Pendientes',
                 'ultimos' => 'Últimos períodos'
                 ))
                 ->setOptions(array('id' => 'reportType'))
@@ -40,6 +40,13 @@
             'label'      => 'Buscar',
         ));
         $this->search->setAttrib('class', 'buttons');
+        
+        $this->addElement('button', 'pay', array(
+            'ignore'   => true,
+            'label'      => 'Informar Pago',
+        ));
+        $this->pay->setAttrib('class', 'buttons')
+                    ->setAttrib('onClick', 'showPaymentInfo()');
             
         $this->addElement('hidden', 'data');
       }

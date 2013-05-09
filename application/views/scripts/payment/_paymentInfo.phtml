@@ -1,0 +1,111 @@
+<script type="text/javascript">
+    function showTipoOperacion(){
+        var operacion = $('#ddl_operacion').val();
+        if(operacion == "T"){
+            $('#div_banco_trans').show();
+            $('#div_banco_dep').hide();
+        }
+        else{
+            $('#div_banco_dep').show();
+            $('#div_banco_trans').hide();    
+        }
+    }
+    function showOtro(){
+        var banco = $('#ddl_banco_orig').val();
+        if(banco == 'otro')
+            $('#div_otro_banco').show();
+        else
+            $('#div_otro_banco').hide();
+    }
+</script>
+<div id="paymentInfo" class="invisible">
+    <div><span>Información de Pago</span></div>
+    <div id="paymentFormMessage">
+        <span>Debes completar todos los campos requeridos.</span>
+    </div>
+    <div id="div_desc_pago">
+            <label class="control-label" for="txt_desc_pago">Período/s a pagar:</label>
+            <div class="controls">
+                <input id="txt_desc_pago" value="" readonly="true">
+            </div>
+        </div>
+    <div class="control-group" id="div_tipo_tx">
+        <label class="control-label" for="ddl_operacion">Tipo Operación:</label>
+        <div class="controls">
+            <select id="ddl_operacion" onchange="showTipoOperacion();">
+                <option value="T">Transferencia</option>
+                <option value="D">Depósito</option>
+            </select>
+        </div>
+    </div>
+    <div class="control-group" id="div_banco_trans">
+        <label class="control-label" for="ddl_banco_orig">Banco:</label>
+        <div class="controls">
+            <select id="ddl_banco_orig" onChange="showOtro();">
+                <option value="galicia">Galicia</option>
+                <option value="santander">Santander</option>
+                <option value="otro">Otro</option>
+            </select>
+        </div>
+        <div id="div_otro_banco" style="display: none;">
+            <label class="control-label" for="txt_otro_banco">Otro:</label>
+            <div class="controls">
+                <input id="txt_otro_banco" value="">
+            </div>
+        </div>
+    </div>
+    <div class="control-group" id="div_banco_dep" style="display: none;">
+        <label class="control-label" for="ddl_banco_dest">Cuenta destino:</label>
+        <div class="controls">
+            <select id="ddl_banco_dest">
+                <option value="galicia">Galicia</option>
+            </select>
+        </div>
+    </div>
+    <div class="control-group" id="div_nro_tx">
+        <label class="control-label" for="txt_nro_tx">Nro transacción:</label>
+        <div class="controls">
+            <input id="txt_nro_tx" type="text"/>
+        </div>
+    </div>
+    <div class="control-group" id="div_fecha">
+        <label class="control-label" for="txt_fecha">Fecha:</label>
+        <div class="controls">
+            <input id="txt_fecha" type="text"/>
+        </div>
+    </div>
+    <div class="control-group" id="div_monto">
+        <label class="control-label" for="txt_monto">Monto:</label>
+        <div class="controls">
+            <input id="txt_monto" type="text"/>
+        </div>
+    </div>      
+    <div>
+        <input type="button" class="buttons" id="btn_pay" value="Informar Pago" onclick="sendPayment();"></input>
+        <input type="button" class="buttons" id="cancel" value="Cancelar" onclick="hidePaymentForm();"></input>
+    </div>
+</div>
+<input type="hidden" id="charges_ids" />
+<script type="text/javascript">
+    function hidePaymentForm(){
+        document.getElementById("paymentInfo").className = "invisible";
+        document.getElementById("pay").focus();
+    }
+    
+    function validatePaymentForm(){
+        resp = true;
+        if($('#ddl_operacion').val() == "T"){
+            if($('#ddl_banco_orig').val() == "otro"){
+                if($('#txt_otro_banco').val() == "" )
+                    resp = false;
+            }
+        }
+        if($('#txt_nro_tx').val() == "")
+            resp = false;
+        if($('#txt_monto').val() == "" )
+            resp = false;
+        if($('#txt_fecha').val() == "")
+            resp = false;
+        return resp;   
+    }
+</script>

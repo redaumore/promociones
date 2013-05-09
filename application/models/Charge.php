@@ -98,13 +98,18 @@ class PAP_Model_Charge
     
     public function insert(array $options){
         $this->setOptions($options);
-        $branchMapper = new PAP_Model_ChargeMapper();
-        $branchMapper->save($this);
+        $mapper = new PAP_Model_ChargeMapper();
+        $mapper->save($this);
     }
     
     public function save(){
-        $branchMapper = new PAP_Model_ChargeMapper();
-        $branchMapper->save($this);
+        $mapper = new PAP_Model_ChargeMapper();
+        $mapper->save($this);
+    }
+    
+    public function loadById($charge_id){
+      $mapper = new PAP_Model_ChargeMapper();
+      $mapper->find($charge_id, $this);  
     }
     
     public static function getUnpaidCharges(PAP_Model_User $user = null){

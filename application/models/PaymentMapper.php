@@ -29,8 +29,10 @@ protected $_dbTable;
         $data = array(
             'charge_id'   => $payment->getChargeId(),
             'amount' => $payment->getAmount(),
-            'control_id' => $payment->getControlId(),
-            'payment_type' => $payment->getPaymentType(),
+            'control' => $payment->getControl(),
+            'method_id' => $payment->getMethodId(),
+            'payment_date' => $payment->getPaymentDate(),
+            'entity' => $payment->getEntity(),
             'created' => date('Y-m-d H:i:s'),
         );
  
