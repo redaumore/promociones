@@ -178,15 +178,23 @@ function LoadComplete()
 function DisplayEmptyText( display)
 {
     var grid = $('#list2');
+    $("#pay").hide();
     var emptyText = grid.getGridParam('emptyDataText'); // get the empty text
     var container = grid.parents('.ui-jqgrid-view'); // find the grid's container
     if (display) {
+        $("#gbox_list2").hide();
         container.find('.ui-jqgrid-hdiv, .ui-jqgrid-bdiv').hide(); // hide the column headers and the cells below
-        container.find('.ui-jqgrid-titlebar').after('' + emptyText + ''); // insert the empty data text
+        //container.find('.ui-jqgrid-titlebar').after('' + emptyText + ''); // insert the empty data text
+        showMessage("warning", "No hay registros para mostrar.");
+        
     }
     else {
+        container.find('loading').hide();
         container.find('.ui-jqgrid-hdiv, .ui-jqgrid-bdiv').show(); // show the column headers
-        container.find('#EmptyData' + dataObject).remove(); // remove the empty data text
+        //container.find('#EmptyData' + dataObject).remove(); // remove the empty data text
+        var reportType = $("input[name='reportType']:checked").val();
+        if(reportType == "pendientes")
+            $("#pay").show();
     }
 }
 
