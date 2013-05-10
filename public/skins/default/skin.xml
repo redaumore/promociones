@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <skin>
     <stylesheets>
-        <stylesheet>masterlayout.css</stylesheet>
+        <!--<stylesheet>masterlayout.css</stylesheet>
         <stylesheet>global.css</stylesheet>
-        <!-- <stylesheet>jquery-treeview.css</stylesheet> -->
+        <stylesheet>jquery-treeview.css</stylesheet> -->
         <stylesheet>ui.jqgrid.css</stylesheet>
         <stylesheet>jquery-ui-1.9.1.custom.css</stylesheet>
+        <stylesheet>bootstrap.css</stylesheet> 
+        <stylesheet>datepicker.css</stylesheet>
+        <stylesheet>bootswatch.css</stylesheet>
+        <stylesheet>bootstrap-responsive.css</stylesheet>
         <!--<stylesheet>bootstrap.css</stylesheet>
         <stylesheet>bootstrap-responsive.css</stylesheet>
         <stylesheet>bootswatch.css</stylesheet>

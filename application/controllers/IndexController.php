@@ -18,14 +18,7 @@ class IndexController extends Zend_Controller_Action
     {
         $this->user = $this->_helper->Session->getUserSession();
         if(!isset($this->user)){
-            $mainMenu = array(array('title'=>'Inicio', 'url'=>$this->view->url(array(), null, true)),
-                          array('title'=>'Anunciantes', 
-                                'url'=>$this->view->url(array('controller'=>'auth', 'action'=>'login'),null, true)),
-                          array('title'=>'Contactenos',
-                                'url'=>$this->view->url(array('controller'=>'index', 'action'=>'contact'),null, true)),
-                          array('title'=>'Buscar Promos', 
-                                'url'=>$this->view->url(array('controller'=>'promotion', 'action'=>'search'),null, true)),
-                          );    
+            $mainMenu = array();
         }
         else{
             if($this->user->Status == ""){

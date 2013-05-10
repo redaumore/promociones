@@ -11,6 +11,10 @@ function showMessage(messageType, message){
     }
 }
 
+function gotoPath(path){
+    document.location.href = path;    
+}
+
 function closeMessage(){
    $("#div_alert").hide(); 
 }

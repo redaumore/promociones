@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -9,18 +10,25 @@
         $this->loadSkin($this->skin);
         echo $this->headLink();
 ?>
+<script type="text/javascript" src="/scripts/jquery-1.8.2.js"></script>
+<script type="text/javascript" src="/scripts/jquery-ui-1.9.1.custom.min.js"></script>
+<script type="text/javascript" src="/scripts/bootstrap.js"></script>
+<script type="text/javascript" src="/scripts/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="/scripts/bootswatch.js"></script>
 <script type="text/javascript" src="/scripts/environment.js"></script>
+<script type="text/javascript" src="/scripts/backend.js"></script>
 </head>
 <body>
     <div id="pageWrapper">
         <?php echo $this->partial("_header.phtml"); ?>    
-        <div id="sidebar">
-            <div id="subNav" style="background-color: inherit;">
+        
+        <div id="content" class="container">
+            <div id="main_menu">
                 <?php echo $this->layout()->menu; ?>
             </div>
-        </div>
-        <div id="main">
-            <?php echo $this->layout()->content;?>&nbsp;
+            <div id="main">
+                <?php echo $this->layout()->content;?>&nbsp;
+            </div>
         </div>
         <?php echo $this->partial("_footer.phtml"); ?>
     </div>
