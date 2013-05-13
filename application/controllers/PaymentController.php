@@ -36,7 +36,12 @@ class PaymentController extends Zend_Controller_Action
             }
         }
      }
+     
+     public function successAction(){}
     
+    public function failureAction(){}
+    
+    public function pendingAction(){}
     
     public function createchargesAction(){
         $this->_helper->layout->disableLayout();
