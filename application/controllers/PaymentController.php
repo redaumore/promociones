@@ -37,11 +37,53 @@ class PaymentController extends Zend_Controller_Action
         }
      }
      
-     public function successAction(){}
+     public function successAction(){
+         $paidCharges = $_GET['external_reference'];
+         $status = $_GET['collection_status'];
+         $status = $this->getStatusChar($status);
+         $collection_id = $_GET['collection_id'];
+         $entity = $_GET['payment_type'];
+         $paidCharges = explode(',', $paidCharges);
+         foreach($paidCharges as $charge_id){
+            $charge = new PAP_Model_Charge();
+            $charge->loadById($charge_id);
+            $charge->setPaidOff($status);
+            $charge->save();
+            $payment = new PAP_Model_Payment();
+            $payment->setAmount($charge->getAmount())
+                ->setControl($collection_id)
+                ->setChargeId($charge->getId())
+                ->setMethodId('MP')
+                ->setPaymentDate(date('Y-m-d H:i:s'))
+                ->setEntity($entity);
+            $payment->save();
+         }
+     }
     
     public function failureAction(){}
     
-    public function pendingAction(){}
+    public function pendingAction(){
+        $paidCharges = $_GET['external_reference'];
+         $status = $_GET['collection_status'];
+         $status = $this->getStatusChar($status);
+         $collection_id = $_GET['collection_id'];
+         $entity = $_GET['payment_type'];
+         $paidCharges = explode(',', $paidCharges);
+         foreach($paidCharges as $charge_id){
+            $charge = new PAP_Model_Charge();
+            $charge->loadById($charge_id);
+            $charge->setPaidOff($status);
+            $charge->save();
+            $payment = new PAP_Model_Payment();
+            $payment->setAmount($charge->getAmount())
+                ->setControl($collection_id)
+                ->setChargeId($charge->getId())
+                ->setMethodId('MP')
+                ->setPaymentDate(date('Y-m-d H:i:s'))
+                ->setEntity($entity);
+            $payment->save();
+         }
+    }
     
     public function createchargesAction(){
         $this->_helper->layout->disableLayout();
@@ -133,5 +175,27 @@ class PaymentController extends Zend_Controller_Action
         $this->user = $this->_helper->Session->getUserSession();
         if(!isset($this->user))
             $this->_redirect('/auth/login');    
+    }
+    
+    private function getStatusChar($status){
+        $status_char;
+         switch ($status) {
+            case 'approved':
+                $status_char = 'A';
+                break;
+            case 'pending':
+                $status_char = 'P';
+                break;
+            case 'in_process':
+                $status_char = 'I';
+                break;
+            case 'rejected':
+                $status_char = 'R';
+                break;
+            case 'null':
+                $status_char = 'N';
+                break;
+        }
+        return $status_char;    
     }
 }

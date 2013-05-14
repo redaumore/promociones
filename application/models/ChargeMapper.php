@@ -87,7 +87,7 @@ protected $_dbTable;
     
     public function getUnpaidCharges($user_id = 0){
         $adapter = Zend_Db_Table::getDefaultAdapter();
-        $statement = "SELECT * FROM charge WHERE paid_off <> 'S' " .(($user_id == 0)?";":" AND user_id = ".$user_id).";";
+        $statement = "SELECT * FROM charge WHERE paid_off <> 'A' " .(($user_id == 0)?";":" AND user_id = ".$user_id).";";
         $results = $adapter->fetchAll($statement);
         return $results;
     }

@@ -133,6 +133,36 @@ class PAP_Model_Charge
         }
         return $charges;
     }
-        
+    
+    /*
+    approved    El pago fue aprobado y acreditado
+    pending    El usuario no completó el pago
+    in_process    El pago está siendo revisado
+    rejected    El pago fué rechazado, el usuario puede intentar nuevamente el pago
+    null    El usuario no completó el proceso de pago y no se ha generado ningún pago */
+    
+    public static function setStatus($id_charge, $status){
+        $status_char;
+        switch ($status) {
+            case 'approved':
+                $status_char = 'A';
+                break;
+            case 'pending':
+                $status_char = 'P';
+                break;
+            case 'in_process':
+                $status_char = 'I';
+                break;
+            case 'rejected':
+                $status_char = 'R';
+                break;
+            case 'null':
+                $status_char = 'N';
+                break;
+        }
+        $this->loadById($id_charge);
+        $this->setPaidOff($status_char);
+        $this->save();
+    }    
 }
 

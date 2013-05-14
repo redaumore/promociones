@@ -2,8 +2,8 @@
 class servicesController extends Zend_Controller_Action
 {
     protected $_return;
-    protected $_MP_client_id = '322186708781200';
-    protected $_MP_client_secret = 'vLciBy6G9rr0KR9Egw8TZ3P2MFo9ZdHS';
+    protected $_MP_client_id = '1002026871332942';
+    protected $_MP_client_secret = '6vomHLtI0O03ZrMP7LUOeIy61tnH06Kr';
     protected $_MPTokenUrl = 'https://api.mercadolibre.com/oauth/token';
     
     public function init(){

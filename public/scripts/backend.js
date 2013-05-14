@@ -270,6 +270,20 @@ function DisplayEmptyText( display)
     }
 }
 
+function checkoutReturn(json){
+    if (json.collection_status=='approved'){
+    alert ('Payment credited');
+  } else if(json.collection_status=='pending'){
+    alert ('The user has not completed the payment');
+  } else if(json.collection_status=='in_process'){    
+    alert ('Payment is being reviewed');    
+  } else if(json.collection_status=='rejected'){
+    alert ('Payment was rejected, the user can retry payment');
+  } else if(json.collection_status==null){
+    alert ('The user has not completed the payment process and no payment has been generated');
+  }
+}
+
 
 
 
