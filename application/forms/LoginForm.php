@@ -9,7 +9,7 @@
         $decorators = array(
                 'ViewHelper',
                 array('Label', array(
-                'class' => 'rightalign ui-button-text'
+                'class' => 'control-label'
                 )), 
                 array('HtmlTag', array('tag' => 'div')),
         );
@@ -45,6 +45,6 @@
                 array('HtmlTag', array('tag' => 'div')),
         );
         $this->login->setDecorators($decoratorsButton)
-                ->setAttrib('class', 'buttons');
+                ->setAttrib('class', 'btn');
       }
   }

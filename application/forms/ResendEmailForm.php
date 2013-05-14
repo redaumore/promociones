@@ -9,7 +9,7 @@
             'ignore'   => true,
             'label'      => 'Enviar Email',
         ));
-        $this->reenviar->setAttrib('class', 'buttons');
+        $this->reenviar->setAttrib('class', 'btn');
         
         $this->addElement('hidden', 'email');
       }

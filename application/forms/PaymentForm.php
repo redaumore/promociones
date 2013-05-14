@@ -12,7 +12,7 @@
         $decorators = array(
                 array('ViewHelper'),
                 array('Label', array(
-                'class' => 'leftalign ui-button-text'
+                'class' => 'control-label'
                 )),
         );
         
@@ -39,13 +39,13 @@
             'ignore'   => true,
             'label'      => 'Buscar',
         ));
-        $this->search->setAttrib('class', 'buttons');
+        $this->search->setAttrib('class', 'btn btn-primary');
         
         $this->addElement('button', 'pay', array(
             'ignore'   => true,
             'label'      => 'Informar Pago',
         ));
-        $this->pay->setAttrib('class', 'buttons')
+        $this->pay->setAttrib('class', 'btn')
                     ->setAttrib('onClick', 'showPaymentInfo()');
             
         $this->addElement('hidden', 'data');

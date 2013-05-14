@@ -13,7 +13,7 @@
         $decorators = array(
                 array('ViewHelper'),
                 array('Label', array(
-                'class' => 'leftalign ui-button-text'
+                'class' => 'control-label'
                 )),
                 array('HtmlTag', array('tag' => 'div')),
         );
@@ -157,7 +157,7 @@
             'label'      => 'Localizarme',
         ));
         $this->localization->setDecorators($decoratorsButton)
-                    ->setAttrib('class', 'buttons')
+                    ->setAttrib('class', 'btn btn-primary')
                     ->setAttrib("onClick", "ShowGoogleLocalizator();");
         
         $this->addElement('img', 'logo', array(
@@ -189,7 +189,7 @@
             'ignore'   => true,
             'label'      => 'Cargar Imagen',
         ));
-        $this->fakefile->setAttrib('class', 'buttons')
+        $this->fakefile->setAttrib('class', 'btn btn-primary')
             ->setAttrib("onClick", "clickFile();");
         
         $this->addElement('submit', 'save', array(
@@ -197,14 +197,14 @@
             'label'      => 'Guardar',
         ));
         $this->save->setDecorators($decoratorsButton)
-                ->setAttrib('class', 'buttons');
+                ->setAttrib('class', 'btn');
         
         $this->addElement('submit', 'cancel', array(
             'ignore'   => true,
             'label'      => 'Cancelar',
         ));
         $this->cancel->setDecorators($decoratorsButton)
-                ->setAttrib('class', 'buttons');
+                ->setAttrib('class', 'btn');
         
         $this->addElement('hidden', 'user');
         $this->user->setDecorators(array('ViewHelper'));

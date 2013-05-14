@@ -11,7 +11,7 @@ class PAP_Form_SearchForm extends Zend_Form
         $decorators = array(
                 array('ViewHelper'),
                 array('Label', array(
-                'class' => 'leftalign ui-button-text'
+                'class' => 'control-label'
                 )),
                 array('HtmlTag', array('tag' => 'div')),
         );
@@ -85,7 +85,7 @@ class PAP_Form_SearchForm extends Zend_Form
             'label'      => 'Buscar',
         ));
         $this->search->setAttrib('onClick', 'getPromotions();')
-            ->setAttrib('class', 'buttons');
+            ->setAttrib('class', 'btn');
         
         /*CATEGORIAS*/
         }

@@ -3,48 +3,53 @@
     $this->form->setAction($this->url());
     $form = $this->form;
 ?>
-<form method="<?php echo $form->getMethod() ?>" action="<?php echo $form->getAction()?>">
-<div align="center">
-    <table>
-        <tr>
-            <td colspan="2" align="center" valign="middle" height="75px">
-                <div style="background-image: url(/images/backend/tit-registrarse.png); background-repeat:no-repeat; background-position: center; height: 50px">&nbsp;</div>
-                <hr/>
-                <?php echo $this->errorMessage($this->form, $messages); ?>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <div class="ui-widget-content ui-corner-all">
-                    <p>Luego de registrarte se te enviará un e-mail en el cual encontrarás un link para activa tu cuenta.</p>
-                    <p>Una vez que hayas activado tu cuenta, podrás cargar los datos de tu comercio y luego tus promociones.</p>
-                </div>
-                <br />
-            </td>
-        </tr>
-        <tr>
-            <td align="right"><?php echo $form->email->renderLabel(); ?></td>
-            <td><?php echo $form->email->renderViewHelper(); ?></td>
-        </tr>
-        <tr>
-            <td align="right"><?php echo $form->name->renderLabel(); ?></td>
-            <td><?php echo $form->name->renderViewHelper(); ?></td>
-        </tr>
-        <tr>
-            <td align="right"><?php echo $form->cuit->renderLabel(); ?></td>
-            <td><?php echo $form->cuit->renderViewHelper(); ?></td>
-        </tr>
-        <tr>
-            <td align="right"><?php echo $form->password->renderLabel(); ?></td>
-            <td><?php echo $form->password->renderViewHelper(); ?></td>
-        </tr>
-        <tr>
-            <td align="right"><?php echo $form->confirmPassword->renderLabel(); ?></td>
-            <td><?php echo $form->confirmPassword->renderViewHelper(); ?></td>
-        </tr>
-        <tr>
-            <td colspan="2" align="center"><?php echo $form->registrarse->renderViewHelper(); ?></td>
-        </tr>
-    </table>
-</div>
+<form method="<?php echo $form->getMethod() ?>" action="<?php echo $form->getAction()?>" class="form-horizontal well">
+    <div class="row">
+        <div class="span4 offset4">
+            <h1>Registrarse</h1>
+        </div>
+    </div>
+    <hr class="hr-subtitle"/>
+    <?php echo $this->errorMessage($this->form, $messages); ?>
+    <div class="row span8 offset2">
+        <p>Luego de registrarte se te enviará un e-mail en el cual encontrarás un link para activa tu cuenta.</p>
+        <p>Una vez que hayas activado tu cuenta, podrás cargar los datos de tu comercio y luego tus promociones.</p>
+    </div>
+    <div class="row span6 offset3">
+        <div class="control-group">
+            <?php echo $form->email->renderLabel(); ?>
+            <div class="controls">
+                <?php echo $form->email->renderViewHelper(); ?>
+            </div>
+        </div>
+        <div class="control-group">
+            <?php echo $form->name->renderLabel(); ?>
+            <div class="controls">
+                <?php echo $form->name->renderViewHelper(); ?>
+            </div>
+        </div>
+        <div class="control-group">
+            <?php echo $form->cuit->renderLabel(); ?>
+            <div class="controls">
+                <?php echo $form->cuit->renderViewHelper(); ?>
+            </div>
+        </div>
+        <div class="control-group">
+            <?php echo $form->password->renderLabel(); ?>
+            <div class="controls">
+                <?php echo $form->password->renderViewHelper(); ?>
+            </div>
+        </div>
+        <div class="control-group">
+            <?php echo $form->confirmPassword->renderLabel(); ?>
+            <div class="controls">
+                <?php echo $form->confirmPassword->renderViewHelper(); ?>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <?php echo $form->registrarse->renderViewHelper(); ?>
+            </div>
+        </div>
+    </div>
 </form>

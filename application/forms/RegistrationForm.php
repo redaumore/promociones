@@ -10,7 +10,7 @@
                 'Errors',
                 'ViewHelper',
                 array('Label', array(
-                'class' => 'rightalign'
+                'class' => 'control-label'
                 )), 
                 array('HtmlTag', array('tag' => 'div')),
         );
@@ -83,7 +83,7 @@
                 array('HtmlTag', array('tag' => 'div')),
         );
         $this->registrarse->setDecorators($decoratorsButton)
-                ->setAttrib('class', 'buttons');
+                ->setAttrib('class', 'btn');
         
         $this->addElement('hidden', 'rol');
       }

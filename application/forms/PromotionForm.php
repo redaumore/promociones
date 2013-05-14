@@ -16,7 +16,7 @@ class PAP_Form_PromotionForm extends Zend_Form
                 array('ViewHelper'),
                 array('Errors'),
                 array('Label', array(
-                'class' => 'leftalign ui-button-text'
+                'class' => 'control-label'
                 )),
                 array('HtmlTag', array('tag' => 'div')),
         );
@@ -216,7 +216,7 @@ class PAP_Form_PromotionForm extends Zend_Form
             'ignore'   => true,
             'label'      => 'Cambiar',
         ));
-        $this->fakefile->setAttrib('class', 'buttons')
+        $this->fakefile->setAttrib('class', 'btn btn-primary')
             ->setAttrib("onClick", "clickFile();");
         
         $this->addElement('img', 'imagePromo', array(
@@ -248,7 +248,7 @@ class PAP_Form_PromotionForm extends Zend_Form
         ));
         $control = $this->getElement("save");
         $control->setDecorators($decoratorsButton);
-        $control->setAttrib('class', 'buttons');
+        $control->setAttrib('class', 'btn');
     }
 }
 
