@@ -95,11 +95,11 @@ function showMercadoPago(){
                 }
                 json_MP.items[0].id = "Código",
                 json_MP.items[0].unit_price = (total).toFixed(2);
-                json_MP.items[0].title = "Promos al Paso"
+                json_MP.items[0].title = "Promos al Paso. Periodo/s a pagar: " + periodos.substring(0, periodos.length -2);
                 json_MP.items[0].description = "Periodo/s a pagar: " + periodos.substring(0, periodos.length -2);
                 json_MP.items[0].quantity = 1;
                 json_MP.items[0].currency = "ARS"; 
-                json_MP.items[0].picture_url = _baseUri + "logo-promosalpaso.png";
+                json_MP.items[0].picture_url = 'http://promosalpaso.com/logo-promosalpaso.png';
                 json_MP.external_reference = charges_ids.substring(0, charges_ids.length -1);
                 json_MP.payer.name = "Rolando";
                 json_MP.payer.surname = "Daumas";
