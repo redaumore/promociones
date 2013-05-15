@@ -1,5 +1,35 @@
 <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<div id="gmapmodal" class="modal hide fade">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Confirma la localización de tu Comercio</h3>
+    </div>
+    <div class="modal-body" style="max-height: none; padding:0 15px 0 15px;">
+        <table style="width: 100%;">
+            <tr>
+                <td colspan="2">
+                    <p id="smallfont" style="margin: 5px;">
+                    Recuerda que es muy importante que tu localización sea la correcta. Con ella tus clientes podrán encontrarte.
+                    Si el mapa no te indica tu dirección correctamente intenta cambiando alguno de los datos que cargaste para el comercio.
+                    Si aún así sigues sin encontrar tu dirección avísanos por email y nosotros lo resolveremos. 
+                    </p>        
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <div id="gmap">
+                        <img id="map" src="" alt="Tu localización">
+                    </div>            
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn btn-primary" id="btnConfirm" onclick="ConfirmLocation();">Confirmar Localización</a>
+    </div>
+</div>
 <script type="text/javascript">
+var _confirmed = false;
 function SearchLocation(){
     var street = document.getElementById("street").value.toString();
     var number = document.getElementById("number").value.toString();    
@@ -25,8 +55,8 @@ function SearchLocation(){
     }, function(locResult) {
         var lat1 = locResult[0].geometry.location.lat();
         var lng1 = locResult[0].geometry.location.lng();
-        document.getElementById("latitude").value = lat1;
-        document.getElementById("longitude").value = lng1;
+        jQuery("#latitude").val(lat1);
+        jQuery("#longitude").val(lng1);
     });
     
     urlGoogleMaps = "http://maps.google.com/maps/api/staticmap?center="+localaddress
@@ -39,9 +69,11 @@ function SearchLocation(){
 }
 
 function ConfirmLocation(){
-    document.getElementById("lat").value = document.getElementById("latitude").value;
-    document.getElementById("lng").value = document.getElementById("longitude").value;
-    HiddeGoogleLocalizator();    
+    jQuery("#lat").val(jQuery("#latitude").val());
+    jQuery("#lng").val(jQuery("#longitude").val());
+    jQuery("#gmapmodal").modal("hide")
+    jQuery("#localization").focus();    
+    _confirmed = true;
 }
 
 function ShowGoogleLocalizator(){
@@ -50,48 +82,28 @@ function ShowGoogleLocalizator(){
         return;
     }
     SearchLocation();
-    document.getElementById("background").className = "fullscreen alpha60";
-    document.getElementById("googlemap").className = "googlemap";    
-}
-
-function HiddeGoogleLocalizator(){
-    document.getElementById("background").className = "invisible";
-    document.getElementById("googlemap").className = "invisible";
-    document.getElementById("localization").focus();    
+    //$("gmapmodal").modal("show");
 }
 
 function CancelLocation(){
-    document.getElementById("lat").value = "";
-    document.getElementById("lng").value = "";
-    document.getElementById("latitude").value = "";
-    document.getElementById("longitude").value = "";
-    HiddeGoogleLocalizator();
+    if(!_confirmed){
+        jQuery("#lat").val("");
+        jQuery("#lng").val("");
+        jQuery("#latitude").val("");
+        jQuery("#longitude").val("");
+        _confirmed = false;
+    }
 }
-                                     
+
+jQuery(document).ready(function(){
+    jQuery("#gmapmodal").on('show', function(){
+        ShowGoogleLocalizator();
+    })
+
+    jQuery("#gmapmodal").on("hidden", function(){
+        CancelLocation();        
+    })
+})
+
+
 </script>
-<div id="background" class="invisible">
-    <div id="googlemap">
-        <table style="width: 100%;">
-            <tr>
-                <td colspan="2">
-                    <p id="smallfont" style="margin: 5px;">
-                    Recuerda que es muy importante que tu localización sea la correcta. Con ella tus clientes podrán encontrarte.
-                    Si el mapa no te indica tu dirección correctamente intenta cambiando alguno de los datos que cargaste para el comercio.
-                    Si aún así sigues sin encontrar tu dirección avísanos por email y nosotros lo resolveremos. 
-                    </p>        
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2" align="center">
-                    <div id="gmap">
-                        <img id="map" src="" alt="Tu localización">
-                    </div>            
-                </td>
-            </tr>
-            <tr>
-                <td style="padding: 1em;" align="right"><input type="button" class="buttons" id="btnConfirm" value="Confirmar" onclick="ConfirmLocation();"/></td>
-                <td style="padding: 1em;" align="left"><input type="button" class="buttons" id="btnCancel" value="Cancelar" onclick="CancelLocation();"/></td>
-            </tr>
-        </table>
-    </div>
-</div>

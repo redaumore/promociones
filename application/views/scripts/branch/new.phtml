@@ -53,19 +53,19 @@ legend{
 }
 </style>
 <form method="<?php echo $form->getMethod() ?>" action="<?php echo $form->getAction()?>" enctype="multipart/form-data" class="well">
+    <div class="row">
+        <div class="span4 offset4" id="titulo">
+            <h1>Mis Datos</h1>
+        </div>
+    </div>
+    <hr class="hr-subtitle"/>
+    <?php echo $this->errorMessage($this->form, $messages); ?>
     <div align="center">
         <table width="95%">
             <tr>
-                <td colspan="2" align="center" valign="middle" height="65px">
-                    <div style="background-image: url(/images/backend/tit-misdatos.png); background-repeat:no-repeat; background-position: center; height: 50px; width: 100%">&nbsp;</div>
-                    <hr/>
-                    <?php echo $this->errorMessage($this->form, $messages); ?>
-                </td>
-            </tr>
-            <tr>
                 <td width="100%" colspan="2">
                     <fieldset>
-                        <legend><b>Domicilio</b></legend>
+                        <legend><h4>Domicilio</h4></legend>
                         <table width="100%">
                             <tr>
                                 <td><?php echo $form->name->renderLabel(); ?></td>
@@ -103,7 +103,9 @@ legend{
                                <td><?php echo $form->lat->renderViewHelper(); ?></td>
                                <td><?php echo $form->lng->renderLabel(); ?></td>
                                <td><?php echo $form->lng->renderViewHelper(); ?></td>
-                               <td align="right" colspan="2" valign="top"><?php echo $form->localization->renderViewHelper(); ?></td> 
+                               <td align="right" colspan="2" valign="top">
+                                <button type="button" data-toggle="modal" data-target="#gmapmodal" class="btn btn-primary">Localizarme</button>
+                               </td> 
                             </tr>
                         </table>
                     </fieldset>
@@ -112,7 +114,7 @@ legend{
             <tr>
                 <td valign="top">
                     <fieldset>
-                        <legend align="left"><b>Imagen Comercio</b></legend>
+                        <legend align="left"><h4>Imagen Comercio</h4></legend>
                         <table width="100%">
                             <tr>
                                 <td align="center" rowspan="2" style="padding-right: 10px"><?php echo $form->logo->renderViewHelper(); ?></td>

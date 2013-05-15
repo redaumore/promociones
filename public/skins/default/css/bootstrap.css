@@ -742,7 +742,8 @@ h6 {
   font-family: inherit;
   font-weight: bold;
   line-height: 21px;
-  color: inherit;
+  /*color: inherit;*/
+  color: #FF6A15;
   text-rendering: optimizelegibility;
 }
 
@@ -6920,7 +6921,7 @@ textarea[disabled],
 input[readonly],
 select[readonly],
 textarea[readonly] {
-  color: #bbbfc2;
+  /*color: #bbbfc2;*/
 }
 
 .form-actions {
@@ -7064,4 +7065,8 @@ a.thumbnail:hover {
 
 .affix {
   position: fixed;
+}
+
+div[id="titulo"]{
+    text-align: center;
 }
