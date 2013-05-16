@@ -18,18 +18,19 @@
     }
 </style>
 <script type="text/javascript" src="http://jquery.bassistance.de/treeview/jquery.treeview.js"></script>
+<div class="row">
+    <div class="span4 offset4" id="titulo" align="center">
+        <h1>Mis Datos</h1>
+    </div>
+</div>
+<?php echo $this->errorMessage($this->form, $messages); ?>
+
+<hr class="hr-subtitle"/>
     <div align="center">
         <table width="95%">
             <tr>
-                <td align="center" valign="middle" height="75px">
-                    <div style="background-image: url(/images/backend/tit-categorias.png); background-repeat:no-repeat; background-position: center; height: 50px;">&nbsp;</div>
-                    <hr/>
-                    <?php echo $this->errorMessage($this->form, $messages); ?>
-                </td>
-            </tr>
-            <tr>
                 <td>
-                    <div id="view-content" class="ui-widget-content ui-corner-all ui-widget-p">
+                    <div id="view-content" class="well">
                         <p>Selecciona tus categorías. Es importante establecer las mismas para que tus potenciales clientes puedan buscar rapidamente tus promociones.</p>
                         <p>Esta selecciòn aplica a nivel de Comercio. Oséa que todas las promociones que publiques estarán asociadas a estas categorías.</p>
                     </div>

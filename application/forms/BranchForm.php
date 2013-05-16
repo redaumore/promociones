@@ -165,6 +165,7 @@
             'width' => '75', 
             'height' => '75',
             'src' => '/images/backend/img-comercio.png',
+            'class' => 'img-polaroid',
         ));
         
         $file = new Zend_Form_Element_File('filebranch');

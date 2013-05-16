@@ -3,7 +3,8 @@
     $this->form->setAction($this->url());
     $form = $this->form;
 ?>
-<form method="<?php echo $form->getMethod() ?>" action="<?php echo $form->getAction()?>" class="form-horizontal well">
+<form method="<?php echo $form->getMethod() ?>" action="<?php echo $form->getAction()?>" class="form-horizontal">
+    <div style="height: 100%;" class="well">
     <div class="row">
         <div class="span6 offset3" id="titulo">
                 <h1>Ingresar al Backend</h1>
@@ -30,14 +31,15 @@
                 </div>
             </div>
             <div class="control-group">
-                <div class="well">
-                    <p>¿Aún no sos anunciante en Promos al Paso?. Si querés serlo regístrate pulsando el 
-                        <a href="<?=$this->url(array('controller'=>'auth','action'=>'signup'))?>">
-                            <img src="/images/backend/shamrock.png" width="20px" height="20px"></img>
-                        </a> 
-                    </p>
+                <div class="well" align="center">
+                    <p>¿Aún no sos anunciante en Promos al Paso?</p>
+                    <p> Si querés serlo regístrate pulsando</p>  
+                    <a href="<?=$this->url(array('controller'=>'auth','action'=>'signup'))?>">
+                        <img src="/images/backend/shamrock.png" width="30px" height="30px"></img>
+                    </a> 
                 </div>
             </div>
+    </div>
 </div>
 </form>
     

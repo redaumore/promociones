@@ -650,6 +650,7 @@ a:focus {
 
 p {
   margin: 0 0 10.5px;
+  color: #EEEEEE;
 }
 
 .lead {
@@ -6182,7 +6183,7 @@ pre {
 
 legend,
 .page-header {
-  border-bottom: 1px solid #1c1e22;
+  border-bottom: 1px solid #FF6100;
 }
 
 hr {
