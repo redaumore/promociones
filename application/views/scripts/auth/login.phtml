@@ -4,15 +4,15 @@
     $form = $this->form;
 ?>
 <form method="<?php echo $form->getMethod() ?>" action="<?php echo $form->getAction()?>" class="form-horizontal">
-    <div style="height: 100%;" class="well">
-    <div class="row">
-        <div class="span6 offset3" id="titulo">
-                <h1>Ingresar al Backend</h1>
+    <div class="row-fluid">    
+        <div class="row">
+            <div class="span6 offset3" id="titulo">
+                    <h1>Ingresar al Backend</h1>
+            </div>
         </div>
-    </div>
-    <hr class="hr-subtitle"/>
-    <?php echo $this->errorMessage($this->form, $messages); ?>
-    <div class="row span6 offset3">
+        <hr class="hr-subtitle"/>
+        <?php echo $this->errorMessage($this->form, $messages); ?>
+        <div class="row span6 offset3">
             <div class="control-group">
                 <?php echo $form->email->renderLabel(); ?>
                 <div class="controls">
@@ -39,8 +39,8 @@
                     </a> 
                 </div>
             </div>
-    </div>
-</div>
+        </div>
+     </div>
 </form>
     
     

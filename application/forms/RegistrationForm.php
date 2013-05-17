@@ -83,7 +83,7 @@
                 array('HtmlTag', array('tag' => 'div')),
         );
         $this->registrarse->setDecorators($decoratorsButton)
-                ->setAttrib('class', 'btn');
+                ->setAttrib('class', 'btn btn-large');
         
         $this->addElement('hidden', 'rol');
       }

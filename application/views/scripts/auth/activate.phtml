@@ -1,7 +1,23 @@
-<div id="view-content" class="ui-widget-content ui-corner-all">
-    <p>
-        Felicitaciones <?php echo $this->escape($this->name); ?>! Ya has activado tu cuenta. Ahora podrás cargar toda la información de tu negocio y publicar todas las promociones que quieras.
-    </p>
+<div class="row-fluid">
+    <div class="row">
+        <div class="pagination-centered" id="titulo">
+                <h1>Bienvenido!!</h1>
+        </div>
+    </div>
+    <hr class="hr-subtitle"/>
+    <?php echo $this->errorMessage($this->form, $messages); ?>
+    <div class="row">
+        <div class="pagination-centered">
+            <p>
+                Felicitaciones <?php echo $this->escape($this->name); ?>! Ya has activado tu cuenta. 
+            </p>
+            <p>
+                Primero deberás cargar la información sobre tu negocio y luego podrás publicar todas las promociones que quieras.
+            </p>
+        </div>
+    </div>
+    <div class="pagination-centered">
+        <a class="btn btn-large" href="<?=$this->url(array('controller'=>'auth','action'=>'login'))?>">Ingresar al Backend de Promos al Paso</a>    
+    </div>
 </div>
 
-<a href="<?=$this->url(array('controller'=>'auth','action'=>'login'))?>">Pulsa aquí para ingresar al backend de Promos al Paso</a>

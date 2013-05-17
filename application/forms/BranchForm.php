@@ -157,13 +157,13 @@
             'label'      => 'Localizarme',
         ));
         $this->localization->setDecorators($decoratorsButton)
-                    ->setAttrib('class', 'btn btn-primary')
+                    ->setAttrib('class', 'btn btn-primary btn-small')
                     ->setAttrib("onClick", "ShowGoogleLocalizator();");
         
         $this->addElement('img', 'logo', array(
             'ignore'   => true,
-            'width' => '75', 
-            'height' => '75',
+            'width' => '90', 
+            'height' => '90',
             'src' => '/images/backend/img-comercio.png',
             'class' => 'img-polaroid',
         ));
@@ -190,7 +190,7 @@
             'ignore'   => true,
             'label'      => 'Cargar Imagen',
         ));
-        $this->fakefile->setAttrib('class', 'btn btn-primary')
+        $this->fakefile->setAttrib('class', 'btn btn-primary btn-small')
             ->setAttrib("onClick", "clickFile();");
         
         $this->addElement('submit', 'save', array(
@@ -198,14 +198,14 @@
             'label'      => 'Guardar',
         ));
         $this->save->setDecorators($decoratorsButton)
-                ->setAttrib('class', 'btn');
+                ->setAttrib('class', 'btn btn-large');
         
         $this->addElement('submit', 'cancel', array(
             'ignore'   => true,
             'label'      => 'Cancelar',
         ));
         $this->cancel->setDecorators($decoratorsButton)
-                ->setAttrib('class', 'btn');
+                ->setAttrib('class', 'btn btn-large');
         
         $this->addElement('hidden', 'user');
         $this->user->setDecorators(array('ViewHelper'));

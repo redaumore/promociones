@@ -49,171 +49,169 @@ function clearCoord(){
     //echo $this->form;
     $form = $this->form;
 ?>
-<form method="<?php echo $form->getMethod() ?>" action="<?php echo $form->getAction()?>" enctype="multipart/form-data" class="well">
+<form method="<?php echo $form->getMethod() ?>" action="<?php echo $form->getAction()?>" enctype="multipart/form-data">
+<div class="row-fluid">
     <div class="row">
-        <div class="span4 offset4" id="titulo" align="center">
+        <div class="pagination-centered" id="titulo">
             <h1>Mis Datos</h1>
         </div>
     </div>
     <hr class="hr-subtitle"/>
     <?php echo $this->errorMessage($this->form, $messages); ?>
-    <div class="container-fluid">
-        <div class="row-fluid">
-            <div class="span12">
-                <fieldset>
-                    <legend><h4>Domicilio</h4></legend>
-                    <div class="row-fluid">
-                        <div class="span4">
-                            <div class="control-group">
-                                <?php echo $form->name->renderLabel(); ?>
-                                <div class="controls">
-                                    <?php echo $form->name->renderViewHelper(); ?>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="span4 offset4">
-                            <div class="control-group">
-                                <?php echo $form->phone->renderLabel(); ?>
-                                <div class="controls">
-                                    <?php echo $form->phone->renderViewHelper(); ?>
-                                </div>
+    <div class="row-fluid">
+        <div class="span12">
+            <fieldset>
+                <legend><h4>Domicilio</h4></legend>
+                <div class="row-fluid">
+                    <div class="span4">
+                        <div class="control-group">
+                            <?php echo $form->name->renderLabel(); ?>
+                            <div class="controls">
+                                <?php echo $form->name->renderViewHelper(); ?>
                             </div>
                         </div>
                     </div>
-                    <div class="row-fluid">
-                        <div class="span4">
-                            <div class="control-group">
-                                <?php echo $form->street->renderLabel(); ?>
-                                <div class="controls">
-                                    <?php echo $form->street->renderViewHelper(); ?>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="span4">
-                            <div class="control-group">
-                                <?php echo $form->number->renderLabel(); ?>
-                                <div class="controls">
-                                    <?php echo $form->number->renderViewHelper(); ?>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="span4">
-                            <div class="control-group">
-                                <?php echo $form->local->renderLabel(); ?>
-                                <div class="controls">
-                                    <?php echo $form->local->renderViewHelper(); ?>
-                                </div>
+                    <div class="span4 offset4">
+                        <div class="control-group">
+                            <?php echo $form->phone->renderLabel(); ?>
+                            <div class="controls">
+                                <?php echo $form->phone->renderViewHelper(); ?>
                             </div>
                         </div>
                     </div>
-                    <div class="row-fluid">
-                        <div class="span4">
-                            <div class="control-group">
-                                <?php echo $form->province->renderLabel(); ?>
-                                <div class="controls">
-                                    <?php echo $form->province->renderViewHelper(); ?>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="span4">
-                            <div class="control-group">
-                                <?php echo $form->city->renderLabel(); ?>
-                                <div class="controls">
-                                    <?php echo $form->city->renderViewHelper(); ?>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="span4">
-                            <div class="control-group">
-                                <?php echo $form->zipcode->renderLabel(); ?>
-                                <div class="controls">
-                                    <?php echo $form->zipcode->renderViewHelper(); ?>
-                                </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span4">
+                        <div class="control-group">
+                            <?php echo $form->street->renderLabel(); ?>
+                            <div class="controls">
+                                <?php echo $form->street->renderViewHelper(); ?>
                             </div>
                         </div>
                     </div>
-                    <div class="row-fluid">
-                        <div class="span4">
-                            <div class="control-group">
-                                <?php echo $form->website->renderLabel(); ?>
-                                <div class="controls">
-                                    <?php echo $form->website->renderViewHelper(); ?>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="span4">
-                            <div class="control-group">
-                                <?php echo $form->email->renderLabel(); ?>
-                                <div class="controls">
-                                    <?php echo $form->email->renderViewHelper(); ?>
-                                </div>
+                    <div class="span4">
+                        <div class="control-group">
+                            <?php echo $form->number->renderLabel(); ?>
+                            <div class="controls">
+                                <?php echo $form->number->renderViewHelper(); ?>
                             </div>
                         </div>
                     </div>
-                    <div class="row-fluid">
-                        <div class="span12 well">
-                            <p>Luego de que hayas ingresado los datos requeridos de tu comercio (nombre del comercio, calle, número, localidad y provincia) debes ubicarlo geograficamente
-                            pulsando el botón "Localizarme". Al hacerlo el sistema te mosrtará un mapa indicando el lugar en donde se encuentra tu comercio.</p>
+                    <div class="span4">
+                        <div class="control-group">
+                            <?php echo $form->local->renderLabel(); ?>
+                            <div class="controls">
+                                <?php echo $form->local->renderViewHelper(); ?>
+                            </div>
                         </div>
                     </div>
-                    <div class="row-fluid">
-                        <div class="span4">
-                            <div class="control-group">
-                                <?php echo $form->lat->renderLabel(); ?>
-                                <div class="controls">
-                                    <?php echo $form->lat->renderViewHelper(); ?>
-                                </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span4">
+                        <div class="control-group">
+                            <?php echo $form->province->renderLabel(); ?>
+                            <div class="controls">
+                                <?php echo $form->province->renderViewHelper(); ?>
                             </div>
                         </div>
-                        <div class="span4">
-                            <div class="control-group">
-                                <?php echo $form->lng->renderLabel(); ?>
-                                <div class="controls">
-                                    <?php echo $form->lng->renderViewHelper(); ?>
-                                </div>
+                    </div>
+                    <div class="span4">
+                        <div class="control-group">
+                            <?php echo $form->city->renderLabel(); ?>
+                            <div class="controls">
+                                <?php echo $form->city->renderViewHelper(); ?>
                             </div>
                         </div>
-                        <div class="span4">
-                            <button type="button" data-toggle="modal" data-target="#gmapmodal" class="btn btn-primary">Localizarme</button>
+                    </div>
+                    <div class="span4">
+                        <div class="control-group">
+                            <?php echo $form->zipcode->renderLabel(); ?>
+                            <div class="controls">
+                                <?php echo $form->zipcode->renderViewHelper(); ?>
+                            </div>
                         </div>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span4">
+                        <div class="control-group">
+                            <?php echo $form->website->renderLabel(); ?>
+                            <div class="controls">
+                                <?php echo $form->website->renderViewHelper(); ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="span4">
+                        <div class="control-group">
+                            <?php echo $form->email->renderLabel(); ?>
+                            <div class="controls">
+                                <?php echo $form->email->renderViewHelper(); ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12 well">
+                        <p>Luego de que hayas ingresado los datos requeridos de tu comercio (nombre del comercio, calle, número, localidad y provincia) debes ubicarlo geograficamente
+                        pulsando el botón "Localizarme". Al hacerlo el sistema te mosrtará un mapa indicando el lugar en donde se encuentra tu comercio.</p>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span4">
+                        <div class="control-group">
+                            <?php echo $form->lat->renderLabel(); ?>
+                            <div class="controls">
+                                <?php echo $form->lat->renderViewHelper(); ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="span4">
+                        <div class="control-group">
+                            <?php echo $form->lng->renderLabel(); ?>
+                            <div class="controls">
+                                <?php echo $form->lng->renderViewHelper(); ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="span4" style="padding-top: 25px; height: 78px; text-align: right;">
+                        <button type="button" data-toggle="modal" data-target="#gmapmodal" class="btn btn-primary">Localizarme</button>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span12">
+            <fieldset>
+                    <legend align="left"><h4>Imagen Comercio</h4></legend>
+                    <div class="row-fuid">
+                        <table style="border-collapse: collapse; border-bottom-color: white;">
+                            <tr>
+                                <td width="75%">
+                                    <div class="well">
+                                        <p>La imagen del Comercio es de suma importancia. Aparte de ser tu presentación en tu página de negocio, será 
+                                        la imagen por defecto de todas aquellas promociones sin foto que publiques.</p>
+                                    </div>
+                                </td>
+                                <td width="15%" align="center">
+                                    <div>
+                                        <?php echo $form->logo->renderViewHelper(); ?>
+                                        <div id='yourFile'><small>&nbsp;</small>
+                                    </div>        
+                                </td>
+                                <td width="10%">
+                                    <?php echo $form->fakefile->renderViewHelper(); ?>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 </fieldset>
-            </div>
         </div>
-        <div class="row-fluid">
-            <div class="span12">
-                <fieldset>
-                        <legend align="left"><h4>Imagen Comercio</h4></legend>
-                        <div class="row">
-                           <div class="row-fluid">
-                                <div class="span8 well">
-                                    <p>La imagen del Comercio es de suma importancia. Aparte de ser tu presentación en tu página de negocio, será 
-                                    la imagen por defecto de todas aquellas promociones sin foto que publiques.</p>
-                                </div>
-                                <div class="span3 pagination-centered">
-                                    <?php echo $form->logo->renderViewHelper(); ?>
-                                </div>
-                           </div>
-                           
-                        </div>
-                        <div class="row-fluid">
-                            <div class="show-grid">
-                                <div class="span10">
-                                    <div id='yourFile'><p>&nbsp;</p>
-                                </div>
-                                <div class="span2">
-                                    <?php echo $form->fakefile->renderViewHelper(); ?>
-                                </div>
-                            </div>
-                        </div>
-                    </fieldset>
-            </div>
-        </div>
-        <div class="row-fluid">
-            <div class="span12 rightalign">
-                <?php echo $form->cancel->renderViewHelper(); 
-                      echo $form->save->renderViewHelper(); ?>
-            </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span3 offset9" style="text-align: right;">
+            <?php echo $form->cancel->renderViewHelper(); 
+                  echo $form->save->renderViewHelper(); ?>
         </div>
     </div>
     <div>
@@ -227,6 +225,7 @@ function clearCoord(){
             
         ?>
     </div>
+</div>    
 </form>
 <?php 
     echo $this->partial("branch/_localizator.phtml"); 

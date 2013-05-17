@@ -3,15 +3,16 @@
     margin: 0;
     list-style: none;
     color: #42962F;
+    background-color: #3B3B3B;
 }
 
 .treeview ul {
-    background-color: white;
+    /*background-color: white;*/
     margin-top: 4px;
 }
 
 .treeview .hitarea {
-    background: url(images/treeview-default.gif) -64px -25px no-repeat;
+    background: url(images/treeview-default-line.gif) -64px -25px no-repeat;
     height: 16px;
     width: 16px;
     margin-left: -16px;

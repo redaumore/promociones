@@ -45,6 +45,6 @@
                 array('HtmlTag', array('tag' => 'div')),
         );
         $this->login->setDecorators($decoratorsButton)
-                ->setAttrib('class', 'btn');
+                ->setAttrib('class', 'btn btn-large');
       }
   }

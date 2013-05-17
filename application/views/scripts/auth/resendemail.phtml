@@ -3,31 +3,19 @@
     $this->form->setAction($this->url());
     $form = $this->form;
 ?>
-<form method="<?php echo $form->getMethod() ?>" action="<?php echo $form->getAction()?>" class="form-horizontal well">
-    <div align="center">
-        <table>
-            <tr>
-                <td align="center" valign="middle" height="75px">
-                    <div style="background-image: url(/images/backend/tit-activacion.png); background-repeat:no-repeat; background-position: center; height: 50px;">&nbsp;</div>
-                    <hr/>
-                    <?php echo $this->errorMessage($this->form, $messages); ?>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div id="view-content" class="ui-widget-content ui-corner-all" style="text-align: center;">
-                        <p>Aún no has activado tu cuenta. Si quieres que se te re-envíe el email de activación, pulsa el botón de abajo.</p>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td align="center">
-                    <?php
-                        echo $form->reenviar->renderViewHelper();
-                    ?>
-                </td>
-            </tr>
-        </table>
+<form method="<?php echo $form->getMethod() ?>" action="<?php echo $form->getAction()?>" class="form-horizontal">
+    <div class="row-fluid">
+        <div class="row pagination-centered">
+            <h1>Registrarse</h1>
+        </div>
+        <hr class="hr-subtitle"/>
+        <?php echo $this->errorMessage($this->form, $messages); ?>
+        <div class="row pagination-centered">
+            <p>Aún no has activado tu cuenta. Si quieres que se te re-envíe el email de activación, pulsa el botón de abajo.</p>
+        </div>
+        <div class="row pagination-centered">
+            <?php echo $form->reenviar->renderViewHelper();?>
+        </div>
     </div>
     <?php echo $form->email->renderViewHelper(); ?>
 </form>

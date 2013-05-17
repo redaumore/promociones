@@ -3,53 +3,53 @@
     $this->form->setAction($this->url());
     $form = $this->form;
 ?>
-<form method="<?php echo $form->getMethod() ?>" action="<?php echo $form->getAction()?>" class="form-horizontal well">
-    <div class="row">
-        <div class="span4 offset4">
-            <h1>Registrarse</h1>
-        </div>
-    </div>
-    <hr class="hr-subtitle"/>
-    <?php echo $this->errorMessage($this->form, $messages); ?>
-    <div class="row span8 offset2">
-        <p>Luego de registrarte se te enviará un e-mail en el cual encontrarás un link para activa tu cuenta.</p>
-        <p>Una vez que hayas activado tu cuenta, podrás cargar los datos de tu comercio y luego tus promociones.</p>
-    </div>
-    <div class="row span6 offset3">
-        <div class="control-group">
-            <?php echo $form->email->renderLabel(); ?>
-            <div class="controls">
-                <?php echo $form->email->renderViewHelper(); ?>
+<form method="<?php echo $form->getMethod() ?>" action="<?php echo $form->getAction()?>" class="form-horizontal">
+    <div class="row-fluid">
+        <div class="row">
+            <div class="pagination-centered">
+                <h1>Registrarse</h1>
             </div>
         </div>
-        <div class="control-group">
-            <?php echo $form->name->renderLabel(); ?>
-            <div class="controls">
-                <?php echo $form->name->renderViewHelper(); ?>
+        <hr class="hr-subtitle"/>
+        <?php echo $this->errorMessage($this->form, $messages); ?>
+        <div class="row pagination-centered">
+            <p>Luego de registrarte se te enviará un e-mail en el cual encontrarás un link para activa tu cuenta.</p>
+            <p>Una vez que hayas activado tu cuenta, podrás cargar los datos de tu comercio y luego tus promociones.</p>
+        </div>
+        <div class="row span6 offset3">
+            <div class="control-group">
+                <?php echo $form->email->renderLabel(); ?>
+                <div class="controls">
+                    <?php echo $form->email->renderViewHelper(); ?>
+                </div>
+            </div>
+            <div class="control-group">
+                <?php echo $form->name->renderLabel(); ?>
+                <div class="controls">
+                    <?php echo $form->name->renderViewHelper(); ?>
+                </div>
+            </div>
+            <div class="control-group">
+                <?php echo $form->cuit->renderLabel(); ?>
+                <div class="controls">
+                    <?php echo $form->cuit->renderViewHelper(); ?>
+                </div>
+            </div>
+            <div class="control-group">
+                <?php echo $form->password->renderLabel(); ?>
+                <div class="controls">
+                    <?php echo $form->password->renderViewHelper(); ?>
+                </div>
+            </div>
+            <div class="control-group">
+                <?php echo $form->confirmPassword->renderLabel(); ?>
+                <div class="controls">
+                    <?php echo $form->confirmPassword->renderViewHelper(); ?>
+                </div>
             </div>
         </div>
-        <div class="control-group">
-            <?php echo $form->cuit->renderLabel(); ?>
-            <div class="controls">
-                <?php echo $form->cuit->renderViewHelper(); ?>
-            </div>
-        </div>
-        <div class="control-group">
-            <?php echo $form->password->renderLabel(); ?>
-            <div class="controls">
-                <?php echo $form->password->renderViewHelper(); ?>
-            </div>
-        </div>
-        <div class="control-group">
-            <?php echo $form->confirmPassword->renderLabel(); ?>
-            <div class="controls">
-                <?php echo $form->confirmPassword->renderViewHelper(); ?>
-            </div>
-        </div>
-        <div class="control-group">
-            <div class="controls">
-                <?php echo $form->registrarse->renderViewHelper(); ?>
-            </div>
+        <div class="row-fluid span2 offset5">
+            <?php echo $form->registrarse->renderViewHelper(); ?>
         </div>
     </div>
 </form>

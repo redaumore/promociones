@@ -7,9 +7,9 @@
         //$this->addElement('hidden', 'email', array('disableLoadDefaultDecorators' => true));
         $this->addElement('submit', 'reenviar', array(
             'ignore'   => true,
-            'label'      => 'Enviar Email',
+            'label'      => 'Re-Enviar Email',
         ));
-        $this->reenviar->setAttrib('class', 'btn');
+        $this->reenviar->setAttrib('class', 'btn btn-large');
         
         $this->addElement('hidden', 'email');
       }

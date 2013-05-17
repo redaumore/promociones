@@ -72,7 +72,7 @@ class PAP_Form_Treeview extends Zend_Form
                 'options' => array(
                     'ignore' => true,
                     'label' => 'Guardar Cambios',
-                    'class' => 'btn',
+                    'class' => 'btn btn-large',
                 )
             ),
          
