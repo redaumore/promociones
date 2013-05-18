@@ -47,7 +47,7 @@ class PaymentController extends Zend_Controller_Action
          foreach($paidCharges as $charge_id){
             $charge = new PAP_Model_Charge();
             $charge->loadById($charge_id);
-            $charge->setPaidOff($status);
+            $charge->setStatus($status);
             $charge->save();
             $payment = new PAP_Model_Payment();
             $payment->setAmount($charge->getAmount())
@@ -72,7 +72,7 @@ class PaymentController extends Zend_Controller_Action
          foreach($paidCharges as $charge_id){
             $charge = new PAP_Model_Charge();
             $charge->loadById($charge_id);
-            $charge->setPaidOff($status);
+            $charge->setStatus($status);
             $charge->save();
             $payment = new PAP_Model_Payment();
             $payment->setAmount($charge->getAmount())
@@ -109,16 +109,54 @@ class PaymentController extends Zend_Controller_Action
                     $charge->setAmount($payment["total"])
                             ->setDiscount(0)
                             ->setPeriod($payment["periodo"])
-                            ->setPaidOff('N')
+                            ->setStatus('N')
                             ->setUserId($payment["user_id"])
                             ->setFinalAmount($payment["total"]);
                     if($payment["total"] == "0.00")
-                        $charge->setPaidOff('S');
+                        $charge->setStatus('A');
                     $charge->save();
                 }
             }
             $config->setLastPeriod($currentPeriod);
         }  
+    }
+    
+    public function mpnotificationAction(){
+        try{
+            $this->_helper->layout->disableLayout();
+            $this->_helper->viewRenderer->setNoRender(TRUE);
+            
+            $user_id = 0;
+            if(isset($_GET['id']) && $_GET['topic'] == 'payment')
+                $notification_id = $_GET['id'];
+            else
+                throw new Exception("Se ha llamado al método mpnotification pero no se encontró el parámetro id", 10001);
+                
+            //$pendigPayments = PAP_Model_Payment::getPendigPaymentsMP($user_id);
+            
+            $config = new PAP_Helper_Config();
+            $MPConfig = $config->getMPConfig();
+            $MPObject = new PAP_MP($MPConfig['mp_client_id'], $MPConfig['mp_client_secret']);
+            $payment_info = $MPObject->get_payment_info($notification_id);
+            
+            if ($payment_info["status"] == 200) {
+                $jsonPayment = json_decode($payment_info["response"]);
+                $payment = new PAP_Model_Payment();
+                $payment->loadByControl($jsonPayment->{'id'}, 'MP');
+                $payment->setStatus($jsonPayment->{'status'});
+                $charge = new PAP_Model_Charge();
+                $charge->loadById($payment->getChargeId());
+                $charge->setStatus($payment->getStatus());
+                $payment->save();
+                $charge->save();    
+            }
+            else{
+                throw new Exception("MP Error (".$payment_info["status"].")".$payment_info["error"].": ".$payment_info["message"]." CAUSE:".$payment_info["cause"] );
+            }
+        }
+        catch(Exception $ex){
+            //TODO 4: Logear error en llamada mpnotification. 
+        }
     }
     /***
     * Devuelve un array con los últimos n payments, trayendo por defecto los últimos 6
@@ -192,8 +230,14 @@ class PaymentController extends Zend_Controller_Action
             case 'rejected':
                 $status_char = 'R';
                 break;
-            case 'null':
-                $status_char = 'N';
+            case 'refunded':
+                $status_char = 'D';
+                break;
+            case 'cancelled':
+                $status_char = 'C';
+                break;
+            case 'in_mediation':
+                $status_char = 'M';
                 break;
         }
         return $status_char;    

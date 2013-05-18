@@ -32,7 +32,7 @@ protected $_dbTable;
             'amount' => $charge->getAmount(),
             'final_amount' => $charge->getFinalAmount(),
             'discount' => $charge->getDiscount(),
-            'paid_off' => $charge->getPaidOff(),
+            'status' => $charge->getStatus(),
             'created' => date('Y-m-d H:i:s'),
         );
  
@@ -62,7 +62,7 @@ protected $_dbTable;
                   ->setAmount($row->amount)
                   ->setFinalAmount($row->final_amount)
                   ->setDiscount($row->discount)
-                  ->setPaidOff($row->paid_off)
+                  ->setStatus($row->status)
                   ->setCreated($row->created);
     }
  
@@ -78,7 +78,7 @@ protected $_dbTable;
                   ->setAmount($row->amount)
                   ->setFinalAmount($row->final_amount)
                   ->setDiscount($row->discount)
-                  ->setPaidOff($row->paid_off)
+                  ->setStatus($row->status)
                   ->setCreated($row->created);
             $entries[] = $entry;
         }
@@ -87,7 +87,7 @@ protected $_dbTable;
     
     public function getUnpaidCharges($user_id = 0){
         $adapter = Zend_Db_Table::getDefaultAdapter();
-        $statement = "SELECT * FROM charge WHERE paid_off <> 'A' " .(($user_id == 0)?";":" AND user_id = ".$user_id).";";
+        $statement = "SELECT * FROM charge WHERE status <> 'A' " .(($user_id == 0)?";":" AND user_id = ".$user_id).";";
         $results = $adapter->fetchAll($statement);
         return $results;
     }

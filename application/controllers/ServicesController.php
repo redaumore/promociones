@@ -180,7 +180,7 @@ class servicesController extends Zend_Controller_Action
                 else
                     $payment->setEntity($payment_json['banco_destino']);
                 $payment->save();
-                $charge->setPaidOff('S');
+                $charge->setStatus('S');
                 $charge->save();                            
             }
             

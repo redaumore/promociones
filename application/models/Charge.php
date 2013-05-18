@@ -8,7 +8,7 @@ class PAP_Model_Charge
       protected $_amount;
       protected $_final_amount;
       protected $_discount;
-      protected $_paid_off;
+      protected $_status;
       protected $_created;
       
     public function setId($text){
@@ -46,12 +46,12 @@ class PAP_Model_Charge
     public function getDiscount(){
         return $this->_discount;}
         
-    public function setPaidOff($text){
-        $this->_paid_off = (string) $text;
+    public function setStatus($text){
+        $this->_status = (string) $text;
         return $this;}
  
-    public function getPaidOff(){
-        return $this->_paid_off;}
+    public function getStatus(){
+        return $this->_status;}
         
     public function setCreated($text){
         $this->_created = (string) $text;
@@ -126,7 +126,7 @@ class PAP_Model_Charge
                     ->setDiscount($chargerecord["discount"])
                     ->setCreated($chargerecord["created"])
                     ->setFinalAmount($chargerecord["final_amount"])
-                    ->setPaidOff($chargerecord["paid_off"])
+                    ->setStatus($chargerecord["status"])
                     ->setPeriod($chargerecord["period"])
                     ->setUserId($chargerecord["user_id"]);
             $charges[] = $charge;
@@ -141,7 +141,7 @@ class PAP_Model_Charge
     rejected    El pago fué rechazado, el usuario puede intentar nuevamente el pago
     null    El usuario no completó el proceso de pago y no se ha generado ningún pago */
     
-    public static function setStatus($id_charge, $status){
+    /*public static function setStatus($id_charge, $status){
         $status_char;
         switch ($status) {
             case 'approved':
@@ -161,8 +161,8 @@ class PAP_Model_Charge
                 break;
         }
         $this->loadById($id_charge);
-        $this->setPaidOff($status_char);
+        $this->setStatus($status_char);
         $this->save();
-    }    
+    } */   
 }
 
