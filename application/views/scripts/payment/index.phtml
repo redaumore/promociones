@@ -25,15 +25,6 @@
             </td>
         </tr>
         <tr>
-            <td>
-                <div id="div_alert" class="alert alert-error" style="display: none;">
-                    <a class="close" onclick="closeMessage()">×</a>
-                    <h4 class="alert-heading">Atención!</h4>
-                    <p id="p_message"></p>
-                </div>
-            </td>
-        </tr>
-        <tr>
             <td><?php echo $this->form; ?></td>
         </tr>
         <tr>
@@ -47,6 +38,11 @@
                     <table id="list2"></table>
                     <div id="pager2"></div>
                 </div>
+                <div id="div_alert" class="alert alert-error" style="display: none;">
+                    <a class="close" onclick="closeMessage()">×</a>
+                    <h4 class="alert-heading">Atención!</h4>
+                    <p id="p_message"></p>
+                </div>
             </td>
         </tr>
     </table>
@@ -54,6 +50,9 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
+        $("#pay").hide();
+        $("#payMP").hide();
+        $("#div_MP").hide();
         if($('input#data').val() != ""){
             getPayments();
         }         
@@ -61,4 +60,5 @@
 </script>
 <?php 
     echo $this->partial("payment/_paymentInfo.phtml"); 
+    echo $this->partial("payment/_frameMP.phtml"); 
 ?>

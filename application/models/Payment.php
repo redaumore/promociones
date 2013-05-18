@@ -10,6 +10,7 @@ class PAP_Model_Payment
     protected $_payment_date;
     protected $_control;
     protected $_created;
+    protected $_info;
     
      public function setId($text){
         $this->_payment_id = (string) $text;
@@ -28,6 +29,12 @@ class PAP_Model_Payment
         return $this;}
     public function getAmount(){
         return $this->_amount;}
+        
+    public function setStatus($text){
+        $this->_status = $this->getStatusToDB($text);
+        return $this;}
+    public function getStatus(){
+        return $this->_status;}
         
     public function setMethodId($text){
         $this->_method_id = (string) $text;
@@ -58,6 +65,12 @@ class PAP_Model_Payment
         return $this;}
     public function getControl(){
         return $this->_control;}
+        
+    public function setInfo($text){
+        $this->_info = (string) $text;
+        return $this;}
+    public function getInfo(){
+        return $this->_info;}
         
     
     public function __construct(array $options = null){
@@ -92,6 +105,13 @@ class PAP_Model_Payment
                 $this->$method($value);
         }
         return $this;
+    }
+    
+    public function loadByControl($control, $method_id){
+        $mapper = new PAP_Model_PaymentMapper();
+        if(!$mapper->loadByControl($control, $method_id, $this)){
+            throw new Exception("Payment with control ".$control." and method_id ".$method_id." not found");    
+        }
     }
     
     public static function  getWorkingDays($startDate, $endDate, $holidays = array()){ 
@@ -270,6 +290,56 @@ class PAP_Model_Payment
         $total += $cost * $cantdias;
         $promoscost = $promos_rows;
         return $total;
+    }
+    
+    public static function getPendigPaymentsMP($user_id = 0){
+        $result = array();
+        $mapper = new PAP_Model_PaymentMapper();
+        $payments = $mapper->getPendingPayments('MP', $user_id);
+        foreach($payments as $payment_record){
+            $payment = new PAP_Model_Payment();
+            $payment->setAmount($payment_record['amount'])
+                    ->setChargeId($payment_record['charge_id'])
+                    ->setControl($payment_record['control'])
+                    ->setCreated($payment_record['created'])
+                    ->setEntity($payment_record['entity'])
+                    ->setId($payment_record['payment_id'])
+                    ->setMethodId($payment_record['method_id'])
+                    ->setPaymentDate($payment_record['payment_date'])
+                    ->setStatus($payment_record['status']);
+             $result[] = $payment;            
+        }
+        return $result;
+    }
+    
+    private function getStatusToDB($status){
+        $statusDB = "";
+        switch ($status) {
+            case 'approved':
+                $statusDB = 'A';
+                break;
+            case 'pending':
+                $statusDB = 'P';
+                break;
+            case 'in_process':
+                $statusDB = 'I';
+                break;
+            case 'rejected':
+                $statusDB = 'R';
+                break;
+            case 'refunded':
+                $statusDB = 'D';
+                break;
+            case 'cancelled':
+                $statusDB = 'C';
+                break;
+            case 'in_mediation':
+                $statusDB = 'M';
+                break;
+            default:
+                $statusDB = $status;
+        }
+        return $statusDB; 
     }
 }
 

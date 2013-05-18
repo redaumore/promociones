@@ -30,6 +30,8 @@ protected $_dbTable;
             'charge_id'   => $payment->getChargeId(),
             'amount' => $payment->getAmount(),
             'control' => $payment->getControl(),
+            'status' => $payment->getStatus(),
+            'info' => $payment->getInfo(),
             'method_id' => $payment->getMethodId(),
             'payment_date' => $payment->getPaymentDate(),
             'entity' => $payment->getEntity(),
@@ -54,7 +56,9 @@ protected $_dbTable;
         $payment->setId($row->payment_id)
                   ->setChargeId($row->charge_id)
                   ->setAmount($row->amount)
+                  ->setStatus($row->status)
                   ->setControlId($row->control_id)
+                  ->setInfo($row->info)
                   ->setPaymentType($row->payment_type)
                   ->setCreated($row->created);
     }
@@ -68,12 +72,41 @@ protected $_dbTable;
             $entry->setId($row->payment_id)
                   ->setChargeId($row->charge_id)
                   ->setAmount($row->amount)
+                  ->setStatus($row->status)
+                  ->setInfo($row->info)
                   ->setControlId($row->control_id)
                   ->setPaymentType($row->payment_type)
                   ->setCreated($row->created);
             $entries[] = $entry;
         }
         return $entries;
+    }
+    
+    public function getPendingPayments($paymentType, $user_id){
+        $adapter = Zend_Db_Table::getDefaultAdapter();
+        $statement = "SELECT p.* FROM payment p ".(($user_id == 0)?" ":" INNER JOIN charge c ON (p.charge_id = c.charge_id)")
+                    ."WHERE p.status = 'P' AND method_id = ".$paymentType.(($user_id == 0)?";":" AND c.user_id = ".$user_id.";");
+        $results = $adapter->fetchAll($statement);
+        return $results;    
+    }
+    
+    public function getPaymentByControl($control, $method_id, PAP_Model_Payment $payment){
+        $adapter = Zend_Db_Table::getDefaultAdapter();
+        $statement = "SELECT p.* FROM payment p WHERE p.control = '".$control."' AND p.method_id = '".$method_id."';";
+        $result = $adapter->fetchAll($statement);
+        if(isset($result))
+            $payment->setId($result->payment_id)
+                  ->setChargeId($result->charge_id)
+                  ->setAmount($result->amount)
+                  ->setStatus($result->status)
+                  ->setControlId($result->control_id)
+                  ->setPaymentType($result->payment_type)
+                  ->setInfo($result->info)
+                  ->setCreated($result->created);
+        else
+            return false;
+        return true;
+        
     }
 
 }

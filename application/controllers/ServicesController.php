@@ -2,6 +2,9 @@
 class servicesController extends Zend_Controller_Action
 {
     protected $_return;
+    protected $_MP_client_id = '1002026871332942';
+    protected $_MP_client_secret = '6vomHLtI0O03ZrMP7LUOeIy61tnH06Kr';
+    protected $_MPTokenUrl = 'https://api.mercadolibre.com/oauth/token';
     
     public function init(){
         /*
@@ -177,7 +180,7 @@ class servicesController extends Zend_Controller_Action
                 else
                     $payment->setEntity($payment_json['banco_destino']);
                 $payment->save();
-                $charge->setPaidOff('S');
+                $charge->setStatus('S');
                 $charge->save();                            
             }
             
@@ -196,6 +199,80 @@ class servicesController extends Zend_Controller_Action
             $response->appendBody($callback.'('.json_encode($data).')');
             $this->getFrontController()->setResponse($response);    
         }
+    }
+    
+    public function getmptokenAction(){
+        $this->_helper->layout->setLayout('json');  
+        $callback = $this->getRequest()->getParam('jsoncallback');
+        if ($callback != ""){
+            // strip all non alphanumeric elements from callback
+            $callback = preg_replace('/[^a-zA-Z0-9_]/', '', $callback);
+        }  
+        $this->view->callback = $callback;
+        
+        $client = new Zend_Http_Client();
+        $client->setMethod(Zend_Http_Client::POST);
+        $client->setUri($this->_MPTokenUrl);
+        $client->setHeaders(array(
+            'Accept'  => 'application/json',
+            'Content-Type'   => 'application/x-www-form-urlencoded'
+        ));
+        $client->setParameterPost(array(
+            'grant_type' => 'client_credentials', 
+            'client_id' => $this->_MP_client_id,
+            'client_secret' => $this->_MP_client_secret
+        ));
+        $response = $client->request();
+        $json = json_encode(array('status'=>'ERROR', 'body'=>''));
+        if($response->getStatus() == 200){
+            $resp = json_decode($response->getBody());
+            //$json = json_encode(array('status'=>'OK', 'body'=>$resp->access_token));
+            
+        }
+        else{
+            $json = json_encode(array('status'=>'ERROR', 'body'=>$response->getMessage()));
+        }
+        $response = $this->getFrontController()->getResponse();
+        $response->appendBody($callback.'('.$json.')');
+        $this->getFrontController()->setResponse($response);
+        // echo $json;
+    }
+    
+    private function getEntryPoint($access_token, $json_preference){
+        $client = new Zend_Http_Client();
+        $client->setMethod(Zend_Http_Client::POST);
+        $client->setUri($this->_MPTokenUrl);
+        $client->setHeaders(array(
+            'Accept'  => 'application/json',
+            'Content-Type'   => 'application/x-www-form-urlencoded'
+        ));
+        $client->setParameterPost(array(
+            'grant_type' => 'client_credentials', 
+            'client_id' => $this->_MP_client_id,
+            'client_secret' => $this->_MP_client_secret
+        ));
+        $response = $client->request();    
+    }
+    
+    public function getmpinitpointAction(){
+        $this->_helper->layout->setLayout('json');  
+        $callback = $this->getRequest()->getParam('jsoncallback');
+        if ($callback != ""){
+            // strip all non alphanumeric elements from callback
+            $callback = preg_replace('/[^a-zA-Z0-9_]/', '', $callback);
+        }  
+        $this->view->callback = $callback;
+        $json_preference = $this->_getParam('data');
+        $json_preference['items']['0']['quantity'] = (integer)$json_preference['items']['0']['quantity'];
+        $json_preference['items']['0']['unit_price'] = (float)$json_preference['items']['0']['unit_price'];
+        $json_preference['payment_methods']['installments'] = (integer)$json_preference['payment_methods']['installments'];
+        $mp = new PAP_MP($this->_MP_client_id, $this->_MP_client_secret);
+        $preferenceResult = $mp->create_preference($json_preference);
+        
+        $json = json_encode(array('status'=>'OK', 'body'=>$preferenceResult["response"]["sandbox_init_point"]));
+        $response = $this->getFrontController()->getResponse();
+        $response->appendBody($callback.'('.$json.')');
+        $this->getFrontController()->setResponse($response);    
     }
 }
 

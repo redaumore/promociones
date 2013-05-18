@@ -8,7 +8,7 @@ class PAP_Model_Charge
       protected $_amount;
       protected $_final_amount;
       protected $_discount;
-      protected $_paid_off;
+      protected $_status;
       protected $_created;
       
     public function setId($text){
@@ -46,12 +46,12 @@ class PAP_Model_Charge
     public function getDiscount(){
         return $this->_discount;}
         
-    public function setPaidOff($text){
-        $this->_paid_off = (string) $text;
+    public function setStatus($text){
+        $this->_status = (string) $text;
         return $this;}
  
-    public function getPaidOff(){
-        return $this->_paid_off;}
+    public function getStatus(){
+        return $this->_status;}
         
     public function setCreated($text){
         $this->_created = (string) $text;
@@ -126,13 +126,43 @@ class PAP_Model_Charge
                     ->setDiscount($chargerecord["discount"])
                     ->setCreated($chargerecord["created"])
                     ->setFinalAmount($chargerecord["final_amount"])
-                    ->setPaidOff($chargerecord["paid_off"])
+                    ->setStatus($chargerecord["status"])
                     ->setPeriod($chargerecord["period"])
                     ->setUserId($chargerecord["user_id"]);
             $charges[] = $charge;
         }
         return $charges;
     }
-        
+    
+    /*
+    approved    El pago fue aprobado y acreditado
+    pending    El usuario no completó el pago
+    in_process    El pago está siendo revisado
+    rejected    El pago fué rechazado, el usuario puede intentar nuevamente el pago
+    null    El usuario no completó el proceso de pago y no se ha generado ningún pago */
+    
+    /*public static function setStatus($id_charge, $status){
+        $status_char;
+        switch ($status) {
+            case 'approved':
+                $status_char = 'A';
+                break;
+            case 'pending':
+                $status_char = 'P';
+                break;
+            case 'in_process':
+                $status_char = 'I';
+                break;
+            case 'rejected':
+                $status_char = 'R';
+                break;
+            case 'null':
+                $status_char = 'N';
+                break;
+        }
+        $this->loadById($id_charge);
+        $this->setStatus($status_char);
+        $this->save();
+    } */   
 }
 
