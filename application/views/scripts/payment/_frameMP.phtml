@@ -1,0 +1,70 @@
+<div id="div_MP">
+    <!-- Aquí debes insertar la URL que corresponde al "init_point" -->
+    <iframe id="iframe_MP" onreturn="checkoutReturn" src="" name="MP-Checkout" width="740" height="600" frameborder="0"></iframe>-->
+
+    <!-- Pega este código antes de cerrar la etiqueta </body> -->
+    <script type="text/javascript">
+        (function(){function $MPBR_load(){window.$MPBR_loaded !== true && (function(){var s = document.createElement("script");s.type = "text/javascript";s.async = true;
+        s.src = ("https:"==document.location.protocol?"https://www.mercadopago.com/org-img/jsapi/mptools/buttons/":"http://mp-tools.mlstatic.com/buttons/")+"render.js";
+        var x = document.getElementsByTagName('script')[0];x.parentNode.insertBefore(s, x);window.$MPBR_loaded = true;})();}
+        window.$MPBR_loaded !== true ? (window.attachEvent ? window.attachEvent('onload', $MPBR_load) : window.addEventListener('load', $MPBR_load, false)) : null;})();
+    </script>
+    <script type="text/javascript">
+        function hideFrameMP(){
+            $("#div_MP").hide();
+            $("#pay").focus();
+        }
+        
+        function chekoutReturn(json){
+            if (json.collection_status=='approved'){
+            alert ('Pago acreditado');
+          } else if(json.collection_status=='pending'){
+            alert ('El usuario no completó el pago');
+          } else if(json.collection_status=='in_process'){    
+            alert ('El pago está siendo revisado');    
+          } else if(json.collection_status=='rejected'){
+            alert ('El pago fué rechazado, el usuario puede intentar nuevamente el pago');
+          } else if(json.collection_status==null){
+            alert ('El usuario no completó el proceso de pago, no se ha generado ningún pago');
+          }
+        }
+        
+        var json_MP ={"items": [
+                        {
+                        "id": "Código",
+                        "title": "Título de lo que estás pagando",
+                        "description": "Descripción",
+                        "quantity": 1,
+                        "unit_price": 50.5,
+                        "currency_id": "ARS",
+                        "picture_url": "https://www.mercadopago.com/org-img/MP3/home/logomp3.gif"
+                        }
+                        ],
+                        "external_reference": "Reference_1234",
+                        "payer": {
+                            "name": "payer-name",
+                            "surname": "payer-surname",
+                            "email": "payer@email.com"
+                        },
+                        "back_urls": {
+                            "success": "https://www.success.com",
+                            "failure": "http://www.failure.com",
+                            "pending": "http://www.pending.com"
+                        },
+                        "payment_methods": {
+                            "excluded_payment_methods": [
+                                {"id":"naranja"},
+                                {"id":"tarshop"},
+                                {"id":"cencosud"},
+                                {"id":"argencard"},
+                            ],
+                            "excluded_payment_types": [
+                                {"id":"ticket"},
+                                {"id":"bank_transfer"},
+                                {"id":"atm"}
+                            ],
+                            "installments": 12
+                        }
+        }
+    </script>
+</div>
