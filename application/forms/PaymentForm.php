@@ -46,7 +46,16 @@
             'label'      => 'Informar Pago',
         ));
         $this->pay->setAttrib('class', 'btn')
-                    ->setAttrib('onClick', 'showPaymentInfo()');
+                    ->setAttrib('onClick', 'showPaymentInfo()')
+                    ->setDecorators($decoratorsButton);
+        
+        $this->addElement('button', 'payMP', array(
+            'ignore'   => true,
+            'label'      => 'Pagar con Mercado Pago',
+        ));
+        $this->payMP->setAttrib('class', 'buttons')
+                    ->setAttrib('onClick', 'showMercadoPago()')
+                    ->setDecorators($decoratorsButton);
             
         $this->addElement('hidden', 'data');
       }
