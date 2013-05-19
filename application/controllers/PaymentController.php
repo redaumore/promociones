@@ -148,6 +148,7 @@ class PaymentController extends Zend_Controller_Action
                 $charge->loadById($payment->getChargeId());
                 $charge->setStatus($payment->getStatus());
                 $payment->save();
+                
                 $charge->save();    
             }
             else{
