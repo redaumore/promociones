@@ -1,53 +1,58 @@
 <?php
     $messages = $this->errorMessage;
-      /*echo $this->headLink()->appendStylesheet($this->baseUrl().'/skins/default/css/jquery-ui-1.8.23.custom.css')
-            ->appendStylesheet($this->baseUrl().'/skins/default/css/ui.jqgrid.css');
-      echo $this->headScript()->appendScript($this->baseUrl().'/scripts/jquery-1.8.0.min.js')
-            ->appendScript($this->baseUrl().'/scripts/jquery-ui-1.8.23.custom.min.js')
-            ->appendScript($this->baseUrl().'scripts/grid.locale-es.js')
-            ->appendScript($this->baseUrl().'/scripts/jquery.jqGrid.min.js');
-      */
+    $this->form->setAction($this->url());
+    $form = $this->form;
 ?>
-<!--
-<script type="text/javascript" src='/scripts/jquery-1.8.2.js'></script>
-<script type="text/javascript" src='/scripts/jquery-ui-1.9.1.custom.js'></script>-->
 <script type="text/javascript" src='/scripts/grid.locale-es.js'></script>
-<script type="text/javascript" src='/scripts/jquery.jqGrid.min.js'></script>
+<!--<script type="text/javascript" src='/scripts/jquery.jqGrid.min.js'></script>-->
 <script type="text/javascript" src='/scripts/jquery.jqGrid.src.js'></script>
-<!--<script type="text/javascript" src="/scripts/backend.js"></script>                  -->
-<div align="center">
-    <table width="100%">
-        <tr>
-            <td>
-                <div style="background-image: url(/images/backend/tit-promociones.png); background-repeat:no-repeat; background-position: center; height: 50px;">&nbsp;</div>
-                <hr/>
-                <?php echo $this->errorMessage($this->form, $messages); ?>
-            </td>
-        </tr>
-        <tr>
-            <td><?php echo $this->form; ?></td>
-        </tr>
-        <tr>
-            <td>
-                <a href="#paymentInfo" role="button" class="btn" data-toggle="modal">Informar Transferencia/Depósito</a>
-            </td>
-        </tr>
-        <tr>
-            <td align="center">
-                <div>
-                    <table id="list2"></table>
-                    <div id="pager2"></div>
-                </div>
-                <div id="div_alert" class="alert alert-error" style="display: none;">
-                    <a class="close" onclick="closeMessage()">×</a>
-                    <h4 class="alert-heading">Atención!</h4>
-                    <p id="p_message"></p>
-                </div>
-            </td>
-        </tr>
-    </table>
- </div>
-
+<form method="<?php echo $form->getMethod() ?>" action="<?php echo $form->getAction()?>">
+<div class="row-fluid">
+    <div class="row">
+        <div class="pagination-centered" id="titulo">
+            <h1>Mis Cargos</h1>
+        </div>
+    </div>
+    <hr class="hr-subtitle"/>
+    <?php echo $this->errorMessage($this->form, $messages); ?>
+    <div class="row-fluid pagination-centered">
+            <p>En esta sección encontrarás información acerca de tu historial de anuncios y también te permitirá ver, pagar o informar el pago de los cargos que adeudas.</p>
+    </div>
+    <div class="row-fluid">
+        <div class="span3 pagination-right">
+            <p>Selecciona el tipo de reporte:</p>
+        </div>
+        <div class="span6 ">
+            <?php echo $form->reportType->renderViewHelper(); ?>
+        </div>
+        <div class="span2 pagination-right">
+            <?php echo $form->search->renderViewHelper(); ?>
+        </div>    
+    </div>
+    <div class="row-fluid">
+        <div class="span8 offset2">
+            <table id="list2"></table>
+            <div id="pager2"></div>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span3 offset3">
+            <button id="pay" type="button" data-toggle="modal" data-target="#paymentInfo" class="btn">Informar Pago por Transferencia/Depósito</button>
+        </div>
+        <div class="span3">
+            <button id="payMP" type="button" class="btn" onclick="showMercadoPago();">Pagar por MercadoPago</button>
+            <button id="payHiddenMP" type="button" data-toggle="modal" data-target="#div_MP" style="height: 0px; width: 0px;"></button>
+        </div>
+    </div>
+    <div id="div_alert" class="alert alert-error" style="display: none;">
+            <a class="close" onclick="closeMessage()">×</a>
+            <h4 class="alert-heading">Atención!</h4>
+            <p id="p_message"></p>
+    </div>
+    
+</div>
+<?php echo $form->data->renderViewHelper(); ?>
+</form>
 <script type="text/javascript">
     $(document).ready(function(){
         $("#pay").hide();

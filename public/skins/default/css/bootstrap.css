@@ -390,6 +390,7 @@ a:focus {
 
 .row-fluid {
   width: 100%;
+  margin-bottom: 10px;
   *zoom: 1;
 }
 
@@ -763,7 +764,7 @@ h6 small {
 h1,
 h2,
 h3 {
-  line-height: 42px;
+  /*line-height: 42px;*/
 }
 
 h1 {
@@ -1098,7 +1099,7 @@ input[type="color"],
 .uneditable-input {
   display: inline-block;
   height: 21px;
-  padding: 4px 6px;
+  padding: 2px;
   margin-bottom: 10.5px;
   font-size: 14px;
   line-height: 21px;
@@ -3111,7 +3112,7 @@ table th[class*="span"],
 .well {
   min-height: 20px;
   padding: 19px;
-  margin-bottom: 20px;
+  /*margin-bottom: 20px;*/
   background-color: #202328;
   border: 1px solid #101214;
   -webkit-border-radius: 4px;

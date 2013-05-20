@@ -61,7 +61,8 @@ function getAccessToken(preference){
                 if(ajaxResponse.status == "OK"){
                     _iframe_MP_url = ajaxResponse.body;
                     $("#iframe_MP").attr("src", _iframe_MP_url);
-                    $("#div_MP").show();
+                    $("#payHiddenMP").click();
+                    //$("#div_MP").show();
                 }   
                 else{
                     showMessage("error", "No nos podemos conectar con Mercado Pago, intentalo nuevamente en algunos minutos");

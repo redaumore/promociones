@@ -25,12 +25,12 @@
         $control = new Zend_Form_Element_Radio('reportType');
         $control->setLabel('Tipo de Reporte')
                 ->setMultiOptions(array(
-                'actual' => 'Período Actual',
-                'pendientes' => 'Cargos Pendientes',
-                'ultimos' => 'Últimos períodos'
+                'actual' => ' Período Actual',
+                'pendientes' => ' Cargos Pendientes',
+                'ultimos' => ' Últimos 6 períodos'
                 ))
                 ->setOptions(array('id' => 'reportType'))
-                ->setSeparator('')
+                ->setSeparator('          ')
                 ->setAttrib('label_class', 'leftalign ui-button-text')
                 ->setDecorators($decorators);
         $this->addElement($control);
@@ -43,7 +43,7 @@
         
         $this->addElement('button', 'pay', array(
             'ignore'   => true,
-            'label'      => 'Informar Pago',
+            'label'      => 'Informar Pago por Transferencia/Depósito',
         ));
         $this->pay->setAttrib('class', 'btn')
                     ->setAttrib('onClick', 'showPaymentInfo()')
@@ -51,12 +51,14 @@
         
         $this->addElement('button', 'payMP', array(
             'ignore'   => true,
-            'label'      => 'Pagar con Mercado Pago',
+            'label'      => 'Pagar con MercadoPago',
         ));
-        $this->payMP->setAttrib('class', 'buttons')
+        $this->payMP->setAttrib('class', 'btn')
                     ->setAttrib('onClick', 'showMercadoPago()')
                     ->setDecorators($decoratorsButton);
             
         $this->addElement('hidden', 'data');
+        $this->data->setDecorators($decorators);
+        
       }
   }
