@@ -211,7 +211,7 @@ function sendPayment(){
                 'nro_tx':$('#txt_nro_tx').val(),
                 'monto':$('#txt_monto').val(),
                 'fecha':$('#txt_fecha').val(),    
-                'charges_ids':$('#charges_ids').val(),
+                'charges_ids':$('#charges_ids').val()
             }]};
             
             $.ajax({

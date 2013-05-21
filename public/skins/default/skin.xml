@@ -5,7 +5,7 @@
         <stylesheet>global.css</stylesheet>
         <stylesheet>jquery-treeview.css</stylesheet> -->
         <stylesheet>ui.jqgrid.css</stylesheet>
-        <stylesheet>jquery-ui-1.9.1.custom.css</stylesheet>
+        <stylesheet>jquery-ui-1.9.2.custom.css</stylesheet>
         <stylesheet>bootstrap.css</stylesheet> 
         <stylesheet>datepicker.css</stylesheet>
         <stylesheet>bootswatch.css</stylesheet>

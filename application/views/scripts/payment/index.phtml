@@ -31,8 +31,10 @@
     </div>
     <div class="row-fluid">
         <div class="span8 offset2">
-            <table id="list2"></table>
-            <div id="pager2"></div>
+            <table width="100%"><tr><td align="center">
+                <table id="list2"></table>
+                <div id="pager2"></div>
+            </td></tr></table>
         </div>
     </div>
     <div class="row-fluid">
@@ -56,6 +58,7 @@
 <script type="text/javascript">
     $(document).ready(function(){
         $("#pay").hide();
+        $("#payHiddenMP").hide();
         $("#payMP").hide();
         $("#div_MP").hide();
         if($('input#data').val() != ""){

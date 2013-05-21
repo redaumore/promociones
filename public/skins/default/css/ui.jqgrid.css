@@ -12,7 +12,7 @@
 .ui-jqgrid .ui-jqgrid-htable {table-layout:fixed;margin:0em;}
 .ui-jqgrid .ui-jqgrid-htable th {height:22px;padding: 0 2px 0 2px;}
 .ui-jqgrid .ui-jqgrid-htable th div {overflow: hidden; position:relative; height:17px; color:white; background-color: #42962F;}
-.ui-th-column, .ui-jqgrid .ui-jqgrid-htable th.ui-th-column {overflow: hidden;white-space: nowrap;text-align:center;border-top : 0px none;border-bottom : 0px none;  font-family: Tahoma,Verdana,Arial,sans-serif; font-size: 0.75em; background-color: #42962F;}
+.ui-th-column, .ui-jqgrid .ui-jqgrid-htable th.ui-th-column {overflow: hidden;white-space: nowrap;text-align:center;border-top : 0px none;border-bottom : 0px none;  font-family: Tahoma,Verdana,Arial,sans-serif; font-size: 1.2em; background-color: #42962F;}
 .ui-th-ltr, .ui-jqgrid .ui-jqgrid-htable th.ui-th-ltr {border-left : 0px none;}
 .ui-th-rtl, .ui-jqgrid .ui-jqgrid-htable th.ui-th-rtl {border-right : 0px none;}
 .ui-first-th-ltr {border-right: 1px solid; }
@@ -37,7 +37,7 @@ tr.ui-search-toolbar select {margin: 1px 0px 0px 0px}
 .ui-jqgrid tr.jqgfirstrow td {padding: 0 2px 0 2px;border-right-width: 1px; border-right-style: solid;}
 .ui-jqgrid tr.jqgroup td {font-weight: normal; overflow: hidden; white-space: pre; height: 22px;padding: 0 2px 0 2px;border-bottom-width: 1px; border-bottom-color: inherit; border-bottom-style: solid;}
 .ui-jqgrid tr.jqfoot td {font-weight: bold; overflow: hidden; white-space: pre; height: 22px;padding: 0 2px 0 2px;border-bottom-width: 1px; border-bottom-color: inherit; border-bottom-style: solid;}
-.ui-jqgrid tr.ui-row-ltr td {text-align:left;border-right-width: 1px; border-right-color: inherit; border-right-style: solid; font-size: 0.75em}
+.ui-jqgrid tr.ui-row-ltr td {text-align:left;border-right-width: 1px; border-right-color: inherit; border-right-style: solid; font-size: 1.2em}
 .ui-jqgrid tr.ui-row-rtl td {text-align:right;border-left-width: 1px; border-left-color: inherit; border-left-style: solid;}
 .ui-jqgrid td.jqgrid-rownum { padding: 0 2px 0 2px; margin: 0px; border: 0px none;}
 .ui-jqgrid .ui-jqgrid-resize-mark { width:2px; left:0; background-color:#777; cursor: e-resize; cursor: col-resize; position:absolute; top:0; height:100px; overflow:hidden; display:none; border:0 none; z-index: 99999;}
@@ -51,13 +51,13 @@ tr.ui-search-toolbar select {margin: 1px 0px 0px 0px}
 .ui-jqgrid .ui-jqgrid-pager { border-left: 0px none !important;border-right: 0px none !important; border-bottom: 0px none !important; margin: 0px !important; padding: 0px !important; position: relative; height: 25px;white-space: nowrap;overflow: hidden;font-size:11px;}
 .ui-jqgrid .ui-pager-control {position: relative;}
 .ui-jqgrid .ui-pg-table {position: relative; padding-bottom:2px; width:auto; margin: 0em;}
-.ui-jqgrid .ui-pg-table td {font-weight:normal; vertical-align:middle; padding:1px; font-size: 0.75em}
+.ui-jqgrid .ui-pg-table td {font-weight:normal; vertical-align:middle; padding:1px; font-size: 1.2em}
 .ui-jqgrid .ui-pg-button  { height:19px !important;}
 .ui-jqgrid .ui-pg-button span { display: block; margin: 1px; float:left;}
 .ui-jqgrid .ui-pg-button:hover { padding: 0px; }
 .ui-jqgrid .ui-state-disabled:hover {padding:1px;}
 .ui-jqgrid .ui-pg-input { height:13px;font-size:.8em; margin: 0em;}
-.ui-jqgrid .ui-pg-selbox {font-size:.8em; line-height:18px; display:block; height:18px; margin: 0em;}
+.ui-jqgrid .ui-pg-selbox {font-size:.8em; line-height:18px; display:block; height:18px; margin: 0em; padding: 0px;}
 .ui-jqgrid .ui-separator {height: 18px; border-left: 1px solid #ccc ; border-right: 1px solid #ccc ; margin: 1px; float: right;}
 .ui-jqgrid .ui-paging-info {font-weight: normal;height:19px; margin-top:3px;margin-right:4px;}
 .ui-jqgrid .ui-jqgrid-pager .ui-pg-div {padding:1px 0;float:left;position:relative;}
@@ -78,7 +78,7 @@ tr.ui-search-toolbar select {margin: 1px 0px 0px 0px}
 .ui-jqgrid .ui-subgrid td.subgrid-cell {border-width: 0px 0px 1px 0px;}
 .ui-jqgrid .ui-th-subgrid {height:20px;}
 /* loading */
-.ui-jqgrid .loading {position: absolute; top: 45%;left: 45%;width: auto;z-index:101;padding: 6px; margin: 5px;text-align: center;font-weight: bold;display: none;border-width: 2px !important; font-size:11px;}
+.ui-jqgrid .loading {position: absolute; top: 45%;left: 45%;width: auto;z-index:101;padding: 6px; margin: 5px;text-align: center;font-weight: bold;display: none;border-width: 2px !important; font-size:15px;}
 .ui-jqgrid .jqgrid-overlay {display:none;z-index:100;}
 * html .jqgrid-overlay {width: expression(this.parentNode.offsetWidth+'px');height: expression(this.parentNode.offsetHeight+'px');}
 * .jqgrid-overlay iframe {position:absolute;top:0;left:0;z-index:-1;width: expression(this.parentNode.offsetWidth+'px');height: expression(this.parentNode.offsetHeight+'px');}

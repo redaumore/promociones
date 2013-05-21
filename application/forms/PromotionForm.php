@@ -48,7 +48,7 @@ class PAP_Form_PromotionForm extends Zend_Form
         $validator = new Zend_Validate_Alnum(array('allowWhiteSpace' => true));
         $control->addValidator($validator, true);
         $control->setDecorators($decorators);
-        $control->setOptions(array('rows' => '2','cols' => '30'));
+        $control->setOptions(array('rows' => '2','cols' => '40'));
         
         /*
         $this->addElement('textarea', 'long_description', array(
@@ -66,7 +66,7 @@ class PAP_Form_PromotionForm extends Zend_Form
         $allowWhiteSpace = new Zend_Validate_Alnum(array('allowWhiteSpace' => true));
         $control = new Zend_Form_Element_TextArea('longDescription');
         $control->setLabel('Desc. larga ')
-            ->setOptions(array('rows' => '5','cols' => '30'))
+            ->setOptions(array('rows' => '5','cols' => '45'))
             ->setRequired(true)
             //->addFilter('HTMLEntities', 'UTF-8')
             ->addFilter('StripTags')
@@ -143,7 +143,8 @@ class PAP_Form_PromotionForm extends Zend_Form
         $control = $this->addElement('text', 'displayedText', array(
             'label'      => 'Título ',      //2x1, Liquidación, etc
             'required'   => true,
-            'size' => 25, 
+            'size' => 40,
+            'maxlength' => 60, 
             'validators' => array(
                 'StringLength',
             ),
@@ -155,15 +156,14 @@ class PAP_Form_PromotionForm extends Zend_Form
         $control = new Zend_Form_Element_Radio('alertType');
         $control->setLabel('Alertas')
                 ->setMultiOptions(array(
-                'D' => 'Mostror por días',
-                'Q' => 'Mostrar por cantidad',
-                'N' => 'No mostrar'
+                'N' => 'No mostrar alertas',
+                'D' => 'Mostrar días restantes de promo',
+                'Q' => 'Mostrar unidades restantes del producto/servicio'
                 ))
                 ->setOptions(array('id' => 'alertType'))
                 ->setAttrib('label_class', 'leftalign ui-button-text');
         $this->addElement($control);
-        $this->alertType->setAttrib('class', 'leftalign ui-button-text');
-                
+                        
         $this->addElement('select', 'state', array(
             'label'      => 'Estado',
             'required'   => true,
@@ -214,7 +214,7 @@ class PAP_Form_PromotionForm extends Zend_Form
         
         $this->addElement('button', 'fakefile', array(
             'ignore'   => true,
-            'label'      => 'Cambiar',
+            'label'      => 'Cambiar Imagen',
         ));
         $this->fakefile->setAttrib('class', 'btn btn-primary')
             ->setAttrib("onClick", "clickFile();");
@@ -222,8 +222,9 @@ class PAP_Form_PromotionForm extends Zend_Form
         $this->addElement('img', 'imagePromo', array(
             'label'     => 'Imagen',
             'ignore'   => true,
-            'width' => '75', 
-            'height' => '75',
+            'width' => '110', 
+            'height' => '110',
+            'class' => 'img-polaroid',
         ));
         $this->imagePromo->setDecorators($decorators);
         
@@ -248,7 +249,7 @@ class PAP_Form_PromotionForm extends Zend_Form
         ));
         $control = $this->getElement("save");
         $control->setDecorators($decoratorsButton);
-        $control->setAttrib('class', 'btn');
+        $control->setAttrib('class', 'btn btn-large');
     }
 }
 

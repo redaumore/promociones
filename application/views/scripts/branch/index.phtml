@@ -49,7 +49,7 @@ function clearCoord(){
     //echo $this->form;
     $form = $this->form;
 ?>
-<form method="<?php echo $form->getMethod() ?>" action="<?php echo $form->getAction()?>" enctype="multipart/form-data">
+<form method="<?php echo $form->getMethod() ?>" action="<?php echo $form->getAction()?>" enctype="multipart/form-data" class="form-horizontal">
 <div class="row-fluid">
     <div class="row">
         <div class="pagination-centered" id="titulo">
@@ -63,7 +63,7 @@ function clearCoord(){
             <fieldset>
                 <legend><h4>Domicilio</h4></legend>
                 <div class="row-fluid">
-                    <div class="span4">
+                    <div class="span6">
                         <div class="control-group">
                             <?php echo $form->name->renderLabel(); ?>
                             <div class="controls">
@@ -71,7 +71,7 @@ function clearCoord(){
                             </div>
                         </div>
                     </div>
-                    <div class="span4 offset4">
+                    <div class="span6">
                         <div class="control-group">
                             <?php echo $form->phone->renderLabel(); ?>
                             <div class="controls">
@@ -81,7 +81,7 @@ function clearCoord(){
                     </div>
                 </div>
                 <div class="row-fluid">
-                    <div class="span4">
+                    <div class="span6">
                         <div class="control-group">
                             <?php echo $form->street->renderLabel(); ?>
                             <div class="controls">
@@ -89,7 +89,7 @@ function clearCoord(){
                             </div>
                         </div>
                     </div>
-                    <div class="span4">
+                    <div class="span6">
                         <div class="control-group">
                             <?php echo $form->number->renderLabel(); ?>
                             <div class="controls">
@@ -97,7 +97,9 @@ function clearCoord(){
                             </div>
                         </div>
                     </div>
-                    <div class="span4">
+                </div>
+                <div class="row-fluid">
+                    <div class="span6">
                         <div class="control-group">
                             <?php echo $form->local->renderLabel(); ?>
                             <div class="controls">
@@ -105,25 +107,7 @@ function clearCoord(){
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row-fluid">
-                    <div class="span4">
-                        <div class="control-group">
-                            <?php echo $form->province->renderLabel(); ?>
-                            <div class="controls">
-                                <?php echo $form->province->renderViewHelper(); ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="span4">
-                        <div class="control-group">
-                            <?php echo $form->city->renderLabel(); ?>
-                            <div class="controls">
-                                <?php echo $form->city->renderViewHelper(); ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="span4">
+                    <div class="span6">
                         <div class="control-group">
                             <?php echo $form->zipcode->renderLabel(); ?>
                             <div class="controls">
@@ -133,7 +117,25 @@ function clearCoord(){
                     </div>
                 </div>
                 <div class="row-fluid">
-                    <div class="span4">
+                    <div class="span6">
+                        <div class="control-group">
+                            <?php echo $form->province->renderLabel(); ?>
+                            <div class="controls">
+                                <?php echo $form->province->renderViewHelper(); ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="span6">
+                        <div class="control-group">
+                            <?php echo $form->city->renderLabel(); ?>
+                            <div class="controls">
+                                <?php echo $form->city->renderViewHelper(); ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span6">
                         <div class="control-group">
                             <?php echo $form->website->renderLabel(); ?>
                             <div class="controls">
@@ -141,7 +143,7 @@ function clearCoord(){
                             </div>
                         </div>
                     </div>
-                    <div class="span4">
+                    <div class="span6">
                         <div class="control-group">
                             <?php echo $form->email->renderLabel(); ?>
                             <div class="controls">
@@ -173,7 +175,7 @@ function clearCoord(){
                             </div>
                         </div>
                     </div>
-                    <div class="span4" style="padding-top: 25px; height: 78px; text-align: right;">
+                    <div class="span4" style="text-align: right;">
                         <button type="button" data-toggle="modal" data-target="#gmapmodal" class="btn btn-primary">Localizarme</button>
                     </div>
                 </div>

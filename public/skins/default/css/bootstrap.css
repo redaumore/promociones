@@ -290,6 +290,7 @@ a:focus {
 .navbar-fixed-top .container,
 .navbar-fixed-bottom .container {
   width: 940px;
+  min-width: 940px;
 }
 
 .span12 {
@@ -1113,7 +1114,7 @@ input[type="color"],
 input,
 textarea,
 .uneditable-input {
-  width: 206px;
+  /*width: 206px;*/
 }
 
 textarea {
@@ -1951,7 +1952,7 @@ legend + .control-group {
 }
 
 .form-horizontal .control-group {
-  margin-bottom: 21px;
+  /*margin-bottom: 21px;*/
   *zoom: 1;
 }
 
@@ -6887,10 +6888,7 @@ div.subnav.subnav-fixed .nav > li:first-child > a:hover {
 }
 
 label,
-input,
 button,
-select,
-textarea,
 legend {
   color: #c8c8c8;
 }

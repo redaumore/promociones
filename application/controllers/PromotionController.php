@@ -11,7 +11,7 @@
     private function checkLogin(){
         $this->user = $this->_helper->Session->getUserSession();
         if(!isset($this->user))
-            $this->_redirect('/auth/login');    
+            $this->_redirect('/auth/login');
     }
     
     public function newAction(){

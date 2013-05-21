@@ -29,60 +29,59 @@ label[for=branches]{
 }
 </style>
 
-<form method="<?php echo $form->getMethod() ?>" action="<?php echo $form->getAction()?>" enctype="multipart/form-data" class="well">
-    <div align="center">
-        <table width="95%">
-            <tr>
-                <td align="center" valign="middle" height="65px" colspan="2">
-                    <div style="background-image: url(/images/backend/tit-promocion.png); background-repeat:no-repeat; background-position: center; height: 50px; width: 100%">&nbsp;</div>
-                    <hr/>
-                    <?php echo $this->errorMessage($this->form, $messages); ?>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <fieldset>
-                        <legend>Portada de Promoción</legend>
-                        <table>
-                            <tr>
-                                <td width="20px">
-                                    <?php echo $form->displayedText->renderLabel(); ?>
-                                </td>
-                                <td>
-                                    <?php echo $form->displayedText->renderViewHelper(); ?>
-                                    <img src="/images/backend/icon-info.gif" title="Descripción de la descripción." />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><?php echo $form->shortDescription->renderLabel(); ?></td>
-                                <td>
-                                    <table>
-                                        <tr>
-                                            <td><?php echo $form->shortDescription->renderViewHelper(); ?></td>
-                                            <td><img src="/images/backend/icon-info.gif" title="Descripcin de la descripci." /></td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><?php echo $form->promoValue->renderLabel(); ?>
-                                </td>
-                                <td><?php echo $form->promoValue->renderViewHelper(); ?>
-                                    <img src="/images/backend/icon-info.gif" title="Descripción de la descripción." /> &nbsp;
-                                    <div style="float: right;">
-                                        <?php echo $form->valueSince->renderLabel(); ?>
-                                        <?php echo $form->valueSince->renderViewHelper(); ?>
-                                        <img src="/images/backend/icon-info.gif" title="Descripción de la descripción." />    
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                    </fieldset>
-                </td>
-                <td>
-                    <fieldset>
+<form method="<?php echo $form->getMethod() ?>" action="<?php echo $form->getAction()?>" enctype="multipart/form-data" class="form-horizontal">
+<div class="row-fluid">
+    <div class="row">
+        <div class="pagination-centered" id="titulo">
+            <h1>Editar Promoción</h1>
+        </div>
+    </div>
+    <hr class="hr-subtitle"/>
+    <?php echo $this->errorMessage($this->form, $messages); ?>
+    <div class="row-fluid">
+        <div class="span8">
+            <fieldset>
+                <legend>Portada de Promoción</legend>
+                    <div class="row-fluid">
+                        <div class="control-group">
+                            <?php echo $form->displayedText->renderLabel(); ?>
+                            <div class="controls">
+                                <?php echo $form->displayedText->renderViewHelper(); ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="control-group">
+                            <?php echo $form->shortDescription->renderLabel(); ?>
+                            <div class="controls">
+                                <?php echo $form->shortDescription->renderViewHelper(); ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span2">
+                            <div class="control-group">
+                                <?php echo $form->promoValue->renderLabel(); ?>
+                                <div class="controls">
+                                    <?php echo $form->promoValue->renderViewHelper(); ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="span2">
+                            <div class="control-group">
+                                <?php echo $form->valueSince->renderLabel(); ?>
+                                <div class="controls">
+                                    <?php echo $form->valueSince->renderViewHelper(); ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+        </div>
+        <div class="span4">
+            <fieldset>
                         <legend>Imagen</legend>
-                        <table>
+                        <table width="100%">
                             <tr>
                                 <td style="text-align: center;">
                                     <?php echo $form->imagePromo->renderViewHelper(); ?>
@@ -99,6 +98,17 @@ label[for=branches]{
                             </tr>
                         </table>
                     </fieldset>
+        </div>
+    </div>
+</div>    
+    <div align="center">
+        <table width="95%">
+            <tr>
+                <td>
+                    
+                </td>
+                <td>
+                    
                 </td>
             </tr>
             <tr>
