@@ -84,6 +84,19 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             $log = $r->getLog();
             Zend_Registry::set("log", $log);
         }
+        $db = $this->getPluginResource("db");
+        $columnMapping = array('priority' => 'priority',
+            'priorityname' => 'priorityname', 
+            'message' => 'message',
+            'timestamp' => 'timestamp', 
+            'user' => 'user',    
+            'file' => 'file',
+            'line' => 'line',
+            'context' => 'context',
+            );
+        $writer = new Zend_Log_Writer_Db($db->getDbAdapter(), 'log', $columnMapping);
+        $logger = new Zend_Log($writer);
+        Zend_Registry::set("logDB", $logger);
     }
 }
 

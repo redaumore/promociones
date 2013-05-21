@@ -25,63 +25,73 @@ class servicesController extends Zend_Controller_Action
     
     
     public function getpromolistAction(){
-        $this->_helper->layout->setLayout('json');  
+        try{
+            $this->_helper->layout->setLayout('json');  
 
-        $callback = $this->getRequest()->getParam('jsoncallback');
-        if ($callback != "")
-        {
-            // strip all non alphanumeric elements from callback
-            $callback = preg_replace('/[^a-zA-Z0-9_]/', '', $callback);
-        }  
-        $this->view->callback = $callback;
+            $callback = $this->getRequest()->getParam('jsoncallback');
+            if ($callback != "")
+            {
+                // strip all non alphanumeric elements from callback
+                $callback = preg_replace('/[^a-zA-Z0-9_]/', '', $callback);
+            }  
+            $this->view->callback = $callback;
 
-        $lat  = $this->_getParam('lat'); //$_GET['lat'];
-        $lng = $this->_getParam('lng'); //$_GET['lng']; 
-        $promotion = new PAP_Model_Promotion();
-        $data = $promotion->getPromotionsByCoords($lat, $lng, '');
-        
-        $i = 0;
-        foreach($data as $item){
-            $data[$i]["path"] = $this->getDataURI("./images".$this->getThumb($item["path"]));
-            $i = $i + 1;
+            $lat  = $this->_getParam('lat'); //$_GET['lat'];
+            $lng = $this->_getParam('lng'); //$_GET['lng']; 
+            $promotion = new PAP_Model_Promotion();
+            $data = $promotion->getPromotionsByCoords($lat, $lng, '');
+            
+            $i = 0;
+            foreach($data as $item){
+                $data[$i]["path"] = $this->getDataURI("./images".$this->getThumb($item["path"]));
+                $i = $i + 1;
+            }
+            
+            //header('Content-Type: application/json');
+            /*$data = array();
+            $data['latitud'] = $lat;
+            $data['longitud'] = $lng;
+            */
+            $response = $this->getFrontController()->getResponse();
+            $response->appendBody($callback.'('.json_encode($data).')');
+            $this->getFrontController()->setResponse($response);
         }
-        
-        //header('Content-Type: application/json');
-        /*$data = array();
-        $data['latitud'] = $lat;
-        $data['longitud'] = $lng;
-        */
-        $response = $this->getFrontController()->getResponse();
-        $response->appendBody($callback.'('.json_encode($data).')');
-        $this->getFrontController()->setResponse($response);
+        catch(Exception $e){
+            PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'ServiceController->getpromolistAction',$e);    
+        }
     }
     
     public function getpromolistbyidsAction(){
-        $this->_helper->layout->setLayout('json');  
+        try{
+            $this->_helper->layout->setLayout('json');  
 
-        $callback = $this->getRequest()->getParam('jsoncallback');
-        if ($callback != "")
-        {
-            // strip all non alphanumeric elements from callback
-            $callback = preg_replace('/[^a-zA-Z0-9_]/', '', $callback);
-        }  
-        $this->view->callback = $callback;
+            $callback = $this->getRequest()->getParam('jsoncallback');
+            if ($callback != "")
+            {
+                // strip all non alphanumeric elements from callback
+                $callback = preg_replace('/[^a-zA-Z0-9_]/', '', $callback);
+            }  
+            $this->view->callback = $callback;
 
-        $lat  = $this->_getParam('lat'); //$_GET['lat'];
-        $lng = $this->_getParam('lng');
-        $ids  = $this->_getParam('ids'); //$_GET['lat'];
-        $promotion = new PAP_Model_Promotion();
-        $data = $promotion->getPromotionsByIds($ids, $lat, $lng);
-        
-        $i = 0;
-        foreach($data as $item){
-            $data[$i]["path"] = $this->getDataURI("./images".$this->getThumb($item["path"]));
-            $i = $i + 1;
-        }
-        
-        $response = $this->getFrontController()->getResponse();
-        $response->appendBody($callback.'('.json_encode($data).')');
-        $this->getFrontController()->setResponse($response);
+            $lat  = $this->_getParam('lat'); //$_GET['lat'];
+            $lng = $this->_getParam('lng');
+            $ids  = $this->_getParam('ids'); //$_GET['lat'];
+            $promotion = new PAP_Model_Promotion();
+            $data = $promotion->getPromotionsByIds($ids, $lat, $lng);
+            
+            $i = 0;
+            foreach($data as $item){
+                $data[$i]["path"] = $this->getDataURI("./images".$this->getThumb($item["path"]));
+                $i = $i + 1;
+            }
+            
+            $response = $this->getFrontController()->getResponse();
+            $response->appendBody($callback.'('.json_encode($data).')');
+            $this->getFrontController()->setResponse($response);
+            }
+            catch(Exception $e){
+                PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'ServiceController->getpromolistbyidsAction',$e);    
+            }
     }
     
     private function getThumb($path){
@@ -89,28 +99,33 @@ class servicesController extends Zend_Controller_Action
     }
     
     public function getpromodetailAction(){
-        $this->_helper->layout->setLayout('json');  
+        try{
+            $this->_helper->layout->setLayout('json');  
 
-        $callback = $this->getRequest()->getParam('jsoncallback');
-        if ($callback != "")
-        {
-            // strip all non alphanumeric elements from callback
-            $callback = preg_replace('/[^a-zA-Z0-9_]/', '', $callback);
-        }  
-        $this->view->callback = $callback;
+            $callback = $this->getRequest()->getParam('jsoncallback');
+            if ($callback != "")
+            {
+                // strip all non alphanumeric elements from callback
+                $callback = preg_replace('/[^a-zA-Z0-9_]/', '', $callback);
+            }  
+            $this->view->callback = $callback;
 
-        $lat  = $this->_getParam('lat'); //$_GET['lat'];
-        $lng = $this->_getParam('lng'); //$_GET['lng'];
-        $promotion_id = $this->_getParam('promoid'); //$_GET['lng']; 
-        $promotion = new PAP_Model_Promotion();
-        $data = $promotion->getPromotionById($promotion_id, $lat, $lng);
-        $data["logo"] = $this->getDataURI("./images".$data["logo"]);
-        $data["path"] = $this->getDataURI("./images".$this->getThumb($data["path"]));
-        $data["promo_photo"] = "./images".$data["path"];
-        
-        $response = $this->getFrontController()->getResponse();
-        $response->appendBody($callback.'('.json_encode($data).')');
-        $this->getFrontController()->setResponse($response);
+            $lat  = $this->_getParam('lat'); //$_GET['lat'];
+            $lng = $this->_getParam('lng'); //$_GET['lng'];
+            $promotion_id = $this->_getParam('promoid'); //$_GET['lng']; 
+            $promotion = new PAP_Model_Promotion();
+            $data = $promotion->getPromotionById($promotion_id, $lat, $lng);
+            $data["logo"] = $this->getDataURI("./images".$data["logo"]);
+            $data["path"] = $this->getDataURI("./images".$this->getThumb($data["path"]));
+            $data["promo_photo"] = "./images".$data["path"];
+            
+            $response = $this->getFrontController()->getResponse();
+            $response->appendBody($callback.'('.json_encode($data).')');
+            $this->getFrontController()->setResponse($response);
+        }
+        catch(Exception $e){
+            PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'ServiceController->getpromodetailAction',$e);    
+        }
     }
     
     private function getDataURI($image, $mime = '') {
@@ -125,117 +140,129 @@ class servicesController extends Zend_Controller_Action
     }
     
     public function getregionsAction(){
-        
-        $this->_helper->layout->setLayout('json');  
-        
-        $callback = $this->getRequest()->getParam('jsoncallback');
-        if ($callback != "")
-        {
-            // strip all non alphanumeric elements from callback
-            $callback = preg_replace('/[^a-zA-Z0-9_]/', '', $callback);
-        }  
-        $this->view->callback = $callback;
-        
-        $req_version  = $this->_getParam('lastupdate');
-        $config = new PAP_Model_Config();
-        $response = $this->getFrontController()->getResponse();
-        $result = $config->getRegions($req_version);
-        if(count($result) == 0)        
-            $response->appendBody($callback.'()');
-        else{
-            $response->appendBody($callback.'('.json_encode($result).')');
+        try{
+            $this->_helper->layout->setLayout('json');  
+            
+            $callback = $this->getRequest()->getParam('jsoncallback');
+            if ($callback != "")
+            {
+                // strip all non alphanumeric elements from callback
+                $callback = preg_replace('/[^a-zA-Z0-9_]/', '', $callback);
+            }  
+            $this->view->callback = $callback;
+            
+            $req_version  = $this->_getParam('lastupdate');
+            $config = new PAP_Model_Config();
+            $response = $this->getFrontController()->getResponse();
+            $result = $config->getRegions($req_version);
+            if(count($result) == 0)        
+                $response->appendBody($callback.'()');
+            else{
+                $response->appendBody($callback.'('.json_encode($result).')');
+            }
+            $this->getFrontController()->setResponse($response);
         }
-        $this->getFrontController()->setResponse($response);
+        catch(Exception $e){
+            PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'ServiceController->getregionsAction',$e);    
+        }
     }
     
     public function sendpaymentAction(){
-        $this->_helper->layout->setLayout('json');  
-        
-        $callback = $this->getRequest()->getParam('jsoncallback');
-        if ($callback != "")
-        {
-            // strip all non alphanumeric elements from callback
-            $callback = preg_replace('/[^a-zA-Z0-9_]/', '', $callback);
-        }  
-        $this->view->callback = $callback; 
-        
-        $data = $this->_getParam("data");
-        $payment_json = $data['data'][0];
-        $charges = $payment_json['charges_ids'];
-        $charges = explode(',', $charges);
-        
         try{
-            foreach($charges as $charge_id){
-                $charge = new PAP_Model_Charge();
-                $charge->loadById($charge_id);
-                $payment = new PAP_Model_Payment();
-                $payment->setAmount($charge->getAmount())
-                        ->setChargeId($charge->getId())
-                        ->setControl($payment_json['nro_tx'])
-                        ->setMethodId($payment_json['operacion'])
-                        ->setPaymentDate($payment_json['fecha']);
-                if($payment_json['operacion'] == "T"){
-                    $payment->setEntity($payment_json['banco_origen']);
-                }
-                else
-                    $payment->setEntity($payment_json['banco_destino']);
-                $payment->save();
-                $charge->setStatus('S');
-                $charge->save();                            
-            }
+            $this->_helper->layout->setLayout('json');  
             
-            $data = array();
-            $data['result_code'] = '0';
-            $data['result_message'] = 'Información del pago informada guardada con éxito.';        
-            $response = $this->getFrontController()->getResponse();
-            $response->appendBody($callback.'('.json_encode($data).')');
-            $this->getFrontController()->setResponse($response);   
+            $callback = $this->getRequest()->getParam('jsoncallback');
+            if ($callback != "")
+            {
+                // strip all non alphanumeric elements from callback
+                $callback = preg_replace('/[^a-zA-Z0-9_]/', '', $callback);
+            }  
+            $this->view->callback = $callback; 
+            
+            $data = $this->_getParam("data");
+            $payment_json = $data['data'][0];
+            $charges = $payment_json['charges_ids'];
+            $charges = explode(',', $charges);
+            
+            try{
+                foreach($charges as $charge_id){
+                    $charge = new PAP_Model_Charge();
+                    $charge->loadById($charge_id);
+                    $payment = new PAP_Model_Payment();
+                    $payment->setAmount($charge->getAmount())
+                            ->setChargeId($charge->getId())
+                            ->setControl($payment_json['nro_tx'])
+                            ->setMethodId($payment_json['operacion'])
+                            ->setPaymentDate($payment_json['fecha']);
+                    if($payment_json['operacion'] == "T"){
+                        $payment->setEntity($payment_json['banco_origen']);
+                    }
+                    else
+                        $payment->setEntity($payment_json['banco_destino']);
+                    $payment->save();
+                    $charge->setStatus('S');
+                    $charge->save();                            
+                }
+                
+                $data = array();
+                $data['result_code'] = '0';
+                $data['result_message'] = 'Información del pago informada guardada con éxito.';        
+                $response = $this->getFrontController()->getResponse();
+                $response->appendBody($callback.'('.json_encode($data).')');
+                $this->getFrontController()->setResponse($response);   
+            }
+            catch(Exception $ex){
+                PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'ServiceController->sendpaymentAction(foreach)',$e); 
+                $data = array();
+                $data['result_code'] = $ex->getCode();
+                $data['result_message'] = 'Hubo un error guardando la información del pago. Por favor envíe un email a soporte@promosalpaso.com con dicha información.';
+                $response = $this->getFrontController()->getResponse();
+                $response->appendBody($callback.'('.json_encode($data).')');
+                $this->getFrontController()->setResponse($response);    
+            }
         }
         catch(Exception $ex){
-            $data = array();
-            $data['result_code'] = $ex->getCode();
-            $data['result_message'] = 'Hubo un error guardando la información del pago. Por favor envíe un email a soporte@promosalpaso.com con dicha información.';
-            $response = $this->getFrontController()->getResponse();
-            $response->appendBody($callback.'('.json_encode($data).')');
-            $this->getFrontController()->setResponse($response);    
+            PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'ServiceController->sendpaymentAction',$e); 
         }
     }
     
     public function getmptokenAction(){
-        $this->_helper->layout->setLayout('json');  
-        $callback = $this->getRequest()->getParam('jsoncallback');
-        if ($callback != ""){
-            // strip all non alphanumeric elements from callback
-            $callback = preg_replace('/[^a-zA-Z0-9_]/', '', $callback);
-        }  
-        $this->view->callback = $callback;
-        
-        $client = new Zend_Http_Client();
-        $client->setMethod(Zend_Http_Client::POST);
-        $client->setUri($this->_MPTokenUrl);
-        $client->setHeaders(array(
-            'Accept'  => 'application/json',
-            'Content-Type'   => 'application/x-www-form-urlencoded'
-        ));
-        $client->setParameterPost(array(
-            'grant_type' => 'client_credentials', 
-            'client_id' => $this->_MP_client_id,
-            'client_secret' => $this->_MP_client_secret
-        ));
-        $response = $client->request();
-        $json = json_encode(array('status'=>'ERROR', 'body'=>''));
-        if($response->getStatus() == 200){
-            $resp = json_decode($response->getBody());
-            //$json = json_encode(array('status'=>'OK', 'body'=>$resp->access_token));
+        try{
+            $this->_helper->layout->setLayout('json');  
+            $callback = $this->getRequest()->getParam('jsoncallback');
+            if ($callback != ""){
+                // strip all non alphanumeric elements from callback
+                $callback = preg_replace('/[^a-zA-Z0-9_]/', '', $callback);
+            }  
+            $this->view->callback = $callback;
             
+            $client = new Zend_Http_Client();
+            $client->setMethod(Zend_Http_Client::POST);
+            $client->setUri($this->_MPTokenUrl);
+            $client->setHeaders(array(
+                'Accept'  => 'application/json',
+                'Content-Type'   => 'application/x-www-form-urlencoded'
+            ));
+            $client->setParameterPost(array(
+                'grant_type' => 'client_credentials', 
+                'client_id' => $this->_MP_client_id,
+                'client_secret' => $this->_MP_client_secret
+            ));
+            $response = $client->request();
+            $json = json_encode(array('status'=>'ERROR', 'body'=>''));
+            if($response->getStatus() == 200){
+                $resp = json_decode($response->getBody());
+            }
+            else{
+                $json = json_encode(array('status'=>'ERROR', 'body'=>$response->getMessage()));
+            }
+            $response = $this->getFrontController()->getResponse();
+            $response->appendBody($callback.'('.$json.')');
+            $this->getFrontController()->setResponse($response);
         }
-        else{
-            $json = json_encode(array('status'=>'ERROR', 'body'=>$response->getMessage()));
+        catch(Exception $ex){
+            PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'ServiceController->getmptokenAction',$e); 
         }
-        $response = $this->getFrontController()->getResponse();
-        $response->appendBody($callback.'('.$json.')');
-        $this->getFrontController()->setResponse($response);
-        // echo $json;
     }
     
     private function getEntryPoint($access_token, $json_preference){
@@ -255,24 +282,29 @@ class servicesController extends Zend_Controller_Action
     }
     
     public function getmpinitpointAction(){
-        $this->_helper->layout->setLayout('json');  
-        $callback = $this->getRequest()->getParam('jsoncallback');
-        if ($callback != ""){
-            // strip all non alphanumeric elements from callback
-            $callback = preg_replace('/[^a-zA-Z0-9_]/', '', $callback);
-        }  
-        $this->view->callback = $callback;
-        $json_preference = $this->_getParam('data');
-        $json_preference['items']['0']['quantity'] = (integer)$json_preference['items']['0']['quantity'];
-        $json_preference['items']['0']['unit_price'] = (float)$json_preference['items']['0']['unit_price'];
-        $json_preference['payment_methods']['installments'] = (integer)$json_preference['payment_methods']['installments'];
-        $mp = new PAP_MP($this->_MP_client_id, $this->_MP_client_secret);
-        $preferenceResult = $mp->create_preference($json_preference);
-        
-        $json = json_encode(array('status'=>'OK', 'body'=>$preferenceResult["response"]["sandbox_init_point"]));
-        $response = $this->getFrontController()->getResponse();
-        $response->appendBody($callback.'('.$json.')');
-        $this->getFrontController()->setResponse($response);    
+        try{
+            $this->_helper->layout->setLayout('json');  
+            $callback = $this->getRequest()->getParam('jsoncallback');
+            if ($callback != ""){
+                // strip all non alphanumeric elements from callback
+                $callback = preg_replace('/[^a-zA-Z0-9_]/', '', $callback);
+            }  
+            $this->view->callback = $callback;
+            $json_preference = $this->_getParam('data');
+            $json_preference['items']['0']['quantity'] = (integer)$json_preference['items']['0']['quantity'];
+            $json_preference['items']['0']['unit_price'] = (float)$json_preference['items']['0']['unit_price'];
+            $json_preference['payment_methods']['installments'] = (integer)$json_preference['payment_methods']['installments'];
+            $mp = new PAP_MP($this->_MP_client_id, $this->_MP_client_secret);
+            $preferenceResult = $mp->create_preference($json_preference);
+            
+            $json = json_encode(array('status'=>'OK', 'body'=>$preferenceResult["response"]["sandbox_init_point"]));
+            $response = $this->getFrontController()->getResponse();
+            $response->appendBody($callback.'('.$json.')');
+            $this->getFrontController()->setResponse($response);
+        }
+        catch(Exception $ex){
+            PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'ServiceController->getmpinitpointAction',$e); 
+        }    
     }
 }
 

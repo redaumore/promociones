@@ -31,28 +31,23 @@ class ErrorController extends Zend_Controller_Action
         
         // Log exception, if logger available
         if ($log = $this->getLog()) {
-            $log->crit($this->view->message .": ".$errors->exception);
-            //$log->log($this->view->message, $priority, $this->view->message .": ".$errors->exception);
-            //$log->log('Request Parameters', $priority, $errors->request->getParams());
-            
+            $auth=Zend_Auth::getInstance();
+            $log->setEventItem('user', $auth->getIdentity()->user_id)
+                ->setEventItem('priorityname', 'CRIT')
+                ->setEventItem('context', $this->view->message)
+                ->setEventItem('timestamp', date( 'Y-m-d H:i:s'));
+            $log->crit($errors->exception);
         }
-        
         // conditionally display exceptions
         if ($this->getInvokeArg('displayExceptions') == true) {
             $this->view->exception = $errors->exception;
         }
-        
         $this->view->request   = $errors->request;
     }
 
     public function getLog()
     {
-        $bootstrap = $this->getInvokeArg('bootstrap');
-        if (!$bootstrap->hasResource('Log')) {
-            return false;
-        }
-        $log = $bootstrap->getResource('Log');
-        return $log;
+        return Zend_Registry::get("logDB");
     }
 
 
