@@ -27,7 +27,7 @@
           <li><a href="<?php echo $this->url(array('controller'=>'index','action'=>'contact'));?>" id="tab_contact">Contacto</a></li>
         </ul>
         <ul class="nav pull-right" id="main-menu-right">
-          <li><a id="tab_ingreso" href="<?php echo $this->url(array('controller'=>'auth','action'=>'login'));?>" title="">Ingreso Anunciantes<i class="icon-user"></i></a></li>
+          <li><?php echo $this->profileLink(); ?></li>
         </ul>
        </div>
      </div>
