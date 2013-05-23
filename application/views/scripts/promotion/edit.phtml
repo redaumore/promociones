@@ -200,10 +200,40 @@ label[for=branches]{
     ?>
 </form>
 <script>
-  $(document).ready(function() {
-    $("#starts").datepicker({ dateFormat: "dd-mm-yy" });
-  });
-  $(document).ready(function() {
-    $("#ends").datepicker({ dateFormat: "dd-mm-yy" });
-  });
+ $(document).ready(function(){
+   $("#starts").datepicker({
+      showOn: 'both',
+      buttonImage: '/images/calendar-icon.png',
+      buttonImageOnly: true,
+      changeYear: false,
+      minDate: 0,
+      numberOfMonths: 1,
+      onSelect: function(textoFecha, objDatepicker){
+        var dateParts = textoFecha.split("-");
+        var dateSelected = new Date(dateParts[2], (dateParts[1] - 1), dateParts[0]);
+        if(dateSelected > $("#ends").datepicker('getDate'))
+            $("#ends").datepicker('setDate', dateSelected);
+        $("#ends").datepicker('option', 'minDate', $("#starts").datepicker('getDate'));
+        showPromoTotalCost();   
+      }
+   });
+   $("#starts" ).datepicker( "setDate", new Date() );
+   
+   $("#ends").datepicker({
+      showOn: 'both',
+      buttonImage: '/images/calendar-icon.png',
+      buttonImageOnly: true,
+      changeYear: false,
+      minDate: 0,
+      numberOfMonths: 1,
+      onSelect: function(textoFecha, objDatepicker){
+         showPromoTotalCost();
+      }
+   });
+   $( "#ends" ).datepicker( "setDate", new Date() );
+   
+   showPromoTotalCost(); 
+})
+  
+
  </script>

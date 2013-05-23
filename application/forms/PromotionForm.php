@@ -83,9 +83,13 @@ class PAP_Form_PromotionForm extends Zend_Form
             'required'   => true,
             'size' => 10, 
             'maxlength' => 10,
+            'attribs' => array('readonly' => 'true'),
+            'validators'  => array (
+                array('date', false, array('dd-MM-yyyy'))
+                ),
         ));
         $control = $this->getElement('starts');
-        $control->addValidator('Date',false, array('format'=>'dd/MM/yyyy'));
+        //$control->addValidator('Date',false, array('format'=>'dd-MM-yyyy'));
         $control->setDecorators($decorators);
                 
         $control = $this->addElement('text', 'ends', array(
@@ -93,9 +97,13 @@ class PAP_Form_PromotionForm extends Zend_Form
             'required'   => true,
             'size' => 10, 
             'maxlength' => 10,
+            'attribs' => array('readonly' => 'true'),
+            'validators'  => array (
+                array('date', false, array('dd-MM-yyyy'))
+                ),
         ));
         $control = $this->getElement('ends');
-        $control->addValidator('Date',false, array('format'=>'dd/MM/yyyy'));
+        //$control->addValidator('Date',false, array('format'=>'dd-MM-yyyy'));
         $control->setDecorators($decorators);
         
         $this->addElement('text', 'promoValue', array(
@@ -180,6 +188,7 @@ class PAP_Form_PromotionForm extends Zend_Form
             'required'   => true,
         ));
         $control = $this->getElement('promoCost');
+        $control->setAttrib("onChange", "showPromoTotalCost();");
         $control->setRegisterInArrayValidator(false);
         $control->setDecorators($decorators);
         

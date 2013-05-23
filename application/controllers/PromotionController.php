@@ -45,8 +45,6 @@
     }
     
     public function indexAction(){
-        $layout = $this->_helper->layout;
-        return;    
     }
     
     public function editAction(){
