@@ -269,7 +269,7 @@
         $control = $form->getElement('imagePromo');
         $img = $promo->getImage();
         if(isset($img))
-            $control->setOptions(array('src' => '/images'.$img->getPath()));
+            $control->setOptions(array('src' => '/images'.$img->getPath()."?".time()));
         else
             $control->setOptions(array('src' => '/images'.$this->user->getBranch()->getLogo()));
     }
