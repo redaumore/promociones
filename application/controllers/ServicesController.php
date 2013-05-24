@@ -192,6 +192,7 @@ class servicesController extends Zend_Controller_Action
                     $payment->setAmount($charge->getAmount())
                             ->setChargeId($charge->getId())
                             ->setControl($payment_json['nro_tx'])
+                            ->setStatus('in_process')
                             ->setMethodId($payment_json['operacion'])
                             ->setPaymentDate($payment_json['fecha']);
                     if($payment_json['operacion'] == "T"){
@@ -200,7 +201,7 @@ class servicesController extends Zend_Controller_Action
                     else
                         $payment->setEntity($payment_json['banco_destino']);
                     $payment->save();
-                    $charge->setStatus('S');
+                    $charge->setStatus('in_process');
                     $charge->save();                            
                 }
                 
@@ -212,7 +213,7 @@ class servicesController extends Zend_Controller_Action
                 $this->getFrontController()->setResponse($response);   
             }
             catch(Exception $ex){
-                PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'ServiceController->sendpaymentAction(foreach)',$e); 
+                PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'ServiceController->sendpaymentAction(foreach)',$ex); 
                 $data = array();
                 $data['result_code'] = $ex->getCode();
                 $data['result_message'] = 'Hubo un error guardando la información del pago. Por favor envíe un email a soporte@promosalpaso.com con dicha información.';
@@ -222,7 +223,8 @@ class servicesController extends Zend_Controller_Action
             }
         }
         catch(Exception $ex){
-            PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'ServiceController->sendpaymentAction',$e); 
+            $params = $this->getFrontController()->getRequest()->getParams();
+            PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'ServiceController->sendpaymentAction',$ex); 
         }
     }
     

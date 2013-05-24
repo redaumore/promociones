@@ -10,6 +10,7 @@ class PAP_Model_Payment
     protected $_payment_date;
     protected $_control;
     protected $_created;
+    protected $_status;
     protected $_info;
     
      public function setId($text){
@@ -81,14 +82,14 @@ class PAP_Model_Payment
     public function __set($name, $value){
         $method = 'set' . $name;
         if (('mapper' == $name) || !method_exists($this, $method))
-            throw new Exception('Invalid charge property');
+            throw new Exception('Invalid charge property'.$name);
         $this->$method($value);
     }
  
     public function __get($name){
         $method = 'get' . $name;
         if (('mapper' == $name) || !method_exists($this, $method))
-            throw new Exception('Invalid charge property');
+            throw new Exception('Invalid charge property'.$name);
         return $this->$method();
     }
     

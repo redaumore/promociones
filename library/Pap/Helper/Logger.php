@@ -1,14 +1,16 @@
 <?php
 class PAP_Helper_Logger{
-    public static function writeLog($priority, $context, $message){
+    public static function writeLog($priority, $context, $message, $params = ""){
         $log = Zend_Registry::get("logDB");
         $auth=Zend_Auth::getInstance();
         $log->setEventItem('user', (isset($auth))?$auth->getIdentity()->user_id:0)
             ->setEventItem('priorityname', self::getPriorityString($priority))
             ->setEventItem('priority', $priority)
-            ->setEventItem('context', $this->view->message)
+            ->setEventItem('context', $context)
+            ->setEventItem('params', $params)
+            ->setEventItem('message', $message)
             ->setEventItem('timestamp', date( 'Y-m-d H:i:s'));
-        $log->log($errors->exception);    
+        $log->log($message, $priority);    
     }
     
     private static function getPriorityString($priority){

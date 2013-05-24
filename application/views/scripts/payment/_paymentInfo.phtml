@@ -23,76 +23,89 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h3>Informar pago por transferencia/depósito</h3>
     </div>
-    <div id="paymentFormMessage">
-        <span>Debes completar todos los campos requeridos.</span>
-    </div>
-    <div id="div_desc_pago">
+    <div class="row-fluid">
+        <div id="div_desc_pago" class="control-group">
             <label class="control-label" for="txt_desc_pago">Período/s a pagar:</label>
             <div class="controls">
                 <input id="txt_desc_pago" value="" readonly="true">
             </div>
         </div>
-    <div class="control-group" id="div_tipo_tx">
-        <label class="control-label" for="ddl_operacion">Tipo Operación:</label>
-        <div class="controls">
-            <select id="ddl_operacion" onchange="showTipoOperacion();">
-                <option value="T">Transferencia</option>
-                <option value="D">Depósito</option>
-            </select>
-        </div>
     </div>
-    <div class="control-group" id="div_banco_trans">
-        <label class="control-label" for="ddl_banco_orig">Banco:</label>
-        <div class="controls">
-            <select id="ddl_banco_orig" onChange="showOtro();">
-                <option value="galicia">Galicia</option>
-                <option value="santander">Santander</option>
-                <option value="otro">Otro</option>
-            </select>
-        </div>
-        <div id="div_otro_banco" style="display: none;">
+    <div class="row-fluid">
+        <div class="control-group" id="div_tipo_tx">
+            <label class="control-label" for="ddl_operacion">Tipo Operación:</label>
+            <div class="controls">
+                <select id="ddl_operacion" onchange="showTipoOperacion();">
+                    <option value="T">Transferencia</option>
+                    <option value="D">Depósito</option>
+                </select>
+            </div>
+        </div>    
+    </div>
+    <div class="row-fluid">
+        <div class="control-group" id="div_banco_trans">
+            <label class="control-label" for="ddl_banco_orig">Banco:</label>
+            <div class="controls">
+                <select id="ddl_banco_orig" onChange="showOtro();">
+                    <option value="galicia">Galicia</option>
+                    <option value="santander">Santander</option>
+                    <option value="otro">Otro</option>
+                </select>
+            </div>
+        </div>    
+    </div>
+    <div class="row-fluid" id="div_otro_banco" style="display: none;">
+        <div class="control-group">
             <label class="control-label" for="txt_otro_banco">Otro:</label>
             <div class="controls">
                 <input id="txt_otro_banco" value="">
             </div>
         </div>
     </div>
-    <div class="control-group" id="div_banco_dep" style="display: none;">
-        <label class="control-label" for="ddl_banco_dest">Cuenta destino:</label>
-        <div class="controls">
-            <select id="ddl_banco_dest">
-                <option value="galicia">Galicia</option>
-            </select>
+    <div class="row-fluid">
+        <div class="control-group" id="div_banco_dep" style="display: none;">
+            <label class="control-label" for="ddl_banco_dest">Cuenta destino:</label>
+            <div class="controls">
+                <select id="ddl_banco_dest">
+                    <option value="galicia">Galicia</option>
+                </select>
+            </div>
         </div>
     </div>
-    <div class="control-group" id="div_nro_tx">
-        <label class="control-label" for="txt_nro_tx">Nro transacción:</label>
-        <div class="controls">
-            <input id="txt_nro_tx" type="text"/>
+    <div class="row-fluid">
+        <div class="control-group" id="div_nro_tx">
+            <label class="control-label" for="txt_nro_tx">Nro transacción:</label>
+            <div class="controls">
+                <input id="txt_nro_tx" type="text"/>
+            </div>
         </div>
     </div>
-    <div class="control-group" id="div_fecha">
-        <label class="control-label" for="txt_fecha">Fecha:</label>
-        <div class="controls">
-            <input id="txt_fecha" type="text"/>
+    <div class="row-fluid">
+        <div class="control-group" id="div_fecha">
+            <label class="control-label" for="txt_fecha">Fecha:</label>
+            <div class="controls">
+                <input id="txt_fecha" type="text" readonly="true"/>
+            </div>
+        </div>
+    </div>    
+    <div class="row-fluid">
+        <div class="control-group" id="div_monto">
+            <label class="control-label" for="txt_monto">Monto:</label>
+            <div class="controls">
+                <input id="txt_monto" type="text"/>
+            </div>
         </div>
     </div>
-    <div class="control-group" id="div_monto">
-        <label class="control-label" for="txt_monto">Monto:</label>
-        <div class="controls">
-            <input id="txt_monto" type="text"/>
-        </div>
-    </div>      
-    <div>
-        <input type="button" class="buttons" id="btn_pay" value="Informar Pago" onclick="sendPayment();"></input>
-        <input type="button" class="buttons" id="cancel" value="Cancelar" onclick="hidePaymentForm();"></input>
+    <div class="row-fluid pagination-centered">
+        <input type="button" class="btn btn-primary" id="btn_pay" value="Informar Pago" onclick="sendPayment();"></input>
+        <input type="button" class="btn btn-primary" id="cancel" value="Cancelar" onclick="hidePaymentForm();"></input>
     </div>
+    <input type="hidden" id="charges_ids" />
 </div>
-<input type="hidden" id="charges_ids" />
+
 <script type="text/javascript">
     function hidePaymentForm(){
-        document.getElementById("paymentInfo").className = "invisible";
-        document.getElementById("pay").focus();
+        jQuery("button.close").click();
     }
     
     function validatePaymentForm(){
@@ -111,4 +124,16 @@
             resp = false;
         return resp;   
     }
+    
+    $(document).ready(function(){
+       $("#txt_fecha").datepicker({
+          showOn: 'both',
+          buttonImage: '/images/calendar-icon.png',
+          buttonImageOnly: true,
+          changeYear: false,
+          maxDate: 0,
+          numberOfMonths: 1,
+       });
+       $("#txt_fecha" ).datepicker( "setDate", new Date() );
+    });
 </script>

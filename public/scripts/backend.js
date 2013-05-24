@@ -3,9 +3,20 @@ var _baseServUri = _baseUri + "services/";
 var _urlMPiFrame = "";
 
 function showMessage(messageType, message){
-    if($("#div_alert")){
+    if($("#div_message")){
         $("#p_message").text(message);
-        $("#div_alert").show();
+        switch(messageType){
+            case 'error':
+                $("#div_message").removeClass("alert-info alert-success").addClass("alert-error");
+                break;
+            case 'info':
+                $("#div_message").removeClass("alert-error alert-success").addClass("alert-info");
+                break;
+            case 'success':
+                $("#div_message").removeClass("alert-error alert-info").addClass("alert-success");
+                break;
+        }
+        $("#div_message").show();
     }
     else{
         alert(message);
@@ -37,8 +48,9 @@ function showPaymentInfo(){
                 $("#txt_monto").prop("readonly",true);
                 $('#txt_desc_pago').val(periodos.substring(0, periodos.length -2));
                 $('#charges_ids').val(charges_ids.substring(0, charges_ids.length -1));
-                $('#paymentFormMessage').hide();
-                $("#paymentInfo").attr("class", "fullscreen alpha60");
+                //$('#paymentFormMessage').hide();
+                $("#payHidden").click();
+                //$("#paymentInfo").attr("class", "fullscreen alpha60");
             }
         }
         else
@@ -221,9 +233,6 @@ function sendPayment(){
                 jsonp: 'jsoncallback',
                 contentType: "application/json; charset=utf-8",
                 timeout: 5000,
-                beforeSend: function (jqXHR, settings) {
-                    url = settings.url + "?" + settings.data;
-                },
                 success: function(data, status){
                         if(data.length == 0)
                             alert(data);

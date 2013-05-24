@@ -33,7 +33,7 @@ protected $_dbTable;
             'status' => $payment->getStatus(),
             'info' => $payment->getInfo(),
             'method_id' => $payment->getMethodId(),
-            'payment_date' => $payment->getPaymentDate(),
+            'payment_date' => $this->getDateDB($payment->getPaymentDate()),
             'entity' => $payment->getEntity(),
             'created' => date('Y-m-d H:i:s'),
         );
@@ -58,6 +58,7 @@ protected $_dbTable;
                   ->setAmount($row->amount)
                   ->setStatus($row->status)
                   ->setControlId($row->control_id)
+                  ->setPaymentDate($row->payment_date)
                   ->setInfo($row->info)
                   ->setPaymentType($row->payment_type)
                   ->setCreated($row->created);
@@ -76,6 +77,7 @@ protected $_dbTable;
                   ->setInfo($row->info)
                   ->setControlId($row->control_id)
                   ->setPaymentType($row->payment_type)
+                  ->setPaymentDate($row->payment_date)
                   ->setCreated($row->created);
             $entries[] = $entry;
         }
@@ -107,6 +109,11 @@ protected $_dbTable;
             return false;
         return true;
         
+    }
+    
+    private function getDateDB($date){
+        $str = explode('-', $date);
+        return $str[2]."-".$str[1]."-".$str[0];
     }
 
 }

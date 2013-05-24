@@ -47,7 +47,7 @@ class PAP_Model_Charge
         return $this->_discount;}
         
     public function setStatus($text){
-        $this->_status = (string) $text;
+        $this->_status = $this->getStatusToDB($text);
         return $this;}
  
     public function getStatus(){
@@ -132,6 +132,36 @@ class PAP_Model_Charge
             $charges[] = $charge;
         }
         return $charges;
+    }
+    
+    private function getStatusToDB($status){
+        $statusDB = "";
+        switch ($status) {
+            case 'approved':
+                $statusDB = 'A';
+                break;
+            case 'pending':
+                $statusDB = 'P';
+                break;
+            case 'in_process':
+                $statusDB = 'I';
+                break;
+            case 'rejected':
+                $statusDB = 'R';
+                break;
+            case 'refunded':
+                $statusDB = 'D';
+                break;
+            case 'cancelled':
+                $statusDB = 'C';
+                break;
+            case 'in_mediation':
+                $statusDB = 'M';
+                break;
+            default:
+                $statusDB = $status;
+        }
+        return $statusDB; 
     }
     
     /*
