@@ -1099,7 +1099,7 @@ input[type="tel"],
 input[type="color"],
 .uneditable-input {
   display: inline-block;
-  height: 21px;
+  height: 18px;
   padding: 2px;
   margin-bottom: 10.5px;
   font-size: 14px;
@@ -7072,7 +7072,7 @@ div[id="titulo"]{
     text-align: center;
 }
 
-label.valid {
+label.error.valid {
           width: 24px;
           height: 24px;
           background: url(images/valid.png) center center no-repeat;
@@ -7082,6 +7082,7 @@ label.valid {
 label.error {
     width: 24px;
     height: 24px;
+    background: url(images/error.png) center center no-repeat;
     display: inline-block;
     text-indent: -9999px;
     /*font-weight: bold;
@@ -7089,3 +7090,10 @@ label.error {
     padding: 2px 8px;
     margin-top: 2px;*/
     }
+
+.required:before { 
+    content:"* ";
+    color: yellow;
+    font-size: large;
+    font-weight: bold;
+}

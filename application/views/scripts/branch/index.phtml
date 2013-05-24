@@ -50,7 +50,7 @@ function clearCoord(){
     //echo $this->form;
     $form = $this->form;
 ?>
-<form method="<?php echo $form->getMethod() ?>" action="<?php echo $form->getAction()?>" enctype="multipart/form-data" class="form-horizontal">
+<form id="content-form" method="<?php echo $form->getMethod() ?>" action="<?php echo $form->getAction()?>" enctype="multipart/form-data" class="form-horizontal">
 <div class="row-fluid">
     <div class="row">
         <div class="pagination-centered" id="titulo">
@@ -230,6 +230,44 @@ function clearCoord(){
     </div>
 </div>    
 </form>
+<script type="text/javascript">
+    jQuery('#content-form').validate({
+        rules: {
+          name: {
+            minlength: 5,
+            required: true
+          },
+          street: {
+            minlength: 4,
+            required: true
+          },
+          number: {
+            minlength: 4,
+            required: true
+          },
+          email: {
+            required: true,
+            email: true
+          },
+          lat: {
+            minlength: 4,
+            required: true
+          },
+          lng: {
+            minlength: 4,
+            required: true
+          },
+        },
+        highlight: function(element) {
+            $(element).closest('.control-group').removeClass('success').addClass('error');
+            
+        },
+        success: function(element) {
+            $(element).text('OK!').addClass('valid')
+            $(element).closest('.control-group').removeClass('error').addClass('success');
+        }
+      });
+</script>
 <?php 
     echo $this->partial("branch/_localizator.phtml"); 
 ?>
