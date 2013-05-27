@@ -6,52 +6,60 @@
 <script type="text/javascript" src='/scripts/grid.locale-es.js'></script>
 <!--<script type="text/javascript" src='/scripts/jquery.jqGrid.min.js'></script>-->
 <script type="text/javascript" src='/scripts/jquery.jqGrid.src.js'></script>
-<form method="<?php echo $form->getMethod() ?>" action="<?php echo $form->getAction()?>" class="form-horizontal">
-<div class="row-fluid">
-    <div class="row">
-        <div class="pagination-centered" id="titulo">
-            <h1>Mis Cargos</h1>
+<form method="<?php echo $form->getMethod() ?>" action="<?php echo $form->getAction()?>">
+    <div class="row-fluid">
+        <div class="row">
+            <div class="pagination-centered" id="titulo">
+                <h1>Mis Cargos</h1>
+            </div>
         </div>
-    </div>
-    <hr class="hr-subtitle"/>
-    <?php echo $this->errorMessage($this->form, $messages); ?>
-    <div id="div_message" class="alert" style="display: none; max-width: 400px;">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <p id="p_message"></p>
+        <hr class="hr-subtitle"/>
+        <?php echo $this->errorMessage($this->form, $messages); ?>
     </div>
     <div class="row-fluid pagination-centered">
             <p>En esta sección encontrarás información acerca de tu historial de anuncios y también te permitirá ver, pagar o informar el pago de los cargos que adeudas.</p>
     </div>
-    <div class="row-fluid">
-        <div class="span3 pagination-right">
-            <p>Selecciona el tipo de reporte:</p>
-        </div>
-        <div class="span6 ">
-            <?php echo $form->reportType->renderViewHelper(); ?>
-        </div>
-        <div class="span2 pagination-right">
-            <?php echo $form->search->renderViewHelper(); ?>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span3 well">
+                <div class="row-fluid pagination-left">
+                    <span>Selecciona el tipo de reporte:</span>
+                </div>
+                <div class="row-fluid ">
+                    <?php echo $form->reportType->renderViewHelper(); ?>
+                </div>
+                <div class="row-fluid pagination-centered">
+                    <?php echo $form->search->renderViewHelper(); ?>
+                </div>
+            </div>
+            <div class="span9">
+                <div class="row-fluid">
+                    <table width="100%"><tr><td align="center">
+                        <table id="list2"></table>
+                        <div id="pager2"></div>
+                    </td></tr></table>
+                </div>
+                <?php echo $this->partial("index/_alert.phtml"); ?>
+                <div class="row-fluid">
+                    <div class="span3">
+                        <button id="pay" type="button" class="btn" onclick="showPaymentInfo();">Informar Pago por Transferencia/Depósito</button>
+                        <button id="payHidden" type="button" style="display: none;" data-toggle="modal" data-target="#paymentInfo" class="btn"></button>
+                    </div>
+                    <div class="span3">
+                        <button id="payMP" type="button" class="btn" onclick="showMercadoPago();">Pagar por MercadoPago</button>
+                        <button id="payHiddenMP" type="button" data-toggle="modal" data-target="#div_MP" style="display: none;"></button>
+                    </div>
+                </div>
+            </div>
         </div>    
     </div>
+    
     <div class="row-fluid">
         <div class="span8 offset2">
-            <table width="100%"><tr><td align="center">
-                <table id="list2"></table>
-                <div id="pager2"></div>
-            </td></tr></table>
+            
         </div>
     </div>
-    <div class="row-fluid">
-        <div class="span3 offset3">
-            <button id="pay" type="button" class="btn" onclick="showPaymentInfo();">Informar Pago por Transferencia/Depósito</button>
-            <button id="payHidden" type="button" style="display: none;" data-toggle="modal" data-target="#paymentInfo" class="btn"></button>
-        </div>
-        <div class="span3">
-            <button id="payMP" type="button" class="btn" onclick="showMercadoPago();">Pagar por MercadoPago</button>
-            <button id="payHiddenMP" type="button" data-toggle="modal" data-target="#div_MP" style="display: none;"></button>
-        </div>
-    </div>
-</div>
+    
 <?php echo $form->data->renderViewHelper(); ?>
 <script type="text/javascript">
     $(document).ready(function(){

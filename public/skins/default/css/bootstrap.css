@@ -901,7 +901,7 @@ dd {
 }
 
 hr {
-  margin: 21px 0;
+  /*margin: 21px 0;*/
   border: 0;
   border-top: 1px solid #1c1e22;
   border-bottom: 1px solid #ffffff;
@@ -6974,8 +6974,8 @@ textarea[readonly] {
 }
 
 .alert-info {
-  background-color: #3a87ad;
-  border-color: #3a87ad;
+  background-color: #42962F;
+  border-color: #42962F;
 }
 
 .well,

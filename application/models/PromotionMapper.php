@@ -153,7 +153,7 @@ class PAP_Model_PromotionMapper
                   ->setAlertType($row->alert_type)
                   ->setState($row->state)
                   ->setVisited($row->visited)
-                  ->setPromoCost($row->visited)
+                  ->setPromoCost($row->promo_cost)
                   ->setCreated($row->created);
          /*         
          $imageTable = new PAP_Model_DbTable_Image();

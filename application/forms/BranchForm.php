@@ -29,8 +29,7 @@
             'required'   => true,
             'filters'    => array('StringTrim'),
         ));
-        $this->name->addValidator($allowWhiteSpace, true)
-                    ->setDecorators($decorators)
+        $this->name->setDecorators($decorators)
                     ->addDecorator('HtmlTag', array('tag' => 'div'));
         
         $this->addElement('text', 'street', array(
@@ -190,7 +189,7 @@
             'ignore'   => true,
             'label'      => 'Cargar Imagen',
         ));
-        $this->fakefile->setAttrib('class', 'btn btn-primary btn-small')
+        $this->fakefile->setAttrib('class', 'btn btn-small')
             ->setAttrib("onClick", "clickFile();");
         
         $this->addElement('submit', 'save', array(
@@ -198,14 +197,14 @@
             'label'      => 'Guardar',
         ));
         $this->save->setDecorators($decoratorsButton)
-                ->setAttrib('class', 'btn btn-large');
+                ->setAttrib('class', 'btn');
         
         $this->addElement('submit', 'cancel', array(
             'ignore'   => true,
             'label'      => 'Cancelar',
         ));
         $this->cancel->setDecorators($decoratorsButton)
-                ->setAttrib('class', 'btn btn-large');
+                ->setAttrib('class', 'btn');
         
         $this->addElement('hidden', 'user');
         $this->user->setDecorators(array('ViewHelper'));

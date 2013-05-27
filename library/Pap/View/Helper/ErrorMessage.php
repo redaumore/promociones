@@ -5,9 +5,8 @@
     {
         $html = '';
         if(count($messages)){
-            $html = '<div class="ui-widget">'
-                    .'  <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">'
-                    //.'      <p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>Errores de Validación.</p>'
+            $html = '<div id="div_message" class="span6 offset3 alert alert-error">'
+                    .'  <button type="button" class="close" data-dismiss="alert">&times;</button>'
                     .'      <ul>';
             $elements = count($messages);
             for($i = 0; $i < $elements; $i++){
@@ -17,14 +16,13 @@
                 if(isset($label)){
                     $label = $label->getLabel();
                     $key = array_keys($mess);
-                    $html .= '               <li style="font-size: .6em;"><b>'.$label.': </b>'.$mess[$key[0]].'</li>';
+                    $html .= '               <li><b>'.$label.': </b>'.$mess[$key[0]].'</li>';
                 }
                 else{
-                    $html .= '               <li style="font-size: .6em;">'.$mess.'</li>';
+                    $html .= '               <li>'.$mess.'</li>';
                 }
             }
             $html .= '      </ul>'
-                    .'   </div>'
                     .'</div>';
         }
         return $html;

@@ -47,7 +47,7 @@ function clearCoord(){
     $this->form->setAction($this->url());
     $form = $this->form;
 ?>
-<form method="<?php echo $form->getMethod() ?>" action="<?php echo $form->getAction()?>" enctype="multipart/form-data" class="form-horizontal">
+<form id="content-form" method="<?php echo $form->getMethod() ?>" action="<?php echo $form->getAction()?>" enctype="multipart/form-data" class="form-horizontal">
 <div class="row-fluid">
     <div class="row">
         <div class="pagination-centered" id="titulo">
@@ -56,6 +56,7 @@ function clearCoord(){
     </div>
     <hr class="hr-subtitle"/>
     <?php echo $this->errorMessage($this->form, $messages); ?>
+    <?php echo $this->partial("index/_alert.phtml"); ?>
     <div class="row-fluid">
         <div class="span12">
             <fieldset>
@@ -174,7 +175,8 @@ function clearCoord(){
                         </div>
                     </div>
                     <div class="span4" style="text-align: right;">
-                        <button type="button" data-toggle="modal" data-target="#gmapmodal" class="btn btn-primary btn-small"><i class="icon-map-marker"></i> Localizarme</button>
+                        <button type="button" class="btn btn-small" onclick="ShowGoogleLocalizator();"><i class="icon-map-marker"></i> Localizarme</button>
+                        <button id="locationModal" type="button" data-toggle="modal" data-target="#gmapmodal" style="display: none;"></button>
                     </div>
                 </div>
             </fieldset>
@@ -200,7 +202,7 @@ function clearCoord(){
                                     </div>        
                                 </td>
                                 <td width="10%">
-                                    <button id="fakefile" class="btn btn-primary btn-small" onclick="clickFile();" type="button" name="fakefile"><i class="icon-upload"></i>Cargar Imagen</button>
+                                    <button id="fakefile" class="btn btn-small" onclick="clickFile();" type="button" name="fakefile"><i class="icon-upload"></i> Cargar Imagen</button>
                                 </td>
                             </tr>
                         </table>
@@ -225,7 +227,45 @@ function clearCoord(){
             
         ?>
     </div>
-</div>    
+</div>
+<script type="text/javascript">
+    jQuery('#content-form').validate({
+        rules: {
+          name: {
+            minlength: 5,
+            required: true
+          },
+          street: {
+            minlength: 4,
+            required: true
+          },
+          number: {
+            minlength: 1,
+            required: true
+          },
+          email: {
+            required: true,
+            email: true
+          },
+          lat: {
+            minlength: 4,
+            required: true
+          },
+          lng: {
+            minlength: 4,
+            required: true
+          },
+        },
+        highlight: function(element) {
+            jQuery(element).closest('.control-group').removeClass('success').addClass('error');
+            
+        },
+        success: function(element) {
+            jQuery(element).text('OK!').addClass('valid')
+            jQuery(element).closest('.control-group').removeClass('error').addClass('success');
+        }
+      });
+</script>    
 </form>
 <?php 
     echo $this->partial("branch/_localizator.phtml"); 

@@ -77,11 +77,15 @@ function ConfirmLocation(){
 }
 
 function ShowGoogleLocalizator(){
-    if(document.getElementById("street").value == "" || document.getElementById("number").value == "" ){
-        alert("La calle y el número son datos requeridos");
-        return;
+    if(jQuery("#street").val() == "" || jQuery("#number").val() == "" ){
+        bootbox.alert("La calle y el número son datos requeridos");
+        return false;
     }
-    SearchLocation();
+    else{
+        jQuery("#locationModal").click();
+    }
+    
+//    SearchLocation();
     //$("gmapmodal").modal("show");
 }
 
@@ -97,7 +101,7 @@ function CancelLocation(){
 
 jQuery(document).ready(function(){
     jQuery("#gmapmodal").on('show', function(){
-        ShowGoogleLocalizator();
+        SearchLocation();
     })
 
     jQuery("#gmapmodal").on("hidden", function(){

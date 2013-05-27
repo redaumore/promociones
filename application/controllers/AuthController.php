@@ -36,8 +36,15 @@ class AuthController extends Zend_Controller_Action
                         $this->_redirect('auth/resendemail');
                     $storage = $auth->getStorage();
                     $storage->write($authAdapter->getResultRowObject());
-                    if($user->getStatus() != 'active')                    
+                    if($user->getStatus() == 'validated'){
                         $this->_redirect('branch/new');
+                        return;    
+                    }
+                    if($user->getStatus() == 'charged'){
+                        $this->_redirect('branch/categories');
+                        return;    
+                    }                    
+                        
                     $this->_redirect('promotion/index');
                 } else {
                     $form->addError("Invalid username or password. Please try again.");

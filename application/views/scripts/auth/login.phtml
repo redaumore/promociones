@@ -12,40 +12,37 @@
         </div>
         <hr class="hr-subtitle"/>
         <?php echo $this->errorMessage($this->form, $messages); ?>
-        <div id="div_message" class="alert" style="display: none; max-width: 400px;">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <p id="p_message"></p>
-        </div>
-        <div class="row span6 offset3">
-            <div class="control-group">
-                <?php echo $form->email->renderLabel(); ?>
-                <div class="controls">
-                    <?php echo $form->email->renderViewHelper(); ?>
-                </div>
-            </div>
-            <div class="control-group">
-                <?php echo $form->password->renderLabel(); ?>
-                <div class="controls">
-                    <?php echo $form->password->renderViewHelper(); ?>
-                </div>
-            </div>
-            <div class="control-group">
-                <div class="controls">
-                    <?php echo $form->login->renderViewHelper(); ?>
-                </div>
-            </div>
-            <div class="control-group">
-                <div align="center">
-                    <p>¿Aún no sos anunciante en Promos al Paso?</p>
-                    <p> Si querés serlo regístrate pulsando  
-                        <a href="<?=$this->url(array('controller'=>'auth','action'=>'signup'))?>">
-                            <img src="/images/backend/shamrock-aqui.png" style="width: 30px; height: 30px;"></img>
-                        </a>
-                    </p> 
-                </div>
+        <?php echo $this->partial("index/_alert.phtml"); ?>
+    </div>
+    <div class="row span6 offset3">
+        <div class="control-group">
+            <?php echo $form->email->renderLabel(); ?>
+            <div class="controls">
+                <?php echo $form->email->renderViewHelper(); ?>
             </div>
         </div>
-     </div>
+        <div class="control-group">
+            <?php echo $form->password->renderLabel(); ?>
+            <div class="controls">
+                <?php echo $form->password->renderViewHelper(); ?>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <?php echo $form->login->renderViewHelper(); ?>
+            </div>
+        </div>
+        <div class="control-group">
+            <div align="center">
+                <p>¿Aún no sos anunciante en Promos al Paso?</p>
+                <p> Si querés serlo regístrate pulsando  
+                    <a href="<?=$this->url(array('controller'=>'auth','action'=>'signup'))?>">
+                        <img src="/images/backend/shamrock-aqui.png" style="width: 30px; height: 30px;"></img>
+                    </a>
+                </p> 
+            </div>
+        </div>
+    </div>
 </form>
 <script type="text/javascript">
     $('#content-form').validate({

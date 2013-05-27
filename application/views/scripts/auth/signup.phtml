@@ -12,10 +12,7 @@
         </div>
         <hr class="hr-subtitle"/>
         <?php echo $this->errorMessage($this->form, $messages); ?>
-        <div id="div_message" class="alert" style="display: none; max-width: 400px;">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <p id="p_message"></p>
-        </div>
+        <?php echo $this->partial("index/_alert.phtml"); ?>
         <div class="row pagination-centered">
             <p>Luego de registrarte se te enviará un e-mail en el cual encontrarás un link para activa tu cuenta.</p>
             <p>Una vez que hayas activado tu cuenta, podrás cargar los datos de tu comercio y luego tus promociones.</p>

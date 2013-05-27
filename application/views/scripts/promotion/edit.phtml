@@ -33,7 +33,7 @@ label[for=branches]{
 <div class="row-fluid">
     <div class="row">
         <div class="pagination-centered" id="titulo">
-            <h1>Nueva Promoción</h1>
+            <h1>Editar Promoción</h1>
         </div>
     </div>
     <hr class="hr-subtitle"/>
@@ -83,10 +83,10 @@ label[for=branches]{
                 <legend><h4>Imagen</h4></legend>
                 <div class="row-fluid pagination-centered">
                      <?php echo $form->imagePromo->renderViewHelper(); ?>
-                     <div id='yourFile' style="width: 100%; text-align: center; font-size: small; color: #666666;">Nombre archivo</div>
+                     <div id='yourFile' style="width: 100%; text-align: center; font-size: small; color: #666666;"></div>
                 </div>
                 <div class="row-fluid pagination-centered">
-                    <?php echo $form->fakefile->renderViewHelper(); ?>
+                    <button id="fakefile" class="btn btn-small" onclick="clickFile();" type="button" name="fakefile"><i class="icon-upload"></i> Cargar Imagen</button>
                 </div>
             </fieldset>
         </div>
@@ -217,7 +217,8 @@ label[for=branches]{
         showPromoTotalCost();   
       }
    });
-   $("#starts" ).datepicker( "setDate", new Date() );
+   if($("#starts").val() == "")
+        $("#starts").datepicker( "setDate", new Date() );
    
    $("#ends").datepicker({
       showOn: 'both',
@@ -230,7 +231,8 @@ label[for=branches]{
          showPromoTotalCost();
       }
    });
-   $( "#ends" ).datepicker( "setDate", new Date() );
+   if($("#starts").val() == "")
+        $("#ends").datepicker( "setDate", new Date() );
    
    showPromoTotalCost(); 
 })

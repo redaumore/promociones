@@ -237,9 +237,6 @@
         $control = $form->getElement('promoValue');
         $control->setValue($promo->getPromoValue());
         
-        //$control = $form->getElement('totalCost');
-        //$control->setValue($promo->getTotalPromoCost());
-        
         $control = $form->getElement('valueSince');
         $control->setValue($promo->getValueSince());
         

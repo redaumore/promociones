@@ -32,7 +32,7 @@ class Zend_View_Helper_ProfileLink extends Zend_View_Helper_Abstract {
             $fnameLink = "<a href=\"$url\"/>$fname</a>";
             $html = $fnameLink . ' <span>|</span> <a href="'.$baseUrl.'/logout">'
                 . $this->view->translate('Logout') . '</a>' ;*/
-            $html = '<a id="tab_ingreso" href="'.$this->view->baseUrl('/auth/logout').'">Salir&nbsp;&nbsp;<i class="icon-off"></i></a>';
+            $html = '<a id="tab_ingreso" href="'.$this->view->baseUrl('/auth/logout').'">Hola '.$auth->getIdentity()->name.'. | Salir&nbsp;&nbsp;<i class="icon-off"></i></a>';
         }   
 
         return $html;

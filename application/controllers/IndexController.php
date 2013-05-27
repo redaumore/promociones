@@ -30,7 +30,7 @@ class IndexController extends Zend_Controller_Action
             //if($this->user->Status == 'pending')
                 //array_push($mainMenu, array('title'=>'Anunciantes', 'url'=>$this->view->url(array('controller'=>'auth', 'action'=>'login'),null, true)));    
             if($this->user->Status == 'validated'){
-                array_push($mainMenu, array('title'=>'Mis Datos', 'url'=>$this->view->url(array('controller'=>'branch', 'action'=>'index'),null, true)));   
+                array_push($mainMenu, array('title'=>'Mis Datos', 'url'=>$this->view->url(array('controller'=>'branch', 'action'=>'new'),null, true)));   
             }
             if($this->user->Status == 'charged' ){
                 array_push($mainMenu, array('title'=>'Mis Datos', 'url'=>$this->view->url(array('controller'=>'branch', 'action'=>'index'),null, true)));   

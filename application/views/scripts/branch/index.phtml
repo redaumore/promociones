@@ -177,7 +177,7 @@ function clearCoord(){
                         </div>
                     </div>
                     <div class="span4" style="text-align: right;">
-                        <button type="button" data-toggle="modal" data-target="#gmapmodal" class="btn btn-primary">Localizarme</button>
+                        <button type="button" data-toggle="modal" data-target="#gmapmodal" class="btn btn-small"><i class="icon-map-marker"></i>Localizarme</button>
                     </div>
                 </div>
             </fieldset>
@@ -196,14 +196,14 @@ function clearCoord(){
                                         la imagen por defecto de todas aquellas promociones sin foto que publiques.</p>
                                     </div>
                                 </td>
-                                <td width="15%" align="center">
+                                <td width="12%" align="center">
                                     <div>
                                         <?php echo $form->logo->renderViewHelper(); ?>
                                         <div id='yourFile'><small>&nbsp;</small>
                                     </div>        
                                 </td>
-                                <td width="10%">
-                                    <?php echo $form->fakefile->renderViewHelper(); ?>
+                                <td width="13%" align="right">
+                                    <button id="fakefile" class="btn btn-small" onclick="clickFile();" type="button" name="fakefile"><i class="icon-upload"></i> Cargar Imagen</button>
                                 </td>
                             </tr>
                         </table>
@@ -242,7 +242,7 @@ function clearCoord(){
             required: true
           },
           number: {
-            minlength: 4,
+            minlength: 1,
             required: true
           },
           email: {
@@ -259,12 +259,12 @@ function clearCoord(){
           },
         },
         highlight: function(element) {
-            $(element).closest('.control-group').removeClass('success').addClass('error');
+            jQuery(element).closest('.control-group').removeClass('success').addClass('error');
             
         },
         success: function(element) {
-            $(element).text('OK!').addClass('valid')
-            $(element).closest('.control-group').removeClass('error').addClass('success');
+            jQuery(element).text('OK!').addClass('valid')
+            jQuery(element).closest('.control-group').removeClass('error').addClass('success');
         }
       });
 </script>

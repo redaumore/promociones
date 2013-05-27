@@ -139,7 +139,7 @@ class BranchController extends Zend_Controller_Action
                 if($operation == 'new'){
                     $branch = new PAP_Model_Branch;
                     $data["branchorder"] = "0";
-                    $this->user->setStatus("active");
+                    $this->user->setStatus("charged");
                     $this->user->update();
                     //TODO Luego de activar la cuenta, mostrar un cartel indicando que se deben cargar las categorias.
                 }
@@ -162,7 +162,14 @@ class BranchController extends Zend_Controller_Action
         if ($this->_request->isPost()) {
             if ($form->isValid($_POST)) {
                 $values = $form->getValues(true);
-                $this->user->setCategories($values['tree']);
+                if(isset($values['tree'])){
+                    $this->user->setCategories($values['tree']);
+                    if($this->user->getStatus() == 'charged'){
+                        $this->user->setStatus('active');
+                        $this->user->update();    
+                    }
+                }
+                    
             }
         }
         else{

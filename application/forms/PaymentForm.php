@@ -30,9 +30,10 @@
                 'ultimos' => ' Últimos 6 períodos'
                 ))
                 ->setOptions(array('id' => 'reportType'))
-                ->setSeparator('          ')
                 ->setAttrib('label_class', 'leftalign ui-button-text')
-                ->setDecorators($decorators);
+                ->setDecorators($decorators)
+                ->setValue('actual');
+                
         $this->addElement($control);
         
         $this->addElement('submit', 'search', array(
@@ -40,6 +41,10 @@
             'label'      => 'Buscar',
         ));
         $this->search->setAttrib('class', 'btn btn-primary');
+        $this->search->setDecorators(array(
+                            'ViewHelper',
+                            array(array('emptyrow'=>'HtmlTag'), array('placement' => Zend_Form_Decorator_Abstract::PREPEND, 'tag'=>'i', 'class'=>'icon-search')),
+        ));
         
         $this->addElement('button', 'pay', array(
             'ignore'   => true,

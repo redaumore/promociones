@@ -72,7 +72,7 @@ class PAP_Form_Treeview extends Zend_Form
                 'options' => array(
                     'ignore' => true,
                     'label' => 'Guardar Cambios',
-                    'class' => 'btn btn-large',
+                    'class' => 'btn',
                 )
             ),
          
@@ -95,7 +95,8 @@ class PAP_Form_Treeview extends Zend_Form
                 array(array('data'=>'HtmlTag'), array('tag' => 'td', 'align' => 'center')),
                 array(array('row'=>'HtmlTag'),array('tag'=>'tr')),
         );
-        $this->submit->setDecorators($decorators);
+        $this->submit->setDecorators($decorators)
+                        ->setAttrib("onClick", "return someCategoryChecked();");
  
         $this->setDecorators(array('FormElements',
                                     array(array('data'=>'HtmlTag'),array('tag'=>'table', 'width' => '740px')),

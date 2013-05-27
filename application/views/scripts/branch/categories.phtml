@@ -8,7 +8,6 @@
 <script type="text/javascript" src="/scripts/jquery.treeview.js"></script>
 <link rel="stylesheet" type="text/css" href="/skins/default/css/jquery.treeview.css"></link>
 -->
-
 <!--<script src="http://code.jquery.com/jquery-latest.js"></script>-->
 <!--<link rel="stylesheet" href="http://jquery.bassistance.de/treeview/jquery.treeview.css" type="text/css" />-->
 <link rel="stylesheet" href="/skins/default/css/jquery.treeview.css" type="text/css" />
@@ -19,7 +18,7 @@
         border: 3px solid;
     }
 </style>
-<div class="row-fluid">
+<div class="row-fluid pagination-centered">
     <div class="row">
         <div class="span4 offset4" id="titulo" align="center">
             <h1>Mis Categorías</h1>
@@ -27,9 +26,11 @@
     </div>
     <?php echo $this->errorMessage($this->form, $messages); ?>
     <hr class="hr-subtitle"/>
-    </div>
+    <?php echo $this->partial("index/_alert.phtml"); ?>
+</div>
+
     <div class="row pagination-centered">
-        <p>Selecciona tus categorías. Es importante establecer las mismas para que tus potenciales clientes puedan buscar rapidamente tus promociones.</p>
+        <p>Selecciona tus categorías. Es importante establecer las mismas para que tus potenciales clientes puedan encontrar rapidamente tus promociones.</p>
         <p>Esta selecciòn aplica a nivel de Comercio. Oséa que todas las promociones que publiques estarán asociadas a estas categorías.</p>
     </div>
     <div class="row pagination-centered">
@@ -43,10 +44,19 @@
     </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){
-    $("#tree").treeview({
+jQuery(document).ready(function(){
+    jQuery("#tree").treeview({
         persist: "cookie",
         cookieId: "treeview-black"
     });
+    jQuery("#div_message").hide();
 });
+
+function someCategoryChecked(){
+    var someChecked = jQuery("input[type=checkbox]:checked").val()?true:false;
+    if(!someChecked){
+        showMessage("error", "Debes seleccionar al menos una categoría para tu comercio.");
+        return false;
+    }    
+}
 </script>

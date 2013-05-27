@@ -3,20 +3,24 @@ var _baseServUri = _baseUri + "services/";
 var _urlMPiFrame = "";
 
 function showMessage(messageType, message){
-    if($("#div_message")){
-        $("#p_message").text(message);
+    if(jQuery("#div_message")){
+        jQuery("#p_message").text(message);
         switch(messageType){
             case 'error':
-                $("#div_message").removeClass("alert-info alert-success").addClass("alert-error");
+                jQuery("#div_message").removeClass("alert-info alert-success").addClass("alert-error");
                 break;
             case 'info':
-                $("#div_message").removeClass("alert-error alert-success").addClass("alert-info");
+                jQuery("#div_message").removeClass("alert-error alert-success").addClass("alert-info");
                 break;
             case 'success':
-                $("#div_message").removeClass("alert-error alert-info").addClass("alert-success");
+                jQuery("#div_message").removeClass("alert-error alert-info").addClass("alert-success");
                 break;
         }
-        $("#div_message").show();
+        jQuery("#p_message").val(message);
+        jQuery("#div_message").show();
+        jQuery('html, body').animate({
+            scrollTop: jQuery("#pageWrapper").offset().top
+        }, 500);
     }
     else{
         alert(message);
@@ -24,11 +28,11 @@ function showMessage(messageType, message){
 }
 
 function closeMessage(){
-   $("#div_alert").hide(); 
+   //jQuery("#div_message").hide(); 
 }
 
 function showPaymentInfo(){
-        var reportType = $("input[name='reportType']:checked").val();
+        var reportType = jQuery("input[name='reportType']:checked").val();
         if(reportType == "pendientes"){
             var ids;
             ids = jQuery("#list2").jqGrid('getGridParam','selarrrow');
@@ -44,13 +48,13 @@ function showPaymentInfo(){
                     periodos += ret.periodo + ", ";
                     charges_ids += ret.charge_id + ",";;
                 }
-                $('#txt_monto').val((total).toFixed(2));
-                $("#txt_monto").prop("readonly",true);
-                $('#txt_desc_pago').val(periodos.substring(0, periodos.length -2));
-                $('#charges_ids').val(charges_ids.substring(0, charges_ids.length -1));
-                //$('#paymentFormMessage').hide();
-                $("#payHidden").click();
-                //$("#paymentInfo").attr("class", "fullscreen alpha60");
+                jQuery('#txt_monto').val((total).toFixed(2));
+                jQuery("#txt_monto").prop("readonly",true);
+                jQuery('#txt_desc_pago').val(periodos.substring(0, periodos.length -2));
+                jQuery('#charges_ids').val(charges_ids.substring(0, charges_ids.length -1));
+                //jQuery('#paymentFormMessage').hide();
+                jQuery("#payHidden").click();
+                //jQuery("#paymentInfo").attr("class", "fullscreen alpha60");
             }
         }
         else
@@ -72,9 +76,9 @@ function getAccessToken(preference){
                     ajaxResponse = data;
                 if(ajaxResponse.status == "OK"){
                     _iframe_MP_url = ajaxResponse.body;
-                    $("#iframe_MP").attr("src", _iframe_MP_url);
-                    $("#payHiddenMP").click();
-                    //$("#div_MP").show();
+                    jQuery("#iframe_MP").attr("src", _iframe_MP_url);
+                    jQuery("#payHiddenMP").click();
+                    //jQuery("#div_MP").show();
                 }   
                 else{
                     showMessage("error", "No nos podemos conectar con Mercado Pago, intentalo nuevamente en algunos minutos");
@@ -90,7 +94,7 @@ function getAccessToken(preference){
 
 function showMercadoPago(){
         
-        var reportType = $("input[name='reportType']:checked").val();
+        var reportType = jQuery("input[name='reportType']:checked").val();
         if(reportType == "pendientes"){
             var ids;
             ids = jQuery("#list2").jqGrid('getGridParam','selarrrow');
@@ -129,25 +133,25 @@ function showMercadoPago(){
 
 
 function showPromoTotalCost(){
-    if($("#starts").val() == "" ||$("#ends").val() == ""){
-        $("#totalPromoCost").text("0");
+    if(jQuery("#starts").val() == "" ||jQuery("#ends").val() == ""){
+        jQuery("#totalPromoCost").text("0");
         return;    
     }
         
-    from = $("#starts").val().split("-");
+    from = jQuery("#starts").val().split("-");
     f = new Date(from[2], from[1] - 1, from[0]);
-    to = $("#ends").val().split("-");
+    to = jQuery("#ends").val().split("-");
     t = new Date(to[2], to[1] - 1, to[0]);
     var days = getWorkingDays(f,t);
     
-    var cost = parseFloat($("#promoCost :selected").text());
+    var cost = parseFloat(jQuery("#promoCost :selected").text());
     
     if(days > 0){
           total = days * cost;
-          $("#totalPromoCost").text(total);
+          jQuery("#totalPromoCost").text(total);
     }
     else
-        $("#totalPromoCost").text("0");    
+        jQuery("#totalPromoCost").text("0");    
 }
 
 function getWorkingDays(startDate, endDate){
@@ -164,10 +168,10 @@ function getWorkingDays(startDate, endDate){
 }
 
 function getPayments(){
-    var reportType = $("input[name='reportType']:checked").val();
+    var reportType = jQuery("input[name='reportType']:checked").val();
     jQuery("#list2").jqGrid({
         datatype: 'local',
-        data: jQuery.parseJSON($('input#data').val()),
+        data: jQuery.parseJSON(jQuery('input#data').val()),
         colNames: ["", "Periodo", "Desde", "Hasta", "Total"],
         colModel: [
             //{name:'',index:'', width:15, align:"center", hidden: (reportType=="pendientes")?false:true,edittype:'checkbox',formatter: "checkbox",editoptions: { value:"True:False"},editable:true,formatoptions: {disabled : false}},
@@ -192,10 +196,10 @@ function getPayments(){
         subGrid: true,
         subGridRowExpanded: function (subgridId, rowid) {
             var subgridTableId = subgridId + "_t";
-            $("#" + subgridId).html("<table id='" + subgridTableId + "'></table>");
-            $("#" + subgridTableId).jqGrid({
+            jQuery("#" + subgridId).html("<table id='" + subgridTableId + "'></table>");
+            jQuery("#" + subgridTableId).jqGrid({
                 datatype: "local",
-                data: $(this).jqGrid("getLocalRow", rowid).costos,
+                data: jQuery(this).jqGrid("getLocalRow", rowid).costos,
                 colNames: ["Costo Promo", "Cantidad", "Días Anunciados", "Subtotal"],
                 colModel: [
                   {name: "cost", width: 125, align:"center", key: true, formatter: "currency", formatoptions:{decimalSeparator:",", thousandsSeparator: ".", decimalPlaces: 2, prefix: "$ "}},
@@ -216,14 +220,14 @@ function getPayments(){
 function sendPayment(){
         if(validatePaymentForm()){
             var json_data = {"data":[{
-                'operacion':$('#ddl_operacion').val(),
-                'banco_origen':$('#ddl_banco_orig').val(),
-                'otro_banco':$('#txt_otro_banco').val(),
-                'banco_destino':$('#ddl_banco_dest').val(),
-                'nro_tx':$('#txt_nro_tx').val(),
-                'monto':$('#txt_monto').val(),
-                'fecha':$('#txt_fecha').val(),    
-                'charges_ids':$('#charges_ids').val()
+                'operacion':jQuery('#ddl_operacion').val(),
+                'banco_origen':jQuery('#ddl_banco_orig').val(),
+                'otro_banco':jQuery('#txt_otro_banco').val(),
+                'banco_destino':jQuery('#ddl_banco_dest').val(),
+                'nro_tx':jQuery('#txt_nro_tx').val(),
+                'monto':jQuery('#txt_monto').val(),
+                'fecha':jQuery('#txt_fecha').val(),    
+                'charges_ids':jQuery('#charges_ids').val()
             }]};
             
             $.ajax({
@@ -243,13 +247,13 @@ function sendPayment(){
             });
         }
         else{
-            $('#paymentFormMessage').show()
+            jQuery('#paymentFormMessage').show()
         }
     }
     
 function LoadComplete()
 {
-    if ($('#list2').getGridParam('reccount') == 0) // are there any records?
+    if (jQuery('#list2').getGridParam('reccount') == 0) // are there any records?
         DisplayEmptyText(true);
     else
         DisplayEmptyText(false);
@@ -257,25 +261,25 @@ function LoadComplete()
 
 function DisplayEmptyText( display)
 {
-    var grid = $('#list2');
-    $("#pay").hide();
+    var grid = jQuery('#list2');
+    jQuery("#pay").hide();
     var emptyText = grid.getGridParam('emptyDataText'); // get the empty text
     var container = grid.parents('.ui-jqgrid-view'); // find the grid's container
     if (display) {
-        $("#gbox_list2").hide();
+        jQuery("#gbox_list2").hide();
         container.find('.ui-jqgrid-hdiv, .ui-jqgrid-bdiv').hide(); // hide the column headers and the cells below
         //container.find('.ui-jqgrid-titlebar').after('' + emptyText + ''); // insert the empty data text
-        showMessage("warning", "No hay registros para mostrar.");
+        showMessage("info", "No hay registros para mostrar.");
         
     }
     else {
         container.find('loading').hide();
         container.find('.ui-jqgrid-hdiv, .ui-jqgrid-bdiv').show(); // show the column headers
         //container.find('#EmptyData' + dataObject).remove(); // remove the empty data text
-        var reportType = $("input[name='reportType']:checked").val();
+        var reportType = jQuery("input[name='reportType']:checked").val();
         if(reportType == "pendientes"){
-            $("#pay").show();
-            $("#payMP").show();
+            jQuery("#pay").show();
+            jQuery("#payMP").show();
         }
     }
 }
