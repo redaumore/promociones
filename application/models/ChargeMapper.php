@@ -91,5 +91,19 @@ protected $_dbTable;
         $results = $adapter->fetchAll($statement);
         return $results;
     }
+    
+    public function getDebtorsInfo($user_id = null){
+        $adapter = Zend_Db_Table::getDefaultAdapter();
+        $statement =    "SELECT u.user_id, g.periods, g.due "
+                        ."FROM (  SELECT user_id, COUNT(period) AS periods, SUM(amount) As due "
+                        ."        FROM charge c "
+                        ."        WHERE status in ('P', 'R', 'C', 'M') ".((!isset($user_id))?"":" AND user_id = ".$user_id)." " 
+                        ."        GROUP BY user_id) g " 
+                        ."INNER JOIN user u ON (g.user_id = u.user_id) "
+                        ."INNER JOIN customer_list cl ON (u.customer_list = cl.customer_list_id) "
+                        ."WHERE periods > cl.pending_periods OR due > cl.credit;";
+        $results = $adapter->fetchAll($statement);
+        return $results;    
+    }
   }
-
+  

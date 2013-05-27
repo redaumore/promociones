@@ -172,7 +172,7 @@ CREATE TABLE `charge` (
 
 LOCK TABLES `charge` WRITE;
 /*!40000 ALTER TABLE `charge` DISABLE KEYS */;
-INSERT INTO `charge` VALUES (58,1,'1ABR13',76.00,0,'A','2013-05-13 22:44:24',76.00,0),(59,3,'1ABR13',143.00,0,'N','2013-04-27 12:03:53',143.00,0),(60,9,'1ABR13',176.00,0,'N','2013-04-27 12:03:53',176.00,0),(61,10,'1ABR13',154.00,0,'A','2013-05-13 23:10:09',154.00,0),(62,11,'1ABR13',33.00,0,'N','2013-04-27 12:03:53',33.00,0),(63,12,'1ABR13',121.00,0,'N','2013-04-27 12:03:53',121.00,0),(64,13,'1ABR13',33.00,0,'N','2013-04-27 12:03:53',33.00,0),(65,14,'1ABR13',44.00,0,'N','2013-04-27 12:03:53',44.00,0),(83,1,'2MAR13',0.00,0,'A','2013-04-27 12:48:48',0.00,0),(84,3,'2MAR13',130.00,0,'N','2013-04-27 12:48:48',130.00,0),(85,9,'2MAR13',160.00,0,'N','2013-04-27 12:48:48',160.00,0),(86,10,'2MAR13',140.00,0,'A','2013-05-13 23:10:09',140.00,0),(87,11,'2MAR13',30.00,0,'N','2013-04-27 12:48:48',30.00,0),(88,12,'2MAR13',110.00,0,'N','2013-04-27 12:48:48',110.00,0),(89,13,'2MAR13',30.00,0,'N','2013-04-27 12:48:48',30.00,0),(90,14,'2MAR13',40.00,0,'N','2013-04-27 12:48:48',40.00,0),(91,1,'2ABR13',36.00,0,'A','2013-05-06 23:02:56',36.00,0),(92,3,'2ABR13',143.00,0,'N','2013-05-01 22:03:32',143.00,0),(93,9,'2ABR13',176.00,0,'N','2013-05-01 22:03:32',176.00,0),(94,10,'2ABR13',154.00,0,'N','2013-05-24 16:36:51',154.00,0),(95,11,'2ABR13',33.00,0,'N','2013-05-01 22:03:32',33.00,0),(96,12,'2ABR13',121.00,0,'N','2013-05-01 22:03:32',121.00,0),(97,13,'2ABR13',33.00,0,'N','2013-05-01 22:03:32',33.00,0),(98,14,'2ABR13',44.00,0,'N','2013-05-01 22:03:33',44.00,0);
+INSERT INTO `charge` VALUES (58,1,'1ABR13',76.00,0,'A','2013-05-13 22:44:24',76.00,0),(59,3,'1ABR13',143.00,0,'P','2013-04-27 12:03:53',143.00,0),(60,9,'1ABR13',176.00,0,'P','2013-04-27 12:03:53',176.00,0),(61,10,'1ABR13',154.00,0,'A','2013-05-13 23:10:09',154.00,0),(62,11,'1ABR13',33.00,0,'P','2013-04-27 12:03:53',33.00,0),(63,12,'1ABR13',121.00,0,'P','2013-04-27 12:03:53',121.00,0),(64,13,'1ABR13',33.00,0,'P','2013-04-27 12:03:53',33.00,0),(65,14,'1ABR13',44.00,0,'P','2013-04-27 12:03:53',44.00,0),(83,1,'2MAR13',0.00,0,'A','2013-04-27 12:48:48',0.00,0),(84,3,'2MAR13',130.00,0,'A','2013-04-27 12:48:48',130.00,0),(85,9,'2MAR13',160.00,0,'P','2013-04-27 12:48:48',160.00,0),(86,10,'2MAR13',140.00,0,'A','2013-05-13 23:10:09',140.00,0),(87,11,'2MAR13',30.00,0,'P','2013-04-27 12:48:48',30.00,0),(88,12,'2MAR13',110.00,0,'P','2013-04-27 12:48:48',110.00,0),(89,13,'2MAR13',30.00,0,'P','2013-04-27 12:48:48',30.00,0),(90,14,'2MAR13',40.00,0,'P','2013-04-27 12:48:48',40.00,0),(91,1,'2ABR13',36.00,0,'A','2013-05-06 23:02:56',36.00,0),(92,3,'2ABR13',143.00,0,'P','2013-05-01 22:03:32',143.00,0),(93,9,'2ABR13',176.00,0,'P','2013-05-01 22:03:32',176.00,0),(94,10,'2ABR13',154.00,0,'P','2013-05-24 16:36:51',154.00,0),(95,11,'2ABR13',33.00,0,'A','2013-05-01 22:03:32',33.00,0),(96,12,'2ABR13',121.00,0,'P','2013-05-01 22:03:32',121.00,0),(97,13,'2ABR13',33.00,0,'P','2013-05-01 22:03:32',33.00,0),(98,14,'2ABR13',44.00,0,'P','2013-05-01 22:03:33',44.00,0);
 /*!40000 ALTER TABLE `charge` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -257,6 +257,36 @@ LOCK TABLES `config` WRITE;
 /*!40000 ALTER TABLE `config` DISABLE KEYS */;
 INSERT INTO `config` VALUES (1,'current_period','C',NULL),(1,'regions','T',NULL);
 /*!40000 ALTER TABLE `config` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `customer_list`
+--
+
+DROP TABLE IF EXISTS `customer_list`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `customer_list` (
+  `customer_list_id` int(11) NOT NULL AUTO_INCREMENT,
+  `list_name` varchar(45) NOT NULL,
+  `credit` decimal(10,2) DEFAULT NULL,
+  `discount` decimal(10,2) DEFAULT NULL,
+  `price_rule` char(2) DEFAULT NULL,
+  `trade-off` bit(1) DEFAULT b'0',
+  `pending_periods` tinyint(4) DEFAULT '2',
+  PRIMARY KEY (`customer_list_id`),
+  UNIQUE KEY `list_name_UNIQUE` (`list_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `customer_list`
+--
+
+LOCK TABLES `customer_list` WRITE;
+/*!40000 ALTER TABLE `customer_list` DISABLE KEYS */;
+INSERT INTO `customer_list` VALUES (1,'default',100.00,NULL,NULL,'\0',2),(2,'confianza',200.00,NULL,NULL,'\0',3);
+/*!40000 ALTER TABLE `customer_list` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -452,7 +482,7 @@ CREATE TABLE `price_rule` (
 
 LOCK TABLES `price_rule` WRITE;
 /*!40000 ALTER TABLE `price_rule` DISABLE KEYS */;
-INSERT INTO `price_rule` VALUES (1,'C1',0.00,3.00,4.00,5.00,'2012-09-05 00:00:00'),(2,'C2',2.00,3.00,4.00,5.00,'2012-09-05 00:00:00'),(3,'C3',3.00,4.00,5.00,6.00,'2012-09-05 00:00:00');
+INSERT INTO `price_rule` VALUES (1,'C1',0.00,2.00,3.00,4.00,'2012-09-05 00:00:00'),(2,'C2',1.00,2.00,3.00,4.00,'2012-09-05 00:00:00'),(3,'C3',2.00,3.00,4.00,5.00,'2012-09-05 00:00:00');
 /*!40000 ALTER TABLE `price_rule` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -569,6 +599,7 @@ CREATE TABLE `user` (
   `created` datetime DEFAULT NULL,
   `status` varchar(10) NOT NULL DEFAULT 'pending' COMMENT 'pending, validated, complete',
   `rol` int(11) DEFAULT '0',
+  `customer_list` int(11) DEFAULT '1',
   PRIMARY KEY (`user_id`),
   KEY `price_rule_id` (`price_rule_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
@@ -580,7 +611,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'redaumore@gmail.com','treschiflados','12345',1,'20-23456789-2','2013-02-11 22:13:32','active',0),(2,'reoka@michi.com','Zandanga','1231',1,'1231','2012-09-02 22:49:17','pending',0),(3,'rdaumas@brandlive.net','Branca','1234',1,'1234','2012-09-17 17:53:35','active',0),(4,'zandanga@nulo.com','Nulo','1234',1,'20-23456789-2','2012-09-04 17:03:39','pending',0),(5,'reda@gmail.com','Movi','1234',1,'20-23456789-2','2012-09-04 17:16:52','pending',0),(6,'rdaumas@ulula.net','Ulula','1234',1,'20-23456789-2','2012-09-12 14:00:11','pending',0),(7,'rolo@fmail.com','El espacio','1234',1,'20-23456700-3','2012-09-17 16:52:21','validated',0),(8,'matioli@salem.com','Salem Patioli','1234',1,'','2012-09-12 23:26:43','pending',0),(9,'prepromo@gmail.com','Pañalera adulta','1234',1,'23-23456789-4','2012-09-18 15:20:24','charged',2),(10,'primero@gmail.com','La primera de San Justo','1234',1,'20-30000000-2','2012-09-26 12:12:41','active',2),(11,'segunda@gmail.com','La Segunda','1234',1,'','2012-10-27 17:35:19','active',2),(12,'tercera@gmail.com','La tercera de San Justo','1234',1,'','2012-11-03 15:41:59','active',2),(13,'emiliomitre@gmail.com','Mi Casa','1234',1,'','2012-11-09 11:36:46','active',2),(14,'sanjusto1@gmail.com','SJ1','1234',1,'29-23456789-9','2012-12-04 21:29:38','active',2),(15,'sanjusto2@gmail.com','SJ2','1234',1,'','2012-12-04 21:20:01','validated',2),(16,'sanjusto3@gmail.com','SJ3','1234',1,'','2012-12-04 21:20:35','validated',2),(17,'sanjusto4@gmail.com','SJ4','1234',1,'','2012-12-04 21:21:14','validated',2);
+INSERT INTO `user` VALUES (1,'redaumore@gmail.com','treschiflados','12345',1,'20-23456789-2','2013-02-11 22:13:32','active',0,1),(2,'reoka@michi.com','Zandanga','1231',1,'1231','2012-09-02 22:49:17','pending',0,1),(3,'rdaumas@brandlive.net','Branca','1234',1,'1234','2013-05-27 14:30:12','debtor',0,1),(4,'zandanga@nulo.com','Nulo','1234',1,'20-23456789-2','2012-09-04 17:03:39','pending',0,1),(5,'reda@gmail.com','Movi','1234',1,'20-23456789-2','2012-09-04 17:16:52','pending',0,1),(6,'rdaumas@ulula.net','Ulula','1234',1,'20-23456789-2','2012-09-12 14:00:11','pending',0,1),(7,'rolo@fmail.com','El espacio','1234',1,'20-23456700-3','2012-09-17 16:52:21','validated',0,1),(8,'matioli@salem.com','Salem Patioli','1234',1,'','2012-09-12 23:26:43','pending',0,1),(9,'prepromo@gmail.com','Pañalera adulta','1234',1,'23-23456789-4','2013-05-27 14:30:13','debtor',2,1),(10,'primero@gmail.com','La primera de San Justo','1234',1,'20-30000000-2','2012-09-26 12:12:41','active',2,2),(11,'segunda@gmail.com','La Segunda','1234',1,'','2012-10-27 17:35:19','active',2,1),(12,'tercera@gmail.com','La tercera de San Justo','1234',1,'','2013-05-27 14:30:13','debtor',2,1),(13,'emiliomitre@gmail.com','Mi Casa','1234',1,'','2012-11-09 11:36:46','active',2,2),(14,'sanjusto1@gmail.com','SJ1','1234',1,'29-23456789-9','2013-05-27 14:30:13','debtor',2,1),(15,'sanjusto2@gmail.com','SJ2','1234',1,'','2012-12-04 21:20:01','validated',2,1),(16,'sanjusto3@gmail.com','SJ3','1234',1,'','2012-12-04 21:20:35','validated',2,1),(17,'sanjusto4@gmail.com','SJ4','1234',1,'','2012-12-04 21:21:14','validated',2,1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -593,4 +624,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-05-24 18:07:46
+-- Dump completed on 2013-05-27 16:30:50

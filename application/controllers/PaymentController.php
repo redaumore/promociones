@@ -109,7 +109,7 @@ class PaymentController extends Zend_Controller_Action
                     $charge->setAmount($payment["total"])
                             ->setDiscount(0)
                             ->setPeriod($payment["periodo"])
-                            ->setStatus('N')
+                            ->setStatus('P')
                             ->setUserId($payment["user_id"])
                             ->setFinalAmount($payment["total"]);
                     if($payment["total"] == "0.00")

@@ -47,6 +47,11 @@ class PAP_Model_User
         $userMapper->loadByEmail($email, $this);
     }
     
+    public function loadById($id){
+        $userMapper = new PAP_Model_UserMapper();
+        $userMapper->find($id, $this);
+    }
+    
     public function insert(array $options){
         
         $this->setOptions($options);
@@ -101,6 +106,22 @@ class PAP_Model_User
         $userMap = new PAP_Model_UserMapper();
         $categories = $userMap->setCategories($this, $categories);
         return;    
+    }
+    
+    public function refreshStatus(){
+        $my_info = PAP_Model_Charge::getDebtorsInfo($this);
+        if(isset($my_info)){
+             if ($this->getStatus() == 'active'){
+                $this->setStatus('debtor');
+                $this->update();
+            }   
+        }
+        else{
+            if ($this->getStatus() == 'debtor'){
+                $this->setStatus('active');
+                $this->update();
+            }
+        }
     }
  
     public function setId($text)

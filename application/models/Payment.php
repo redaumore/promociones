@@ -115,7 +115,7 @@ class PAP_Model_Payment
         }
     }
     
-    public static function  getWorkingDays($startDate, $endDate, $holidays = array()){ 
+    public static function getWorkingDays($startDate, $endDate, $holidays = array()){ 
 
         // Calculate weekday number. Monday is 1, Sunday is 7 
         $firstWeekdayNumber = date("N", strtotime($startDate)); 

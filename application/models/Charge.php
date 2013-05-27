@@ -134,6 +134,25 @@ class PAP_Model_Charge
         return $charges;
     }
     
+    public static function proccessDebtorUsers(){
+        $result = self::getDebtorsInfo();
+        foreach($result as $row){
+            $user = new PAP_Model_User();
+            $user->loadById($row['user_id']);
+            $user->setStatus('debtor');
+            $user->update();
+        }    
+    }
+    
+    public static function getDebtorsInfo(PAP_Model_User $user = null){
+        $mapper = new PAP_Model_ChargeMapper();
+        if(isset($user))
+            $result = $mapper->getDebtorsInfo($user->getId());
+        else
+            $result = $mapper->getDebtorsInfo();
+        return $result;    
+    }
+    
     private function getStatusToDB($status){
         $statusDB = "";
         switch ($status) {
