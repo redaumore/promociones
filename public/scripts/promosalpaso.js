@@ -30,7 +30,7 @@ var _firstAttempFav = true;
 var _inFavorites = false;
 var _last_update;
 
-$(document).ready(function(){
+jQuery(document).ready(function(){
     if(jQuery.browser.mobile){
         $.mobile.defaultPageTransition = 'none';
         _last_update = window.localStorage.getItem("last_update");    
@@ -46,7 +46,7 @@ $(document).ready(function(){
     }
 });
 
-$(document).bind("mobileinit", function(){
+jQuery(document).bind("mobileinit", function(){
 	$.mobile.defaultPageTransition = 'none';
 });
 
@@ -104,8 +104,8 @@ function loadPromoList(){
                 $.each(data, function(i,item){
                     promolist += getPromoRecord(item);
                 });
-                $("#promolist").html(promolist);
-                $.mobile.changePage($("#one"));
+                jQuery("#promolist").html(promolist);
+                $.mobile.changePage(jQuery("#one"));
                 $.mobile.hidePageLoadingMsg();
         },
         error: function(jqXHR, textStatus, errorThrown){
@@ -138,7 +138,7 @@ function loadPromoListByIds(ids){
         },
         success: function(data, status){
                 if(data.length == 0)
-                    $.mobile.changePage($("#nopromos"));
+                    $.mobile.changePage(jQuery("#nopromos"));
                 document.getElementById("promolist").innerHTML = "";                        
                 $.each(data, function(i,item){
                     document.getElementById("promolist").innerHTML += getPromoRecord(item);
@@ -208,7 +208,7 @@ function callPromoDetail(promotion_id){
         success: function(data, status){
                 loadPromoDetail(data);
                 $.mobile.hidePageLoadingMsg();
-                $.mobile.changePage($("#detail"));
+                $.mobile.changePage(jQuery("#detail"));
         },
         error: function(jqXHR, textStatus, errorThrown){
             showMessage(
@@ -223,64 +223,64 @@ function callPromoDetail(promotion_id){
 }
 
 function loadPromoDetail(item){
-    $("#det-name").html(item.name);
-    $("#det-long_description").html(item.long_description);
-    $("#det-displayed_text").html(item.displayed_text);
-    $("#det-short_description").html(item.short_description);
-    $("#det-promo_value").html(formatPrice(item.promo_value));
-    $("#det-distance").html(item.distance);
-    $("#det-direccion").html(item.street + ' ' + item.number + ' - ' + item.city);
-    $("#det-img-comercio").attr("src",item.logo);
+    jQuery("#det-name").html(item.name);
+    jQuery("#det-long_description").html(item.long_description);
+    jQuery("#det-displayed_text").html(item.displayed_text);
+    jQuery("#det-short_description").html(item.short_description);
+    jQuery("#det-promo_value").html(formatPrice(item.promo_value));
+    jQuery("#det-distance").html(item.distance);
+    jQuery("#det-direccion").html(item.street + ' ' + item.number + ' - ' + item.city);
+    jQuery("#det-img-comercio").attr("src",item.logo);
     if(item.branch_website != null && item.branch_website != "" )
-        $("#det-link").attr("href", item.website);
+        jQuery("#det-link").attr("href", item.website);
     else
-        $("#det-web").hide();
+        jQuery("#det-web").hide();
     
     if(item.phone != null && item.phone != "")
-        $("#det-phone").attr("onclick", "makeacall('"+item.phone+"')");
+        jQuery("#det-phone").attr("onclick", "makeacall('"+item.phone+"')");
     else
-        $("#det-tel").hide();
+        jQuery("#det-tel").hide();
     
     if(item.branch_email != null && item.branch_email != "")
-        $("#det-msg").attr("onclick", "sendamessage('"+item.branch_email+"')");
+        jQuery("#det-msg").attr("onclick", "sendamessage('"+item.branch_email+"')");
     else
-        $("#det-email").hide();
+        jQuery("#det-email").hide();
     
     if(item.path != "NOPIC")
-    	$("#det-img-promo").attr("src",item.path);
+    	jQuery("#det-img-promo").attr("src",item.path);
     else
-    	$("#det-img-promo").attr("src","images/photo_error.png");
+    	jQuery("#det-img-promo").attr("src","images/photo_error.png");
     
     if(item.alert_type == "N"){
-        $("#det-alarma").hide();
+        jQuery("#det-alarma").hide();
     }
     else{
         if(item.alert_type == "Q"){
-            $("#det-alarm_num").html(item.quantity);
-            $("#det-alarm_type").html("unids");
+            jQuery("#det-alarm_num").html(item.quantity);
+            jQuery("#det-alarm_type").html("unids");
         }
         else{
             today=new Date();
             ends = new Date(item.ends);
             var one_day = 1000*60*60*24;
             days = Math.ceil((ends.getTime()-today.getTime())/(one_day));
-            $("#det-alarm_num").html(days);
-            $("#det-alarm_type").html("días");
+            jQuery("#det-alarm_num").html(days);
+            jQuery("#det-alarm_type").html("días");
         } 
     }
     if(item.value_since == "1")
-        $("#precio_desde").show();
+        jQuery("#precio_desde").show();
     else
-        $("#precio_desde").hide();
+        jQuery("#precio_desde").hide();
     if(isFavorite(item.promotion_id)){
-        $("#favtext").html("Quitar de Favoritos");
-        $("#linkFavorite").unbind("click");
-        $("#linkFavorite").click(function(){deleteFavorite(item.promotion_id);});
+        jQuery("#favtext").html("Quitar de Favoritos");
+        jQuery("#linkFavorite").unbind("click");
+        jQuery("#linkFavorite").click(function(){deleteFavorite(item.promotion_id);});
     }
     else{
-        $("#favtext").html("Agregar a Favoritos");
-        $("#linkFavorite").unbind("click");
-        $("#linkFavorite").click(function(){saveFavorite();});
+        jQuery("#favtext").html("Agregar a Favoritos");
+        jQuery("#linkFavorite").unbind("click");
+        jQuery("#linkFavorite").click(function(){saveFavorite();});
     }
     _promo_lat = item.latitude;
     _promo_lng = item.longitude;
@@ -358,26 +358,26 @@ function showMessage(message, title, button){
 // Function called when phonegap is ready
 function setFullScreen() {
     //All pages at least 100% of viewport height
-    var viewPortHeight = $(window).height();
-    var headerHeight = $('div[data-role="header"]').height();
-    var footerHeight = $('div[data-role="footer"]').height();
+    var viewPortHeight = jQuery(window).height();
+    var headerHeight = jQuery('div[data-role="header"]').height();
+    var footerHeight = jQuery('div[data-role="footer"]').height();
     var contentHeight = viewPortHeight - headerHeight - footerHeight;
 
     // Set all pages with class="page-content" to be at least contentHeight
-    $('div[class="ui-content"]').css({'min-height': contentHeight + 'px'});
+    jQuery('div[class="ui-content"]').css({'min-height': contentHeight + 'px'});
  }
  
 function showProgress() {
-    $('body').append('<div id="progress"><img src="/css/images/ajax-loader.gif" alt="" width="16" height="11" /> Loading...</div>');
-    $('#progress').center();
+    jQuery('body').append('<div id="progress"><img src="/css/images/ajax-loader.gif" alt="" width="16" height="11" /> Loading...</div>');
+    jQuery('#progress').center();
 }
 function hideProgress() {
-    $('#progress').remove();
+    jQuery('#progress').remove();
 }
 jQuery.fn.center = function () {
     this.css("position", "absolute");
-    this.css("top", ($(window).height() - this.height()) / 2 + $(window).scrollTop() + "px");
-    this.css("left", ($(window).width() - this.width()) / 2 + $(window).scrollLeft() + "px");
+    this.css("top", (jQuery(window).height() - this.height()) / 2 + jQuery(window).scrollTop() + "px");
+    this.css("left", (jQuery(window).width() - this.width()) / 2 + jQuery(window).scrollLeft() + "px");
     return this;
 }
 
@@ -521,8 +521,8 @@ function successCB(){
 function gotoSearch(){
     var db = window.openDatabase("promosalpaso", "1.0", "Promos al Paso", 200000);
     db.transaction(populateProvinceDDL, errorProvinceDDL, successProvinceDDL);
-    $('#city_button').hide();
-    $.mobile.changePage($("#search"));        
+    jQuery('#city_button').hide();
+    $.mobile.changePage(jQuery("#search"));        
 }
 function populateProvinceDDL(tx){
     tx.executeSql('SELECT province_id, name FROM province ORDER BY name', [], queryProvinceSuccess, errorCB);
@@ -534,13 +534,13 @@ function errorProvinceDDL(err) {
         console.log("errorProvinceDDL: "+err.message+". Code: "+err.code);
     }
 function queryProvinceSuccess(tx, results){
-    $('#state_select').empty();
+    jQuery('#state_select').empty();
     for(i=0;i<results.rows.length;i++){
-        $('#state_select').append('<option value="'+results.rows.item(i).province_id+'">' + results.rows.item(i).name + '</option>');
+        jQuery('#state_select').append('<option value="'+results.rows.item(i).province_id+'">' + results.rows.item(i).name + '</option>');
     }
-    $("#state_select option:first").attr('selected','selected');
-    $('#state_select').selectmenu("refresh");
-    addCites($('#state_select').val());
+    jQuery("#state_select option:first").attr('selected','selected');
+    jQuery('#state_select').selectmenu("refresh");
+    addCites(jQuery('#state_select').val());
 }
 function addCites(province_id) {
     var db = window.openDatabase("promosalpaso", "1.0", "Promos al Paso", 200000);
@@ -556,20 +556,20 @@ function errorCityDDL(err) {
         console.log("Error City SQL: "+err.code);
     }
 function queryCitySuccess(tx, results){
-    $('#city_select').empty();
+    jQuery('#city_select').empty();
     for(i=0;i<results.rows.length;i++){
-        $('#city_select').append('<option value="'+results.rows.item(i).city_id+'">' + results.rows.item(i).name + '</option>');
+        jQuery('#city_select').append('<option value="'+results.rows.item(i).city_id+'">' + results.rows.item(i).name + '</option>');
     }
-    $("#city_select option:first").attr('selected','selected');     
-    $('#city_select').selectmenu("refresh");
-    $('#city_button').show();
+    jQuery("#city_select option:first").attr('selected','selected');     
+    jQuery('#city_select').selectmenu("refresh");
+    jQuery('#city_button').show();
 }
 
 //SEARCH
 function doSearch(){
-    var city_id = $("#city_select option:selected").val();
+    var city_id = jQuery("#city_select option:selected").val();
     if(city_id != null){
-        $("#promolist").html("");
+        jQuery("#promolist").html("");
         var db = window.openDatabase("promosalpaso", "1.0", "Promos al Paso", 200000);
         db.transaction(function(tx){querySearchDB(tx, city_id)}, errorSearchDB);    
     }
@@ -586,7 +586,7 @@ function querySearchSuccess(tx, results) {
         _lat = results.rows.item(0).latitude;
         _lng = results.rows.item(0).longitude;
         loadPromoList();
-        $.mobile.changePage($("#one"));
+        $.mobile.changePage(jQuery("#one"));
     }
 }
 function errorSearchDB(err){
@@ -595,26 +595,26 @@ function errorSearchDB(err){
 
 
 
-$('#state_select').live("change blur", function() {
-    var selectedState = $(this).val();
+jQuery('#state_select').live("change blur", function() {
+    var selectedState = jQuery(this).val();
     addCites(selectedState);
-    if ($('#city_select option').size() == 0) {
-        $('#city_select').append('<option value="nocity">No se encontraron ciudades</option>');
+    if (jQuery('#city_select option').size() == 0) {
+        jQuery('#city_select').append('<option value="nocity">No se encontraron ciudades</option>');
     }
     event.preventDefault();
 });
 
-$('#a_search_button').live("click", function() {
+jQuery('#a_search_button').live("click", function() {
     event.preventDefault();
     doSearch();
 });
 
-$(document).delegate( "#page-map", "pagebeforeshow", function(event){
+jQuery(document).delegate( "#page-map", "pagebeforeshow", function(event){
     initialize();
-    var _width = $(window).width();
-    var _height = $(window).height();
-    $("#map_canvas").css({height:_height});
-    $("#map_canvas").css({width:_width});
+    var _width = jQuery(window).width();
+    var _height = jQuery(window).height();
+    jQuery("#map_canvas").css({height:_height});
+    jQuery("#map_canvas").css({width:_width});
     calcRoute();
 });
 

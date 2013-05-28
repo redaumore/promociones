@@ -18,7 +18,7 @@ class PAP_Form_SearchForm extends Zend_Form
         
         $this->addElement('select', 'province', array(
             'label'      => 'Provincia',
-            'required'   => true,
+            'required'   => false,
         ));
         $this->province->setRegisterInArrayValidator(false)
                 ->setDecorators($decorators)
@@ -26,7 +26,7 @@ class PAP_Form_SearchForm extends Zend_Form
         
         $this->addElement('select', 'city', array(
             'label'      => 'Ciudad',
-            'required'   => true,
+            'required'   => false,
         ));
         $this->city->setRegisterInArrayValidator(false)
                 ->setDecorators($decorators);

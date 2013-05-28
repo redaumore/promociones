@@ -40,7 +40,7 @@
             'ignore'   => true,
             'label'      => 'Buscar',
         ));
-        $this->search->setAttrib('class', 'btn btn-primary');
+        $this->search->setAttrib('class', 'btn');
         $this->search->setDecorators(array(
                             'ViewHelper',
                             array(array('emptyrow'=>'HtmlTag'), array('placement' => Zend_Form_Decorator_Abstract::PREPEND, 'tag'=>'i', 'class'=>'icon-search')),

@@ -32,22 +32,20 @@
                     <?php echo $form->search->renderViewHelper(); ?>
                 </div>
             </div>
-            <div class="span9">
+            <div class="span9" style="height: 100%; min-height: 175px;">
+                <?php echo $this->partial("index/_alert.phtml"); ?>
                 <div class="row-fluid">
                     <table width="100%"><tr><td align="center">
                         <table id="list2"></table>
                         <div id="pager2"></div>
                     </td></tr></table>
                 </div>
-                <?php echo $this->partial("index/_alert.phtml"); ?>
-                <div class="row-fluid">
-                    <div class="span3">
+                <div class="row-fluid pagination-centered">
                         <button id="pay" type="button" class="btn" onclick="showPaymentInfo();">Informar Pago por Transferencia/Depósito</button>
                         <button id="payHidden" type="button" style="display: none;" data-toggle="modal" data-target="#paymentInfo" class="btn"></button>
-                    </div>
-                    <div class="span3">
                         <button id="payMP" type="button" class="btn" onclick="showMercadoPago();">Pagar por MercadoPago</button>
                         <button id="payHiddenMP" type="button" data-toggle="modal" data-target="#div_MP" style="display: none;"></button>
+                        <button id="payCash" type="button" class="btn" onclick="requestCashPayment();">Efectivo</button>
                     </div>
                 </div>
             </div>
@@ -66,6 +64,8 @@
         $("#pay").hide();
         $("#payHiddenMP").hide();
         $("#payMP").hide();
+        $("#div_MP").hide();
+        $("#payCash").hide();
         $("#div_MP").hide();
         if($('input#data').val() != ""){
             getPayments();

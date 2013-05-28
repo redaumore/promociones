@@ -61,6 +61,54 @@ function showPaymentInfo(){
             showMessage("error", "Para informar pagos debes seleccionar Cargos Pendientes.");    
 }
 
+function requestCashPayment(){
+    var reportType = jQuery("input[name='reportType']:checked").val();
+        if(reportType == "pendientes"){
+            var ids;
+            ids = jQuery("#list2").jqGrid('getGridParam','selarrrow');
+            if(ids == "")            
+                showMessage("error", "No hay cargos seleccionados.");
+            else{
+                bootbox.confirm("Miembros del staff pasará por tu comercio para efectuar el cobro. Te anticiparemos la fecha de la visita por email.", 
+                    function(result) {
+                        if(result){
+                            var ret, total = 0;
+                            var periodos = "";
+                            var charges_ids = "";
+                            for (var i = 0; i < ids.length; i++) {
+                                ret = jQuery("#list2").jqGrid('getRowData',ids[i]);
+                                total += parseFloat(ret.total);
+                                periodos += ret.periodo + ", ";
+                                charges_ids += ret.charge_id + ",";;
+                            }
+                
+                            var json_data = {"data":[{
+                            //'charges_ids':charges_ids, 
+                            'periodos':periodos,
+                            'total':total
+                            }]};
+                        
+                        $.ajax({
+                            url: _baseServUri + 'requestcash',
+                            dataType: 'jsonp',
+                            data: {"data":json_data},
+                            jsonp: 'jsoncallback',
+                            contentType: "application/json; charset=utf-8",
+                            timeout: 5000,
+                            success: function(data, status){
+                                    if(data.length == 0)
+                                        alert(data);
+                            },
+                            error: function(jqXHR, textStatus, errorThrown){
+                                alert(textStatus);    
+                            }
+                        });    
+                        }
+                });
+            }
+        }     
+}
+
 function getAccessToken(preference){
     $.ajax({
         url: _baseServUri + 'getmpinitpoint',
@@ -280,6 +328,7 @@ function DisplayEmptyText( display)
         if(reportType == "pendientes"){
             jQuery("#pay").show();
             jQuery("#payMP").show();
+            jQuery("#payCash").show()
         }
     }
 }

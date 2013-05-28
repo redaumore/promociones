@@ -11,7 +11,6 @@
       */
 ?>
 <script type="text/javascript" src="/scripts/prototype.js"></script>
-<script type="text/javascript" src='/scripts/jquery-1.8.2.js'></script>
 <script type="text/javascript" src='/scripts/grid.locale-es.js'></script>
 <script type="text/javascript" src='/scripts/jquery.jqGrid.min.js'></script>
 <script type="text/javascript" src="/scripts/promosalpaso.js"></script>
@@ -60,7 +59,7 @@ function FillFormProvinces(data)
         loadCities(); 
 }
 </script>
-<form method="<?php echo $form->getMethod() ?>" action="<?php echo $form->getAction()?>" enctype="multipart/form-data" class="well">
+<form method="<?php echo $form->getMethod() ?>" action="<?php echo $form->getAction()?>" enctype="multipart/form-data">
     <div class="row-fluid">
         <div class="row">
             <div class="pagination-centered" id="titulo">
@@ -125,7 +124,7 @@ function getPromotions(){
         categoriesString = categoriesString.substring(0, categoriesString.length-1);
     var _url = _baseUri + '/promotion/search/city/' + city + '/categories/' + categoriesString;
     if (!firstClick){
-        $("#list2").jqGrid('setGridParam', { url: _url }).trigger("reloadGrid");
+        jQuery("#list2").jqGrid('setGridParam', { url: _url }).trigger("reloadGrid");
     }
     else{
         firstClick = false;
