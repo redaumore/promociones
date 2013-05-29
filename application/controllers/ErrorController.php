@@ -2,10 +2,31 @@
 
 class ErrorController extends Zend_Controller_Action
 {
-
+    public function init(){
+        // Add the context to the error action
+        //$this->_helper->contextSwitch()->addActionContext('error', 'json');
+    }
+    
     public function errorAction()
     {
         $errors = $this->_getParam('error_handler');
+        if ($this->getRequest()->isXmlHttpRequest()) {
+            $this->_helper->contextSwitch()->initJsonContext();
+            //$this->_helper->contextSwitch()->initContext('json');
+            $response = array('success' => false);
+
+            if ($this->getInvokeArg('displayExceptions') == true) {
+                // Add exception error message
+                $response['message'] = $errors->exception->getMessage();
+
+                // Send stack trace
+                $response['code'] = $errors->exception->getCode();
+
+            }
+
+            echo Zend_Json::encode($response);
+            return;
+        }
         
         if (!$errors || !$errors instanceof ArrayObject) {
             $this->view->message = 'You have reached the error page';
@@ -42,8 +63,7 @@ class ErrorController extends Zend_Controller_Action
         if ($this->getInvokeArg('displayExceptions') == true) {
             $this->view->exception = $errors->exception;
         }
-        if (!$this->_request->isXmlHttpRequest())
-            $this->view->request   = $errors->request;
+        $this->view->request   = $errors->request;
     }
 
     public function getLog()

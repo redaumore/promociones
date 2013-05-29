@@ -240,7 +240,7 @@ class servicesController extends Zend_Controller_Action
             $charges = $payment_json['charges_ids'];
             $charges = explode(',', $charges);
             
-            try{
+            //try{
                 foreach($charges as $charge_id){
                     $charge = new PAP_Model_Charge();
                     $charge->loadById($charge_id);
@@ -267,18 +267,27 @@ class servicesController extends Zend_Controller_Action
                 $response = $this->getFrontController()->getResponse();
                 $response->appendBody($callback.'('.json_encode($data).')');
                 $this->getFrontController()->setResponse($response);   
-            }
-            catch(Exception $ex){
+            //}
+            /*catch(Exception $ex){
                 $params = $this->getFrontController()->getRequest()->getParams();
                 PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'ServiceController->requestcashAction(foreach)',$ex, $params);
-                $this->returnErrorResponse($ex->getCode(), 'Hubo un error guardando el requerimiento. Por favor envíe un email a soporte@promosalpaso.com con tu información.'); 
+                //$this->returnErrorResponse($ex->getCode(), 'Hubo un error guardando el requerimiento. Por favor envíe un email a soporte@promosalpaso.com con tu información.'); 
                 
-            }
+            } */
         }
         catch(Exception $ex){
-            $params = $this->getFrontController()->getRequest()->getParams();
+            $params = $this->getRequest()->getParams();
             PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'ServiceController->requestcashAction',$ex, $params);
-            $this->returnErrorResponse($ex->getCode(), 'Hubo un error guardando el requerimiento. Por favor envíe un email a soporte@promosalpaso.com con tu información.'); 
+            $data = array();
+                $data['result_code'] = '1001';
+                $data['result_message'] = 'Hubo un error guardando el requerimiento. Por favor enviá un email a soporte@promosalpaso.com con tu información.';        
+                $response = $this->getFrontController()->getResponse();
+                $response->appendBody($callback.'('.json_encode($data).')');
+                $this->getFrontController()->throwExceptions(false);
+                //$this->getFrontController()->setParam('disableOutputBuffering',true);
+                ob_get_clean();
+                $this->getFrontController()->setResponse($response);
+            //throw new Exception('Hubo un error guardando el requerimiento. Por favor enviá un email a soporte@promosalpaso.com con tu información.', 100); 
         }
     }
     
@@ -364,19 +373,8 @@ class servicesController extends Zend_Controller_Action
     }
     
     private function returnErrorResponse($code, $message){
-        $this->_helper->layout->disableLayout();
-        $this->_helper->viewRenderer->setNoRender(TRUE);
-    
-        $data = array();
-        $data['result_code'] = $code;
-        $data['result_message'] = $message;
-        //$response->appendBody($callback.'('.json_encode($data).')');
-        //$this->getFrontController()->setResponse($response);
-        $response = $this->getFrontController()->getResponse();
-        $this->response->clearBody();
-        $this->view->content = json_encode($data); 
-        //$response->appendBody($callback.'('.json_encode($data).')');
-        //$this->getFrontController()->setResponse($response);
+        
+         
     }
 }
 
