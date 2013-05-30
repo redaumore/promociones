@@ -69,6 +69,20 @@ class PAP_Model_Branch
         
     }
     
+    public function getAddress(){
+        $address = new PAP_Model_Address();
+        $address->setStreet($this->_street);
+        $address->setNumber($this->_number);
+        $address->setPhone($this->_phone);
+        $address->setOthers($this->_local);
+        $address->setProvince($this->_province_id);
+        $address->setCity($this->_city_id);
+        $address->setLatitude($this->_latitude);
+        $address->setLongitude($this->_longitude);
+        $address->setZipCode($this->_zip_code);
+        return $address;
+    }
+    
     public static function getBranchesByRange($latE, $latO, $lngN, $lngS){
         $mapper = new PAP_Model_BranchMapper();
         $branches = $mapper->getBranchesByRange($latE, $latO, $lngN, $lngS);

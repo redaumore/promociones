@@ -46,6 +46,11 @@ class PAP_Model_City
         return $this;
     }
     
+    public function loadById($id){
+        $mapper = new PAP_Model_CityMapper();
+        $mapper->find($id, $this);
+    }
+    
      public function setId($text){
         $this->_id = (string) $text;
         return $this;

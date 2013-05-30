@@ -78,13 +78,13 @@ function requestCashPayment(){
                             for (var i = 0; i < ids.length; i++) {
                                 ret = jQuery("#list2").jqGrid('getRowData',ids[i]);
                                 total += parseFloat(ret.total);
-                                periodos += ret.periodo + ", ";
+                                periodos += ret.periodo + ",";
                                 charges_ids += ret.charge_id + ",";;
                             }
                 
                             var json_data = {"data":[{
-                            //'charges_ids':charges_ids, 
-                            'periodos':periodos,
+                            'charges_ids':charges_ids.substring(0, charges_ids.length-1), 
+                            'periodos':periodos.substring(0, periodos.length-1),
                             'total':total
                             }]};
                         
@@ -93,20 +93,45 @@ function requestCashPayment(){
                             dataType: 'jsonp',
                             data: {"data":json_data},
                             jsonp: 'jsoncallback',
+                            async: false,
                             contentType: "application/json; charset=utf-8",
                             timeout: 5000,
                             success: function(data, status){
-                                    if(data.length == 0)
-                                        alert(data);
+                                if(data.result_code != 0){
+                                    showMessage('error', data.result_message);    
+                                }
+                                else{
+                                    getPayments();    
+                                }
                             },
                             error: function(jqXHR, textStatus, errorThrown){
-                                alert(textStatus);    
+                                showAjaxError(textStatus, jqXHR.responseText);   
                             }
                         });    
                         }
                 });
             }
         }     
+}
+
+function showAjaxError(_err, _mess){
+    var message = '';
+    if(_mess != ''){
+        //result = JSON.parse(_mess);
+        //message = '('+result.result_code+') '+result.result_message;
+    }
+    switch(_err){
+        case 'parsererror':
+            if(message=='')message='No se pudo leer la respuesta del sistema. Intentalo nuevamente más tarde.';
+            break;
+        case 'error':
+            if(message=='')message='Hubo un error en la comunicación con el sistema. Intentalo nuevamente más tarde.';
+            break;
+        case 'timeout':
+            if(message=='')message='El sistema no contestó a tiempo. Intentalo nuevamente más tarde.';
+            break;
+    }
+    showMessage('error', message);
 }
 
 function getAccessToken(preference){

@@ -11,6 +11,7 @@ class PAP_Model_User
     protected $_rol;
     protected $_created;
     protected $_status;
+    protected $_billingAddress;
     
     public function __construct(array $options = null)
     {
@@ -45,15 +46,16 @@ class PAP_Model_User
     public function loadByEmail($email){
         $userMapper = new PAP_Model_UserMapper();
         $userMapper->loadByEmail($email, $this);
+        $this->loadBillingAddress();
     }
     
     public function loadById($id){
         $userMapper = new PAP_Model_UserMapper();
         $userMapper->find($id, $this);
+        $this->loadBillingAddress();
     }
     
     public function insert(array $options){
-        
         $this->setOptions($options);
         $userMapper = new PAP_Model_UserMapper();
         $userMapper->save($this);
@@ -122,6 +124,11 @@ class PAP_Model_User
                 $this->update();
             }
         }
+    }
+    
+    private function loadBillingAddress(){
+        $mainBranch = $this->getBranch();
+        $this->_billingAddress = $mainBranch->getAddress();
     }
  
     public function setId($text)
