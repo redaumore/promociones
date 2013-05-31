@@ -100,12 +100,8 @@ function FillFormProvinces(data)
     
 </form>
 <script type="text/javascript">
-
-loadProvinces();
-
 var firstClick = true;
 function getPromotions(){
-    
     var city = document.getElementById('city').options[document.getElementById('city').selectedIndex].value;
     var categories = document.getElementById('category').options;
     var categoriesString = '';
@@ -167,6 +163,12 @@ function loadPromotion(promotion_id){
 
 function FillPromotion(data){
     var promotion = eval('(' + data.responseText + ')');
-    alert(data.responseText);    
+    jQuery("#btnpromobody").click();
+    //alert(data.responseText);    
 }
+
+jQuery(document).ready(function(){
+    loadProvinces();
+})
 </script>
+<?php echo $this->partial("promotion/_promobody.phtml"); ?>
