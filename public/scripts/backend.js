@@ -242,9 +242,11 @@ function getWorkingDays(startDate, endDate){
 
 function getPayments(){
     var reportType = jQuery("input[name='reportType']:checked").val();
+    var jsondata = jQuery.parseJSON(jQuery('input#data').val());
     jQuery("#list2").jqGrid({
         datatype: 'local',
-        data: jQuery.parseJSON(jQuery('input#data').val()),
+        //data: jQuery.parseJSON(jQuery('input#data').val()),
+        data: jsondata.payments,
         colNames: ["", "Periodo", "Desde", "Hasta", "Total"],
         colModel: [
             //{name:'',index:'', width:15, align:"center", hidden: (reportType=="pendientes")?false:true,edittype:'checkbox',formatter: "checkbox",editoptions: { value:"True:False"},editable:true,formatoptions: {disabled : false}},
@@ -273,10 +275,10 @@ function getPayments(){
             jQuery("#" + subgridTableId).jqGrid({
                 datatype: "local",
                 data: jQuery(this).jqGrid("getLocalRow", rowid).costos,
-                colNames: ["Costo Promo", "Cantidad", "Días Anunciados", "Subtotal"],
+                colNames: ["Cantidad", "Costo Promo", "Días Anunciados", "Subtotal"],
                 colModel: [
-                  {name: "cost", width: 125, align:"center", key: true, formatter: "currency", formatoptions:{decimalSeparator:",", thousandsSeparator: ".", decimalPlaces: 2, prefix: "$ "}},
                   {name: "promo_count", align:"center", width: 125},
+                  {name: "cost", width: 125, align:"center", key: true, formatter: "currency", formatoptions:{decimalSeparator:",", thousandsSeparator: ".", decimalPlaces: 2, prefix: "$ "}},
                   {name: "cant_dias", align:"center", width: 125},
                   {name: "subtotal", align:"right", width: 125, formatter: "currency", formatoptions:{decimalSeparator:",", thousandsSeparator: ".", decimalPlaces: 2, prefix: "$ "}}
                 ],
@@ -351,9 +353,16 @@ function DisplayEmptyText( display)
         //container.find('#EmptyData' + dataObject).remove(); // remove the empty data text
         var reportType = jQuery("input[name='reportType']:checked").val();
         if(reportType == "pendientes"){
-            jQuery("#pay").show();
-            jQuery("#payMP").show();
-            jQuery("#payCash").show()
+            var jsondata = jQuery.parseJSON(jQuery('input#data').val());
+            var paymentMethods = jsondata.payment_methods;
+            for (i = 0; paymentMethods.length > i; i += 1) {
+                if (paymentMethods[i].payment_method_id == 'T' || paymentMethods[i].payment_method_id == 'D' )
+                    jQuery("#pay").show();
+                if (paymentMethods[i].payment_method_id == 'MP')
+                    jQuery("#payMP").show();
+                if (paymentMethods[i].payment_method_id == 'E')
+                    jQuery("#payCash").show();
+            }
         }
     }
 }

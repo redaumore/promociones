@@ -52,7 +52,7 @@ class PAP_Model_User
     public function loadById($id){
         $userMapper = new PAP_Model_UserMapper();
         $userMapper->find($id, $this);
-        $this->loadBillingAddress();
+        //$this->loadBillingAddress();
     }
     
     public function insert(array $options){
@@ -104,6 +104,19 @@ class PAP_Model_User
         return $categories;
     }
     
+    public function getPaymentMethods(){
+        $payment_methods = array();
+        if(!isset($this->_billingAddress))
+            if(!$this->loadBillingAddress())
+                return $payment_methods;
+        $payment_methods = $this->_billingAddress->getCity()->getPaymentMethods();
+        
+        /*$paymentMethods = array();
+        $paymentMethods[] = 'E';
+        $paymentMethods[] = 'MP';*/
+        return $payment_methods;
+    }
+    
     public function setCategories($categories){
         $userMap = new PAP_Model_UserMapper();
         $categories = $userMap->setCategories($this, $categories);
@@ -128,7 +141,11 @@ class PAP_Model_User
     
     private function loadBillingAddress(){
         $mainBranch = $this->getBranch();
-        $this->_billingAddress = $mainBranch->getAddress();
+        if(isset($mainBranch)){
+            $this->_billingAddress = $mainBranch->getAddress();
+            return true;
+        }
+        return false;
     }
  
     public function setId($text)

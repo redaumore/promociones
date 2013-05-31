@@ -29,8 +29,13 @@ class PaymentController extends Zend_Controller_Action
                         $payments = $this->getLastPayments($user);
                         break;
                 }
+                
+                $paymentMethods = $user->getPaymentMethods();
+                $data = array();
+                $data['payments'] = $payments;
+                $data['payment_methods'] = $paymentMethods; 
                 $control = $form->getElement('data');
-                $valor = json_encode($payments);
+                $valor = json_encode($data);
                 $control->setValue($valor);
                 //echo $this->_helper->json($payments);
             }

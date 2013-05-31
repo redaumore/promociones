@@ -162,7 +162,32 @@ function loadPromotion(promotion_id){
 }
 
 function FillPromotion(data){
-    var promotion = eval('(' + data.responseText + ')');
+    var promotion =jQuery.parseJSON(data.responseText);
+    promotion = promotion[0];
+    jQuery('#det-name').text(promotion.name);
+    jQuery('#det-direccion').text(promotion.street+' '+promotion.number+' - '+promotion.city_name);
+    jQuery('#det-img-comercio').attr("src", '../images'+promotion.logo.replace(/\\/g, '/'));
+    jQuery('#det-long_description').text(promotion.long_description);
+    jQuery('#det-displayed_text').text(promotion.displayed_text);
+    jQuery('#det-img-promo').attr("src", '../images'+promotion.path.replace(/\\/g, '/'));
+    jQuery('#det-short_description').text(promotion.short_description);
+    if(promotion.value_since)
+        jQuery('#det-short_description').show
+    else
+        jQuery('#det-short_description').hide;
+    jQuery('#det-promo_value').text(promotion.promo_value);
+    if(promotion.alert_type == 'N')
+        jQuery('#det-alarma').hide();
+    if(promotion.alert_type == 'D'){
+        jQuery('#det-alarm_num').text(getDaysTo(promotion.ends));
+        jQuery('#det-alarm_type').text('días');
+        jQuery('#det-alarma').show();
+    }
+    if(promotion.alert_type == 'U'){
+        jQuery('#det-alarm_num').text(promotion.quantity);
+        jQuery('#det-alarm_type').text('unidades');
+        jQuery('#det-alarma').show();
+    }
     jQuery("#btnpromobody").click();
     //alert(data.responseText);    
 }

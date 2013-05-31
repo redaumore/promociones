@@ -54,7 +54,7 @@ protected $_dbTable;
         }
         $row = $result->current();
         $province->setId($row->province_id)
-                  ->setName($row->Name);
+                  ->setName($row->name);
     }
  
     public function fetchAll()
@@ -64,7 +64,7 @@ protected $_dbTable;
         foreach ($resultSet as $row) {
             $entry = new PAP_Model_Branch();
             $entry->setId($row->province_id)
-                  ->setName($row->Name);
+                  ->setName($row->name);
             $entries[] = $entry;
         }
         return $entries;

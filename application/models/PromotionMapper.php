@@ -95,7 +95,7 @@ class PAP_Model_PromotionMapper
     
     public function getViewRecord($promotion_id){
         $adapter = Zend_Db_Table::getDefaultAdapter();
-        $statement = "SELECT DISTINCT b.name, b.street, b.number, b.logo, b.latitude, b.longitude, b.branch_website, b.branch_email, b.phone, c.name, p.*, i.path FROM promotion p ".
+        $statement = "SELECT DISTINCT b.name, b.street, b.number, b.logo, b.latitude, b.longitude, b.branch_website, b.branch_email, b.phone, c.name as city_name, p.*, i.path FROM promotion p ".
                      "INNER JOIN promotion_branch pb ON pb.promotion_id = p.promotion_id ".
                      "INNER JOIN branch b ON pb.branch_id = b.branch_id ".
                      "INNER JOIN city c ON b.city_id = c.city_id ".

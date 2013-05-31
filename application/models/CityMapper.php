@@ -78,6 +78,13 @@ protected $_dbTable;
         return $result;
     }
     
+    public function getPaymentMethods($city_id){
+        $adapter = Zend_Db_Table::getDefaultAdapter();
+        $statement = "SELECT payment_method_id FROM city_payment_method WHERE city_id = ". $city_id;
+        $results = $adapter->fetchAll($statement);
+        return $results;    
+    }
+    
     /*public function findForSelect(){
         $db = Zend_Db_Table::getDefaultAdapter();
         $email = $db->quote($param);

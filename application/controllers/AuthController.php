@@ -94,6 +94,7 @@ class AuthController extends Zend_Controller_Action
         $this->_helper->Session->setUserSession(null);
         $storage = new Zend_Auth_Storage_Session();
         $storage->clear();
+        Zend_Auth::getInstance()->clearIdentity();
         $this->_redirect('auth/login');
     }
 

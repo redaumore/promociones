@@ -8,6 +8,7 @@ class PAP_Model_City
     protected $_latitude;
     protected $_longitude;
     protected $_status;
+    protected $_payment_methods = array();
     
     public function __construct(array $options = null)
     {
@@ -20,7 +21,7 @@ class PAP_Model_City
     {
         $method = 'set' . $name;
         if (('mapper' == $name) || !method_exists($this, $method)) {
-            throw new Exception('Invalid promotion property');
+            throw new Exception('Invalid city property');
         }
         $this->$method($value);
     }
@@ -29,7 +30,7 @@ class PAP_Model_City
     {
         $method = 'get' . $name;
         if (('mapper' == $name) || !method_exists($this, $method)) {
-            throw new Exception('Invalid promotion property');
+            throw new Exception('Invalid city property');
         }
         return $this->$method();
     }
@@ -49,6 +50,15 @@ class PAP_Model_City
     public function loadById($id){
         $mapper = new PAP_Model_CityMapper();
         $mapper->find($id, $this);
+    }
+    
+    public function getPaymentMethods(){
+        $mapper = new PAP_Model_CityMapper();
+        $methods = $mapper->getPaymentMethods($this->getId());    
+        foreach($methods as $method){
+            $_this->_paymentMethods[] = $method;
+        }
+        return  $_this->_paymentMethods;
     }
     
      public function setId($text){
