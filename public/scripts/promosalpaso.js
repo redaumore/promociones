@@ -325,16 +325,6 @@ function gotoFavoritos(){
     showMessage('No tienes favoritos.', 'Info', 'Ok');        
 }
 
-function showMessage(message, title, button){
-	$.mobile.showPageLoadingMsg('a', message, true);
-	setTimeout( function() { $.mobile.hidePageLoadingMsg(); }, 3000 );
-    /*
-	if(navigator.notification == null)
-        alert(message);
-    else
-        navigator.notification.alert(message, null, title, button);
-    */        
-}
 // Function called when phonegap is ready
 function setFullScreen() {
     //All pages at least 100% of viewport height

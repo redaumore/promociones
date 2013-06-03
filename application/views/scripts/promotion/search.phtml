@@ -163,19 +163,27 @@ function loadPromotion(promotion_id){
 
 function FillPromotion(data){
     var promotion =jQuery.parseJSON(data.responseText);
+    if(promotion == null || promotion.length == 0 ){
+        showMessage("error", "No se ha podido cargar la promo. Intenta en otro momento.");
+    }
+    var time = new Date();
     promotion = promotion[0];
     jQuery('#det-name').text(promotion.name);
     jQuery('#det-direccion').text(promotion.street+' '+promotion.number+' - '+promotion.city_name);
-    jQuery('#det-img-comercio').attr("src", '../images'+promotion.logo.replace(/\\/g, '/'));
+    jQuery('#det-img-comercio').attr("src", '../images'+promotion.logo.replace(/\\/g, '/')+"?"+time.getTime());
     jQuery('#det-long_description').text(promotion.long_description);
     jQuery('#det-displayed_text').text(promotion.displayed_text);
-    jQuery('#det-img-promo').attr("src", '../images'+promotion.path.replace(/\\/g, '/'));
+    jQuery('#det-img-promo').attr("src", '../images'+promotion.path.replace(/\\/g, '/')+"?"+time.getTime());
     jQuery('#det-short_description').text(promotion.short_description);
     if(promotion.value_since)
         jQuery('#det-short_description').show
     else
         jQuery('#det-short_description').hide;
-    jQuery('#det-promo_value').text(promotion.promo_value);
+    jQuery('#det-promo_value').html(formatPrice(promotion.promo_value));
+    if(promotion.value_since == "1")
+        jQuery('#precio_desde').html("desde");
+    else
+        jQuery('#precio_desde').html("&nbsp;");
     if(promotion.alert_type == 'N')
         jQuery('#det-alarma').hide();
     if(promotion.alert_type == 'D'){

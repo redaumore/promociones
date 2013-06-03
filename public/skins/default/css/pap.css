@@ -4,13 +4,13 @@
     text-align: center;
     vertical-align: middle;
     white-space:pre-wrap;
-    font-size: 1.7em;
-    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 1.5em;
+    font-family: Arial, Geneva, sans-serif;
     padding: 5px;
 }
 
 .det-direccion{
-    color: #2e3236;
+    color: #5B5B5B;
     font-weight: bolder;    
 }
 
@@ -18,7 +18,7 @@
     font-size: 1em;
     color: #2e3236;
     white-space:pre-wrap;
-    font-family: Tahoma, Geneva, sans-serif;
+    font-family: Arial, Geneva, sans-serif;
     /*border:2px solid;
     border-radius:4px;*/
     padding: 0.5em;
@@ -27,7 +27,7 @@
 
 .det-displayed_text{
     background-color: #E6E6E6; 
-    color:#2e3236;
+    color:#939192;
     padding: 0.3em;
     font-weight: bolder;
     text-align: center;
@@ -53,6 +53,15 @@
 .precio:before{
     content: "$";
     font-size: 0.7em; 
+}
+
+.desde-det{
+    font-size: 0.7em;
+    font-weight: bold;
+    color: #FF6A15;
+    font-family: Arial, Helvetica, sans-serif;
+    vertical-align: middle;
+    text-align: center;
 }
 /*
 html{ font-size: 125%; }
@@ -107,14 +116,7 @@ body{ font-size: .5em; }
     width: 40px;
     position: absolute;
 }
-.desde-det{
-    font-size: 1.5em;
-    font-weight: bold;
-    color: #FF6A15;
-    font-family: Arial, Helvetica, sans-serif;
-    vertical-align: middle;
-    text-align: center;
-}
+
 .distancia{
     font-size: 0.9em;
     text-align: center;

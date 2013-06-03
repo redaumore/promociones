@@ -381,6 +381,10 @@ function checkoutReturn(json){
   }
 }
 
+function getDaysTo(fecha){
+    return 29;
+}
+
 
 
 

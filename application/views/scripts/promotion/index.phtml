@@ -61,8 +61,8 @@
             var ids = jQuery("#list2").jqGrid('getDataIDs');
             for(var i=0;i < ids.length;i++){
                 var cl = ids[i];
-                be = "<a href='/promotion/edit/id/"+cl+"'><span class='ui-icon ui-icon-pencil'></span></a>"; 
-                se = "<a href='/promotion/delete/id/"+cl+"'><span class='ui-icon ui-icon-trash'></span></a>"; 
+                be = "<div style='float:left;'><a href='/promotion/edit/id/"+cl+"'><span class='ui-icon ui-icon-pencil'></span></a></div>"; 
+                se = "<div style='float:left;'><a href='/promotion/delete/id/"+cl+"'><span class='ui-icon ui-icon-trash'></span></a></div>"; 
                 jQuery("#list2").jqGrid('setRowData',ids[i],{act:be+se});
             }    
     },

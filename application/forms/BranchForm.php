@@ -25,7 +25,8 @@
                 
         $this->addElement('text', 'name', array(
             'label'      => 'Nombre',
-            'size' => 40,
+            'size' => 50,
+            'maxlength' => 50,
             'required'   => true,
             'filters'    => array('StringTrim'),
         ));
