@@ -165,6 +165,7 @@ function FillPromotion(data){
     var promotion =jQuery.parseJSON(data.responseText);
     if(promotion == null || promotion.length == 0 ){
         showMessage("error", "No se ha podido cargar la promo. Intenta en otro momento.");
+        return;
     }
     var time = new Date();
     promotion = promotion[0];
@@ -173,7 +174,10 @@ function FillPromotion(data){
     jQuery('#det-img-comercio').attr("src", '../images'+promotion.logo.replace(/\\/g, '/')+"?"+time.getTime());
     jQuery('#det-long_description').text(promotion.long_description);
     jQuery('#det-displayed_text').text(promotion.displayed_text);
-    jQuery('#det-img-promo').attr("src", '../images'+promotion.path.replace(/\\/g, '/')+"?"+time.getTime());
+    if(promotion.path != null)
+        jQuery('#det-img-promo').attr("src", '../images'+promotion.path.replace(/\\/g, '/')+"?"+time.getTime());
+    else
+        jQuery('#det-img-promo').attr("src", '../images'+promotion.logo.replace(/\\/g, '/')+"?"+time.getTime());
     jQuery('#det-short_description').text(promotion.short_description);
     if(promotion.value_since)
         jQuery('#det-short_description').show
@@ -191,9 +195,9 @@ function FillPromotion(data){
         jQuery('#det-alarm_type').text('días');
         jQuery('#det-alarma').show();
     }
-    if(promotion.alert_type == 'U'){
+    if(promotion.alert_type == 'Q'){
         jQuery('#det-alarm_num').text(promotion.quantity);
-        jQuery('#det-alarm_type').text('unidades');
+        jQuery('#det-alarm_type').text('unids.');
         jQuery('#det-alarma').show();
     }
     jQuery("#btnpromobody").click();

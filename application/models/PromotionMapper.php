@@ -99,7 +99,7 @@ class PAP_Model_PromotionMapper
                      "INNER JOIN promotion_branch pb ON pb.promotion_id = p.promotion_id ".
                      "INNER JOIN branch b ON pb.branch_id = b.branch_id ".
                      "INNER JOIN city c ON b.city_id = c.city_id ".
-                     "INNER JOIN image i ON (p.promotion_id = i.parent_id AND i.parent_type = 'P') ".
+                     "LEFT JOIN image i ON (p.promotion_id = i.parent_id AND i.parent_type = 'P') ".
                      "WHERE p.promotion_id = ".$promotion_id. " ";
                      
         $results = $adapter->fetchAll($statement);
@@ -261,22 +261,27 @@ class PAP_Model_PromotionMapper
     }
     
     public function loadImages(PAP_Model_Promotion $promo)
-    {
+    {   $images = $this->getImages($promo);
+        if(!isset($images))
+            return false;
+        $promo->setImages($images);
+        return true;
+    }
+    
+    public function getImages(PAP_Model_Promotion $promo){
         $imageTable = new PAP_Model_DbTable_Image();
         $images = array();
         $select = $imageTable->select();
         $select->where('parent_id = ?', $promo->getId())
                 ->where('parent_type = ?', 'P');
-               
         $result = $imageTable->fetchAll($select);
         if(count($result)==0)
-            return false;
+            return null;
         $i=0;
         foreach ($result as $r) {
             $images[] = new PAP_Model_Image($r->path);
         }
-        $promo->setImages($images);
-        return true;
+        return $images;
     }
     
     private function getFormatedStringDate($date)

@@ -50,7 +50,7 @@ class PAP_Form_PromotionForm extends Zend_Form
         
         $control = new Zend_Form_Element_TextArea('longDescription');
         $control->setLabel('Desc. larga ')
-            ->setOptions(array('rows' => '6','cols' => '50'))
+            ->setOptions(array('rows' => '6','cols' => '45'))
             ->setRequired(true)
             ->addFilter('StripTags')
             ->addFilter('StringTrim')
@@ -231,6 +231,14 @@ class PAP_Form_PromotionForm extends Zend_Form
             'label'      => 'Guardar',
         ));
         $control = $this->getElement("save");
+        $control->setDecorators($decoratorsButton);
+        $control->setAttrib('class', 'btn');
+        
+        $this->addElement('submit', 'clone', array(
+            'ignore'   => true,
+            'label'      => 'Clonar',
+        ));
+        $control = $this->getElement("clone");
         $control->setDecorators($decoratorsButton);
         $control->setAttrib('class', 'btn');
     }

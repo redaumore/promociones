@@ -19,6 +19,7 @@
             'label'      => 'Email',
             'required'   => true,
             'filters'    => array('StringTrim'),
+            'size' => 50,
             'maxlength' => 50,
             'validators' => array(
                 'EmailAddress', 
@@ -31,12 +32,14 @@
             'label'      => 'Nombre del Comercio',
             'required'   => true,
             'filters'    => array('StringTrim'),
+            'size' => 50,
             'maxlength' => 50,
+            'filters'    => array('StringTrim', 'StripTags'),
         ));
         $this->name->setDecorators($decorators);
         
-        $validator = new Zend_Validate_Alnum(array('allowWhiteSpace' => true));
-        $this->getElement('name')->addValidator($validator, true);
+        //$validator = new Zend_Validate_Alnum(array('allowWhiteSpace' => true));
+        //$this->getElement('name')->addValidator($validator, true);
         
         // Nombre del comercio
         $this->addElement('text', 'cuit', array(

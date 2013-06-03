@@ -187,7 +187,10 @@ label[for=branches]{
         <div class="span2 text-left">
             <h3>$<span id="totalPromoCost"></span></h3>
         </div>
-        <div class="span6 pagination-right">
+        <div class="span4 pagination-right">
+            <?php echo $form->clone->renderViewHelper(); ?>
+        </div>
+        <div class="span2 pagination-right">
             <?php echo $form->save->renderViewHelper(); ?>
         </div>
     </div>
@@ -231,9 +234,11 @@ label[for=branches]{
          showPromoTotalCost();
       }
    });
-   if($("#starts").val() == "")
-        $("#ends").datepicker( "setDate", new Date() );
-   
+   if(jQuery("#starts").val() == "")
+        jQuery("#ends").datepicker( "setDate", new Date() );
+   /*if(jQuery("#starts").datepicker("getDate") < Date.now())
+        jQuery("#starts").datepicker("disable"); 
+   */
    showPromoTotalCost(); 
 })
   

@@ -381,8 +381,15 @@ function checkoutReturn(json){
   }
 }
 
-function getDaysTo(fecha){
-    return 29;
+function getDaysTo(promo_ends_date){
+    var _MS_PER_DAY = 1000 * 60 * 60 * 24;
+    today = new Date();
+    utc1 = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    promo_ends_date = promo_ends_date.split(" ");
+    from = promo_ends_date[0].split("-"); 
+    utc2 = new Date(from[0], from[1] - 1, from[2]);
+    _return = Math.floor((utc2 - utc1) / _MS_PER_DAY);
+    return _return;
 }
 
 

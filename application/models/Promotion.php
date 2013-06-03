@@ -73,6 +73,15 @@ class PAP_Model_Promotion
         $this->insert($options);
     }
     
+    public function cloneMe(array $options){
+        unset($options['promoId']);
+        $options['starts'] = date("d-m-Y");
+        $options['ends'] = date("d-m-Y");
+        $options['promoCode'] = $this->getAutoPromoCode($options['userId']);
+        $this->insert($options);
+        $this->cloneImages();    
+    }
+    
     public function saveImages($images){
         $promoMapper = new PAP_Model_PromotionMapper();
         $promoMapper->setImages($this, $images);
@@ -214,6 +223,7 @@ class PAP_Model_Promotion
     public function getState(){
         return $this->_state;
     }
+    
     public function setPromoCost($text){
         $this->_promoCost = (string) $text;
         return $this;
@@ -352,7 +362,7 @@ class PAP_Model_Promotion
         $city = new PAP_Model_City();
         $cityMapper = new PAP_Model_CityMapper();
         $cityMapper->find($city_id, $city);
-        
+        //TODO 2: verificar que la localidad seleccionada y las coordenadas sean congruenets.
         $promotions = $this->getPromotionsByCoords($city->getLatitude(), $city->getLongitude(), $categories);
         
         return $promotions;
@@ -415,6 +425,33 @@ class PAP_Model_Promotion
         if(count($branches) != 0)
             $image = $branches[0]->getLogo();
         return $image;
+    }
+    
+    private function cloneImages(){
+        $promoMapper = new PAP_Model_PromotionMapper();
+        $images = $promoMapper->getImages($this);    
+        if (isset($images)){
+            for($i = 0; $i < $images.lenght; $i=$i+1){
+                $img = $images[$i];
+                $pathimg = $img.explode("/");
+                $pathimg[2] = $this->getUserId();
+                $pathimg[3] = $this->getId();
+                $images[$i] = implode("/", $pathimg);
+                copy($img, $images[$i]);
+            }    
+        }
+        else{
+            $images = array();
+            $branches = $promoMapper->getBranches($this->getId());
+            $images[] = new PAP_Model_Image($branches[0]->getLogo());
+        }    
+        $this->setImages($images);
+    }
+    
+    private function getAutoPromoCode($user_id){
+        $f = getDate();
+        $auto = 'C'.$user_id.'-'.$f['yday'].$f['hours'].$f['minutes'].$f['seconds'];
+        return $auto;
     }
     
 }

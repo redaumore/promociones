@@ -58,11 +58,16 @@
                 $data = $form->getValues();
                 $data['userId'] = $user->getId();
                 $data['branches'] = $_POST['branches'];
-                $newPromotion = new PAP_Model_Promotion();
-                $newPromotion->update($data);
-                $this->saveImages($data, $newPromotion);
-                //$this->loadForm($newPromotion, 'update');
-                $this->_redirect('promotion/index');
+                if ($form->save->isChecked()){
+                    $newPromotion = new PAP_Model_Promotion();
+                    $newPromotion->update($data);
+                    $this->saveImages($data, $newPromotion);
+                }
+                if($form->clone->isChecked()){
+                    $clonedPromotion = new PAP_Model_Promotion();
+                    $clonedPromoId = $clonedPromotion->cloneMe($data);
+                }
+                 $this->_redirect('promotion/index');
             }                
         }
         else{
@@ -230,6 +235,8 @@
         
         $control = $form->getElement('starts');
         $control->setValue($promo->getStarts());
+        /*if(strtotime($promo->getStarts()) <= time())  se pasa esta validación al cliente porque se usa un control.
+            $control->setAttrib('readonly', true);*/
         
         $control = $form->getElement('ends');
         $control->setValue($promo->getEnds());
