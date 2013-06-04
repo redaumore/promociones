@@ -116,7 +116,7 @@ class AuthController extends Zend_Controller_Action
     {
         $request = $this->getRequest();
         $param = $request->getParam("key");
-        $email = $this->convert($param, $this->_key);
+        $email = $this->decrypt($param);
         if(isset($email)){
             $user = new PAP_Model_User();
             $user->loadByEmail($email);
@@ -189,7 +189,7 @@ class AuthController extends Zend_Controller_Action
             <p>
                 Debes activar tu cuenta de Promos al paso para seguir cargando tus datos de Comercio y Promociones<br/>
                 Para activarla solo tienes que hacer click en el siguiente link: 
-                <a href='http://".$_SERVER['SERVER_NAME']."/auth/activate/key/".$this->convert($email, $this->_key)."'>Promos al Paso</a>
+                <a href='http://".$_SERVER['SERVER_NAME']."/auth/activate/key/".$this->encrypt($email)."'>Promos al Paso</a>
             </p>
             <p>
                 Una vez que hayas activado tu cuenta, debes dar de alta los restantes datos de tu Comercio, por ejemplo dirección, teléfono, logo, etc.
@@ -232,6 +232,16 @@ class AuthController extends Zend_Controller_Action
             $j=$j==$kl?0:$j;
         } 
         return $str; 
+    }
+    
+    private function encrypt($str){
+        $clave = base64_encode(urlencode($str));
+        return $clave;
+    }
+    
+    private function decrypt($str){
+        $clave = urldecode(base64_decode($str));
+        return $clave;
     } 
 }
 

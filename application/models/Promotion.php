@@ -74,12 +74,13 @@ class PAP_Model_Promotion
     }
     
     public function cloneMe(array $options){
+        $cloned_promo_id = $options['promoId'];
         unset($options['promoId']);
         $options['starts'] = date("d-m-Y");
         $options['ends'] = date("d-m-Y");
         $options['promoCode'] = $this->getAutoPromoCode($options['userId']);
         $this->insert($options);
-        $this->cloneImages();    
+        $this->cloneImages($cloned_promo_id);    
     }
     
     public function saveImages($images){
@@ -427,25 +428,30 @@ class PAP_Model_Promotion
         return $image;
     }
     
-    private function cloneImages(){
+    private function cloneImages($promo_id){
         $promoMapper = new PAP_Model_PromotionMapper();
-        $images = $promoMapper->getImages($this);    
-        if (isset($images)){
-            for($i = 0; $i < $images.lenght; $i=$i+1){
-                $img = $images[$i];
-                $pathimg = $img.explode("/");
+        $imagesObj = $promoMapper->getImagesByPromoId($promo_id);
+        $images = array();    
+        if (isset($imagesObj)){
+            for($i = 0; $i < count($imagesObj); $i=$i+1){
+                $img = $imagesObj[$i];
+                $pathimg = explode("/", $img->getPath());
                 $pathimg[2] = $this->getUserId();
                 $pathimg[3] = $this->getId();
-                $images[$i] = implode("/", $pathimg);
-                copy($img, $images[$i]);
+                $images[] = implode("/", $pathimg);
+                $directory = IMAGE_PATH.'\\'.'customers\\'.$pathimg[2].'\\'.$pathimg[3]; 
+                if (!file_exists($directory))
+                    mkdir($directory);
+                copy(IMAGE_PATH.$img->getPath(), IMAGE_PATH.$images[$i]);
             }    
         }
         else{
             $images = array();
             $branches = $promoMapper->getBranches($this->getId());
-            $images[] = new PAP_Model_Image($branches[0]->getLogo());
+            if(isset($branches))
+                $images[] = $branches[0]->getLogo();
         }    
-        $this->setImages($images);
+        $this->saveImages($images);
     }
     
     private function getAutoPromoCode($user_id){

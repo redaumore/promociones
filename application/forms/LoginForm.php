@@ -18,6 +18,8 @@
         $this->addElement('text', 'email', array(
             'label'      => 'Usuario (email)',
             'required'   => true,
+            'size' => 30,
+            'maxlength' => 50,
             'filters'    => array('StringTrim'),
             'validators' => array(
                 'EmailAddress',
@@ -29,6 +31,8 @@
         $this->addElement('password', 'password', array(
             'label'      => 'Contraseña',
             'required'   => true,
+            'size' => 30,
+            'maxlength' => 50,
             'filters'    => array('StringTrim', 'StringToUpper'),
             'validators' => array(
                 'alnum',

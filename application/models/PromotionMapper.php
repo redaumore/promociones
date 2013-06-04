@@ -269,10 +269,14 @@ class PAP_Model_PromotionMapper
     }
     
     public function getImages(PAP_Model_Promotion $promo){
+        return $this->getImagesByPromoId($promo->getId());    
+    }
+    
+    public function getImagesByPromoId($id){
         $imageTable = new PAP_Model_DbTable_Image();
         $images = array();
         $select = $imageTable->select();
-        $select->where('parent_id = ?', $promo->getId())
+        $select->where('parent_id = ?', $id)
                 ->where('parent_type = ?', 'P');
         $result = $imageTable->fetchAll($select);
         if(count($result)==0)
@@ -281,7 +285,7 @@ class PAP_Model_PromotionMapper
         foreach ($result as $r) {
             $images[] = new PAP_Model_Image($r->path);
         }
-        return $images;
+        return $images;    
     }
     
     private function getFormatedStringDate($date)
