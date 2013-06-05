@@ -188,6 +188,7 @@ label[for=branches]{
             <h3>$<span id="totalPromoCost"></span></h3>
         </div>
         <div class="span6 pagination-right">
+            <button id="preview" type="button" class="btn" onclick="showPreview();">Previsualizar</button>
             <?php echo $form->clone->renderViewHelper(); ?>&nbsp;
             <?php echo $form->save->renderViewHelper(); ?>
         </div>
@@ -197,6 +198,7 @@ label[for=branches]{
         echo $form->filePromo;
         echo $form->promoId;
         echo $form->userId;
+        echo $form->userInfo;
         echo $form->branches;
     ?>
 </form>
@@ -234,11 +236,17 @@ label[for=branches]{
    });
    if(jQuery("#starts").val() == "")
         jQuery("#ends").datepicker( "setDate", new Date() );
-   /*if(jQuery("#starts").datepicker("getDate") < Date.now())
+   if(jQuery("#starts").datepicker("getDate") < Date.now())
         jQuery("#starts").datepicker("disable"); 
-   */
+   
    showPromoTotalCost(); 
 })
-  
+ 
+ function showPreview(){
+     var data;
+     data = collectPromotionFormData();
+     FillPromotion(data);
+ } 
 
  </script>
+<?php echo $this->partial("promotion/_promobody.phtml"); ?>

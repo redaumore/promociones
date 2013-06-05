@@ -367,20 +367,6 @@ function DisplayEmptyText( display)
     }
 }
 
-function checkoutReturn(json){
-    if (json.collection_status=='approved'){
-    alert ('Payment credited');
-  } else if(json.collection_status=='pending'){
-    alert ('The user has not completed the payment');
-  } else if(json.collection_status=='in_process'){    
-    alert ('Payment is being reviewed');    
-  } else if(json.collection_status=='rejected'){
-    alert ('Payment was rejected, the user can retry payment');
-  } else if(json.collection_status==null){
-    alert ('The user has not completed the payment process and no payment has been generated');
-  }
-}
-
 function getDaysTo(promo_ends_date){
     var _MS_PER_DAY = 1000 * 60 * 60 * 24;
     today = new Date();
@@ -392,6 +378,82 @@ function getDaysTo(promo_ends_date){
     return _return;
 }
 
+function callFillPromotion(data){
+    var promotion =jQuery.parseJSON(data.responseText);
+    FillPromotion(promotion);    
+}
+
+function FillPromotion(data){
+    
+    if(promotion == null || promotion.length == 0 ){
+        showMessage("error", "No se ha podido cargar la promo. Intenta en otro momento.");
+        return;
+    }
+    var time = new Date();
+    promotion = promotion[0];
+    jQuery('#det-name').text(promotion.name);
+    jQuery('#det-direccion').text(promotion.street+' '+promotion.number+' - '+promotion.city_name);
+    jQuery('#det-img-comercio').attr("src", '../images'+promotion.logo.replace(/\\/g, '/')+"?"+time.getTime());
+    jQuery('#det-long_description').text(promotion.long_description);
+    jQuery('#det-displayed_text').text(promotion.displayed_text);
+    if(promotion.path != null)
+        jQuery('#det-img-promo').attr("src", '../images'+promotion.path.replace(/\\/g, '/')+"?"+time.getTime());
+    else
+        jQuery('#det-img-promo').attr("src", '../images'+promotion.logo.replace(/\\/g, '/')+"?"+time.getTime());
+    jQuery('#det-short_description').text(promotion.short_description);
+    if(promotion.value_since)
+        jQuery('#det-short_description').show
+    else
+        jQuery('#det-short_description').hide;
+    jQuery('#det-promo_value').html(formatPrice(promotion.promo_value));
+    if(promotion.value_since == "1")
+        jQuery('#precio_desde').html("desde");
+    else
+        jQuery('#precio_desde').html("&nbsp;");
+    if(promotion.alert_type == 'N')
+        jQuery('#det-alarma').hide();
+    if(promotion.alert_type == 'D'){
+        jQuery('#det-alarm_num').text(getDaysTo(promotion.ends));
+        jQuery('#det-alarm_type').text('días');
+        jQuery('#det-alarma').show();
+    }
+    if(promotion.alert_type == 'Q'){
+        jQuery('#det-alarm_num').text(promotion.quantity);
+        jQuery('#det-alarm_type').text('unids.');
+        jQuery('#det-alarma').show();
+    }
+    jQuery("#hidden_latitude").val(promotion.latitude);
+    jQuery("#hidden_longitude").val(promotion.longitude);
+    jQuery("#").click();
+    //alert(data.responseText);    
+}
+
+function showPromoPreview(){
+  //TODO 3: Hacer preview.      
+}
+
+function collectPromotionFormData(){
+    var data = {"promotion":[
+    {
+        "name": jQuery("#name").val(),    
+        "street": jQuery("#street").val(),
+        "number": jQuery("#number").val(),
+        "city_name": jQuery("#city :selected").text(),
+        "logo": "",
+        "long_description": jQuery("#longDescription").val(),
+        "displayed_text": jQuery("#displayedText").val(),
+        "path": "imagen por defecto",
+        "short_description": jQuery("#shortDescription").val(),
+        "promo_value": jQuery("#promoValue").val(),
+        "value_since": jQuery("#valueSince").val(),
+        "alert_type": jQuery("#alertType").val(),
+        "latitude": jQuery("#hidden_latitude").val(),    
+        "longitude": jQuery("#hidden_longitude").val(),
+        "quantity": jQuery("#quantity").val(),                                            
+    }
+    ]};
+    return data;
+}
 
 
 

@@ -79,6 +79,8 @@ class PAP_Form_SearchForm extends Zend_Form
                 ->addMultiOption(3100, 'Regalos')    
                 ->addMultiOption(3200, 'Servicios Varios')    
                 ->addMultiOption(3300, 'Telefonía');
+        
+        $this->category->setAttrib("height", "100px");
                 
         $this->addElement('button', 'search', array(
             'ignore'   => true,

@@ -214,7 +214,7 @@
         echo $this->_helper->json($response);        
     }
     
-    private function loadForm(PAP_Model_Promotion $promo, $formName = null)
+    private function loadForm(PAP_Model_Promotion $promo)
     {
         $form = $this->view->form;
         
@@ -274,6 +274,23 @@
             $control->setOptions(array('src' => '/images'.$img->getPath()."?".time()));
         else
             $control->setOptions(array('src' => '/images'.$this->user->getBranch()->getLogo()));
+            
+        $this->loadJsonUserInfo();
+    }
+    
+    private function loadJsonUserInfo(){
+        $user = $this->_helper->Session->getUserSession();
+        $mainbranch = $user->getBranch();
+        $address = $mainbranch->getAddress();
+        $userInfo = array("user_name"=>utf8_encode($user->getName()),
+                    "user_email"=>utf8_encode($user->getEmail()),
+                    "branch_street"=>utf8_encode($address->getStreet()),
+                    "branch_number"=>$address->getNumber(),
+                    "branch_local"=>utf8_encode($address->getOthers()),
+                    "branch_city_name"=>utf8_encode($address->getCity()->getName()),
+                    "branch_city_id"=>$address->getCity()->getId(),
+                    );
+        $this->form->userInfo = json_encode($userInfo);    
     }
     
     private function saveImages($data, $promo)

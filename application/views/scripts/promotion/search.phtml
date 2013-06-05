@@ -3,6 +3,11 @@
     $this->form->setAction($this->url());
     $form = $this->form;
 ?>
+<style type="text/css">
+    select[multiple], select[size] {
+        height: 310px;
+    }
+</style>
 <script type="text/javascript" src="/scripts/prototype.js"></script>
 <script type="text/javascript" src='/scripts/grid.locale-es.js'></script>
 <script type="text/javascript" src='/scripts/jquery.jqGrid.min.js'></script>
@@ -61,12 +66,16 @@ function FillFormProvinces(data)
         </div>
         <hr class="hr-subtitle"/>
         <?php echo $this->errorMessage($this->form, $messages); ?>
-        <?php echo $this->partial("index/_alert.phtml"); ?>
     </div>
         <div class="row-fluid">
             <div class="span3 well">
-                <div class="row-fluid pagination-left">
-                    <span>Filtros</span>
+                <div class="row-fluid">
+                    <div class="span7">
+                        <span>Filtros</span>
+                    </div>
+                    <div class="span5 pagination-right">
+                        <?php echo $form->search->renderViewHelper(); ?>
+                    </div>
                 </div>
                 <div class="row-fluid pagination-left">
                     <div class="control-group">
@@ -87,12 +96,10 @@ function FillFormProvinces(data)
                             <?php echo $form->category->renderViewHelper(); ?>
                         </div>
                     </div>
-                    <div class="row-fluid">
-                        <?php echo $form->search->renderViewHelper(); ?> 
-                    </div>
                 </div>
             </div>
             <div class="span9 pagination-centered">
+                <?php echo $this->partial("index/_alert.phtml"); ?>
                 <table id="list2"></table>
                 <div id="pager2"></div>    
             </div>
@@ -135,16 +142,22 @@ function getPromotions(){
              sortorder: "desc",
              height: "287px",
              mtype:"POST",
-             caption:"Promociones",
+             caption:"Promociones encontradas",
              gridComplete: function(){
-             var ids = jQuery("#list2").jqGrid('getDataIDs');
-             for(var i=0;i < ids.length;i++){
-                 var cl = ids[i];
-                 var row = jQuery("#list2").jqGrid('getRowData',cl); 
-                 be = "<img src='/"+row["img"]+"' height='50px' width='50px' onClick='loadPromotion("+cl+")'/>"; //"<a href='/promotion/edit/id/"+cl+"'><span class='ui-icon ui-icon-pencil'></span></a>"; 
-                 jQuery("#list2").jqGrid('setRowData',ids[i],{img:be});
+                 var ids = jQuery("#list2").jqGrid('getDataIDs');
+                 if(ids.length == 0 ){
+                     showMessage("info", "No se encontraron promos para los filtros de búsqueda seleccionados.");
+                     jQuery("#gbox_list2").hide();
+                     return;
+                 }
+                 for(var i=0;i < ids.length;i++){
+                     var cl = ids[i];
+                     var row = jQuery("#list2").jqGrid('getRowData',cl); 
+                     be = "<img src='/"+row["img"]+"' height='50px' width='50px' onClick='loadPromotion("+cl+")'/>"; //"<a href='/promotion/edit/id/"+cl+"'><span class='ui-icon ui-icon-pencil'></span></a>"; 
+                     jQuery("#list2").jqGrid('setRowData',ids[i],{img:be});
+                 }
+                 jQuery("#gbox_list2").show();
              }
-         }
         })
      //jQuery("#list2").trigger('reloadGrid');
      //jQuery("#list2").jqGrid('GridNav','#pager2',{edit:false,add:false,del:false});
@@ -161,51 +174,10 @@ function loadPromotion(promotion_id){
         });    
 }
 
-function FillPromotion(data){
-    var promotion =jQuery.parseJSON(data.responseText);
-    if(promotion == null || promotion.length == 0 ){
-        showMessage("error", "No se ha podido cargar la promo. Intenta en otro momento.");
-        return;
-    }
-    var time = new Date();
-    promotion = promotion[0];
-    jQuery('#det-name').text(promotion.name);
-    jQuery('#det-direccion').text(promotion.street+' '+promotion.number+' - '+promotion.city_name);
-    jQuery('#det-img-comercio').attr("src", '../images'+promotion.logo.replace(/\\/g, '/')+"?"+time.getTime());
-    jQuery('#det-long_description').text(promotion.long_description);
-    jQuery('#det-displayed_text').text(promotion.displayed_text);
-    if(promotion.path != null)
-        jQuery('#det-img-promo').attr("src", '../images'+promotion.path.replace(/\\/g, '/')+"?"+time.getTime());
-    else
-        jQuery('#det-img-promo').attr("src", '../images'+promotion.logo.replace(/\\/g, '/')+"?"+time.getTime());
-    jQuery('#det-short_description').text(promotion.short_description);
-    if(promotion.value_since)
-        jQuery('#det-short_description').show
-    else
-        jQuery('#det-short_description').hide;
-    jQuery('#det-promo_value').html(formatPrice(promotion.promo_value));
-    if(promotion.value_since == "1")
-        jQuery('#precio_desde').html("desde");
-    else
-        jQuery('#precio_desde').html("&nbsp;");
-    if(promotion.alert_type == 'N')
-        jQuery('#det-alarma').hide();
-    if(promotion.alert_type == 'D'){
-        jQuery('#det-alarm_num').text(getDaysTo(promotion.ends));
-        jQuery('#det-alarm_type').text('días');
-        jQuery('#det-alarma').show();
-    }
-    if(promotion.alert_type == 'Q'){
-        jQuery('#det-alarm_num').text(promotion.quantity);
-        jQuery('#det-alarm_type').text('unids.');
-        jQuery('#det-alarma').show();
-    }
-    jQuery("#btnpromobody").click();
-    //alert(data.responseText);    
-}
-
 jQuery(document).ready(function(){
     loadProvinces();
 })
+
+
 </script>
 <?php echo $this->partial("promotion/_promobody.phtml"); ?>
