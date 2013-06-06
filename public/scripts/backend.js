@@ -383,7 +383,7 @@ function callFillPromotion(data){
     FillPromotion(promotion);    
 }
 
-function FillPromotion(data){
+function FillPromotion(promotion){
     
     if(promotion == null || promotion.length == 0 ){
         showMessage("error", "No se ha podido cargar la promo. Intenta en otro momento.");
@@ -424,7 +424,7 @@ function FillPromotion(data){
     }
     jQuery("#hidden_latitude").val(promotion.latitude);
     jQuery("#hidden_longitude").val(promotion.longitude);
-    jQuery("#").click();
+    jQuery("#btnpromobody").click();
     //alert(data.responseText);    
 }
 

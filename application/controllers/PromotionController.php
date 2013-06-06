@@ -290,7 +290,7 @@
                     "branch_city_name"=>utf8_encode($address->getCity()->getName()),
                     "branch_city_id"=>$address->getCity()->getId(),
                     );
-        $this->form->userInfo = json_encode($userInfo);    
+        $this->view->form->userInfo->setValue(json_encode($userInfo));    
     }
     
     private function saveImages($data, $promo)
