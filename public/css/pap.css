@@ -144,6 +144,8 @@ div[data-role="header"]{
     -webkit-overflow-scrolling: touch;
 }
 
+ul[id="promolist"] > li:nth-child(odd) { background-color:#eee; }
+ul[id="promolist"] > li:nth-child(even) { background-color:#fff; }
 
 
 

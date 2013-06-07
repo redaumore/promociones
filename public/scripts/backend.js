@@ -390,7 +390,8 @@ function FillPromotion(promotion){
         return;
     }
     var time = new Date();
-    promotion = promotion[0];
+    /*if(promotion.length == 1)
+        promotion = promotion[0];  */
     jQuery('#det-name').text(promotion.name);
     jQuery('#det-direccion').text(promotion.street+' '+promotion.number+' - '+promotion.city_name);
     jQuery('#det-img-comercio').attr("src", '../images'+promotion.logo.replace(/\\/g, '/')+"?"+time.getTime());
@@ -433,16 +434,17 @@ function showPromoPreview(){
 }
 
 function collectPromotionFormData(){
+    var userInfo =jQuery.parseJSON(jQuery("#userInfo").val());
     var data = {"promotion":[
     {
-        "name": jQuery("#name").val(),    
-        "street": jQuery("#street").val(),
-        "number": jQuery("#number").val(),
-        "city_name": jQuery("#city :selected").text(),
-        "logo": "",
+        "name": userInfo.user_name,    
+        "street": userInfo.branch_street,
+        "number": userInfo.branch_number,
+        "city_name": userInfo.branch_city_name,
+        "logo": userInfo.branch_logo,
         "long_description": jQuery("#longDescription").val(),
         "displayed_text": jQuery("#displayedText").val(),
-        "path": "imagen por defecto",
+        "path": userInfo.promo_image,
         "short_description": jQuery("#shortDescription").val(),
         "promo_value": jQuery("#promoValue").val(),
         "value_since": jQuery("#valueSince").val(),

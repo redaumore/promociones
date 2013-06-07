@@ -275,10 +275,10 @@
         else
             $control->setOptions(array('src' => '/images'.$this->user->getBranch()->getLogo()));
             
-        $this->loadJsonUserInfo();
+        $this->loadJsonUserInfo($promo);
     }
     
-    private function loadJsonUserInfo(){
+    private function loadJsonUserInfo($promo){
         $user = $this->_helper->Session->getUserSession();
         $mainbranch = $user->getBranch();
         $address = $mainbranch->getAddress();
@@ -289,6 +289,8 @@
                     "branch_local"=>utf8_encode($address->getOthers()),
                     "branch_city_name"=>utf8_encode($address->getCity()->getName()),
                     "branch_city_id"=>$address->getCity()->getId(),
+                    "branch_logo"=>$mainbranch->getLogo(),
+                    "promo_image"=>$mainbranch->getLogo(),
                     );
         $this->view->form->userInfo->setValue(json_encode($userInfo));    
     }
