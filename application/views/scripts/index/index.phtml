@@ -1,3 +1,4 @@
+<script type="text/javascript" src="./scripts/jquery.jcarousel.min.js"></script>
 <div class="row">
     <div class="span6 offset3" id="titulo" align="center">
             <h1>¿Qué es promos al paso?</h1>
@@ -16,5 +17,89 @@
     <div class="span4 offset4" align="center">
         <a class="btn" href="<?php echo 'auth/signup'; ?>">Registrarme como Anunciante</a>
     </div>
+</div>
+<div class="row pagination-centered">
+    <div class="span10 offset1">
+        <div id="mycarousel" class="jcarousel-skin-ie7">
+            <ul>
+              <!-- The content will be dynamically loaded in here -->
+            </ul>
+        </div>
+    </div>
     
 </div>
+<script type="text/javascript">
+    function mycarousel_itemLoadCallback(carousel, state)
+    {
+        // Check if the requested items already exist
+        if (carousel.has(carousel.first, carousel.last)) {
+            return;
+        }
+        
+         $.ajax({
+            url: _baseAjaxUri + 'getfeatured',
+            dataType: 'jsonp',
+            data: {first: carousel.first,
+                   last: carousel.last},
+            jsonp: 'jsoncallback',
+            contentType: "application/json; charset=utf-8",
+            timeout: 10000,
+            beforeSend: function (jqXHR, settings) {
+                console.log(settings.url);
+            },
+            success: function(data, status){
+                 mycarousel_itemAddCallback(carousel, carousel.first, carousel.last, data);    
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                alert(textStatus);
+            }
+         });
+        /*
+        jQuery.get(
+            'dynamic_ajax_php.php',
+            {
+                first: carousel.first,
+                last: carousel.last
+            },
+            function(xml) {
+                mycarousel_itemAddCallback(carousel, carousel.first, carousel.last, xml);
+            },
+            'json'
+        );*/
+    };
+
+    function mycarousel_itemAddCallback(carousel, first, last, data)
+    {
+        // Set the size of the carousel
+        //carousel.size(parseInt(jQuery('total', xml).text()));
+        carousel.size(parseInt(data.total));
+
+        $.each(data.images, function(i,item){
+            carousel.add(first + i, mycarousel_getItemHTML(item));
+        });
+        /*        
+        jQuery('image', xml).each(function(i) {
+            carousel.add(first + i, mycarousel_getItemHTML(jQuery(this).text()));
+        });*/
+    };
+
+    /**
+     * Item html creation helper.
+     */
+    function mycarousel_getItemHTML(url)
+    {
+        return '<img src="' + url + '" width="75" height="75" alt="" />';
+    };
+
+    jQuery(document).ready(function() {
+        jQuery('#mycarousel').jcarousel({
+            // Uncomment the following option if you want items
+            // which are outside the visible range to be removed
+            // from the DOM.
+            // Useful for carousels with MANY items.
+
+            // itemVisibleOutCallback: {onAfterAnimation: function(carousel, item, i, state, evt) { carousel.remove(i); }},
+            itemLoadCallback: mycarousel_itemLoadCallback
+        });
+    });
+</script>
