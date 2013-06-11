@@ -74,12 +74,12 @@ class BackendajaxController extends Zend_Controller_Action
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
         
-        if ($this->getRequest()->isXmlHttpRequest()){
+        //if ($this->getRequest()->isXmlHttpRequest()){     LO SACO PORQUE ES UN GET LO QUE SE HACE.
             $promotion_id = $this->_getParam('promotion_id');
             $promotion = new PAP_Model_Promotion();
             $data = $promotion->getViewRecord($promotion_id);
             $this->_helper->json($data);
-        }    
+        //}    
     }
     
     public function getprovincesAction(){
@@ -108,7 +108,7 @@ class BackendajaxController extends Zend_Controller_Action
     }
     
     public function getfeaturedAction(){
-        
+        header('Content-type: application/json');
         // Array indexes are 0-based, jCarousel positions are 1-based.
         $first = max(0, intval($_GET['first']) - 1);
         $last  = max($first + 1, intval($_GET['last']) - 1);
@@ -116,7 +116,6 @@ class BackendajaxController extends Zend_Controller_Action
         $length = $last - $first + 1;
 
         // ---
-
         $images = array(
             'http://static.flickr.com/66/199481236_dc98b5abb3_s.jpg',
             'http://static.flickr.com/75/199481072_b4a0d09597_s.jpg',
@@ -129,9 +128,8 @@ class BackendajaxController extends Zend_Controller_Action
             'http://static.flickr.com/60/199480111_87d4cb3e38_s.jpg',
             'http://static.flickr.com/70/229228324_08223b70fa_s.jpg',
         );
-
         $total    = count($images);
-        $selected = array_slice($images, $first, $length);
+        //$selected = array_slice($images, $first, $length);
 
         // ---
         /*
