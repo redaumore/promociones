@@ -7,38 +7,43 @@ class PaymentController extends Zend_Controller_Action
      }
      
     public function indexAction(){
-        $this->checkLogin();
-        $form = new PAP_Form_PaymentForm();
-        $this->view->form = $form; 
-        if($this->getRequest()->isPost()){
-            //$this->_helper->viewRenderer->setNoRender();
-            //$this->_helper->getHelper('layout')->disableLayout();
-            if($form->isValid($_POST)){
-                $data = $this->getParam('reportType');
-                $user = $this->_helper->Session->getUserSession();
-                switch($data){
-                    case 'actual':
-                        //true: corta en el día de hoy
-                        $payments = $this->getCurrentPeriod($user, true);
-                        break;    
-                    case 'pendientes':
-                        $payments = $this->getPendingPayments($user);
-                        break;
-                    case 'ultimos':
-                        //devulve los últimos 6 períodos
-                        $payments = $this->getLastPayments($user);
-                        break;
+        try{
+            $this->checkLogin();
+            $form = new PAP_Form_PaymentForm();
+            $this->view->form = $form; 
+            if($this->getRequest()->isPost()){
+                //$this->_helper->viewRenderer->setNoRender();
+                //$this->_helper->getHelper('layout')->disableLayout();
+                if($form->isValid($_POST)){
+                    $data = $this->getParam('reportType');
+                    $user = $this->_helper->Session->getUserSession();
+                    switch($data){
+                        case 'actual':
+                            //true: corta en el día de hoy
+                            $payments = $this->getCurrentPeriod($user, true);
+                            break;    
+                        case 'pendientes':
+                            $payments = $this->getPendingPayments($user);
+                            break;
+                        case 'ultimos':
+                            //devulve los últimos 6 períodos
+                            $payments = $this->getLastPayments($user);
+                            break;
+                    }
+                    
+                    $paymentMethods = $user->getPaymentMethods();
+                    $data = array();
+                    $data['payments'] = $payments;
+                    $data['payment_methods'] = $paymentMethods; 
+                    $control = $form->getElement('data');
+                    $valor = json_encode($data);
+                    $control->setValue($valor);
+                    //echo $this->_helper->json($payments);
                 }
-                
-                $paymentMethods = $user->getPaymentMethods();
-                $data = array();
-                $data['payments'] = $payments;
-                $data['payment_methods'] = $paymentMethods; 
-                $control = $form->getElement('data');
-                $valor = json_encode($data);
-                $control->setValue($valor);
-                //echo $this->_helper->json($payments);
             }
+        }
+        catch(Exception $ex){
+            PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'PaymentController->indexAction()',$ex, $_SERVER['REQUEST_URI']);
         }
      }
      
@@ -69,7 +74,7 @@ class PaymentController extends Zend_Controller_Action
          }
     }
     catch(Exception $e){
-        PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'PaymentController->successAction',$e);    
+        PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'PaymentController->successAction',$e, $_SERVER['REQUEST_URI']);    
     }
     }
 
@@ -99,7 +104,7 @@ class PaymentController extends Zend_Controller_Action
          }
      }
      catch(Exception $e){
-        PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'PaymentController->pendingAction',$e);    
+        PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'PaymentController->pendingAction',$e, $_SERVER['REQUEST_URI']);    
      }
     }
 
@@ -138,7 +143,7 @@ class PaymentController extends Zend_Controller_Action
         }
     }
      catch(Exception $e){
-        PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'PaymentController->createchargesAction',$e);    
+        PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'PaymentController->createchargesAction',$e, $_SERVER['REQUEST_URI']);    
      }
       
     }
@@ -180,7 +185,7 @@ class PaymentController extends Zend_Controller_Action
         }
     }
     catch(Exception $ex){
-         PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'PaymentController->mpnotificationAction',$e); 
+         PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'PaymentController->mpnotificationAction',$e, $_SERVER['REQUEST_URI']); 
     }
     }
     /***
@@ -190,10 +195,15 @@ class PaymentController extends Zend_Controller_Action
     * @param mixed $periods
     */
     public function getLastPayments(PAP_Model_User $user, $numperiods = 6){
-    $date = date('Y-m-d');
-    $periods = PAP_Model_Period::getPeriodsOffset($date, $numperiods);
-    $payments = PAP_Model_Payment::getPayments($user, $periods);
-    return $payments;
+        try{
+            $date = date('Y-m-d');
+            $periods = PAP_Model_Period::getPeriodsOffset($date, $numperiods);
+            $payments = PAP_Model_Payment::getPayments($user, $periods);
+            return $payments;
+        }
+        catch(Exception $ex){
+             PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'PaymentController->mpnotificationAction',$e, $_SERVER['REQUEST_URI']); 
+        }
     }
 
     private function getCurrentPeriod(PAP_Model_User $user, $untiltoday){

@@ -15,203 +15,224 @@
     }
     
     public function newAction(){
-        //$user = $this->_helper->Session->getUserSession();
-        $this->checkLogin();
-        $form = new PAP_Form_PromotionForm();
-        $this->view->form = $form;
-        $this->loadPriceRules($this->user);
-        if($this->getRequest()->isPost()){
-            if($form->isValid($_POST)){
-                $data = $form->getValues();
-                $data['userId'] = $this->user->getId();
-                $data['branches'] = $_POST['branches'];
-                $newPromotion = new PAP_Model_Promotion();
-                $newPromotion->insert($data);
-                $this->saveImages($data, $newPromotion);
-                $this->_redirect('promotion/index'); 
+        try{
+            //$user = $this->_helper->Session->getUserSession();
+            $this->checkLogin();
+            $form = new PAP_Form_PromotionForm();
+            $this->view->form = $form;
+            $this->loadPriceRules($this->user);
+            if($this->getRequest()->isPost()){
+                if($form->isValid($_POST)){
+                    $data = $form->getValues();
+                    $data['userId'] = $this->user->getId();
+                    $data['branches'] = $_POST['branches'];
+                    $newPromotion = new PAP_Model_Promotion();
+                    $newPromotion->insert($data);
+                    $this->saveImages($data, $newPromotion);
+                    $this->_redirect('promotion/index'); 
+                }
+                else{
+                    $this->loadUserBranches($this->user);
+                }                
             }
             else{
                 $this->loadUserBranches($this->user);
-            }                
+            }
+            $form->imagePromo->setOptions(array('src' => '/images'.$this->user->getBranch()->getLogo()));
+            $form->promoCode->setValue($this->getAutoPromoCode());
+            
+            //TODO En la descripcion larga cambiar el estilo
+            //TODO Descripcion larga no permite puntos.
         }
-        else{
-            $this->loadUserBranches($this->user);
+        catch(Exception $ex){
+            PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'PromotionController->newAction()',$ex, $_SERVER['REQUEST_URI']);
         }
-        $form->imagePromo->setOptions(array('src' => '/images'.$this->user->getBranch()->getLogo()));
-        $form->promoCode->setValue($this->getAutoPromoCode());
-        
-        //TODO En la descripcion larga cambiar el estilo
-        //TODO Descripcion larga no permite puntos.
-    }
-    
-    public function indexAction(){
     }
     
     public function editAction(){
-        $this->checkLogin();
-        $form = new PAP_Form_PromotionForm();
-        $this->view->form = $form;
-        $user = $this->_helper->Session->getUserSession();
-        $this->loadPriceRules($user);
-        if($this->getRequest()->isPost()){
-            if($form->isValid($_POST)){
-                $data = $form->getValues();
-                $data['userId'] = $user->getId();
-                $data['branches'] = $_POST['branches'];
-                if ($form->save->isChecked()){
-                    $newPromotion = new PAP_Model_Promotion();
-                    $newPromotion->update($data);
-                    $this->saveImages($data, $newPromotion);
-                }
-                if($form->clone->isChecked()){
-                    $clonedPromotion = new PAP_Model_Promotion();
-                    $clonedPromoId = $clonedPromotion->cloneMe($data);
-                }
-                 $this->_redirect('promotion/index');
-            }                
+        try{
+            $this->checkLogin();
+            $form = new PAP_Form_PromotionForm();
+            $this->view->form = $form;
+            $user = $this->_helper->Session->getUserSession();
+            $this->loadPriceRules($user);
+            if($this->getRequest()->isPost()){
+                if($form->isValid($_POST)){
+                    $data = $form->getValues();
+                    $data['userId'] = $user->getId();
+                    $data['branches'] = $_POST['branches'];
+                    if ($form->save->isChecked()){
+                        $newPromotion = new PAP_Model_Promotion();
+                        $newPromotion->update($data);
+                        $this->saveImages($data, $newPromotion);
+                    }
+                    if($form->clone->isChecked()){
+                        $clonedPromotion = new PAP_Model_Promotion();
+                        $clonedPromoId = $clonedPromotion->cloneMe($data);
+                    }
+                     $this->_redirect('promotion/index');
+                }                
+            }
+            else{
+                $promotion = new PAP_Model_Promotion;
+                $promo_id = $this->getParam('id');
+                $promotionMapper = new PAP_Model_PromotionMapper();
+                $promotionMapper->find($promo_id, $promotion);     
+                if(isset($promotion)){
+                     $this->loadForm($promotion, 'update');
+                      //TODO Modificar la carga de Branches cuando sean màs de uno.
+                     //$this->_helper->Session->setBranchSession($branch);
+                 }
+                 else{
+                    //@todo Mostrar mensaje de que no se encontrò la promo.
+                 }
+            }
+            $this->loadUserBranches($this->user);
         }
-        else{
-            $promotion = new PAP_Model_Promotion;
-            $promo_id = $this->getParam('id');
-            $promotionMapper = new PAP_Model_PromotionMapper();
-            $promotionMapper->find($promo_id, $promotion);     
-            if(isset($promotion)){
-                 $this->loadForm($promotion, 'update');
-                  //TODO Modificar la carga de Branches cuando sean màs de uno.
-                 //$this->_helper->Session->setBranchSession($branch);
-             }
-             else{
-                //@todo Mostrar mensaje de que no se encontrò la promo.
-             }
-        }
-        $this->loadUserBranches($this->user); 
+        catch(Exception $ex){
+            PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'PromotionController->editAction()',$ex, $_SERVER['REQUEST_URI']);
+        } 
     }
     
     public function deleteAction(){
-        $this->checkLogin();
-        $promo_id = $this->getParam('id');
-        $promoMapper = new PAP_Model_PromotionMapper();
-        $promotion = new PAP_Model_Promotion();
-        $promoMapper->find($promo_id, $promotion);
-        if($this->dateDiff($promotion->getStarts(), null) >= 0 ){
-            //TODO Borrado lògico de las promociones y permitir borrar las promos del dìa actual
-            $promoMapper->delete($promotion);
+        try{
+            $this->checkLogin();
+            $promo_id = $this->getParam('id');
+            $promoMapper = new PAP_Model_PromotionMapper();
+            $promotion = new PAP_Model_Promotion();
+            $promoMapper->find($promo_id, $promotion);
+            if($this->dateDiff($promotion->getStarts(), null) >= 0 ){
+                //TODO Borrado lògico de las promociones y permitir borrar las promos del dìa actual
+                $promoMapper->delete($promotion);
+            }
+            $this->_redirect('promotion/index'); 
+            //@todo Mostrar mensaje al usuario
         }
-        $this->_redirect('promotion/index'); 
-        //@todo Mostrar mensaje al usuario
+        catch(Exception $ex){
+            PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'PromotionController->deleteAction()',$ex, $_SERVER['REQUEST_URI']);
+        }
     }
     
     public function datosAction(){
-        $this->checkLogin();
-        
-        $user = $this->_helper->Session->getUserSession();
-        
-        $promoMapper = new PAP_Model_PromotionMapper();
-        
-        $this->_helper->viewRenderer->setNoRender();
-        $this->_helper->getHelper('layout')->disableLayout();
-        if($this->getRequest()->isPost()){
-            $page = $_POST['page']; // get the requested page
-            $limit = $_POST['rows']; // get how many rows we want to have into the grid
-            $sidx = $_POST['sidx']; // get index row - i.e. user click to sort
-            $sord = $_POST['sord']; // get the direction
-        }
-        else{
-            $page = 0; // get the requested page
-            $limit = 10; // get how many rows we want to have into the grid
-            $sidx = 0; // get index row - i.e. user click to sort
-            $sord =  'starts';
-        }
-        
-        if(!$sidx) $sidx =1;
-        
-        $count =  $promoMapper->countPromos($user->getId());
-
-        if( $count > 0 ) {$total_pages = ceil($count/$limit);} 
-        else{$total_pages = 0;}
-        
-        if ($page > $total_pages)
-            $page=$total_pages;
-
-        $start = $limit * $page - $limit;
-        
-        if ($start<0) $start=0;
-        
-        $row = $promoMapper->getByUserId($user->getId(), $sidx, $sord, $start, $limit);
-
-        $response['page'] = $page;
-        $response['total'] = $total_pages;
-        $response['records'] = $count;
-        $i=0;
-        
-        foreach ($row as $r) {
-            $response['rows'][$i]['id']=$r['promotion_id']; //id
-            $response['rows'][$i]['cell']=array('',$r['promo_code'],$r['starts'],$r['ends'],$r['short_description'],$r['promo_value'],$r['state'],$r['visited']);
-            $i++;
-        }
-        echo $this->_helper->json($response);
-
-        /*    }                
-        }
-        else{
+        try{
+            $this->checkLogin();
+            
+            $user = $this->_helper->Session->getUserSession();
+            
             $promoMapper = new PAP_Model_PromotionMapper();
-            $result = $promoMapper->getByUserId($user->getId());    
+            
+            $this->_helper->viewRenderer->setNoRender();
+            $this->_helper->getHelper('layout')->disableLayout();
+            if($this->getRequest()->isPost()){
+                $page = $_POST['page']; // get the requested page
+                $limit = $_POST['rows']; // get how many rows we want to have into the grid
+                $sidx = $_POST['sidx']; // get index row - i.e. user click to sort
+                $sord = $_POST['sord']; // get the direction
+            }
+            else{
+                $page = 0; // get the requested page
+                $limit = 10; // get how many rows we want to have into the grid
+                $sidx = 0; // get index row - i.e. user click to sort
+                $sord =  'starts';
+            }
+            
+            if(!$sidx) $sidx =1;
+            
+            $count =  $promoMapper->countPromos($user->getId());
+
+            if( $count > 0 ) {$total_pages = ceil($count/$limit);} 
+            else{$total_pages = 0;}
+            
+            if ($page > $total_pages)
+                $page=$total_pages;
+
+            $start = $limit * $page - $limit;
+            
+            if ($start<0) $start=0;
+            
+            $row = $promoMapper->getByUserId($user->getId(), $sidx, $sord, $start, $limit);
+
+            $response['page'] = $page;
+            $response['total'] = $total_pages;
+            $response['records'] = $count;
+            $i=0;
+            
+            foreach ($row as $r) {
+                $response['rows'][$i]['id']=$r['promotion_id']; //id
+                $response['rows'][$i]['cell']=array('',$r['promo_code'],$r['starts'],$r['ends'],$r['short_description'],$r['promo_value'],$r['state'],$r['visited']);
+                $i++;
+            }
+            echo $this->_helper->json($response);
+
+            /*    }                
+            }
+            else{
+                $promoMapper = new PAP_Model_PromotionMapper();
+                $result = $promoMapper->getByUserId($user->getId());    
+            }
+            */
         }
-        */
+        catch(Exception $ex){
+            PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'PromotionController->datosAction()',$ex, $_SERVER['REQUEST_URI']);
+        }
     }
     
     public function searchAction(){
-        
-        $form = new PAP_Form_SearchForm();
-        $this->view->form = $form;
-        
-        if($this->getRequest()->isPost()){
-            $this->_helper->viewRenderer->setNoRender();
-            $this->_helper->getHelper('layout')->disableLayout();
-            $page = $_POST['page']; // get the requested page
-            $limit = $_POST['rows']; // get how many rows we want to have into the grid
-            $sidx = $_POST['sidx']; // get index row - i.e. user click to sort
-            $sord = $_POST['sord'];
-            $city_id = $this->getParam('city');
-            $categories = ''.$this->getParam('categories');
-        }
-        else{
-            $page = 0; // get the requested page
-            $limit = 10; // get how many rows we want to have into the grid
-            $sidx = 0; // get index row - i.e. user click to sort
-            $sord =  'starts';
-            $city_id = 150;
-            return;
-        }
-        
-        if(!$sidx) $sidx =1;
-        $promo = new PAP_Model_Promotion(); 
-        $promotions = $promo->getPromotionsByCity($city_id, $categories);
-        $count = count($promotions);
-        if( $count > 0 ) {$total_pages = ceil($count/$limit);} 
-        else{$total_pages = 0;}
-        
-        if ($page > $total_pages)
-            $page=$total_pages;
+        try{
+            $form = new PAP_Form_SearchForm();
+            $this->view->form = $form;
+            
+            if($this->getRequest()->isPost()){
+                $this->_helper->viewRenderer->setNoRender();
+                $this->_helper->getHelper('layout')->disableLayout();
+                $page = $_POST['page']; // get the requested page
+                $limit = $_POST['rows']; // get how many rows we want to have into the grid
+                $sidx = $_POST['sidx']; // get index row - i.e. user click to sort
+                $sord = $_POST['sord'];
+                $city_id = $this->getParam('city');
+                $categories = ''.$this->getParam('categories');
+            }
+            else{
+                $page = 0; // get the requested page
+                $limit = 10; // get how many rows we want to have into the grid
+                $sidx = 0; // get index row - i.e. user click to sort
+                $sord =  'starts';
+                $city_id = 150;
+                return;
+            }
+            
+            if(!$sidx) $sidx =1;
+            $promo = new PAP_Model_Promotion(); 
+            $promotions = $promo->getPromotionsByCity($city_id, $categories);
+            $count = count($promotions);
+            if( $count > 0 ) {$total_pages = ceil($count/$limit);} 
+            else{$total_pages = 0;}
+            
+            if ($page > $total_pages)
+                $page=$total_pages;
 
-        $start = $limit * $page - $limit;
-        
-        if ($start<0) $start=0;
-        
-        //$row = $promoMapper->getByUserId($user->getId(), $sidx, $sord, $start, $limit);
+            $start = $limit * $page - $limit;
+            
+            if ($start<0) $start=0;
+            
+            //$row = $promoMapper->getByUserId($user->getId(), $sidx, $sord, $start, $limit);
 
-        $response['page'] = $page;
-        $response['total'] = $total_pages;
-        $response['records'] = $count;
-        $i=0;
-        
-        foreach ($promotions as $r) {
-            $response['rows'][$i]['id']=$r['promotion_id']; //id
-            $r['path'] = 'images'.$r['path'];
-            $response['rows'][$i]['cell']=array($r['path'],$r['name'],$r['displayed_text'],$r['street'].' '.$r['number'].', '.$r['city'],$r['promo_value'],isset($r['distance'])?(string)$r['distance']:'N/D');
-            $i++;
+            $response['page'] = $page;
+            $response['total'] = $total_pages;
+            $response['records'] = $count;
+            $i=0;
+            
+            foreach ($promotions as $r) {
+                $response['rows'][$i]['id']=$r['promotion_id']; //id
+                $r['path'] = 'images'.$r['path'];
+                $response['rows'][$i]['cell']=array($r['path'],$r['name'],$r['displayed_text'],$r['street'].' '.$r['number'].', '.$r['city'],$r['promo_value'],isset($r['distance'])?(string)$r['distance']:'N/D');
+                $i++;
+            }
+            echo $this->_helper->json($response);
         }
-        echo $this->_helper->json($response);        
+        catch(Exception $ex){
+            PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'PromotionController->searchAction()',$ex, $_SERVER['REQUEST_URI']);
+        }        
     }
     
     private function loadForm(PAP_Model_Promotion $promo)

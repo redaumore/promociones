@@ -6,28 +6,27 @@
 </div>
 <hr class="hr-subtitle"/>
 <?php echo $this->partial("index/_alert.phtml"); ?>
-<div class="row">
+<div class="row-fluid">
     <div class="span10 offset1 well">
         <p>Promos al paso es un sistema que comunica a los comercios con los clientes para hacerle llegar a éstos las promociones vigentes.</p>
         <p>El sistema está compuesto por dos módulos. Uno es una aplicación para teléfonos inteligentes (smartphones) y el otro es una aplicación web que le permite a los comercios administrar los anuncios de las distintas promociones.</p>
         <p>Promos al Paso se caracteriza por ser simple tanto para los clientes finales como para los anunciantes. Con el objetivo de que ingresando pocos datos éstos últimos pueden hacer llegar las promociones a los celulares de los clientes finales.</p>
     </div>
 </div>
-<div class="row">
+<div class="row-fluid">
     <div class="span4 offset4" align="center">
         <a class="btn" href="<?php echo 'auth/signup'; ?>">Registrarme como Anunciante</a>
     </div>
 </div>
-<div class="row pagination-centered">
+<div class="row-fluid pagination-centered">
     <div class="span10 offset1">
-        <div id="mycarousel" class="jcarousel-skin-ie7">
-            <ul>
-              <!-- The content will be dynamically loaded in here -->
-            </ul>
-        </div>
+    <div id="mycarousel" class="jcarousel-skin-ie7">
+        <ul><!-- The content will be dynamically loaded in here --></ul>
     </div>
-    
+    </div>
+    <div class="span1">&nbsp;</div>
 </div>
+<script type="text/javascript" src="/scripts/prototype.js"></script>
 <script type="text/javascript">
     function mycarousel_itemLoadCallback(carousel, state)
     {
@@ -35,38 +34,26 @@
         if (carousel.has(carousel.first, carousel.last)) {
             return;
         }
-        
-         $.ajax({
-            url: _baseAjaxUri + 'getfeatured',
-            dataType: 'jsonp',
-            data: {first: carousel.first,
-                   last: carousel.last},
-            jsonp: 'jsoncallback',
-            contentType: "application/json; charset=utf-8",
-            timeout: 10000,
-            beforeSend: function (jqXHR, settings) {
-                console.log(settings.url);
-            },
-            success: function(data, status){
-                 mycarousel_itemAddCallback(carousel, carousel.first, carousel.last, data);    
-            },
-            error: function(jqXHR, textStatus, errorThrown){
-                alert(textStatus);
-            }
-         });
-        /*
-        jQuery.get(
-            'dynamic_ajax_php.php',
+        var myAjax = new Ajax.Request(
+        _baseAjaxUri + 'getfeatured',
             {
-                first: carousel.first,
-                last: carousel.last
-            },
-            function(xml) {
-                mycarousel_itemAddCallback(carousel, carousel.first, carousel.last, xml);
-            },
-            'json'
-        );*/
+                method:'get',
+                parameters: {first: carousel.first,
+                             last: carousel.last},
+                onSuccess: carouselSuccess,
+                onError: carouselError
+        });
     };
+    
+    function carouselSuccess(data){
+        var carousel = jQuery('#mycarousel').data('jcarousel');
+        data = JSON.parse(data.responseText);
+        mycarousel_itemAddCallback(carousel, carousel.first, carousel.last, data);    
+    }
+    
+    function carouselError(data){
+       alert(data);    
+    }
 
     function mycarousel_itemAddCallback(carousel, first, last, data)
     {
@@ -74,7 +61,7 @@
         //carousel.size(parseInt(jQuery('total', xml).text()));
         carousel.size(parseInt(data.total));
 
-        $.each(data.images, function(i,item){
+        jQuery.each(data.images, function(i,item){
             carousel.add(first + i, mycarousel_getItemHTML(item));
         });
         /*        
@@ -99,7 +86,11 @@
             // Useful for carousels with MANY items.
 
             // itemVisibleOutCallback: {onAfterAnimation: function(carousel, item, i, state, evt) { carousel.remove(i); }},
-            itemLoadCallback: mycarousel_itemLoadCallback
+            itemLoadCallback: mycarousel_itemLoadCallback,
+            auto: 5,
+            animation: "slow",
+            scroll: 4,
+            wrap: "circular",
         });
     });
 </script>

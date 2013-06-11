@@ -11,7 +11,8 @@
 }
 
 .jcarousel-skin-ie7 .jcarousel-container-horizontal {
-    width: 245px;
+    /*width: 245px;*/
+    width: 90%;
     padding: 20px 40px;
 }
 

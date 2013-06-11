@@ -10,8 +10,6 @@ class BackendajaxController extends Zend_Controller_Action
         $this->_helper->getHelper('contextSwitch')
             ->addActionContext($action, 'json')
             ->initContext();
-            
-        
         /*
         $ajaxContext = $this->_helper->getHelper('AjaxContext');
         $ajaxContext->addActionContext('getCities', 'json');
@@ -27,31 +25,36 @@ class BackendajaxController extends Zend_Controller_Action
     
     public function getcitiesAction()
     {
-       /* include ('models/ajax.php');
-        $id = trim($this->getRequest()->getParam('province_id'));
-        $cities = new PAP_Model_CityMapper();
-        $this->_view->result = $cities->getCitiesByProvinceId($id);
-         */
-        $cities = new PAP_Model_CityMapper();
-        
-        $this->_helper->layout()->disableLayout();
-        $this->_helper->viewRenderer->setNoRender();
-        
-        if ($this->getRequest()->isXmlHttpRequest()) {
-            $id = $this->_getParam('province_id');
-            $citiesData = $cities->getCitiesByProvinceId($id);
-            $this->_helper->json($citiesData);
+        try{
+           /* include ('models/ajax.php');
+            $id = trim($this->getRequest()->getParam('province_id'));
+            $cities = new PAP_Model_CityMapper();
+            $this->_view->result = $cities->getCitiesByProvinceId($id);
+             */
+            $cities = new PAP_Model_CityMapper();
+            
+            $this->_helper->layout()->disableLayout();
+            $this->_helper->viewRenderer->setNoRender();
+            
+            if ($this->getRequest()->isXmlHttpRequest()) {
+                $id = $this->_getParam('province_id');
+                $citiesData = $cities->getCitiesByProvinceId($id);
+                $this->_helper->json($citiesData);
+            }
+            
+            /*
+            if ($this->getRequest()->isXmlHttpRequest()) {
+                $id = $this->_getParam('province_id');
+                $citiesData = $cities->getCitiesByProvinceId($id);
+                //$dojoData= new Zend_Dojo_Data('city_id',$citiesData);
+                //echo $dojoData->toJson();
+                echo json_encode($citiesData);
+            }
+            */
         }
-        
-        /*
-        if ($this->getRequest()->isXmlHttpRequest()) {
-            $id = $this->_getParam('province_id');
-            $citiesData = $cities->getCitiesByProvinceId($id);
-            //$dojoData= new Zend_Dojo_Data('city_id',$citiesData);
-            //echo $dojoData->toJson();
-            echo json_encode($citiesData);
+        catch(Exception $ex){
+            PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'BackendAjaxController->getcitiesAction()',$ex, $_SERVER['REQUEST_URI']);
         }
-        */
     }
     
     /*public function getpromotionsAction(){
@@ -70,86 +73,117 @@ class BackendajaxController extends Zend_Controller_Action
     }*/
     
     public function getpromotionAction(){
-        
-        $this->_helper->layout()->disableLayout();
-        $this->_helper->viewRenderer->setNoRender();
+        try{
+            $this->_helper->layout()->disableLayout();
+            $this->_helper->viewRenderer->setNoRender();
         
         //if ($this->getRequest()->isXmlHttpRequest()){     LO SACO PORQUE ES UN GET LO QUE SE HACE.
             $promotion_id = $this->_getParam('promotion_id');
             $promotion = new PAP_Model_Promotion();
             $data = $promotion->getViewRecord($promotion_id);
             $this->_helper->json($data);
-        //}    
+        //} 
+        }
+        catch(Exception $ex){
+            PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'BackendAjaxController->getpromotionAction()',$ex, $_SERVER['REQUEST_URI']);
+        }   
     }
     
     public function getprovincesAction(){
-        $provinces = new PAP_Model_ProvinceMapper();
-        
-        $this->_helper->layout()->disableLayout();
-        $this->_helper->viewRenderer->setNoRender();
-        
-        //if ($this->getRequest()->isXmlHttpRequest()) {
-            $provincesData = $provinces->findForSelect();
-            $this->_helper->json($provincesData);
-        //}
+        try{
+            $provinces = new PAP_Model_ProvinceMapper();
+            
+            $this->_helper->layout()->disableLayout();
+            $this->_helper->viewRenderer->setNoRender();
+            
+            //if ($this->getRequest()->isXmlHttpRequest()) {
+                $provincesData = $provinces->findForSelect();
+                $this->_helper->json($provincesData);
+            //}
+        }
+        catch(Exception $ex){
+            PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'BackendAjaxController->getprovincesAction()',$ex, $_SERVER['REQUEST_URI']);
+        }
     }
     
     public function getprovAction(){
-        $provinces = new PAP_Model_ProvinceMapper();
-        
-        $this->_helper->layout()->disableLayout();
-        $this->_helper->viewRenderer->setNoRender();
-        
-        //if ($this->getRequest()->isXmlHttpRequest()) {
-            $provincesData = $provinces->findForSelect();
-            $this->_helper->json($provincesData);
-            //echo '{"items":'. $this->_helper->json($provincesData) .'}';
-        //}
+        try{
+            $provinces = new PAP_Model_ProvinceMapper();
+            
+            $this->_helper->layout()->disableLayout();
+            $this->_helper->viewRenderer->setNoRender();
+            
+            //if ($this->getRequest()->isXmlHttpRequest()) {
+                $provincesData = $provinces->findForSelect();
+                $this->_helper->json($provincesData);
+                //echo '{"items":'. $this->_helper->json($provincesData) .'}';
+            //}
+        }
+        catch(Exception $ex){
+            PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'BackendAjaxController->getprovAction()',$ex, $_SERVER['REQUEST_URI']);
+        }
     }
     
     public function getfeaturedAction(){
-        header('Content-type: application/json');
-        // Array indexes are 0-based, jCarousel positions are 1-based.
-        $first = max(0, intval($_GET['first']) - 1);
-        $last  = max($first + 1, intval($_GET['last']) - 1);
+        try{
+            header('Content-type: application/json');
+            // Array indexes are 0-based, jCarousel positions are 1-based.
+            $this->_helper->layout()->disableLayout();
+            $this->_helper->viewRenderer->setNoRender();
+            
+            $first = max(0, intval($_GET['first']) - 1);
+            $last  = max($first + 1, intval($_GET['last']) - 1);
 
-        $length = $last - $first + 1;
+            $length = $last - $first + 1;
 
-        // ---
-        $images = array(
-            'http://static.flickr.com/66/199481236_dc98b5abb3_s.jpg',
-            'http://static.flickr.com/75/199481072_b4a0d09597_s.jpg',
-            'http://static.flickr.com/57/199481087_33ae73a8de_s.jpg',
-            'http://static.flickr.com/77/199481108_4359e6b971_s.jpg',
-            'http://static.flickr.com/58/199481143_3c148d9dd3_s.jpg',
-            'http://static.flickr.com/72/199481203_ad4cdcf109_s.jpg',
-            'http://static.flickr.com/58/199481218_264ce20da0_s.jpg',
-            'http://static.flickr.com/69/199481255_fdfe885f87_s.jpg',
-            'http://static.flickr.com/60/199480111_87d4cb3e38_s.jpg',
-            'http://static.flickr.com/70/229228324_08223b70fa_s.jpg',
-        );
-        $total    = count($images);
-        //$selected = array_slice($images, $first, $length);
+            // ---
+            $images = array(
+                'http://static.flickr.com/66/199481236_dc98b5abb3_s.jpg',
+                'http://static.flickr.com/75/199481072_b4a0d09597_s.jpg',
+                'http://static.flickr.com/57/199481087_33ae73a8de_s.jpg',
+                'http://static.flickr.com/77/199481108_4359e6b971_s.jpg',
+                'http://static.flickr.com/58/199481143_3c148d9dd3_s.jpg',
+                'http://static.flickr.com/72/199481203_ad4cdcf109_s.jpg',
+                'http://static.flickr.com/58/199481218_264ce20da0_s.jpg',
+                'http://static.flickr.com/69/199481255_fdfe885f87_s.jpg',
+                'http://static.flickr.com/60/199480111_87d4cb3e38_s.jpg',
+                'http://static.flickr.com/70/229228324_08223b70fa_s.jpg',
+                'http://static.flickr.com/66/199481236_dc98b5abb3_s.jpg',
+                'http://static.flickr.com/75/199481072_b4a0d09597_s.jpg',
+                'http://static.flickr.com/57/199481087_33ae73a8de_s.jpg',
+                'http://static.flickr.com/77/199481108_4359e6b971_s.jpg',
+                'http://static.flickr.com/58/199481143_3c148d9dd3_s.jpg',
+                'http://static.flickr.com/72/199481203_ad4cdcf109_s.jpg',
+                'http://static.flickr.com/58/199481218_264ce20da0_s.jpg',
+                'http://static.flickr.com/69/199481255_fdfe885f87_s.jpg',
+                'http://static.flickr.com/60/199480111_87d4cb3e38_s.jpg',
+                'http://static.flickr.com/70/229228324_08223b70fa_s.jpg',
+            );
+            $total    = count($images);
+            //$selected = array_slice($images, $first, $length);
 
-        // ---
-        /*
-        header('Content-Type: text/xml');
+            // ---
+            /*
+            header('Content-Type: text/xml');
 
-        echo '<data>';
+            echo '<data>';
 
-        // Return total number of images so the callback
-        // can set the size of the carousel.
-        echo '  <total>' . $total . '</total>';
+            // Return total number of images so the callback
+            // can set the size of the carousel.
+            echo '  <total>' . $total . '</total>';
 
-        foreach ($selected as $img) {
-            echo '  <image>' . $img . '</image>';
+            foreach ($selected as $img) {
+                echo '  <image>' . $img . '</image>';
+            }
+
+            echo '</data>';
+             */
+            $data= array("total" => $total,
+                      'images' => $images,);
+            $this->_helper->json($data);
         }
-
-        echo '</data>';
-         */
-        $data= array('total' => $total,
-                  'images' => $images,);
-        
-        $this->_helper->json($data);
+        catch(Exception $ex){
+            PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'BackendAjaxController->getfeaturedAction()',$ex, $_SERVER['REQUEST_URI']);
+        }
     }
 }
