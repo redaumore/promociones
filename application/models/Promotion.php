@@ -325,6 +325,60 @@ class PAP_Model_Promotion
         return $promotions;
     }
     
+    public function getPromotionsForWeb(PAP_Model_City $city, $categories = ''){
+        
+        $promomapper = new PAP_Model_PromotionMapper();
+        $branchmapper = new PAP_Model_BranchMapper();
+        
+        $lat = $city->getLatitude();
+        $lng = $city->getLongitude();
+        
+        $kmlat = 0.009003753;
+        $kmlng = 0.01093571;
+        
+        $klat = $kmlat * 10;
+        $klng = $kmlng * 10;
+        
+        $latO = $lat - $klat;
+        $latE = $lat + $klat;
+        $lngS = $lng - $klng;
+        $lngN = $lng + $klng;
+        
+        $branches = $branchmapper->getBranchesByRange($latE, $latO, $lngN, $lngS);
+        if(count($branches) == 0)
+            return array();
+        
+        $promotions = $promomapper->getPromotionsByBranches($branches, $categories, 20);
+        
+        $i = 0;
+        
+        foreach($promotions as $promo){
+            $plat = $promo['latitude'];
+            $deltalat = (($lat-$plat)*1000)/$kmlat;
+            $plng = $promo['longitude'];
+            $deltalng = (($lng-$plng)*1000)/$kmlng;
+            $distance = round(sqrt(pow($deltalat, 2) + pow($deltalng, 2)));
+            $valor = substr($promo['promo_cost'], strrpos($promo['promo_cost'], '-')+1);
+            $valor = ($valor == '0.00')?1.00:floatval($valor);
+            $indiceord = abs(($distance*$valor*1000)/(1-$distance)+(($valor -1)*1000))-1000;
+            $promotions[$i]['distance'] = $distance;
+            $promotions[$i]['ord'] = $indiceord;
+            if(!isset($promo['path']))
+                $promotions[$i]['path'] = $this->getBranchImage($promo['promotion_id']);
+            unset($promotions[$i]['promo_cost']);
+            $i += 1;
+        }
+        if(count($promotions)!=0)
+            $promotions = $this->sortPromotions($promotions);
+        else{
+            if($this->_radius != 4){
+                $this->_radius = 4;
+                $promotions = $this->getPromotionsByCoords($lat, $lng, $categories);
+            }
+        }
+        return $promotions;
+    }
+    
     public function getPromotionsByIds($ids, $lat, $lng){
         $promomapper = new PAP_Model_PromotionMapper();
         $branchmapper = new PAP_Model_BranchMapper();

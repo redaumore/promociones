@@ -85,6 +85,16 @@ protected $_dbTable;
         return $results;    
     }
     
+    public function findByIp($ipnum, $city){
+        $adapter = Zend_Db_Table::getDefaultAdapter();
+        $statement = "SELECT il.city_id FROM iplocator_location il INNER JOIN iplocator_block ib ON (il.locId = ib.locId) "
+                    ."WHERE ib.startIpNum <= ".$ipnum." AND ib.endIpNum >= ".$ipnum." LIMIT 1";
+        $results = $adapter->fetchAll($statement);
+        if(isset($results)){
+            $this->find($results->city_id, $city);    
+        }
+    }
+    
     /*public function findForSelect(){
         $db = Zend_Db_Table::getDefaultAdapter();
         $email = $db->quote($param);

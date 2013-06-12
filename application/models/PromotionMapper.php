@@ -294,7 +294,7 @@ class PAP_Model_PromotionMapper
         return $dStarts->format("d/m/Y");    
     }
     
-    public function getPromotionsByBranches($branches, $categories = ''){
+    public function getPromotionsByBranches($branches, $categories = '', $limit = 0){
         $in = '';
         foreach($branches as $branch){
             $in .= $branch->getId().',';
@@ -312,6 +312,8 @@ class PAP_Model_PromotionMapper
                      (($categories == '')?'':"INNER JOIN category_user cu ON (b.user_id = cu.user_id) ").
                      "WHERE p.starts <= '".date('Y-m-d')."' AND p.ends >= '".date('Y-m-d')."' AND pb.branch_id IN ".$in. " ".
                      (($categories == '')?'':"AND cu.category_id IN (".$categories.")");
+                     (($limit == 0)?'':"ORDER BY p.promo_cost DESC LIMIT ".$limit." ");
+                     
         $results = $adapter->fetchAll($statement);
         return $results;
     }

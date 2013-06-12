@@ -61,6 +61,16 @@ class PAP_Model_City
         return  $_this->_paymentMethods;
     }
     
+    public static function getByIp($ip){
+        $city = new PAP_Model_City();
+        $numip = ip2long($ip);
+        $mapper = new PAP_Model_CityMapper();
+        $mapper->findByIp($numip, $city);
+        if($city->getId() != null)
+            return $city;
+        return null;      
+    }
+    
      public function setId($text){
         $this->_id = (string) $text;
         return $this;
