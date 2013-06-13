@@ -29,7 +29,7 @@
 .jcarousel-skin-ie7 .jcarousel-clip-horizontal {
     /*width:  245px;*/
     width:  100%;
-    height: 77px;
+    /*height: 77px;*/
 }
 
 .jcarousel-skin-ie7 .jcarousel-clip-vertical {
@@ -38,8 +38,8 @@
 }
 
 .jcarousel-skin-ie7 .jcarousel-item {
-    width: 75px;
-    height: 75px;
+    /*width: 75px;
+    height: 75px;*/
     border: 1px solid #fff;
 }
 

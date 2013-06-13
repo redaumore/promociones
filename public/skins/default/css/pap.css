@@ -63,6 +63,21 @@
     vertical-align: middle;
     text-align: center;
 }
+
+.slider_promo{
+    border: solid 1px #9CAAC6;
+    text-align: center;
+    width: 120px; 
+    height: 150px; 
+    display: inline; 
+    float: left;
+}
+
+.slider_promo+div{
+    display: block; 
+    width: 100%;
+    text-align: center;
+}
 /*
 html{ font-size: 125%; }
 

@@ -14,18 +14,43 @@
 <meta name="creation-date" content="06/01/2011">
 <meta name="revisit-after" content="15 days">
 <title>Untitled</title>
+<style>
+li{display:inline;}
+.slider_promo{
+	border: solid 1px #9CAAC6;
+	text-align: center;
+	width: 120px; 
+	height: 150px; 
+	display: inline; 
+	float: left;
+}
+.slider_promo+div{
+	display: block; 
+	width: 100%;
+	text-align: center;
+}
+</style>
 </head>
 <body>
-<table>
-    <tr>
-        <td>
-            <div style="border: solid 1px #9CAAC6; text-align: center">
-                <div style="z-index: 2; display: none;"><img src="images/lbl-desde48h.png" style="display: inline"/></div>
-                <div style="border-bottom: solid 1px blue;"><span class="precio">#PRECIO#</span></div>
-                <div style="vertical-align: middle; text-align: center"><span class="distancia">#DISTANCIA#</span></div>
-            </div>
-       </td>
-    </tr>
-</table>
+<ul>
+<li>
+<div class="slider_promo">
+                <div>Localidad</div>
+				<div><img src="images/photo_error.png" height="60px;"/></div>
+				<div>nombre local</div>
+                <div><span class="precio">$400</span></div>
+                <div>Texto mostrado</div>
+</div>
+</li>
+<li>
+<div class="slider_promo">
+                <div>Localidad</div>
+				<div><img src="images/photo_error.png" height="60px;"/></div>
+				<div>nombre local</div>
+                <div><span class="precio">$400</span></div>
+                <div>Texto mostrado</div>
+</div>
+</li>
+</ul>
 </body>
 </html>

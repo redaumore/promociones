@@ -18,6 +18,7 @@
         <a class="btn" href="<?php echo 'auth/signup'; ?>">Registrarme como Anunciante</a>
     </div>
 </div>
+<a id="a_carousel"/>
 <div class="row-fluid pagination-centered">
     <div class="span10 offset1">
     <div id="mycarousel" class="jcarousel-skin-ie7">
@@ -26,6 +27,7 @@
     </div>
     <div class="span1">&nbsp;</div>
 </div>
+<input type="hidden" id="slider_promos"/>
 <script type="text/javascript" src="/scripts/prototype.js"></script>
 <script type="text/javascript">
     function mycarousel_itemLoadCallback(carousel, state)
@@ -47,8 +49,10 @@
     
     function carouselSuccess(data){
         var carousel = jQuery('#mycarousel').data('jcarousel');
-        data = JSON.parse(data.responseText);
-        mycarousel_itemAddCallback(carousel, carousel.first, carousel.last, data);    
+        var response = data.responseText.substring(0, data.responseText.indexOf("<br />"));
+        var jsondata = JSON.parse(response);
+        jQuery("#slider_promos").val(response);
+        mycarousel_itemAddCallback(carousel, carousel.first, carousel.last, jsondata);    
     }
     
     function carouselError(data){
@@ -61,7 +65,7 @@
         //carousel.size(parseInt(jQuery('total', xml).text()));
         carousel.size(parseInt(data.total));
 
-        jQuery.each(data.images, function(i,item){
+        jQuery.each(data.promos, function(i,item){
             carousel.add(first + i, mycarousel_getItemHTML(item));
         });
         /*        
@@ -73,10 +77,22 @@
     /**
      * Item html creation helper.
      */
-    function mycarousel_getItemHTML(url)
+    function mycarousel_getItemHTML(promo)
     {
-        return '<img src="' + url + '" width="75" height="75" alt="" />';
+        var promo_html = '<a href="" onClick="slider_show('+promo.promotion_id+');"><div class="slider_promo">';
+            promo_html += '  <div>Localidad</div>';
+            promo_html += '  <div><img src="images/photo_error.png" height="60px;"/></div>';
+            promo_html += '  <div>nombre local</div>';
+            promo_html += '  <div><span class="precio">$400</span></div>';
+            promo_html += '  <div>Texto mostrado</div></div></a>';;
+
+        return promo_html;
     };
+    
+    function slider_show(promo_id){
+        alert("Muestro Promo: " + promo_id);
+        jQuery.scrollTo("#a_carousel");
+    }
 
     jQuery(document).ready(function() {
         jQuery('#mycarousel').jcarousel({
@@ -89,8 +105,9 @@
             itemLoadCallback: mycarousel_itemLoadCallback,
             auto: 5,
             animation: "slow",
-            scroll: 4,
-            wrap: "circular",
+            scroll: 5,
+            size: 20,
+            wrap: "first",
         });
     });
 </script>

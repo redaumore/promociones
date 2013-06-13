@@ -127,7 +127,7 @@ class BackendajaxController extends Zend_Controller_Action
     public function getfeaturedAction(){
         try{
             $this->_helper->layout()->disableLayout();
-            $this->_helper->viewRenderer->setNoRender();
+            $this->_helper->viewRenderer->setNoRender(true);
             
             $client = new PAP_Helper_Client();
             $ip = $client->getIP();
@@ -166,8 +166,14 @@ class BackendajaxController extends Zend_Controller_Action
             echo '</data>';
              */
             $data= array("total" => $total,
-                      'images' => $promos,);
-            $this->_helper->json($data);
+                      'promos' => $promos,);
+            //$this->_helper->json($data);
+            
+             $response = $this->getResponse();
+             $response->setHeader('Content-Type', 'text/json');
+             $response->setBody(json_encode($data));
+
+             return;
         }
         catch(Exception $ex){
             PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'BackendAjaxController->getfeaturedAction()',$ex, $_SERVER['REQUEST_URI']);
