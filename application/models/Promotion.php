@@ -315,7 +315,7 @@ class PAP_Model_Promotion
             $i += 1;
         }
         if(count($promotions)!=0)
-            $promotions = $this->sortPromotions($promotions);
+            $promotions = PAP_Model_Promotion::sortPromotions($promotions);
         else{
             if($this->_radius != 4){
                 $this->_radius = 4;
@@ -325,10 +325,10 @@ class PAP_Model_Promotion
         return $promotions;
     }
     
-    public function getPromotionsForWeb(PAP_Model_City $city, $categories = ''){
+     public static function getPromotionsForWeb(PAP_Model_City $city, $categories = ''){
         
         $promomapper = new PAP_Model_PromotionMapper();
-        $branchmapper = new PAP_Model_BranchMapper();
+        $branchmapper = new PAP_Model_BranchMapper();  
         
         $lat = $city->getLatitude();
         $lng = $city->getLongitude();
@@ -364,12 +364,12 @@ class PAP_Model_Promotion
             $promotions[$i]['distance'] = $distance;
             $promotions[$i]['ord'] = $indiceord;
             if(!isset($promo['path']))
-                $promotions[$i]['path'] = $this->getBranchImage($promo['promotion_id']);
+                $promotions[$i]['path'] = PAP_Model_Promotion::getBranchLogo($promo['promotion_id']);
             unset($promotions[$i]['promo_cost']);
             $i += 1;
         }
         if(count($promotions)!=0)
-            $promotions = $this->sortPromotions($promotions);
+            $promotions = PAP_Model_Promotion::sortPromotions($promotions);
         else{
             if($this->_radius != 4){
                 $this->_radius = 4;
@@ -407,7 +407,7 @@ class PAP_Model_Promotion
             $i += 1;
         }
         if(count($promotions)!=0)
-            $promotions = $this->sortPromotions($promotions);
+            $promotions = PAP_Model_Promotion::sortPromotions($promotions);
         
         return $promotions;
     }
@@ -453,7 +453,7 @@ class PAP_Model_Promotion
             return PAP_Model_PromotionMapper::getPromotionByPeriod($period);
     }
     
-    private function sortPromotions($promotions){
+    private static function sortPromotions($promotions){
         foreach ($promotions as $key => $row) {
             $indice[$key]  = $row['ord'];
         }
@@ -473,6 +473,16 @@ class PAP_Model_Promotion
     }
     
     private function getBranchImage($promotion_id){
+        //devuelve el path de la imagen
+        $promo_mapper = new PAP_Model_PromotionMapper();
+        $branches = $promo_mapper->getBranches($promotion_id);
+        $image = '';
+        if(count($branches) != 0)
+            $image = $branches[0]->getLogo();
+        return $image;
+    }
+    
+    private static function getBranchLogo($promotion_id){
         //devuelve el path de la imagen
         $promo_mapper = new PAP_Model_PromotionMapper();
         $branches = $promo_mapper->getBranches($promotion_id);

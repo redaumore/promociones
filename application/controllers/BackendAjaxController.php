@@ -129,7 +129,8 @@ class BackendajaxController extends Zend_Controller_Action
             $this->_helper->layout()->disableLayout();
             $this->_helper->viewRenderer->setNoRender();
             
-            $ip = PAP_Helper_Client::getIP();
+            $client = new PAP_Helper_Client();
+            $ip = $client->getIP();
             $city = PAP_Model_City::getByIp($ip);
             if(!isset($city)){
                 $city = new PAP_Model_City();
