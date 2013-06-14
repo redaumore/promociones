@@ -71,12 +71,19 @@
     height: 150px; 
     display: inline; 
     float: left;
+    background-color: rgb(32, 35, 40);
+    font-size: 10px;
 }
 
 .slider_promo+div{
     display: block; 
     width: 100%;
     text-align: center;
+}
+
+.slider_localidad{
+    font-weight: bold;
+    color: #FF6A15;
 }
 /*
 html{ font-size: 125%; }

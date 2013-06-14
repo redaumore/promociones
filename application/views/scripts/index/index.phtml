@@ -79,21 +79,16 @@
      */
     function mycarousel_getItemHTML(promo)
     {
-        var promo_html = '<a href="" onClick="slider_show('+promo.promotion_id+');"><div class="slider_promo">';
-            promo_html += '  <div>Localidad</div>';
-            promo_html += '  <div><img src="images/photo_error.png" height="60px;"/></div>';
-            promo_html += '  <div>nombre local</div>';
-            promo_html += '  <div><span class="precio">$400</span></div>';
-            promo_html += '  <div>Texto mostrado</div></div></a>';;
+        var promo_html = '<a onClick="FillPromotionById('+promo.promotion_id+');"><div class="slider_promo">';
+            promo_html += '  <div class="slider_localidad">'+promo.city+'</div>';
+            promo_html += '  <div><img src="images'+promo.path+'" style="height:60px;"/></div>';
+            promo_html += '  <div class="">'+promo.name+'</div>';
+            promo_html += '  <div class="precio">'+promo.promo_value+'</div>';
+            promo_html += '  <div class="">'+promo.displayed_text+'</div></div></a>';;
 
         return promo_html;
     };
     
-    function slider_show(promo_id){
-        alert("Muestro Promo: " + promo_id);
-        jQuery.scrollTo("#a_carousel");
-    }
-
     jQuery(document).ready(function() {
         jQuery('#mycarousel').jcarousel({
             // Uncomment the following option if you want items
@@ -110,4 +105,15 @@
             wrap: "first",
         });
     });
+    
+    function FillPromotionById(promo_id){
+        var jsondata = JSON.parse(jQuery("#slider_promos").val());
+        jQuery.each(jsondata.promos, function(i,item){
+            if(item.promotion_id == promo_id){
+                FillPromotion(item);
+                return false;
+            }
+        });
+    }
 </script>
+<?php echo $this->partial("promotion/_promobody.phtml"); ?>
