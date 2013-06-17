@@ -1,10 +1,11 @@
 <script type="text/javascript" src="./scripts/jquery.jcarousel.min.js"></script>
+<!--
 <div class="row">
     <div class="span6 offset3" id="titulo" align="center">
             <h1>¿Qué es promos al paso?</h1>
     </div>
 </div>
-<hr class="hr-subtitle"/>
+<hr class="hr-subtitle"/>-->
 <?php echo $this->partial("index/_alert.phtml"); ?>
 <div class="row-fluid">
     <div class="span10 offset1 well">
@@ -68,6 +69,7 @@
         jQuery.each(data.promos, function(i,item){
             carousel.add(first + i, mycarousel_getItemHTML(item));
         });
+        jQuery('#mycarousel').show();
         /*        
         jQuery('image', xml).each(function(i) {
             carousel.add(first + i, mycarousel_getItemHTML(jQuery(this).text()));
@@ -104,6 +106,7 @@
             size: 20,
             wrap: "first",
         });
+        jQuery('#mycarousel').hide();
     });
     
     function FillPromotionById(promo_id){

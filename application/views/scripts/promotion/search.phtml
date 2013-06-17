@@ -124,7 +124,7 @@ function getPromotions(){
     }
     else{
         firstClick = false;
-        
+        jQuery("#gbox_list2").hide();
         jQuery("#list2").jqGrid({url: _url, datatype: "json",
              colNames:['Imagen', 'Comercio','Promoción', 'Dirección', 'Precio'],
              colModel:[ {name:'img',index:'path', width:50,sortable:false},

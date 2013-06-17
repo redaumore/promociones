@@ -98,5 +98,24 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $logger = new Zend_Log($writer);
         Zend_Registry::set("logDB", $logger);
     }
+    
+    protected function _initCache(){
+        $frontend= array(
+            'lifetime' => 7200,
+            'automatic_serialization' => true
+            );
+
+        $backend= array(
+            'cache_dir' => PUBLIC_PATH.'/tmp/',
+            );
+
+        $cache = Zend_Cache::factory('core',
+            'File',
+            $frontend,
+            $backend
+            );
+
+        Zend_Registry::set('cache',$cache);
+    }
 }
 

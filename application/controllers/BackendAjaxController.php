@@ -26,31 +26,16 @@ class BackendajaxController extends Zend_Controller_Action
     public function getcitiesAction()
     {
         try{
-           /* include ('models/ajax.php');
-            $id = trim($this->getRequest()->getParam('province_id'));
-            $cities = new PAP_Model_CityMapper();
-            $this->_view->result = $cities->getCitiesByProvinceId($id);
-             */
-            $cities = new PAP_Model_CityMapper();
-            
             $this->_helper->layout()->disableLayout();
             $this->_helper->viewRenderer->setNoRender();
-            
-            if ($this->getRequest()->isXmlHttpRequest()) {
-                $id = $this->_getParam('province_id');
+            $id = $this->_getParam('province_id');    
+            $cache = Zend_Registry::get('cache');
+            if(!$citiesData = $cache->load('city_'.$id)) {
+                $cities = new PAP_Model_CityMapper();
                 $citiesData = $cities->getCitiesByProvinceId($id);
-                $this->_helper->json($citiesData);
+                $cache->save($citiesData, 'city_'.$id);
             }
-            
-            /*
-            if ($this->getRequest()->isXmlHttpRequest()) {
-                $id = $this->_getParam('province_id');
-                $citiesData = $cities->getCitiesByProvinceId($id);
-                //$dojoData= new Zend_Dojo_Data('city_id',$citiesData);
-                //echo $dojoData->toJson();
-                echo json_encode($citiesData);
-            }
-            */
+            $this->_helper->json($citiesData);
         }
         catch(Exception $ex){
             PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'BackendAjaxController->getcitiesAction()',$ex, $_SERVER['REQUEST_URI']);
@@ -91,15 +76,17 @@ class BackendajaxController extends Zend_Controller_Action
     
     public function getprovincesAction(){
         try{
-            $provinces = new PAP_Model_ProvinceMapper();
-            
             $this->_helper->layout()->disableLayout();
             $this->_helper->viewRenderer->setNoRender();
+                
+            $cache = Zend_Registry::get('cache');
+            if(!$provincesData = $cache->load('province')) {
+                $provinces = new PAP_Model_ProvinceMapper();
             
-            //if ($this->getRequest()->isXmlHttpRequest()) {
                 $provincesData = $provinces->findForSelect();
-                $this->_helper->json($provincesData);
-            //}
+                $cache->save($provincesData, 'province');
+            }
+            $this->_helper->json($provincesData);
         }
         catch(Exception $ex){
             PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'BackendAjaxController->getprovincesAction()',$ex, $_SERVER['REQUEST_URI']);
@@ -108,16 +95,17 @@ class BackendajaxController extends Zend_Controller_Action
     
     public function getprovAction(){
         try{
-            $provinces = new PAP_Model_ProvinceMapper();
-            
             $this->_helper->layout()->disableLayout();
             $this->_helper->viewRenderer->setNoRender();
+                
+            $cache = Zend_Registry::get('cache');
+            if(!$provincesData = $cache->load('province')) {
+                $provinces = new PAP_Model_ProvinceMapper();
             
-            //if ($this->getRequest()->isXmlHttpRequest()) {
                 $provincesData = $provinces->findForSelect();
-                $this->_helper->json($provincesData);
-                //echo '{"items":'. $this->_helper->json($provincesData) .'}';
-            //}
+                $cache->save($provincesData, 'province');
+            }
+            $this->_helper->json($provincesData);
         }
         catch(Exception $ex){
             PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'BackendAjaxController->getprovAction()',$ex, $_SERVER['REQUEST_URI']);
