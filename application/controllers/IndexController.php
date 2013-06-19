@@ -3,13 +3,23 @@
 class IndexController extends Zend_Controller_Action
 {
 
+    private $user;
+    protected $_flashMessenger;
+    
     public function init()
     {
-        /* Initialize action controller here */
-        // insert sidebar to the response object
-    //esto nunca funciono--->    $this->getResponse()->insert('header', $this->view->render('/index/header.phtml'));
+        parent::init(); 
+  
+        $this->_flashMessenger = $this->_helper->getHelper('FlashMessenger'); 
+        $this->view->flash_messages = $this->_flashMessenger->getMessages();         
     }
 
+     private function checkLogin(){
+        if(!PAP_Helper_Session::checkLogin())
+            $this->_redirect('/auth/login');
+        $this->user = $this->_helper->Session->getUserSession();
+    }
+    
     public function indexAction()
     {
     }
@@ -55,7 +65,33 @@ class IndexController extends Zend_Controller_Action
     
     function contactAction(){
         try{
-            
+            $form = new PAP_Form_ContactForm();
+            $this->view->form = $form;
+            if($this->getRequest()->isPost()){
+                if($form->isValid($_POST)){
+                    $data = $form->getValues();
+                    $client = new PAP_Helper_Client();
+                    $data['ip'] = $client->getIP();
+                    if(PAP_Helper_Session::checkLogin()){
+                        $data['email'] = $this->user->getEmail();
+                        $data['message_type'] = 'A';
+                    }
+                    else{
+                        $data['message_type'] = 'C';    
+                    }
+                    $message = new PAP_Model_Message();
+                    $message->setEmail($data['email'])
+                            ->setIp($data['ip'])
+                            ->setIpNumber(ip2long($data['ip']))
+                            ->setName($data['name'])
+                            ->setMessage($data['message'])
+                            ->setMessageType($data['message_type']);
+                    $message->save();
+                    $this->_helper->FlashMessenger->addMessage('Su mensaje ha sido enviado correctamente.');
+                    $this->_redirect('/index/contact');    
+                }
+            }
+            $this->view->messages = $this->_helper->FlashMessenger->getMessages('actions');
         }
         catch(Exception $ex){
             PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'IndexController->contactAction()',$ex, $_SERVER['REQUEST_URI']);
@@ -72,6 +108,15 @@ class IndexController extends Zend_Controller_Action
     }
     
     function contactadmAction(){
+         try{
+            
+        }
+        catch(Exception $ex){
+            PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'IndexController->contactadmAction()',$ex, $_SERVER['REQUEST_URI']);
+        }    
+    }
+    
+    function conditionsAction(){
          try{
             
         }

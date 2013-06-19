@@ -2,9 +2,12 @@
 class PAP_Helper_Logger{
     public static function writeLog($priority, $context, $message, $params = ""){
         $log = Zend_Registry::get("logDB");
+        $user_id = 0;
         $auth=Zend_Auth::getInstance();
+        if($auth->hasIdentity())
+            $user_id = $auth->getIdentity()->user_id;
         if(isset($log)){
-            $log->setEventItem('user', (isset($auth))?$auth->getIdentity()->user_id:0)
+            $log->setEventItem('user', $user_id)
                 ->setEventItem('priorityname', self::getPriorityString($priority))
                 ->setEventItem('priority', $priority)
                 ->setEventItem('context', $context)

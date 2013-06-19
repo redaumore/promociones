@@ -1,6 +1,52 @@
+<?php
+    $messages = $this->form->getMessages();
+    $this->form->setAction($this->url());
+    $form = $this->form;
+?>
 <div class="row">
     <div class="span6 offset3" id="titulo" align="center">
             <h1>Contactar a Promos al Paso</h1>
     </div>
 </div>
 <hr class="hr-subtitle"/>
+<form id="content-form" method="<?php echo $form->getMethod() ?>" action="<?php echo $form->getAction()?>" enctype="multipart/form-data" class="form-horizontal">
+    <?php echo $this->errorMessage($this->form, $messages); ?>
+    <?php if(count($this->messages) > 0)
+            echo $this->messages[0]; ?>
+    <?php echo $this->partial("index/_alert.phtml"); ?>
+    <div class="row-fluid">
+        <div class="span6 offset3">
+            <div class="control-group">
+                <?php echo $form->name->renderLabel(); ?>
+                <div class="controls">
+                    <?php echo $form->name->renderViewHelper(); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span6 offset3">
+            <div class="control-group">
+                <?php echo $form->email->renderLabel(); ?>
+                <div class="controls">
+                    <?php echo $form->email->renderViewHelper(); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span6 offset3">
+            <div class="control-group">
+                <?php echo $form->message->renderLabel(); ?>
+                <div class="controls">
+                    <?php echo $form->message->renderViewHelper(); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span6 offset3 pagination-centered">
+                    <?php echo $form->send->renderViewHelper(); ?>
+        </div>
+    </div>
+</form>

@@ -1,15 +1,13 @@
 <?php
 
-class BranchController extends Zend_Controller_Action
+class BranchController extends PAP_Controllers_Basic
 {
     public $user;
     public function init()
     {
-        /* Initialize action controller here */
-        // insert sidebar to the response object
-        $this->user = $this->_helper->Session->getUserSession();
-        if(!isset($this->user))
+        if(!PAP_Helper_Session::checkLogin())
             $this->_redirect('/auth/login');
+        $user = $this->_helper->Session->getUserSession(); 
     }
 
     public function indexAction()

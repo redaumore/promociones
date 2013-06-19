@@ -9,14 +9,13 @@
     }
     
     private function checkLogin(){
-        $this->user = $this->_helper->Session->getUserSession();
-        if(!isset($this->user))
+        if(!PAP_Helper_Session::checkLogin())
             $this->_redirect('/auth/login');
+        $this->user = $this->_helper->Session->getUserSession();
     }
     
     public function newAction(){
         try{
-            //$user = $this->_helper->Session->getUserSession();
             $this->checkLogin();
             $form = new PAP_Form_PromotionForm();
             $this->view->form = $form;

@@ -39,4 +39,12 @@ class PAP_Helper_Session extends Zend_Controller_Action_Helper_Abstract
         $session->branch = $branch;
     }
     
+    public static function checkLogin(){
+        $auth = Zend_Auth::getInstance();
+        if ($auth->hasIdentity()) {
+            return true;
+        }
+        return false;
+    }
+    
 }

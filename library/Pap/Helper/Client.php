@@ -27,4 +27,9 @@ class PAP_Helper_Client extends Zend_Controller_Action_Helper_Abstract
             $ip = "0";
         return $ip;
     }
+    
+    public function getIpNumber($ip){
+        return ip2long($ip); 
+    }
+    
 } 

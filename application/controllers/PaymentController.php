@@ -5,6 +5,12 @@ class PaymentController extends Zend_Controller_Action
       $form = new PAP_Form_PaymentForm();
       $this->view->form = $form;      
      }
+    
+    private function checkLogin(){
+        if(!PAP_Helper_Session::checkLogin())
+            $this->_redirect('/auth/login');
+        $this->user = $this->_helper->Session->getUserSession();
+    }
      
     public function indexAction(){
         try{
@@ -242,12 +248,6 @@ class PaymentController extends Zend_Controller_Action
     else{
         $payments = PAP_Model_Payment::getPayments($user, $periods);}
     return $payments;    
-    }
-
-    private function checkLogin(){
-    $this->user = $this->_helper->Session->getUserSession();
-    if(!isset($this->user))
-        $this->_redirect('/auth/login');    
     }
 
     private function getStatusChar($status){
