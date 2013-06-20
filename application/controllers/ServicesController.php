@@ -130,7 +130,7 @@ class servicesController extends Zend_Controller_Action
     
     private function getDataURI($image, $mime = '') {
         if(file_exists($image))
-            $_return = 'data: '.(function_exists('mime_content_type') ? mime_content_type($image) : $mime).';base64,'.base64_encode(file_get_contents($image));
+            $_return = 'data: '.(function_exists('mime_content_type') ? mime_content_type($image) : $mime).';base64,'.base64_encode(@file_get_contents($image));
         else{
             //$noimage = './images/backend/photo_error.png';
             //$_return = 'data: '.(function_exists('mime_content_type') ? mime_content_type($noimage) : 'image/png').';base64,'.base64_encode(file_get_contents($noimage));        

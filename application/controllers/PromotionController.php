@@ -8,6 +8,9 @@
         echo $session->user->getName();*/
     }
     
+    public function indexAction(){
+    }
+    
     private function checkLogin(){
         if(!PAP_Helper_Session::checkLogin())
             $this->_redirect('/auth/login');
