@@ -1,13 +1,13 @@
 <?php
 
-class BranchController extends PAP_Controllers_Basic
+class BranchController extends Zend_Controller_Action
 {
-    public $user;
+    protected $user;
     public function init()
     {
         if(!PAP_Helper_Session::checkLogin())
             $this->_redirect('/auth/login');
-        $user = $this->_helper->Session->getUserSession(); 
+        $this->user = $this->_helper->Session->getUserSession(); 
     }
 
     public function indexAction()
