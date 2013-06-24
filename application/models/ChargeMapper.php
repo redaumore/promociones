@@ -45,7 +45,8 @@ protected $_dbTable;
         }
         }
         catch(Exception $ex){
-            //TODO 6: Loguear intento de inserción duplicado   
+            PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'ChargeMapper->save()',$ex);
+            //DONE 6: Loguear intento de inserción duplicado   
         }
     }
  

@@ -366,6 +366,44 @@ class servicesController extends Zend_Controller_Action
         $this->getFrontController()->setResponse($response);     
          
     }
+    
+    public function sendmessageAction(){
+        try{
+            $this->_helper->layout->setLayout('json');  
+            $callback = $this->getRequest()->getParam('jsoncallback');
+            if ($callback != ""){
+                // strip all non alphanumeric elements from callback
+                $callback = preg_replace('/[^a-zA-Z0-9_]/', '', $callback);
+            }  
+            $this->view->callback = $callback;
+            $email = $this->_getParam('email');
+            $message = $this->_getParam('message');
+            $uuid = $this->_getParam('uudi');
+            $name = $this->_getParam('name');
+            $lat = $this->_getParam('lat');
+            $lng = $this->_getParam('lng');
+            
+            $message = new PAP_Model_Message();
+            $message->setEmail($email)
+                    ->setLocation($lat.";".$lng)
+                    ->setMessage($message)
+                    ->setMessageType("M")
+                    ->setName($name)
+                    ->setIp($uuid);
+            $message->save();
+            
+            $response = $this->getFrontController()->getResponse();
+            $response->appendBody($callback.'({code:0, message:"mensaje guardado correctamente"})');
+            $this->getFrontController()->setResponse($response);
+                    
+        }
+        catch(Exception $ex){
+            PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'ServiceController->sendmessageAction',$e);
+            $response = $this->getFrontController()->getResponse();
+            $response->appendBody($callback.'({code:200, message:"Hubo un error guardando el mensaje. Por favor envíanos un email."})');
+            $this->getFrontController()->setResponse($response); 
+        }    
+    }
 }
 
 

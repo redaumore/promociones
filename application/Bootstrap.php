@@ -92,6 +92,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             'user' => 'user',    
             'file' => 'file',
             'line' => 'line',
+            'params' => 'params',
             'context' => 'context',
             );
         $writer = new Zend_Log_Writer_Db($db->getDbAdapter(), 'log', $columnMapping);

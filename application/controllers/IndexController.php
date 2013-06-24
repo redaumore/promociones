@@ -37,8 +37,6 @@ class IndexController extends Zend_Controller_Action
                     $this->menuAction();
                     return;    
                 }
-                //if($this->user->Status == 'pending')
-                    //array_push($mainMenu, array('title'=>'Anunciantes', 'url'=>$this->view->url(array('controller'=>'auth', 'action'=>'login'),null, true)));    
                 if($this->user->Status == 'validated'){
                     array_push($mainMenu, array('title'=>'Mis Datos', 'url'=>$this->view->url(array('controller'=>'branch', 'action'=>'new'),null, true)));   
                 }
@@ -52,7 +50,6 @@ class IndexController extends Zend_Controller_Action
                     array_push($mainMenu, array('title'=>'Mis Promos', 'url'=>$this->view->url(array('controller'=>'promotion', 'action'=>'index'),null, true)));
                     array_push($mainMenu, array('title'=>'Mis Costos', 'url'=>$this->view->url(array('controller'=>'payment', 'action'=>'index'),null, true)));
                 }
-                array_push($mainMenu, array('title'=>'Mensajes', 'url'=>$this->view->url(array('controller'=>'index', 'action'=>'contactadm'),null, true)));
                 array_push($mainMenu, array('title'=>'Ayuda', 'url'=>$this->view->url(array('controller'=>'index', 'action'=>'help'),null, true)));
             }
             $this->view->menu = $mainMenu;
@@ -105,15 +102,6 @@ class IndexController extends Zend_Controller_Action
         catch(Exception $ex){
             PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'IndexController->helpAction()',$ex, $_SERVER['REQUEST_URI']);
         }
-    }
-    
-    function contactadmAction(){
-         try{
-            
-        }
-        catch(Exception $ex){
-            PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'IndexController->contactadmAction()',$ex, $_SERVER['REQUEST_URI']);
-        }    
     }
     
     function conditionsAction(){

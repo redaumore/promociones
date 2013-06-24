@@ -8,6 +8,7 @@ class PAP_Model_Message
      protected $_email;
      protected $_name;
      protected $_message_type;
+     protected $_location;
 
      
     public function __construct(array $options = null)
@@ -88,6 +89,16 @@ class PAP_Model_Message
     public function getIp()
     {
         return $this->_ip;
+    }
+    
+    public function setLocation($text)
+    {
+        $this->_location = (string) $text;
+        return $this;
+    }
+    public function getLocation()
+    {
+        return $this->_location;
     }
     
     public function setIpNumber($text)

@@ -32,6 +32,7 @@ class PAP_Model_MessageMapper
             'message' => $message->getMessage(),
             'email' => $message->getEmail(),
             'name' => $message->getName(),
+            'location' => $message->getLocation(),
             'message_type' => $message->getMessageType(),
             'created' => date('Y-m-d H:i:s'),
         );
@@ -57,6 +58,7 @@ class PAP_Model_MessageMapper
                   ->setMessage($row->message)
                   ->setEmail($row->email)
                   ->setName($row->name)
+                  ->setLocation($row->location)
                   ->setMessageType($row->type)
                   ->setCreated($row->created);
     }
