@@ -20,19 +20,17 @@
     <hr class="hr-subtitle"/>
     <?php echo $this->errorMessage($this->form, $messages); ?>
     <?php echo $this->partial("index/_alert.phtml"); ?>
-    <div class="row pagination-centered">
-        <div class="span12">
+    <div id="div_grid_container" class="row-fluid pagination-centered">
             <table width="100%">
                 <tr><td align="center">
                     <table id="list2"></table>
                     <div id="pager2"></div>
                 </td></tr>
             </table>
-        </div>
         </br>
         </br>
     </div>
-    <div class="row pagination-centered">
+    <div class="row-fluid pagination-centered">
         <?php echo $this->partial("promotion/_botonera.phtml"); ?> 
     </div>
 </div>
@@ -55,18 +53,31 @@
          viewrecords: true,
          sortorder: "desc",
          mtype:"POST",
+         autowidth: true,
          height: "100%",
          caption:"Promociones",
          gridComplete: function(){
             var ids = jQuery("#list2").jqGrid('getDataIDs');
             for(var i=0;i < ids.length;i++){
                 var cl = ids[i];
-                be = "<div style='float:left;'><a href='/promotion/edit/id/"+cl+"'><span class='ui-icon ui-icon-pencil'></span></a></div>"; 
-                se = "<div style='float:left;'><a href='/promotion/delete/id/"+cl+"'><span class='ui-icon ui-icon-trash'></span></a></div>"; 
+                var today = new Date();
+                var _data_row = jQuery("#list2").getRowData(cl).Inicio.split("/");
+                var start = new Date(_data_row[2], _data_row[1], _data_row[0]);
+                start.setDate(start.getDate()+ 1);
+                be = "<div style='float:left;'><a href='/promotion/edit/id/"+cl+"'><span class='ui-icon ui-icon-pencil'></span></a></div>";
+                if(start <= today)
+                    se = "";
+                else 
+                    se = "<div style='float:left;'><a href='/promotion/delete/id/"+cl+"'><span class='ui-icon ui-icon-trash'></span></a></div>"; 
                 jQuery("#list2").jqGrid('setRowData',ids[i],{act:be+se});
             }    
     },
      })
      //jQuery("#list2").jqGrid('GridNav','#pager2',{edit:false,add:false,del:false});
+     
+     $(window).bind('resize', function() {
+        //$('#list2').setGridWidth(width, true); //Back to original width
+        $('#list2').setGridWidth($('#div_grid_container').width(), true); //Resized to new width as per window
+     }).trigger('resize');
 </script>
  
