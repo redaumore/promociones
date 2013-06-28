@@ -301,6 +301,12 @@ class PAP_Model_PromotionMapper
         }
         $in = '('.substr($in, 0, strlen($in)-1).')';
         
+        $incat = '';
+        if($categories <> ''){
+            $incat = implode(',', $categories);     
+        }
+        
+        
         $adapter = Zend_Db_Table::getDefaultAdapter();
         //$statement = (($origin=='')?"SELECT DISTINCT b.name, b.latitude, b.longitude, p.*, i.path FROM promotion p ":
         //$statement = "SELECT DISTINCT b.name, b.latitude, b.longitude, p.*, i.path FROM promotion p ".
@@ -311,8 +317,8 @@ class PAP_Model_PromotionMapper
                      "LEFT JOIN image i ON (p.promotion_id = i.parent_id AND i.parent_type = 'P') ".
                      (($categories == '')?'':"INNER JOIN category_user cu ON (b.user_id = cu.user_id) ").
                      "WHERE p.starts <= '".date('Y-m-d')."' AND p.ends >= '".date('Y-m-d')."' AND pb.branch_id IN ".$in. " ".
-                     (($categories == '')?'':"AND cu.category_id IN (".$categories.")");
-                     (($limit == 0)?'':"ORDER BY p.promo_cost DESC LIMIT ".$limit." ");
+                     (($incat == '')?'':"AND cu.category_id IN (".$incat.") ").
+                     "ORDER BY p.promo_cost DESC ".(($limit == 0)?'':"LIMIT ".$limit." ");
                      
         $results = $adapter->fetchAll($statement);
         return $results;

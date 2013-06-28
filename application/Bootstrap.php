@@ -90,8 +90,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             'message' => 'message',
             'timestamp' => 'timestamp', 
             'user' => 'user',    
-            'file' => 'file',
-            'line' => 'line',
             'params' => 'params',
             'context' => 'context',
             );

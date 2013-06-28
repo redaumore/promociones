@@ -374,7 +374,7 @@
                     $mensajes = $form->filePromo->getMessages();
                     throw new Exception('Error!!');
                 }
-                chmod($logoName,0777);
+                //chmod($logoName,0777);
                 $i++;    
             }
             /*foreach ($adapter->getFileInfo() as $info)

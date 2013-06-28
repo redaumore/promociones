@@ -93,6 +93,20 @@ class BackendajaxController extends Zend_Controller_Action
         }
     }
     
+    public function getcategoriesAction(){
+            try{
+            $this->_helper->layout()->disableLayout();
+            $this->_helper->viewRenderer->setNoRender();
+                
+            $category = new PAP_Model_Category();
+            $categories = $category->getAll();
+            $this->_helper->json($categories);
+        }
+        catch(Exception $ex){
+            PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'BackendAjaxController->getcategoriesAction()',$ex, $_SERVER['REQUEST_URI']);
+        }
+    }
+    
     public function getprovAction(){
         try{
             $this->_helper->layout()->disableLayout();

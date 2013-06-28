@@ -37,12 +37,31 @@ class servicesController extends Zend_Controller_Action
             $this->view->callback = $callback;
 
             $lat  = $this->_getParam('lat'); //$_GET['lat'];
-            $lng = $this->_getParam('lng'); //$_GET['lng']; 
+            $lng = $this->_getParam('lng'); //$_GET['lng'];
+            $categories = $this->_getParam('cat').'';
+            $page = $this->_getParam('page').'';
+            $uuid = $this->_getParam('uuid').'';
+            if($categories <> ""){
+                $categories = explode(',', $categories);
+                $finalcategories = array();
+                for($i=0; $i<count($categories); $i=$i+1){
+                    $finalcategories[] = $categories[$i];
+                    if($categories[$i]%10 == 0){
+                        for($y=1;$y<10;$y=$y+1){
+                            $finalcategories[] = $categories[$i]+$y;
+                        }
+                    }    
+                } 
+            }
+            else{
+                $finalcategories = '';
+            }
             $promotion = new PAP_Model_Promotion();
-            $data = $promotion->getPromotionsByCoords($lat, $lng, '');
+            $data = $promotion->getPromotionsByCoords($lat, $lng, $finalcategories);
             
             $i = 0;
             foreach($data as $item){
+                $data[$i]["logo"] = $this->getDataURI("./images".$item["logo"]);
                 $data[$i]["path"] = $this->getDataURI("./images".$this->getThumb($item["path"]));
                 $i = $i + 1;
             }
