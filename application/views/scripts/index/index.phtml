@@ -22,7 +22,7 @@
 <a id="a_carousel"/>
 <div class="row-fluid pagination-centered">
     <div class="span10 offset1">
-    <div id="mycarousel" class="jcarousel-skin-ie7">
+    <div id="mycarousel" class="jcarousel-skin-ie7" style="padding-left: 40px;">
         <ul><!-- The content will be dynamically loaded in here --></ul>
     </div>
     </div>
@@ -100,10 +100,13 @@
 
             // itemVisibleOutCallback: {onAfterAnimation: function(carousel, item, i, state, evt) { carousel.remove(i); }},
             itemLoadCallback: mycarousel_itemLoadCallback,
+            animation: 1500,
+            scroll: 1,
             auto: 5,
-            animation: "slow",
-            scroll: 5,
+            animation: 1500,
             wrap: "circular",
+            size: 20,
+            
         });
         jQuery('#mycarousel').hide();
     });

@@ -99,6 +99,7 @@
     <div class="row-fluid pagination-centered">
         <input type="button" class="btn btn-primary" id="btn_pay" value="Informar Pago" onclick="sendPayment();"></input>
         <input type="button" class="btn btn-primary" id="cancel" value="Cancelar" onclick="hidePaymentForm();"></input>
+        <input type="button" class="btn btn-primary" id="btn_accountinfo" value="Imprimir Info" onclick="printAccountInfo();"></input>
     </div>
     <input type="hidden" id="charges_ids" />
 </div>
@@ -136,4 +137,10 @@
        });
        $("#txt_fecha" ).datepicker( "setDate", new Date() );
     });
+    
+    function printAccountInfo(){
+        var periods = jQuery("#txt_desc_pago").val();
+        var amount = jQuery("#txt_monto").val();
+        window.open("payment/accountinfo/periods/"+periods+"/amount/"+amount, 'info', 'height=360,width=390,left=100,top=100,resizable=no,scrollbars=no,toolbar=no,status=no');
+    }
 </script>

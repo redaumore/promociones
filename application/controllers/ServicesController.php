@@ -423,6 +423,25 @@ class servicesController extends Zend_Controller_Action
             $this->getFrontController()->setResponse($response); 
         }    
     }
+    
+    public function preregisterAction(){
+        try{
+            $this->_helper->layout->setLayout('json');  
+            $callback = $this->getRequest()->getParam('jsoncallback');
+            if ($callback != ""){
+                // strip all non alphanumeric elements from callback
+                $callback = preg_replace('/[^a-zA-Z0-9_]/', '', $callback);
+            }  
+            $this->view->callback = $callback;
+            $email = $this->_getParam('email');
+            $name = $this->_getParam('name');
+            $mapper = new PAP_Model_PreregisterMapper();
+            $mapper->insert($email, $name);    
+        }
+        catch(Exception $ex){
+            PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'ServiceController->preregisterAction',$e, $_SERVER['REQUEST_URI']);    
+        }    
+    }
 }
 
 

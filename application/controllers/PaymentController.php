@@ -277,4 +277,53 @@ class PaymentController extends Zend_Controller_Action
     }
     return $status_char;    
     }
+    
+    public function accountinfoAction(){
+        $this->_helper->layout()->disableLayout();
+        
+        //$this->_helper->viewRenderer->setNoRender(true);
+        $periods = $this->getRequest()->getparam("periods");
+        $amount = $this->getRequest()->getparam("amount");
+        $titular = "Rolando Daumas";
+        $dni = "22367175";
+        $bank = "Banco Galicia";
+        $account_type = "Caja de Ahorro";
+        $cbu = "00700108 - 30004004782152";
+        
+        $html ="<table>"
+        ."<tr>"
+        ."    <td class='label'>Titular:</td>"
+        ."    <td><span id='titular'>".$titular."</span></td>"
+        ."</tr>"
+        ."<tr>"
+        ."    <td class='label'>DNI</td>"
+        ."    <td><span id='dni'>".$dni."</span></td>"
+        ."</tr>"
+        ."<tr>"
+        ."    <td class='label'>Banco:</td>"
+        ."    <td><span id='bank'>".$bank."</span></td>"
+        ."</tr>"
+        ."<tr>"
+        ."    <td class='label'>CBU:</td>"
+        ."    <td><span id='cbu'>".$cbu."</span></td>"
+        ."</tr>"
+        ."<tr>"
+        ."    <td class='label'>Tipo Cuenta:</td>"
+        ."    <td><span id='acctype'>".$account_type."</span></td>"
+        ."</tr>"
+        ."<tr>"
+        ."    <td class='label'>Períodos:</td>"
+        ."    <td><span id='acctype'>".$periods."</span></td>"
+        ."</tr>"
+        ."<tr>"
+        ."    <td class='label'>Monto Total:</td>"
+        ."    <td><span id='acctype'>".$amount."</span></td>"
+        ."</tr>"
+        ."<tr>"
+        ."    <td colspan='2' align='center'><input type='button' value='Imprimir' onclick='window.print();'/></td>"
+        ."</tr>"
+        ."</table>";
+        
+        echo $html;    
+    }
 }

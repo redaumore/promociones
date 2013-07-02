@@ -457,6 +457,36 @@ function collectPromotionFormData(){
     return data;
 }
 
+function preregister(){
+    var name = jQuery("#name").val();
+    var email = jQuery("#email").val();
+    if(_baseServUri == "")
+        _baseServUri = "http://dev.promosalpaso.com/services/";
+    if(name == "" || email == "")
+        alert("El nombre y el email son requeridos");
+    else{
+        $.ajax({
+                url: _baseServUri + 'preregister',
+                dataType: 'jsonp',
+                data: {"name":name, 
+                       "email":email,
+                },
+                jsonp: 'jsoncallback',
+                contentType: "application/json; charset=utf-8",
+                timeout: 5000,
+                success: function(data, status){
+                    alert("Gracias por contactarte. Te avisaremos cuando salgamos al aire!!");
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    alert("Hubo un error guardando la información. Intenta dentro de algunos minutos.");    
+                }
+            });
+    }
+        
+}
+
+
+
 
 
 
