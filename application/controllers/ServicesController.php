@@ -61,8 +61,11 @@ class servicesController extends Zend_Controller_Action
             
             $i = 0;
             foreach($data as $item){
-                $data[$i]["logo"] = $this->getDataURI("./images".$item["logo"]);
-                $data[$i]["path"] = $this->getDataURI("./images".$this->getThumb($item["path"]));
+                $image = $this->getDataURI("./images".$this->getThumb($item["path"]));
+                if($image == "NOPIC")
+                    $data[$i]["path"] = $this->getDataURI("./images".$item["logo"]);
+                else
+                    $data[$i]["path"] = $this->getDataURI("./images".$this->getThumb($item["path"]));
                 $i = $i + 1;
             }
             
@@ -100,7 +103,11 @@ class servicesController extends Zend_Controller_Action
             
             $i = 0;
             foreach($data as $item){
-                $data[$i]["path"] = $this->getDataURI("./images".$this->getThumb($item["path"]));
+                $image = $this->getDataURI("./images".$this->getThumb($item["path"]));
+                if($image == "NOPIC")
+                    $data[$i]["path"] = $this->getDataURI("./images".$item["logo"]);
+                else
+                    $data[$i]["path"] = $this->getDataURI("./images".$this->getThumb($item["path"]));
                 $i = $i + 1;
             }
             
@@ -384,6 +391,37 @@ class servicesController extends Zend_Controller_Action
         ob_get_clean();
         $this->getFrontController()->setResponse($response);     
          
+    }
+    
+    public function getpromoimageAction(){
+        try{
+            $this->_helper->layout->setLayout('json');  
+            
+            $callback = $this->getRequest()->getParam('jsoncallback');
+            if ($callback != "")
+            {
+                // strip all non alphanumeric elements from callback
+                $callback = preg_replace('/[^a-zA-Z0-9_]/', '', $callback);
+            }  
+            $this->view->callback = $callback;
+            
+            $data = array();
+            $promo_id = $this->_getParam('promoid');
+            
+            $promo = new PAP_Model_Promotion();
+            $promo->loadById($promo_id);
+            $pathImage = $promo->getImage();
+            
+            $data["image"] = $this->getDataURI("./images".$pathImage->getPath());
+             
+            $response = $this->getFrontController()->getResponse();
+            $response->appendBody($callback.'('.json_encode($data).')');
+            $this->getFrontController()->throwExceptions(false);
+            $this->getFrontController()->setResponse($response); 
+        }
+        catch(Exception $ex){
+            
+        }    
     }
     
     public function sendmessageAction(){

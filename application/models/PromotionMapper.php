@@ -334,7 +334,7 @@ class PAP_Model_PromotionMapper
                      "INNER JOIN branch b ON pb.branch_id = b.branch_id ".
                      "INNER JOIN city c ON b.city_id = c.city_id ".
                      "LEFT JOIN image i ON (p.promotion_id = i.parent_id AND i.parent_type = 'P') ".
-                     "WHERE p.starts <= '".date('Y-m-d')."' AND p.ends >= '".date('Y-m-d')."' AND p.promotion_id IN (".$ids.")";
+                     "WHERE p.state = 'A' AND p.starts <= '".date('Y-m-d')."' AND p.ends >= '".date('Y-m-d')."' AND p.promotion_id IN (".$ids.")";
         $results = $adapter->fetchAll($statement);
         return $results;
     }

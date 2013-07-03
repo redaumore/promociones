@@ -44,7 +44,7 @@ class PAP_Form_ContactForm extends Zend_Form
         ));
         $this->email->addDecorators($decorators);
         
-        $control = new Zend_Form_Element_TextArea('message');
+        $control = new Zend_Form_Element_Textarea('message');
         $control->setLabel('Mensaje ')
             ->setOptions(array('rows' => '10','cols' => '50'))
             ->setRequired(true)
