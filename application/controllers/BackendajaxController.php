@@ -138,6 +138,7 @@ class BackendajaxController extends Zend_Controller_Action
                 $city = new PAP_Model_City();
                 $city->loadById(150); //TODO 8: Salimos con San Justo por defecto. Luego hay que generalizarlo.
             }
+            PAP_Helper_Logger::writeDebug('BackendAjaxController->getfeaturedAction', 'ip:'.$ip.'|city:'.$city->getId(), $_SERVER['REQUEST_URI']);
             $promos = PAP_Model_Promotion::getPromotionsForWeb($city);
             $total    = count($promos);
             

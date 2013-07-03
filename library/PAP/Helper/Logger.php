@@ -21,6 +21,10 @@ class PAP_Helper_Logger{
         }
     }
     
+    public static function writeDebug($context, $message, $params = ""){
+        self::writeLog(Zend_Log::DEBUG, $context, $message, $params);
+    }
+    
     private static function getPriorityString($priority){
         $str = "";
         switch($priority){
