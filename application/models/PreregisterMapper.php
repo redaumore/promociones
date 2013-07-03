@@ -1,7 +1,7 @@
 <?php
 class PAP_Model_PreregisterMapper
 {
-    public function insert($name, $email){
+    public function insert($email, $name){
         try{
             $data = array(
                 'name'   => $name,

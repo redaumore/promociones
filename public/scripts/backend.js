@@ -461,7 +461,7 @@ function preregister(){
     var name = jQuery("#name").val();
     var email = jQuery("#email").val();
     if(_baseServUri == "")
-        _baseServUri = "http://dev.promosalpaso.com/services/";
+        _baseServUri = decodeBase64("aHR0cDovL2Rldi5wcm9tb3NhbHBhc28uY29tL3NlcnZpY2VzLw==");
     if(name == "" || email == "")
         alert("El nombre y el email son requeridos");
     else{

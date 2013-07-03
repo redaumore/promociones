@@ -50,7 +50,13 @@
     
     function carouselSuccess(data){
         var carousel = jQuery('#mycarousel').data('jcarousel');
-        var response = data.responseText.substring(0, data.responseText.indexOf("<br />"));
+        var response = data.responseText;
+        
+        if(data.responseText.indexOf("<br />") >= 0)
+            response = data.responseText.substring(0, data.responseText.indexOf("<br />"));
+        if(response.indexOf("<div")>=0)
+            response = response.substring(0, response.indexOf("<div")); 
+        
         var jsondata = JSON.parse(response);
         jQuery("#slider_promos").val(response);
         mycarousel_itemAddCallback(carousel, carousel.first, carousel.last, jsondata);    
@@ -91,6 +97,24 @@
         return promo_html;
     };
     
+    function mycarousel_initCallback(carousel)
+    {
+        // Disable autoscrolling if the user clicks the prev or next button.
+        carousel.buttonNext.bind('click', function() {
+            carousel.startAuto(0);
+        });
+        carousel.buttonPrev.bind('click', function() {
+            carousel.startAuto(0);
+        });
+    
+        // Pause autoscrolling if the user moves with the cursor over the clip.
+        carousel.clip.hover(function() {
+            carousel.stopAuto();
+        }, function() {
+            carousel.startAuto();
+            });
+    }; 
+        
     jQuery(document).ready(function() {
         jQuery('#mycarousel').jcarousel({
             // Uncomment the following option if you want items
@@ -99,14 +123,11 @@
             // Useful for carousels with MANY items.
 
             // itemVisibleOutCallback: {onAfterAnimation: function(carousel, item, i, state, evt) { carousel.remove(i); }},
-            itemLoadCallback: mycarousel_itemLoadCallback,
-            animation: 1500,
-            scroll: 1,
-            auto: 5,
-            animation: 1500,
-            wrap: "circular",
-            size: 20,
-            
+            initCallback: mycarousel_initCallback,
+            itemLoadCallback: {onBeforeAnimation: mycarousel_itemLoadCallback},
+            animation: 2000,
+            wrap: "last",
+            auto: 2,
         });
         jQuery('#mycarousel').hide();
     });
