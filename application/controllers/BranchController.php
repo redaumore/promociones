@@ -108,7 +108,7 @@ class BranchController extends Zend_Controller_Action
         $data["user"] = $this->user->getId();
         
         if(isset($data['filebranch'])){
-            $relativeImageDir = '/customers/'.$data["user"];
+            $relativeImageDir = '/images/customers/'.$data["user"];
             $customerImageDir = IMAGE_PATH.$relativeImageDir;
         
             //Tratamiento de la imagen

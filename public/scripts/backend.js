@@ -398,19 +398,32 @@ function FillPromotion(promotion){
     jQuery('#det-long_description').text(promotion.long_description);
     jQuery('#det-displayed_text').text(promotion.displayed_text);
     if(promotion.path != null)
-        jQuery('#det-img-promo').attr("src", '/images'+promotion.path.replace(/\\/g, '/')+"?"+time.getTime());
+        jQuery('#det-img-promo').attr("src", promotion.path);
+        //jQuery('#det-img-promo').attr("src", '/images'+promotion.path.replace(/\\/g, '/')+"?"+time.getTime());
     else
-        jQuery('#det-img-promo').attr("src", '/images'+promotion.logo.replace(/\\/g, '/')+"?"+time.getTime());
+        jQuery('#det-img-promo').attr("src", promotion.logo);
+    //    jQuery('#det-img-promo').attr("src", '/images'+promotion.logo.replace(/\\/g, '/')+"?"+time.getTime());
     jQuery('#det-short_description').text(promotion.short_description);
     if(promotion.value_since)
         jQuery('#det-short_description').show
     else
         jQuery('#det-short_description').hide;
     jQuery('#det-promo_value').html(formatPrice(promotion.promo_value));
+    
     if(promotion.value_since == "1")
         jQuery('#precio_desde').html("desde");
     else
         jQuery('#precio_desde').html("&nbsp;");
+    
+    if(promotion.is_percentage == "1"){
+        jQuery("#det-promo_value").removeClass("precio");
+        jQuery("#det-promo_value").addClass("porcentaje");
+    }
+    else{
+        jQuery("#det-promo_value").removeClass("porcentaje");
+        jQuery("#det-promo_value").addClass("precio");
+    }
+    
     if(promotion.alert_type == 'N')
         jQuery('#det-alarma').hide();
     if(promotion.alert_type == 'D'){
@@ -444,10 +457,11 @@ function collectPromotionFormData(){
         "logo": userInfo.branch_logo,
         "long_description": jQuery("#longDescription").val(),
         "displayed_text": jQuery("#displayedText").val(),
-        "path": userInfo.promo_image,
+        "path": jQuery("#imagePromo").attr("src"),  //userInfo.promo_image,
         "short_description": jQuery("#shortDescription").val(),
         "promo_value": jQuery("#promoValue").val(),
-        "value_since": jQuery("#valueSince").val(),
+        "value_since": jQuery("#valueSince").is(':checked'),
+        "is_percentage": jQuery("#valueType").is(':checked'),
         "alert_type": jQuery("#alertType").val(),
         "latitude": jQuery("#hidden_latitude").val(),    
         "longitude": jQuery("#hidden_longitude").val(),

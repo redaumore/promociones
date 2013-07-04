@@ -66,6 +66,8 @@ class BackendajaxController extends Zend_Controller_Action
             $promotion_id = $this->_getParam('promotion_id');
             $promotion = new PAP_Model_Promotion();
             $data = $promotion->getViewRecord($promotion_id);
+            $data[0]['path'] = '/images'.$data[0]['path'];
+            $data[0]['logo'] = '/images'.$data[0]['logo'];
             $this->_helper->json($data);
         //} 
         }

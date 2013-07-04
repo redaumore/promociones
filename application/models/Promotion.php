@@ -22,6 +22,7 @@ class PAP_Model_Promotion
     protected $_created;
     protected $_updated;
     protected $_images;
+    protected $_ispercentaje;
     protected $_radius = 2;
     
     public function __construct(array $options = null)
@@ -58,6 +59,7 @@ class PAP_Model_Promotion
                 $this->$method($value);
             }
         }
+        $this->setIsPercentaje($options["valueType"]);
         return $this;
     }
     
@@ -125,6 +127,14 @@ class PAP_Model_Promotion
     }
     public function getPromoCode(){
         return $this->_promocode;
+    }
+    
+    public function setIsPercentaje($text){
+        $this->_ispercentaje = (bool) $text;
+        return $this;
+    }
+    public function getIsPercentaje(){
+        return $this->_ispercentaje;
     }
 
     public function setUserId($text){
@@ -500,13 +510,16 @@ class PAP_Model_Promotion
             for($i = 0; $i < count($imagesObj); $i=$i+1){
                 $img = $imagesObj[$i];
                 $pathimg = explode("/", $img->getPath());
-                $pathimg[2] = $this->getUserId();
-                $pathimg[3] = $this->getId();
+                $pathimg[3] = $this->getUserId();
+                $clonedId = $pathimg[4];
+                $pathimg[4] = $this->getId();
                 $images[] = implode("/", $pathimg);
-                $directory = IMAGE_PATH.'\\'.'customers\\'.$pathimg[2].'\\'.$pathimg[3]; 
+                $directory = IMAGE_PATH.'/'.'customers/'.$pathimg[3].'/'.$pathimg[4]; 
                 if (!file_exists($directory))
                     mkdir($directory);
-                copy(IMAGE_PATH.$img->getPath(), IMAGE_PATH.$images[$i]);
+                    mkdir($directory.'/thumb');
+                copy(PUBLIC_PATH.$img->getPath(), PUBLIC_PATH.$images[$i]);
+                copy(PUBLIC_PATH.'/images/customers/'.$pathimg[3].'/'.$clonedId.'/thumb/'.$pathimg[5], PUBLIC_PATH.'/images/customers/'.$pathimg[3].'/'.$pathimg[4].'/thumb/'.$pathimg[5]);
             }    
         }
         else{

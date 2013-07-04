@@ -40,7 +40,7 @@
             else{
                 $this->loadUserBranches($this->user);
             }
-            $form->imagePromo->setOptions(array('src' => '/images'.$this->user->getBranch()->getLogo()));
+            $form->imagePromo->setOptions(array('src' => $this->user->getBranch()->getLogo()));
             $form->promoCode->setValue($this->getAutoPromoCode());
             
             //TODO En la descripcion larga cambiar el estilo
@@ -270,6 +270,9 @@
         $control = $form->getElement('valueSince');
         $control->setValue($promo->getValueSince());
         
+        $control = $form->getElement('valueType');
+        $control->setValue($promo->getIsPercentaje());
+        
         $control = $form->getElement('quantity');
         $control->setValue($promo->getQuantity());
         
@@ -294,9 +297,9 @@
         $control = $form->getElement('imagePromo');
         $img = $promo->getImage();
         if(isset($img))
-            $control->setOptions(array('src' => '/images'.$img->getPath()."?".time()));
+            $control->setOptions(array('src' => $img->getPath()."?".time()));
         else
-            $control->setOptions(array('src' => '/images'.$this->user->getBranch()->getLogo()));
+            $control->setOptions(array('src' => $this->user->getBranch()->getLogo()));
             
         $this->loadJsonUserInfo($promo);
     }
@@ -322,8 +325,8 @@
     {
         if(isset($data['filePromo']))
         {
-            $relativeImageDir = '/customers/'.$data["userId"];
-            $customerImageDir = IMAGE_PATH.$relativeImageDir;
+            $relativeImageDir = '/images/customers/'.$data["userId"];
+            $customerImageDir = IMAGE_PATH.'/customers/'.$data["userId"];
 
             $form = $this->view->form;            
             $adapter = $form->filePromo->getTransferAdapter();

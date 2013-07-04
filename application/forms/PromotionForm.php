@@ -107,6 +107,14 @@ class PAP_Form_PromotionForm extends Zend_Form
         $control = $this->getElement('valueSince');
         $control->setDecorators($decorators);
         
+        $this->addElement('checkbox', 'valueType', array(
+          'label'   => 'Es porcentaje ',
+          'required'=> false, 
+          'value'   => 0,  
+        ));
+        $control = $this->getElement('valueType');
+        $control->setDecorators($decorators);
+        
         $this->addElement('text', 'quantity', array(
             'label'      => 'Unidades ',
             'required'   => false,
@@ -131,8 +139,8 @@ class PAP_Form_PromotionForm extends Zend_Form
         $control = $this->addElement('text', 'displayedText', array(
             'label'      => 'Título ',      //2x1, Liquidación, etc
             'required'   => true,
-            'size' => 40,
-            'maxlength' => 60, 
+            'size' => 25,
+            'maxlength' => 25, 
             'validators' => array(
                 'StringLength',
             ),

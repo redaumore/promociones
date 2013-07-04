@@ -67,7 +67,15 @@ label[for=branches]{
                                 </div>
                             </div>
                         </div>
-                        <div class="span4 offset2">
+                        <div class="span4">
+                            <div class="control-group">
+                                <?php echo $form->valueType->renderLabel(); ?>
+                                <div class="controls">
+                                    <?php echo $form->valueType->renderViewHelper(); ?>
+                                </div>
+                            </div>
+                         </div>
+                         <div class="span4">
                             <div class="control-group">
                                 <?php echo $form->valueSince->renderLabel(); ?>
                                 <div class="controls">

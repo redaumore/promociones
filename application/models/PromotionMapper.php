@@ -27,8 +27,8 @@ class PAP_Model_PromotionMapper
     {
         $startsDate = strtotime( $promotion->getStarts());
         $startsDate = date( 'Y-m-d H:i:s', $startsDate );
-        $endsDate = strtotime( $promotion->getEnds());
-        $endsDate = date( 'Y-m-d H:i:s', $endsDate.' 23:59:59');
+        $endsDate = strtotime( $promotion->getEnds().' 23:59:59');
+        $endsDate = date( 'Y-m-d H:i:s', $endsDate);
         
         $data = array(
             'promo_code'   => $promotion->getPromoCode(),
@@ -43,6 +43,7 @@ class PAP_Model_PromotionMapper
             'displayed_text' => $promotion->getDisplayedText(),
             'alert_type' => $promotion->getAlertType(),
             'state' => $promotion->getState(),
+            'is_percentage' => ($promotion->getIsPercentaje())?1:0,
             'promo_cost' => $promotion->getPromoCost(),
             //'visited' => $promotion->getVisited(),
             //'updated' => date('Y-m-d H:i:s'),
@@ -153,6 +154,7 @@ class PAP_Model_PromotionMapper
                   ->setAlertType($row->alert_type)
                   ->setState($row->state)
                   ->setVisited($row->visited)
+                  ->setIsPercentaje($row->is_percentage)
                   ->setPromoCost($row->promo_cost)
                   ->setCreated($row->created);
          /*         
@@ -181,7 +183,7 @@ class PAP_Model_PromotionMapper
         }
         $entries   = array();
         foreach ($resultSet as $row) {
-            $entry = new PAP_Model_Branch();
+            $entry = new PAP_Model_Promotion();
             $entry->setId($row->promotion_id)
                   ->setPromoCode($row->promo_code)
                   ->setUserId($row->user_id)
@@ -198,6 +200,7 @@ class PAP_Model_PromotionMapper
                   ->setState($row->state)
                   ->setPromoCost($row->promo_cost)
                   ->setVisited($row->visited)
+                  ->setIsPercentaje($row->is_percentage)
                   ->setCreated($row->created);
             $entries[] = $entry;
         }
@@ -310,7 +313,7 @@ class PAP_Model_PromotionMapper
         $adapter = Zend_Db_Table::getDefaultAdapter();
         //$statement = (($origin=='')?"SELECT DISTINCT b.name, b.latitude, b.longitude, p.*, i.path FROM promotion p ":
         //$statement = "SELECT DISTINCT b.name, b.latitude, b.longitude, p.*, i.path FROM promotion p ".
-        $statement = "SELECT DISTINCT b.name, b.logo, b.latitude, b.longitude, b.street, b.number, b.branch_website, b.branch_email, b.phone, c.name as city, p.short_description, p.displayed_text, p.promotion_id, p.promo_value, p.promo_cost, i.path, p.value_since FROM promotion p ".
+        $statement = "SELECT DISTINCT b.name, b.logo, b.latitude, b.longitude, b.street, b.number, b.branch_website, b.branch_email, b.phone, c.name as city, p.short_description, p.displayed_text, p.promotion_id, p.promo_value, p.promo_cost, i.path, p.value_since, p.is_percentage FROM promotion p ".
                      "INNER JOIN promotion_branch pb ON pb.promotion_id = p.promotion_id ".
                      "INNER JOIN branch b ON pb.branch_id = b.branch_id ".
                      "INNER JOIN city c ON b.city_id = c.city_id ".
@@ -329,7 +332,7 @@ class PAP_Model_PromotionMapper
         $adapter = Zend_Db_Table::getDefaultAdapter();
         //$statement = (($origin=='')?"SELECT DISTINCT b.name, b.latitude, b.longitude, p.*, i.path FROM promotion p ":
         //$statement = "SELECT DISTINCT b.name, b.latitude, b.longitude, p.*, i.path FROM promotion p ".
-        $statement = "SELECT DISTINCT b.name, b.logo, b.latitude, b.longitude, b.street, b.number, b.branch_website, b.branch_email, b.phone, c.name as city, p.short_description, p.displayed_text, p.promotion_id, p.promo_value, p.promo_cost, i.path, p.value_since FROM promotion p ".
+        $statement = "SELECT DISTINCT b.name, b.logo, b.latitude, b.longitude, b.street, b.number, b.branch_website, b.branch_email, b.phone, c.name as city, p.short_description, p.displayed_text, p.promotion_id, p.promo_value, p.promo_cost, i.path, p.value_since, p.is_percentage FROM promotion p ".
                      "INNER JOIN promotion_branch pb ON pb.promotion_id = p.promotion_id ".
                      "INNER JOIN branch b ON pb.branch_id = b.branch_id ".
                      "INNER JOIN city c ON b.city_id = c.city_id ".
