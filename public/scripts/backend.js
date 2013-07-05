@@ -499,6 +499,47 @@ function preregister(){
         
 }
 
+function getToday(){
+    var now = new Date();
+    var today = new Date(now.getFullYear(), now.getMonth(), now.getDay());
+    return today;
+}
+
+function resetPassword(){
+    bootbox.prompt("Ingresa tu email para reestablecer la contraseña.", 
+        function(result) {
+            if(result === null){
+                return false;    
+            }
+            var email = result;
+            var json_data = {"data":[{
+            'email':email, 
+            }]};
+        
+            $.ajax({
+                url: _baseServUri + 'resetpassword',
+                dataType: 'jsonp',
+                data: {"data":json_data},
+                jsonp: 'jsoncallback',
+                async: false,
+                contentType: "application/json; charset=utf-8",
+                timeout: 5000,
+                success: function(data, status){
+                    if(data.result_code != 0){
+                        showMessage('error', data.result_message);    
+                    }
+                    else{
+                        getPayments();    
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    showAjaxError(textStatus, jqXHR.responseText);   
+                }
+            });    
+        }
+    );    
+}
+
 
 
 

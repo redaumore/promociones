@@ -75,11 +75,11 @@ class AuthController extends Zend_Controller_Action
                     $data = $form->getValues();
                     if($data['password'] != $data['confirmPassword']){
                         //$this->view->errorMessage = "Password and confirm password don't match.";
-                        $form->addError("Password and confirm password don't match.");
+                        $form->addError("La contraseña y su confirmación no coinciden.");
                         return;
                     }
                     if($users->checkUnique($data['email'])){
-                        $form->addError("Email already taken. Please choose another one.");
+                        $form->addError("Este Email ya está en uso. Intente con otro.");
                         return;
                     }
                     unset($data['confirmPassword']);

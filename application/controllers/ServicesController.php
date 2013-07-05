@@ -480,6 +480,39 @@ class servicesController extends Zend_Controller_Action
             PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'ServiceController->preregisterAction',$e, $_SERVER['REQUEST_URI']);    
         }    
     }
+    
+    public function resetpasswordAction(){
+        try{
+            $message = "";
+            $this->_helper->layout->setLayout('json');  
+            $callback = $this->getRequest()->getParam('jsoncallback');
+            if ($callback != ""){
+                // strip all non alphanumeric elements from callback
+                $callback = preg_replace('/[^a-zA-Z0-9_]/', '', $callback);
+            }  
+            $this->view->callback = $callback;
+            $email = $this->_getParam('email');
+            $user = new PAP_Model_User();
+            if($user->loadByEmail($email)){
+                if($user->resetPassword())
+                    $message = '({code:0, message:"Tu nueva contraseña fue enviada a '.$email.'."})';
+                else
+                    $message = '({code:300, message:"Tu contraseña no pudo ser cambiada. Por favor envíanos un email a soporte@promosalpaso.com avisandonos de esto."})';        
+            }
+            else{
+                $message = '({code:301, message:"No hemos encontrado un usuario con email '.$email.'. Corrígelo y vuelve a intentarlo."})');
+            }
+            $response = $this->getFrontController()->getResponse();
+                $response->appendBody($callback.'({code:301, message:"No hemos encontrado un usuario con email '.$email.'. Corrígelo y vuelve a intentarlo."})');
+                $this->getFrontController()->setResponse($response);     
+        }
+        catch(Exception $ex){
+            PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'ServiceController->forgotpasswordAction',$e, $_SERVER['REQUEST_URI']);    
+            $response = $this->getFrontController()->getResponse();
+                $response->appendBody($callback.'({code:302, message:"No hemos encontrado un usuario con email '.$email.'. Corrígelo y vuelve a intentarlo."})');
+                $this->getFrontController()->setResponse($response); 
+        }    
+    }
 }
 
 

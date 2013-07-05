@@ -125,6 +125,10 @@ class PAP_Model_PromotionMapper
         $where[] = $table->getAdapter()->quoteInto('parent_type = ?', 'P');
         $table->delete($where);   
         $where = null;
+        
+        $table = new PAP_Model_DbTable_PromotionBranch();
+        $where = $table->getAdapter()->quoteInto('promotion_id = ?', $promotion->getId());
+        $table->delete($where);
                             
         $table = $this->getDbTable();
         $where = $table->getAdapter()->quoteInto('promotion_id = ?', $promotion->getId());
@@ -135,7 +139,7 @@ class PAP_Model_PromotionMapper
     {
         $result = $this->getDbTable()->find($id);
         if (0 == count($result)) {
-            return;
+            return false;
         }
         $row = $result->current();
         
@@ -169,6 +173,7 @@ class PAP_Model_PromotionMapper
          }
          $promotion->setImages($oimages);*/
          $promotion->loadImages();
+         return true;
     }
  
     public function fetchAll($userId = null)
