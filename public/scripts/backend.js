@@ -525,11 +525,11 @@ function resetPassword(){
                 contentType: "application/json; charset=utf-8",
                 timeout: 5000,
                 success: function(data, status){
-                    if(data.result_code != 0){
-                        showMessage('error', data.result_message);    
+                    if(data.code != 0){
+                        showMessage('error', data.message);    
                     }
                     else{
-                        getPayments();    
+                        showMessage('info', 'Tu nueva contraseña se ha enviado a tu casilla de email.');    
                     }
                 },
                 error: function(jqXHR, textStatus, errorThrown){

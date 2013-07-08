@@ -44,9 +44,12 @@ class PAP_Model_User
     }
     
     public function loadByEmail($email){
+        $result = false;
         $userMapper = new PAP_Model_UserMapper();
-        $userMapper->loadByEmail($email, $this);
-        $this->loadBillingAddress();
+        $result = $userMapper->loadByEmail($email, $this);
+        if($result)
+            $this->loadBillingAddress();
+        return $result;
     }
     
     public function loadById($id){

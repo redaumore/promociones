@@ -500,7 +500,7 @@ class servicesController extends Zend_Controller_Action
                     $message = '({code:300, message:"Tu contraseña no pudo ser cambiada. Por favor envíanos un email a soporte@promosalpaso.com avisandonos de esto."})';        
             }
             else{
-                $message = '({code:301, message:"No hemos encontrado un usuario con email '.$email.'. Corrígelo y vuelve a intentarlo."})');
+                $message = '({code:301, message:"No hemos encontrado un usuario con email '.$email.'. Corrígelo y vuelve a intentarlo."})';
             }
             $response = $this->getFrontController()->getResponse();
                 $response->appendBody($callback.'({code:301, message:"No hemos encontrado un usuario con email '.$email.'. Corrígelo y vuelve a intentarlo."})');
