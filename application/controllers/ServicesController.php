@@ -434,16 +434,20 @@ class servicesController extends Zend_Controller_Action
             }  
             $this->view->callback = $callback;
             $email = $this->_getParam('email');
-            $message = $this->_getParam('message');
+            $msg = $this->_getParam('message');
             $uuid = $this->_getParam('uudi');
             $name = $this->_getParam('name');
             $lat = $this->_getParam('lat');
             $lng = $this->_getParam('lng');
-            
+            if($lat == "" && $lng == "")
+                $location = "No disponible";
+            else
+                $location = $lat.";".$lng;
+                
             $message = new PAP_Model_Message();
             $message->setEmail($email)
-                    ->setLocation($lat.";".$lng)
-                    ->setMessage($message)
+                    ->setLocation($location)
+                    ->setMessage($msg)
                     ->setMessageType("M")
                     ->setName($name)
                     ->setIp($uuid);
