@@ -102,10 +102,11 @@
             $promo_id = $this->getParam('id');
             $promoMapper = new PAP_Model_PromotionMapper();
             $promotion = new PAP_Model_Promotion();
-            $promoMapper->find($promo_id, $promotion);
+            $promotion->loadById($promo_id);
             if($this->dateDiff($promotion->getStarts(), null) >= 0 ){
                 //TODO Borrado lògico de las promociones y permitir borrar las promos del dìa actual
-                $promoMapper->delete($promotion);
+                //$promoMapper->delete($promotion);
+                PAP_Model_Promotion::delete($promo_id);
             }
             $this->_redirect('promotion/index'); 
             //@todo Mostrar mensaje al usuario
@@ -415,7 +416,7 @@
           $pivot = date("Y-m-d");
          }
          
-         $date = DateTime::createFromFormat('d/m/Y', $date);
+         $date = DateTime::createFromFormat('d-m-Y', $date);
          $date = $date->format('Y-m-d');
          //$pivot = strtotime($pivot);
          

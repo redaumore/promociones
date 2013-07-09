@@ -83,8 +83,13 @@ protected $_dbTable;
     
     public function loadByEmail($email, PAP_Model_user $user){
         $user_id = $this->getIdByEmail($email);
-        if(isset($user_id))
+        if($user_id){
             $this->find($user_id, $user);
+            return true;    
+        }
+        
+        return false;
+            
     }
  
     public function fetchAll()

@@ -244,7 +244,7 @@ label[for=branches]{
    });
    if(jQuery("#starts").val() == "")
         jQuery("#ends").datepicker( "setDate", new Date() );
-   if(jQuery("#starts").datepicker("getDate") < Date.now())
+   if(jQuery("#starts").datepicker("getDate") < getToday())
         jQuery("#starts").datepicker("disable"); 
         //jQuery("#starts").datepicker({minDate:-1,maxDate:-2}).attr('readonly','readonly');
    

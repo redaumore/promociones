@@ -103,7 +103,7 @@ class PAP_Model_Promotion
     
     public function loadById($promotion_id){
         $promoMapper = new PAP_Model_PromotionMapper();
-        $promoMapper->find($promotion_id, $this);
+        return $promoMapper->find($promotion_id, $this);
     }
     
     public function getViewRecord($promotion_id){
@@ -537,6 +537,47 @@ class PAP_Model_Promotion
         return $auto;
     }
     
+    public static function delete($id){
+        $promo = new PAP_Model_Promotion();
+        if($promo->loadById($id)){
+            $mapper = new PAP_Model_PromotionMapper();
+            $promo->deleteImages();
+            $mapper->delete($promo);
+            return true;    
+        }
+        return false;
+    }
+    
+    private function deleteImages(){
+        $img = $this->getImage();
+        $arr = explode('/', $img->getPath());
+        $imgdir = '/'.$arr[1].'/'.$arr[2].'/'.$arr[3].'/'.$this->getId();
+        $this->deleteDirectory(PUBLIC_PATH.$imgdir);
+    }
+    
+    public function getThumb($idx = 0){
+        $img = $this->getImage($idx);
+        $arr = explode('/', $img->getPath());
+        $thumb = '/'.$arr[1].'/'.$arr[2].'/'.$arr[3].'/'.$arr[4].'/thumb/'.$arr[5];
+        return $thumb;
+    }
+    
+    function deleteDirectory($dir) {
+        try{
+            if (!file_exists($dir)) return true;
+            if (!is_dir($dir) || is_link($dir)) 
+                return unlink($dir);
+            foreach (scandir($dir) as $item) {
+                if ($item == '.' || $item == '..') continue;
+                if (!$this->deleteDirectory($dir . "/" . $item)) {
+                    chmod($dir . "/" . $item, 0777);
+                    if (!$this->deleteDirectory($dir . "/" . $item)) return false;
+                };
+            }
+            return rmdir($dir);
+        }
+        catch(Exception $ex){}
+    }
 }
 
 

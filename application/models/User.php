@@ -44,9 +44,12 @@ class PAP_Model_User
     }
     
     public function loadByEmail($email){
+        $result = false;
         $userMapper = new PAP_Model_UserMapper();
-        $userMapper->loadByEmail($email, $this);
-        $this->loadBillingAddress();
+        $result = $userMapper->loadByEmail($email, $this);
+        if($result)
+            $this->loadBillingAddress();
+        return $result;
     }
     
     public function loadById($id){
@@ -245,6 +248,63 @@ class PAP_Model_User
     public function getRol()
     {
         return $this->_rol;
+    }
+    
+    public function resetPassword(){
+        $newPassword = PAP_Helper_Tools::generateRandomString();
+        $this->setPassword($newPassword);
+        $this->update();
+        return $this->sendResetPasswordEmail($this->getEmail(), $newPassword);
+    }
+    
+    private function sendResetPasswordEmail($email, $newpassword){
+        try {
+            //DONE -o RED:  Envìo de email de validaciòn.
+            $to = $email;
+            $subject = "Tu contraseña en Promos al Paso ha cambiado";
+
+            // compose headers
+            $headers = "From: soporte@promosalpaso.com\r\n";
+            $headers .= "Reply-To: soporte@promosalpaso.com\r\n";
+            $headers .= "X-Mailer: PHP/".phpversion()."\r\n";
+            // To send HTML mail, the Content-type header must be set
+            $headers .= "MIME-Version: 1.0\r\n";
+            $headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
+
+
+            // compose message
+            $message = "<html>
+              <head>
+                <title>Promos al Paso</title>
+              </head>
+              <body>
+                <h1>Su contraseña en Promos al Paso ha cambiado.</h1>
+                <p>
+                    Se ha pedido que cambiemos la contraseña para el backend de Promos al Paso. Estos son los nuevos datos.<br/>
+                    Usuario: ".$email.
+                    "Nueva Contraseña: ".$newpassword.
+                "</p>
+                <p>
+                    Por favor cambiala una vez que hayas ingresado al sistema.
+                </p>
+                <p>
+                    Si consideras que este email fue enviado por error y quieres contarnoslo, por favor hazlo a soporte@promosalpaso.com.
+                </p>
+                <p>
+                    Gracias!!
+                </p>
+              </body>
+            </html>
+            ";
+
+            // send email
+            mail($to, $subject, $message, $headers);
+            return true;    
+        }
+        catch(Exception $ex){
+            PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'User->sendValidationEmail()',$ex, $_SERVER['REQUEST_URI']);
+            return false;
+        }
     }
 }
 
