@@ -61,11 +61,11 @@ class servicesController extends Zend_Controller_Action
             
             $i = 0;
             foreach($data as $item){
-                $image = $this->getDataURI("./images".$this->getThumb($item["path"]));
+                $image = $this->getDataURI(".".$this->getThumb($item["path"]));
                 if($image == "NOPIC")
-                    $data[$i]["path"] = $this->getDataURI("./images".$item["logo"]);
+                    $data[$i]["path"] = $this->getDataURI(".".$item["logo"]);
                 else
-                    $data[$i]["path"] = $this->getDataURI("./images".$this->getThumb($item["path"]));
+                    $data[$i]["path"] = $this->getDataURI(".".$this->getThumb($item["path"]));
                 $i = $i + 1;
             }
             
@@ -103,11 +103,11 @@ class servicesController extends Zend_Controller_Action
             
             $i = 0;
             foreach($data as $item){
-                $image = $this->getDataURI("./images".$this->getThumb($item["path"]));
+                $image = $this->getDataURI(".".$this->getThumb($item["path"]));
                 if($image == "NOPIC")
-                    $data[$i]["path"] = $this->getDataURI("./images".$item["logo"]);
+                    $data[$i]["path"] = $this->getDataURI(".".$item["logo"]);
                 else
-                    $data[$i]["path"] = $this->getDataURI("./images".$this->getThumb($item["path"]));
+                    $data[$i]["path"] = $this->getDataURI(".".$this->getThumb($item["path"]));
                 $i = $i + 1;
             }
             
@@ -141,9 +141,9 @@ class servicesController extends Zend_Controller_Action
             $promotion_id = $this->_getParam('promoid'); //$_GET['lng']; 
             $promotion = new PAP_Model_Promotion();
             $data = $promotion->getPromotionById($promotion_id, $lat, $lng);
-            $data["logo"] = $this->getDataURI("./images".$data["logo"]);
-            $data["path"] = $this->getDataURI("./images".$this->getThumb($data["path"]));
-            $data["promo_photo"] = "./images".$data["path"];
+            $data["logo"] = $this->getDataURI(".".$data["logo"]);
+            $data["path"] = $this->getDataURI(".".$this->getThumb($data["path"]));
+            $data["promo_photo"] = ".".$data["path"];
             
             $response = $this->getFrontController()->getResponse();
             $response->appendBody($callback.'('.json_encode($data).')');
@@ -412,7 +412,7 @@ class servicesController extends Zend_Controller_Action
             $promo->loadById($promo_id);
             $pathImage = $promo->getImage();
             
-            $data["image"] = $this->getDataURI("./images".$pathImage->getPath());
+            $data["image"] = $this->getDataURI(".".$pathImage->getPath());
              
             $response = $this->getFrontController()->getResponse();
             $response->appendBody($callback.'('.json_encode($data).')');

@@ -227,7 +227,6 @@
             
             foreach ($promotions as $r) {
                 $response['rows'][$i]['id']=$r['promotion_id']; //id
-                $r['path'] = 'images'.$r['path'];
                 $response['rows'][$i]['cell']=array($r['path'],$r['name'],$r['displayed_text'],$r['street'].' '.$r['number'].', '.$r['city'],$r['promo_value'],isset($r['distance'])?(string)$r['distance']:'N/D');
                 $i++;
             }

@@ -153,7 +153,7 @@ function getPromotions(){
                  for(var i=0;i < ids.length;i++){
                      var cl = ids[i];
                      var row = jQuery("#list2").jqGrid('getRowData',cl); 
-                     be = "<img src='/"+row["img"]+"' height='50px' width='50px' onClick='loadPromotion("+cl+")'/>"; //"<a href='/promotion/edit/id/"+cl+"'><span class='ui-icon ui-icon-pencil'></span></a>"; 
+                     be = "<img src='"+row["img"]+"' height='50px' width='50px' onClick='loadPromotion("+cl+")'/>"; //"<a href='/promotion/edit/id/"+cl+"'><span class='ui-icon ui-icon-pencil'></span></a>"; 
                      jQuery("#list2").jqGrid('setRowData',ids[i],{img:be});
                  }
                  jQuery("#gbox_list2").show();

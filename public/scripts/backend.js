@@ -394,7 +394,7 @@ function FillPromotion(promotion){
         promotion = promotion[0];  
     jQuery('#det-name').text(promotion.name);
     jQuery('#det-direccion').text(promotion.street+' '+promotion.number+' - '+promotion.city_name);
-    jQuery('#det-img-comercio').attr("src", '/images'+promotion.logo.replace(/\\/g, '/')+"?"+time.getTime());
+    jQuery('#det-img-comercio').attr("src", promotion.logo.replace(/\\/g, '/')+"?"+time.getTime());
     jQuery('#det-long_description').text(promotion.long_description);
     jQuery('#det-displayed_text').text(promotion.displayed_text);
     if(promotion.path != null)
