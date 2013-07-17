@@ -506,20 +506,18 @@ function getToday(){
 }
 
 function resetPassword(){
-    bootbox.prompt("Ingresa tu email para reestablecer la contraseña.", 
+    bootbox.prompt("Ingresa tu email para enviarte la contraseña.", 
         function(result) {
-            if(result === null){
-                return false;    
+            if(result === null || result == ''){
+                showMessage('info', 'Es necesario ingresar tu email para generar una nueva contraseña.');
+                return;    
             }
             var email = result;
-            var json_data = {"data":[{
-            'email':email, 
-            }]};
-        
+           
             $.ajax({
                 url: _baseServUri + 'resetpassword',
                 dataType: 'jsonp',
-                data: {"data":json_data},
+                data: {"email":email},
                 jsonp: 'jsoncallback',
                 async: false,
                 contentType: "application/json; charset=utf-8",

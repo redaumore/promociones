@@ -426,7 +426,7 @@ body .one .bsa_it_p {
 	}
 }
  
-@media (min-width: 1210px) {
+@media(min-width: 1210px){
  
 	.subnav-fixed .nav {
 		width: 1168px; /* 2px less to account for left/right borders being removed when in fixed mode */
@@ -436,7 +436,7 @@ body .one .bsa_it_p {
 .hr-subtitle{
     color: #7A8288;
     background-color: #7A8288;
-    height: 5px;
+    height: 2px;
     margin-left: auto;
     margin-right: auto;
 }

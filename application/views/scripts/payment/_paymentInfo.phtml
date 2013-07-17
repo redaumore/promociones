@@ -25,10 +25,15 @@
     </div>
     <div class="container form-horizontal">
         <div class="row-fluid">
+            <div class="modal-body">
+                <p style="width: 500px;">En este formulario podrás informar el pago por medio de depósito ó transferencia de tus cargos. Si aún no lo has hecho, puedes imprimir los datos necesarios para realizar la transacción pulsando en "Imprimir Info".</p>
+            </div>
+        </div>
+        <div class="row-fluid">
             <div id="div_desc_pago" class="control-group">
                 <label class="control-label" for="txt_desc_pago">Período/s a pagar:</label>
                 <div class="controls">
-                    <input id="txt_desc_pago" value="" readonly="true">
+                    <input id="txt_desc_pago" type="text" value="" readonly="true">
                 </div>
             </div>
         </div>
@@ -48,9 +53,6 @@
                 <label class="control-label" for="ddl_banco_orig">Banco:</label>
                 <div class="controls">
                     <select id="ddl_banco_orig" onChange="showOtro();">
-                        <option value="galicia">Galicia</option>
-                        <option value="santander">Santander</option>
-                        <option value="otro">Otro</option>
                     </select>
                 </div>
             </div>    
@@ -59,7 +61,7 @@
             <div class="control-group">
                 <label class="control-label" for="txt_otro_banco">Otro:</label>
                 <div class="controls">
-                    <input id="txt_otro_banco" value="">
+                    <input id="txt_otro_banco" type="text" value="">
                 </div>
             </div>
         </div>
@@ -68,7 +70,7 @@
                 <label class="control-label" for="ddl_banco_dest">Cuenta destino:</label>
                 <div class="controls">
                     <select id="ddl_banco_dest">
-                        <option value="galicia">Galicia</option>
+                        <option value="bancogalicia">Banco Galicia</option>
                     </select>
                 </div>
             </div>
@@ -144,11 +146,50 @@
           numberOfMonths: 1,
        });
        $("#txt_fecha" ).datepicker( "setDate", new Date() );
+       
+       loadBanks();
     });
     
     function printAccountInfo(){
         var periods = jQuery("#txt_desc_pago").val();
         var amount = jQuery("#txt_monto").val();
         window.open("payment/accountinfo/periods/"+periods+"/amount/"+amount, 'info', 'height=360,width=390,left=100,top=100,resizable=no,scrollbars=no,toolbar=no,status=no');
+    }
+    
+    function loadBanks(){
+        var newOptions = {
+            'abnamro': 'ABN AMRO',
+            'bancofrances': 'BBVA Banco Francés',
+            'citibank': 'Citibank',
+            'bancociudad': 'Banco Ciudad',
+            'bancocomafi': 'Comafi',
+            'bancocredicoop': 'Credicoop',
+            'bancogalicia': 'Banco Galicia',
+            'hipotecario': 'Banco Hipotecario',
+            'hsbc': 'HSBC Bank',
+            'icbc': 'ICBC',
+            'itau': 'Banco Itaú',
+            'macro': 'Banco Macro',
+            'bna': 'Banco Nación',
+            'bpn': 'Banco de Neuquén',
+            'otro': 'Otro banco',
+            'bancopatagonia': 'Banco Patagonia',
+            'bapro': 'Banco Provincia',
+            'santanderrio': 'Santander Río',
+            'supervielle': 'Supervielle'
+        };
+
+        var select = jQuery('#ddl_banco_orig');
+        if(select.prop) {
+          var options = select.prop('options');
+        }
+        else {
+          var options = select.attr('options');
+        }
+        $('option', select).remove();
+         
+        $.each(newOptions, function(val, text) {
+            options[options.length] = new Option(text, val);
+        });
     }
 </script>
