@@ -222,7 +222,8 @@ class BranchController extends Zend_Controller_Action
         $form->user->setValue($branch->getUser());
         $form->branch_id->setValue($branch->getId());
         $form->branch_order->setValue($branch->getBranchorder());
-        $form->logo->setOptions(array('src' => '/images'.$branch->getLogo()."?".time()));
+        //$form->logo->setOptions(array('src' => '/images'.$branch->getLogo()."?".time()));
+        $form->logo->setOptions(array('src' => $branch->getLogo()."?".time()));
         $form->setDefault('province', $branch->getProvince());
         //$combo->setAttrib('onChange', 'loadCities();');
         //$combo = $form->getElement("city");
