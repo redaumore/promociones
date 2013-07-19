@@ -517,6 +517,47 @@ class servicesController extends Zend_Controller_Action
                 $this->getFrontController()->setResponse($response); 
         }    
     }
+
+
+    public function edituserinfoAction(){
+        try{
+            $jsonmsg = "";
+            $this->_helper->layout->setLayout('json');  
+            $callback = $this->getRequest()->getParam('jsoncallback');
+            if ($callback != ""){
+                // strip all non alphanumeric elements from callback
+                $callback = preg_replace('/[^a-zA-Z0-9_]/', '', $callback);
+            }  
+            $this->view->callback = $callback;
+            $userid = $this->_getParam('user_id');
+            $name = $this->_getParam('name');
+            $cuit = $this->_getParam('cuit');
+            $newpass = $this->_getParam('string1')."";
+            $newpassconf = $this->_getParam('string2')."";
+            $pass = $this->_getParam('string3');
+            $user = new PAP_Model_User();
+            if($user->validatePassword($userid, $pass)){
+                $user->setName($name);
+                $user->setCuit($cuit);
+                if($newpass <> "")
+                    $user->setPassword($newpass);
+                $user->update();
+                $jsonmsg = '({code:0, message:"Se a actulalizado el usuario correctamente."})';
+            }
+            else{
+                $jsonmsg = '({code:303, message:"La contraseña ingresada parece no ser correcta."})';    
+            }
+            $response = $this->getFrontController()->getResponse();
+            $response->appendBody($callback.$jsonmsg);
+            $this->getFrontController()->setResponse($response);
+        }
+        catch(Exception $ex){
+            PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'ServiceController->edituserinfoAction',$e, $_SERVER['REQUEST_URI']);    
+            $response = $this->getFrontController()->getResponse();
+                $response->appendBody($callback.'({code:304, message:"Ha ocurrido un errar en la edición del usuario. Intentalo en algunos minutos."})');
+                $this->getFrontController()->setResponse($response);    
+        }
+        
+    }
+
 }
-
-

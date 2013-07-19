@@ -230,6 +230,9 @@ class BranchController extends Zend_Controller_Action
         //$this->loadCities($combo, $branch->getProvince());
         $form->setDefault('city', $branch->getCity());
         
+        $form->user_name->setValue($this->user->getName());
+        $form->user_cuit->setValue($this->user->getCuit());
+        
         if($formName = 'update'){
             $form->filebranch->setRequired(false)
                 ->setLabel('Imagen del Comercio');

@@ -27,10 +27,6 @@ function showMessage(messageType, message){
     }
 }
 
-function closeMessage(){
-   //jQuery("#div_message").hide(); 
-}
-
 function showPaymentInfo(){
         var reportType = jQuery("input[name='reportType']:checked").val();
         if(reportType == "pendientes"){
@@ -322,20 +318,18 @@ function sendPayment(){
             });
         }
         else{
-            jQuery('#paymentFormMessage').show()
+            alert("No has completado correctamente todos los campos requeridos. Por favor inténtalo nuevamente.");
         }
     }
     
-function LoadComplete()
-{
+function LoadComplete(){
     if (jQuery('#list2').getGridParam('reccount') == 0) // are there any records?
         DisplayEmptyText(true);
     else
         DisplayEmptyText(false);
 }
 
-function DisplayEmptyText( display)
-{
+function DisplayEmptyText( display){
     var grid = jQuery('#list2');
     jQuery("#pay").hide();
     var emptyText = grid.getGridParam('emptyDataText'); // get the empty text
@@ -442,10 +436,6 @@ function FillPromotion(promotion){
     //alert(data.responseText);    
 }
 
-function showPromoPreview(){
-  //TODO 3: Hacer preview.      
-}
-
 function collectPromotionFormData(){
     var userInfo =jQuery.parseJSON(jQuery("#userInfo").val());
     var data = {"promotion":[
@@ -537,6 +527,8 @@ function resetPassword(){
         }
     );    
 }
+
+
 
 
 

@@ -306,5 +306,13 @@ class PAP_Model_User
             return false;
         }
     }
+    
+    public function validatePassword($id, $password){
+        $mapper = new PAP_Model_UserMapper();
+        $mapper->find($id, $this);
+        if($this->getPassword() == $password)
+            return true;
+        return false;
+    }
 }
 

@@ -24,7 +24,7 @@
         );
                 
         $this->addElement('text', 'name', array(
-            'label'      => 'Nombre',
+            'label'      => 'Nombre Comercio',
             'size' => 50,
             'maxlength' => 50,
             'required'   => true,
@@ -209,6 +209,10 @@
         
         $this->addElement('hidden', 'user');
         $this->user->setDecorators(array('ViewHelper'));
+        $this->addElement('hidden', 'user_name', array('ignore' => true,));
+        $this->user_name->setDecorators(array('ViewHelper'));
+        $this->addElement('hidden', 'user_cuit', array('ignore' => true,));
+        $this->user_cuit->setDecorators(array('ViewHelper'));
         $this->addElement('hidden', 'branch_id', array('ignore' => true,));
         $this->branch_id->setDecorators(array('ViewHelper'));
         $this->addElement('hidden', 'branch_order', array('ignore' => true,));

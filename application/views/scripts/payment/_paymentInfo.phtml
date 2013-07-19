@@ -1,23 +1,3 @@
-<script type="text/javascript">
-    function showTipoOperacion(){
-        var operacion = $('#ddl_operacion').val();
-        if(operacion == "T"){
-            $('#div_banco_trans').show();
-            $('#div_banco_dep').hide();
-        }
-        else{
-            $('#div_banco_dep').show();
-            $('#div_banco_trans').hide();    
-        }
-    }
-    function showOtro(){
-        var banco = $('#ddl_banco_orig').val();
-        if(banco == 'otro')
-            $('#div_otro_banco').show();
-        else
-            $('#div_otro_banco').hide();
-    }
-</script>
 <div id="paymentInfo" class="modal hide fade">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -191,5 +171,25 @@
         $.each(newOptions, function(val, text) {
             options[options.length] = new Option(text, val);
         });
+    }
+    
+    function showTipoOperacion(){
+        var operacion = $('#ddl_operacion').val();
+        if(operacion == "T"){
+            $('#div_banco_trans').show();
+            $('#div_banco_dep').hide();
+        }
+        else{
+            $('#div_banco_dep').show();
+            $('#div_banco_trans').hide();    
+        }
+    }
+    
+    function showOtro(){
+        var banco = $('#ddl_banco_orig').val();
+        if(banco == 'otro')
+            $('#div_otro_banco').show();
+        else
+            $('#div_otro_banco').hide();
     }
 </script>
