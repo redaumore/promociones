@@ -58,6 +58,10 @@
             alert("La nueva contraseña y su confirmación no son idénticas.")
             return false;
         }
+        if(jQuery('#ui_name').val() == "" || jQuery('#ui_pass').val() == ""){
+            alert("El nombre y la contraseña son requeridos.")
+            return false;
+        }
         var json_data = {
                 'user_id':jQuery('#user').val(),
                 'name':jQuery('#ui_name').val(),
@@ -66,23 +70,30 @@
                 'string2':jQuery('#ui_newpassconf').val(),
                 'string3':jQuery('#ui_pass').val(),
         };
-        $.ajax({
+        jQuery.ajax({
                 url: _baseServUri + 'edituserinfo',
                 dataType: 'jsonp',
-                data: {"data":json_data},
+                data: json_data,
                 jsonp: 'jsoncallback',
                 contentType: "application/json; charset=utf-8",
                 timeout: 5000,
                 success: function(data, status){
-                        if(data.length == 0)
-                            alert(data);
+                        if(data.code != 0)
+                            bootbox.alert(data.message);
+                        else{
+                            bootbox.alert("El usuario ha sido editado con éxito.")
+                            jQuery('button.close').click();
+                        }
                 },
                 error: function(jqXHR, textStatus, errorThrown){
-                    alert(textStatus);    
+                if(textStatus == "timeout")
+                    bootbox.alert("El sistema no responde, por favor intentá en otro momento. Si el error persiste, por favor avísanos a soporte@promosalpaso.com.")
+                else
+                    bootbox.alert("Hubo un error procesando tu información, por favor intentá en otro momento. Si el error persiste, por favor avísanos a soporte@promosalpaso.com.")
                 }
         });
             
-        jQuery("#payHidden").click();
+        
     }
     
     jQuery(document).ready(function(){

@@ -200,7 +200,6 @@ function showMercadoPago(){
             showMessage("error", "Para informar pagos debes seleccionar Cargos Pendientes.");    
 }
 
-
 function showPromoTotalCost(){
     if(jQuery("#starts").val() == "" ||jQuery("#ends").val() == ""){
         jQuery("#totalPromoCost").text("0");

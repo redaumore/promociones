@@ -68,6 +68,10 @@
 
     function mycarousel_itemAddCallback(carousel, first, last, data)
     {
+        if(data.total < 6){
+            jQuery('#mycarousel').hide();  
+            return;
+        }
         // Set the size of the carousel
         //carousel.size(parseInt(jQuery('total', xml).text()));
         carousel.size(parseInt(data.total));
@@ -89,7 +93,7 @@
     {
         var promo_html = '<a onClick="FillPromotionById('+promo.promotion_id+');"><div class="slider_promo">';
             promo_html += '  <div class="slider_localidad">'+promo.city+'</div>';
-            promo_html += '  <div><img src="images'+promo.path+'" style="height:60px;"/></div>';
+            promo_html += '  <div><img src="'+promo.path+'" style="height:60px;"/></div>';
             promo_html += '  <div class="">'+promo.name+'</div>';
             promo_html += '  <div class="precio">'+promo.promo_value+'</div>';
             promo_html += '  <div class="">'+promo.displayed_text+'</div></div></a>';;

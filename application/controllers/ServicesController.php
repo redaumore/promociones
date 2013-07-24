@@ -511,7 +511,7 @@ class servicesController extends Zend_Controller_Action
                 $this->getFrontController()->setResponse($response);     
         }
         catch(Exception $ex){
-            PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'ServiceController->forgotpasswordAction',$e, $_SERVER['REQUEST_URI']);    
+            PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'ServiceController->forgotpasswordAction',$ex, $_SERVER['REQUEST_URI']);    
             $response = $this->getFrontController()->getResponse();
                 $response->appendBody($callback.'({code:302, message:"No hemos encontrado un usuario con email '.$email.'. Corrígelo y vuelve a intentarlo."})');
                 $this->getFrontController()->setResponse($response); 
@@ -536,6 +536,8 @@ class servicesController extends Zend_Controller_Action
             $newpassconf = $this->_getParam('string2')."";
             $pass = $this->_getParam('string3');
             $user = new PAP_Model_User();
+            if($userid == null || $pass == null)
+                throw new Exception("user o pass son nulos. Se corta el procesamiento.", 305);
             if($user->validatePassword($userid, $pass)){
                 $user->setName($name);
                 $user->setCuit($cuit);
@@ -552,9 +554,9 @@ class servicesController extends Zend_Controller_Action
             $this->getFrontController()->setResponse($response);
         }
         catch(Exception $ex){
-            PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'ServiceController->edituserinfoAction',$e, $_SERVER['REQUEST_URI']);    
+            PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'ServiceController->edituserinfoAction',$ex, $_SERVER['REQUEST_URI']);    
             $response = $this->getFrontController()->getResponse();
-                $response->appendBody($callback.'({code:304, message:"Ha ocurrido un errar en la edición del usuario. Intentalo en algunos minutos."})');
+                $response->appendBody($callback.'({code:304, message:"Ha ocurrido un error en la edición del usuario. Intentalo en algunos minutos."})');
                 $this->getFrontController()->setResponse($response);    
         }
         
