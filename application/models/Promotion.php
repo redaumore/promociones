@@ -82,7 +82,8 @@ class PAP_Model_Promotion
         $options['ends'] = date("d-m-Y");
         $options['promoCode'] = $this->getAutoPromoCode($options['userId']);
         $this->insert($options);
-        $this->cloneImages($cloned_promo_id);    
+        $this->cloneImages($cloned_promo_id);
+        return $this->getId();    
     }
     
     public function saveImages($images){
@@ -279,6 +280,13 @@ class PAP_Model_Promotion
     
     public function getImageCount(){
         return count($this->_images);
+    }
+    
+    public function isLoaded(){
+        if($this->_id == null)
+            return false;
+        return true;
+    
     }
     
     public function getTotalPromoCost(){
@@ -517,9 +525,20 @@ class PAP_Model_Promotion
                 $directory = IMAGE_PATH.'/'.'customers/'.$pathimg[3].'/'.$pathimg[4]; 
                 if (!file_exists($directory))
                     mkdir($directory);
+                if (!file_exists($directory.'/thumb'))
                     mkdir($directory.'/thumb');
-                copy(PUBLIC_PATH.$img->getPath(), PUBLIC_PATH.$images[$i]);
-                copy(PUBLIC_PATH.'/images/customers/'.$pathimg[3].'/'.$clonedId.'/thumb/'.$pathimg[5], PUBLIC_PATH.'/images/customers/'.$pathimg[3].'/'.$pathimg[4].'/thumb/'.$pathimg[5]);
+                if(file_exists(PUBLIC_PATH.$img->getPath()))
+                    copy(PUBLIC_PATH.$img->getPath(), PUBLIC_PATH.$images[$i]);
+                else{
+                    copy(PUBLIC_PATH.'/images/photo_error.png', PUBLIC_PATH.$images[$i]);
+                    PAP_Helper_Logger::writeLog(Zend_Log::INFO, 'Promotion->cloneImages()','No se encontró la imagen '.$img->getPath().". Se la reemplazo por photo_error.png.", $_SERVER['REQUEST_URI']); 
+                }
+                if(file_exists(PUBLIC_PATH.'/images/customers/'.$pathimg[3].'/'.$clonedId.'/thumb/'.$pathimg[5]))
+                    copy(PUBLIC_PATH.'/images/customers/'.$pathimg[3].'/'.$clonedId.'/thumb/'.$pathimg[5], PUBLIC_PATH.'/images/customers/'.$pathimg[3].'/'.$pathimg[4].'/thumb/'.$pathimg[5]);
+                else{
+                    copy(PUBLIC_PATH.'/images/photo_error_thumb.png', PUBLIC_PATH.'/images/customers/'.$pathimg[3].'/'.$pathimg[4].'/thumb/'.$pathimg[5]);
+                    PAP_Helper_Logger::writeLog(Zend_Log::INFO, 'Promotion->cloneImages()','No se encontró el thumb de la promo '.$clonedId.". Se la reemplazo por photo_error_thumb.png.", $_SERVER['REQUEST_URI']);     
+                }
             }    
         }
         else{

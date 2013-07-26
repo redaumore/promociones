@@ -63,16 +63,36 @@
                     $data = $form->getValues();
                     $data['userId'] = $user->getId();
                     $data['branches'] = $_POST['branches'];
+                    
+                    if($form->clone->isChecked()){
+                        $clonedPromotion = new PAP_Model_Promotion();
+                        $clonedPromoId = $clonedPromotion->cloneMe($data);
+                        $this->_redirect('promotion/edit/id/'.$clonedPromoId);
+                        return true;
+                    }
+                     
+                    
+                    /*Validación de fecha por las dudas*/
+                    $promo = new PAP_Model_Promotion();
+                    $promo->loadById($data['promoId']);
+                    if($promo->isLoaded()){
+                        $formdate = DateTime::createFromFormat('d-m-Y', $data['starts']);
+                        $promodate = DateTime::createFromFormat('d-m-Y', $promo->getStarts());
+                        $today = DateTime::createFromFormat('d-m-Y', date('d-m-Y'));
+                        if($promodate->format('Y-m-d') < $today->format('Y-m-d') && $formdate->format('Y-m-d') <> $promodate->format('Y-m-d')){
+                            PAP_Helper_Logger::writeLog(Zend_Log::WARN, 'PromotionController->editAction()',
+                            "El cliente ".$user->getId()." intentó cambiar la fecha de inicio de promocion sospechosamente. ".$promodate->format("d-m-Y")." por ".$formdate->format("d-m-Y").".", 
+                            $_SERVER['REQUEST_URI']); 
+                            return false; /*TODO 9: Hacer una salida más elegente si la validación fallo.*/       
+                        }
+                             
+                    }
                     if ($form->save->isChecked()){
                         $newPromotion = new PAP_Model_Promotion();
                         $newPromotion->update($data);
                         $this->saveImages($data, $newPromotion);
                     }
-                    if($form->clone->isChecked()){
-                        $clonedPromotion = new PAP_Model_Promotion();
-                        $clonedPromoId = $clonedPromotion->cloneMe($data);
-                    }
-                     $this->_redirect('promotion/index');
+                    
                 }                
             }
             else{

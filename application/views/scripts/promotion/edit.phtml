@@ -196,9 +196,14 @@ label[for=branches]{
             <h3>$<span id="totalPromoCost"></span></h3>
         </div>
         <div class="span6 pagination-right">
-            <button id="preview" type="button" class="btn" onclick="showPreview();">Previsualizar</button>
+            <input id="preview" class="btn" onclick="showPreview();" value="Previsualizar"/>
             <?php echo $form->clone->renderViewHelper(); ?>&nbsp;
-            <?php echo $form->save->renderViewHelper(); ?>
+            <?php
+                $endsdate = DateTime::createFromFormat('d-m-Y', $form->ends->getValue());
+                $today = DateTime::createFromFormat('d-m-Y', date('d-m-Y'));
+                if($endsdate->format('Y-m-d') >= $today->format('Y-m-d')) 
+                    echo $form->save->renderViewHelper(); 
+            ?>
         </div>
     </div>
 </div>
