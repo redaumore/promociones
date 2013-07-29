@@ -43,4 +43,9 @@ class PAP_Helper_Config extends Zend_Controller_Action_Helper_Abstract{
         $result['mp_url_token'] = $config->url_token;
         return $result;
     }
+    
+    public function getCategoryUpdate(){
+        $config = new Zend_Config_Xml(APPLICATION_PATH.'\\configs\\config.xml', 'updates');
+        return new DateTime($config->category);    
+    }
 }

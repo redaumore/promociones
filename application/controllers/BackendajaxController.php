@@ -99,9 +99,11 @@ class BackendajaxController extends Zend_Controller_Action
             try{
             $this->_helper->layout()->disableLayout();
             $this->_helper->viewRenderer->setNoRender();
+            
+            $lastupdate = new DateTime($this->_getParam('last_update'));
                 
             $category = new PAP_Model_Category();
-            $categories = $category->getAll();
+            $categories = $category->getFrom($lastupdate);
             $this->_helper->json($categories);
         }
         catch(Exception $ex){

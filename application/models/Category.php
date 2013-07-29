@@ -91,6 +91,16 @@ class PAP_Model_Category
         return $arrCategories;
     }
     
+    public function getFrom($date){
+        $config = new PAP_Helper_Config();
+        $categoryUpdate = $config->getCategoryUpdate();
+        if($date < $categoryUpdate){
+            return  $this->getAll();
+        }
+        return array();
+            
+    }
+    
     public function loadById($id){
         $categoryMapper = new PAP_Model_CategoryMapper();
         $categoryMapper->find($id, $this);

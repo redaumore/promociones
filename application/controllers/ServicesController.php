@@ -556,10 +556,9 @@ class servicesController extends Zend_Controller_Action
         catch(Exception $ex){
             PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'ServiceController->edituserinfoAction',$ex, $_SERVER['REQUEST_URI']);    
             $response = $this->getFrontController()->getResponse();
-                $response->appendBody($callback.'({code:304, message:"Ha ocurrido un error en la edición del usuario. Intentalo en algunos minutos."})');
+                $response->appendBody($callback.'({code:304, message:"Ha ocurrido un error en la edición del usuario. Por favor inténtalo en algunos minutos."})');
                 $this->getFrontController()->setResponse($response);    
         }
         
     }
-
 }

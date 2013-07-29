@@ -3,4 +3,7 @@
   <payments>
     <last_period>2MAY13</last_period>
   </payments>
+  <updates>
+    <category>2013-07-29</category>
+  </updates>
 </zend-config>

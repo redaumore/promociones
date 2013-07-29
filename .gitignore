@@ -163,3 +163,4 @@ pip-log.txt
 .DS_Store
 /public/dbg-wizard.php
 /logs
+customers
