@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 class BranchController extends Zend_Controller_Action
 {
@@ -27,11 +27,12 @@ class BranchController extends Zend_Controller_Action
             $branchMapper->findByUserId($this->user, $branch_order, $branch);     
                     
             if($this->getRequest()->isPost()){
-                if($form->isValidPartial($_POST)){
+                if($form->isValidPartial($this->getRequest()->getPost())){
                     $data = $form->getValues();
                     $branch = $this->saveBranch($data, 'update');
                     $this->loadForm($branch, 'update');
                     $this->loadCities($comboCities, $branch->getProvince(), $branch->getCity());
+                    $this->_helper->Session->setBranchSession($branch);
                 }                
             }
             else{

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
   class PAP_View_Helper_ErrorMessage extends Zend_View_Helper_Abstract
 {
     public function errorMessage(Zend_Form $form = null, $messages)

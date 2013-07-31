@@ -8,7 +8,7 @@
         $this->setAttrib('enctype', Zend_Form::ENCTYPE_MULTIPART);
         //'multipart/form-data'
         $this->addPrefixPath('PAP_Form_Element_', 'PAP/Form/Element/', 'Element');
-        $this->addDecorators(array('FormElements', 'Form'));
+        //$this->addDecorators(array('FormElements', 'Form'));
         
         $decorators = array(
                 array('ViewHelper'),
@@ -28,7 +28,7 @@
             'size' => 50,
             'maxlength' => 50,
             'required'   => true,
-            'filters'    => array('StringTrim'),
+            'filters'    => array('StripTags', 'StringTrim'),
         ));
         $this->name->setDecorators($decorators)
                     ->addDecorator('HtmlTag', array('tag' => 'div'));
@@ -38,11 +38,11 @@
             'size' => 50,
             'maxlength' => 50,
             'required'   => true,
-            'filters'    => array('StringTrim', 'StringToUpper'),
+            'filters'    => array('StripTags', 'StringTrim'),
         ));
         $this->street->setDecorators($decorators)
-            ->addValidator($allowWhiteSpace, true)
             ->setAttrib('onChange', 'clearCoord();');
+            //->setAttrib("escape",true);
         
         $this->addElement('text', 'number', array(
             'label'      => 'Número',
@@ -62,7 +62,7 @@
             'size' => 30,
             'maxlength' => 50,
             'required'   => false,
-            'filters'    => array('StringTrim'),
+            'filters'    => array('StripTags', 'StringTrim'),
         ));
         $this->local->setDecorators($decorators);
         
@@ -71,7 +71,7 @@
             'required'   => false,
             'size' => 12, 
             'maxlength' => 50,
-            'filters'    => array('StringTrim'),
+            'filters'    => array('StripTags', 'StringTrim'),
         ));
         $this->phone->setDecorators($decorators);
         
@@ -84,7 +84,7 @@
         $this->addElement('text', 'website', array(
             'label'      => 'Sitio Web:',
             'required'   => false,
-            'filters'    => array('StringTrim'),
+            'filters'    => array('StripTags', 'StringTrim'),
             'size'      => 40,
             'maxlength' => 100,
         ));
@@ -95,7 +95,7 @@
         $this->addElement('text', 'email', array(
             'label'      => 'Email contacto:',
             'required'   => true,
-            'filters'    => array('StringTrim'),
+            'filters'    => array('StripTags', 'StringTrim'),
             'size'      => 30,
             'maxlength' => 100,
             'validators' => array(

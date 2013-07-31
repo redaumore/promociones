@@ -62,7 +62,7 @@ function SearchLocation(){
     urlGoogleMaps = "http://maps.google.com/maps/api/staticmap?center="+localaddress
                             +"&zoom="+zoom
                             +"&size="+size
-                            +"&markers=color:orange|" + document.getElementById("latitude").value + "," + document.getElementById("longitude").value     // label:S%7C11211%7C11206%7C11222" 
+                            +"&markers=icon:http://dev.promosalpaso.com/images/pap_location.png|" + localaddress //document.getElementById("latitude").value + "," + document.getElementById("longitude").value     // label:S%7C11211%7C11206%7C11222" 
                             +"&sensor="+sensor; 
      
     document.getElementById("map").src = urlGoogleMaps;

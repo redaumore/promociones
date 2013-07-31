@@ -1,4 +1,4 @@
-<?php
+﻿<?php
      
  class PAP_Form_Element_Div extends Zend_Form_Element {
      /**

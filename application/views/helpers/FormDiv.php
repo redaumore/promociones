@@ -1,4 +1,4 @@
-<?php
+﻿<?php
   
 class Zend_View_Helper_FormDiv extends Zend_View_Helper_FormElement {
 

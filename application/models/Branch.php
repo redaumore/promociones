@@ -34,7 +34,7 @@ class PAP_Model_Branch
         if (('mapper' == $name) || !method_exists($this, $method)) {
             throw new Exception('Invalid branch property');
         }
-        $this->$method($value);
+        $this->$method(utf8_decode($value));
     }
  
     public function __get($name)
@@ -153,7 +153,7 @@ class PAP_Model_Branch
  
     public function getName()
     {
-        return utf8_encode($this->_name);
+        return $this->_name;
     }
     
     public function setStreet($text)
@@ -164,8 +164,7 @@ class PAP_Model_Branch
  
     public function getStreet()
     {
-        return utf8_encode($this->_street);
-        //return $this->_street;
+        return $this->_street;
     }
     
     public function setNumber($text)

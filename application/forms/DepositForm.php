@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 class PAP_Form_ContactForm extends Zend_Form
   {
       public function init(){

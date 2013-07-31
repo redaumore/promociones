@@ -46,7 +46,7 @@ class PAP_Model_BranchMapper
             'created' => date('Y-m-d H:i:s'),
             'updated' => date('Y-m-d H:i:s'),
         );
- 
+        //$this->getDbTable()->getAdapter()->query("SET NAMES 'utf8'");
         if (null === ($id = $branch->getId())) {
             unset($data['branch_id']);
             $this->getDbTable()->insert($data);

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
   /**
  * Action Helper for finding days in a month
  */

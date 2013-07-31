@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 class PAP_Helper_Client extends Zend_Controller_Action_Helper_Abstract
 {
     /**

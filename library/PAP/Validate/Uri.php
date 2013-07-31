@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 require_once 'Zend/Validate/Abstract.php';
 require_once 'Zend/Uri.php';

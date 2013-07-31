@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 // include auto-loader class
 require_once 'Zend/Loader/Autoloader.php';
   

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 class PAP_Helper_Logger{
     public static function writeLog($priority, $context, $message, $params = ""){
         $log = Zend_Registry::get("logDB");

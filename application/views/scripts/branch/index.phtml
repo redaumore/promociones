@@ -1,4 +1,4 @@
-<?php
+﻿<?php
     $messages = $this->form->getMessages();
 ?>
 <script type="text/javascript" src="/scripts/prototype.js"></script>
@@ -86,7 +86,7 @@ function clearCoord(){
                         <div class="control-group">
                             <?php echo $form->street->renderLabel(); ?>
                             <div class="controls">
-                                <?php echo $form->street->renderViewHelper(); ?>
+                                <?php echo html_entity_decode($form->street->renderViewHelper()); ?>
                             </div>
                         </div>
                     </div>

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
   class Zend_View_Helper_FormImg extends Zend_View_Helper_FormElement
 {
     public function formImg ($name, $value, $attribs = null)
