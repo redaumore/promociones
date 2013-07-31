@@ -95,22 +95,6 @@ class BackendajaxController extends Zend_Controller_Action
         }
     }
     
-    public function getcategoriesAction(){
-            try{
-            $this->_helper->layout()->disableLayout();
-            $this->_helper->viewRenderer->setNoRender();
-            
-            $lastupdate = new DateTime($this->_getParam('last_update'));
-                
-            $category = new PAP_Model_Category();
-            $categories = $category->getFrom($lastupdate);
-            $this->_helper->json($categories);
-        }
-        catch(Exception $ex){
-            PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'BackendAjaxController->getcategoriesAction()',$ex, $_SERVER['REQUEST_URI']);
-        }
-    }
-    
     public function getprovAction(){
         try{
             $this->_helper->layout()->disableLayout();
@@ -142,7 +126,7 @@ class BackendajaxController extends Zend_Controller_Action
                 $city = new PAP_Model_City();
                 $city->loadById(150); //TODO 8: Salimos con San Justo por defecto. Luego hay que generalizarlo.
             }
-            PAP_Helper_Logger::writeDebug('BackendAjaxController->getfeaturedAction', 'ip:'.$ip.'|city:'.$city->getId(), $_SERVER['REQUEST_URI']);
+            //PAP_Helper_Logger::writeDebug('BackendAjaxController->getfeaturedAction', 'ip:'.$ip.'|city:'.$city->getId(), $_SERVER['REQUEST_URI']);
             $promos = PAP_Model_Promotion::getPromotionsForWeb($city);
             $total    = count($promos);
             

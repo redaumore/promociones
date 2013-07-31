@@ -561,4 +561,30 @@ class servicesController extends Zend_Controller_Action
         }
         
     }
+    
+    public function getcategoriesAction(){
+        try{
+            $jsonmsg = "";
+            $this->_helper->layout->setLayout('json');  
+            $callback = $this->getRequest()->getParam('jsoncallback');
+            if ($callback != ""){
+                // strip all non alphanumeric elements from callback
+                $callback = preg_replace('/[^a-zA-Z0-9_]/', '', $callback);
+            }  
+            $this->view->callback = $callback;
+            $lastupdate = new DateTime($this->_getParam('last_update'));
+                
+            $category = new PAP_Model_Category();
+            $categories = $category->getFrom($lastupdate);
+            $response = $this->getFrontController()->getResponse();
+            $response->appendBody($callback.'('.json_encode($categories).')');
+            $this->getFrontController()->setResponse($response);
+        }
+        catch(Exception $ex){
+            PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'ServicesController->getcategoriesAction()',$ex, $_SERVER['REQUEST_URI']);
+            $response = $this->getFrontController()->getResponse();
+            $response->appendBody($callback.'({code:305, message:"Ha ocurrido un error recuperando las Categorías."})');
+            $this->getFrontController()->setResponse($response);
+        }
+    }
 }
