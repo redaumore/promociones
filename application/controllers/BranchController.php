@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 class BranchController extends Zend_Controller_Action
 {
@@ -110,7 +110,7 @@ class BranchController extends Zend_Controller_Action
         
         if(isset($data['filebranch'])){
             $relativeImageDir = '/images/customers/'.$data["user"];
-            $customerImageDir = IMAGE_PATH.$relativeImageDir;
+            $customerImageDir = PUBLIC_PATH.$relativeImageDir;
         
             //Tratamiento de la imagen
             if(!is_dir($customerImageDir))
