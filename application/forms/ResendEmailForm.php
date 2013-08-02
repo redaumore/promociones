@@ -1,4 +1,4 @@
-﻿<?php
+<?php
   class PAP_Form_ResendEmailForm extends Zend_Form
   {
       public function init(){
@@ -14,4 +14,3 @@
         $this->addElement('hidden', 'email');
       }
   }
-?>

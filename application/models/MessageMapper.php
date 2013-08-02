@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 class PAP_Model_MessageMapper
 {

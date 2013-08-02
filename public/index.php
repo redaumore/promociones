@@ -1,5 +1,4 @@
 <?php
-
 // Define path to application directory
 defined('APPLICATION_PATH')
     || define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/../application'));
@@ -42,16 +41,7 @@ date_default_timezone_set('America/Argentina/Buenos_Aires');
 
 set_include_path('.' . PATH_SEPARATOR . './library' . PATH_SEPARATOR . get_include_path());
 
-
-//include "Zend/Loader.php";
-//setup controller
-/*Zend_Loader::loadClass('Zend_Controller_Front');
-$frontController = Zend_Controller_Front::getInstance();
-$frontController->throwExceptions(true);
-$frontController->setControllerDirectory(APPLICATION_PATH.'/controllers');
-$frontController->dispatch();
-*/ 
+Zend_Session::start();
 
 $application->bootstrap()
             ->run();
-//run

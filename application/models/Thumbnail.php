@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * thumbnail.inc.php
  * 
@@ -665,4 +665,3 @@ class Thumbnail {
 		$this->currentDimensions['height'] = $newHeight;
     }
 }
-?>

@@ -91,5 +91,4 @@ class PAP_Form_SearchForm extends Zend_Form
         
         /*CATEGORIAS*/
         }
-  }
-
+}

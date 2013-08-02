@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
 * this class loads the cms skin
 *

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 class IndexController extends Zend_Controller_Action
 {
@@ -112,6 +112,4 @@ class IndexController extends Zend_Controller_Action
             PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'IndexController->contactadmAction()',$ex, $_SERVER['REQUEST_URI']);
         }    
     }
-    
 }
-

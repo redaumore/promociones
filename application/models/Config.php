@@ -1,4 +1,4 @@
-﻿<?php
+<?php
   
 Class PAP_Model_Config{
     protected $_dbTable;

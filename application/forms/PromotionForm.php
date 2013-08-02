@@ -252,4 +252,3 @@ class PAP_Form_PromotionForm extends Zend_Form
         $control->setAttrib('class', 'btn');
     }
 }
-

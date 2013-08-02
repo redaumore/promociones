@@ -1,4 +1,4 @@
-﻿<?php
+<?php
   class CategoryUserMapper 
 {
     protected $_dbTable;

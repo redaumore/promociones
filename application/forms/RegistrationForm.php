@@ -90,5 +90,4 @@
         
         $this->addElement('hidden', 'rol');
       }
-  }
-?>
+ }

@@ -24,6 +24,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         */
     }
     
+    protected function _initSessions()
+    {
+        Zend_Session::start();
+    }
+
+    
     protected function _initLayout()
     {
         require_once 'Zend/Loader.php';
@@ -118,4 +124,3 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         Zend_Registry::set('cache',$cache);
     }
 }
-

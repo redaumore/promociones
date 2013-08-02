@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 class BackendajaxController extends Zend_Controller_Action
 {
     public function init(){

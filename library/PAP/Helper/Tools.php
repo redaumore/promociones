@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 class PAP_Helper_Tools extends Zend_Controller_Action_Helper_Abstract
 {
     public static function generateRandomString($length = 10) {
@@ -9,5 +9,4 @@ class PAP_Helper_Tools extends Zend_Controller_Action_Helper_Abstract
         }
         return $randomString;
     }
-}  
-
+}

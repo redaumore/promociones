@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 class CustomerController extends Zend_Controller_Action
 {

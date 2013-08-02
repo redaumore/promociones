@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 class Places_View_Helper_BaseUrl
 {
     function baseUrl()

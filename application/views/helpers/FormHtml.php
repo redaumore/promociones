@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Abstract class for extension
  */

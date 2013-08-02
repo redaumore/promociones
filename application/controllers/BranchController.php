@@ -262,19 +262,3 @@ class BranchController extends Zend_Controller_Action
             $this->view->form->setDefault('city', $city_id);    
     }
 }
-
-/* Copia de campos editables
-    private function copyEditableFields($branch, $data)
-    {
-        $branch->setName($data['name']);
-        $branch->setLocal($data['local']);
-        $branch->setPhone($data['phone']);
-        $branch->setZipcode($data['zipcode']);
-    }
-*/
-
-
-
-
-
-

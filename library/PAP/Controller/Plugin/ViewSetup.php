@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 class PAP_Controller_Plugin_ViewSetup extends Zend_Controller_Plugin_Abstract
 {
     /**
