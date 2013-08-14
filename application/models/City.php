@@ -8,6 +8,7 @@ class PAP_Model_City
     protected $_latitude;
     protected $_longitude;
     protected $_status;
+    protected $_kickoff;
     protected $_payment_methods = array();
     
     public function __construct(array $options = null)
@@ -118,6 +119,15 @@ class PAP_Model_City
     public function getProvinceid(){
         return $this->_province_id;
     }
+    
+    public function getKickoff(){
+        return $this->_kickoff;
+    }
+    public function setKickoff($text){
+        $this->_kickoff = (string) $text;
+        return $this;
+    }
+    
 
 }
 

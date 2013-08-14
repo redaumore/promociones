@@ -40,8 +40,19 @@
             else{
                 $this->loadUserBranches($this->user);
             }
+            $city = new PAP_Model_City();
+            $city->loadById($this->user->getBranch()->getCity());
+            if($city->getKickoff() != ""){
+                $kickoff = new DateTime($city->getKickoff());
+                $form->availableStartDate->setValue($kickoff->format("d-m-Y"));
+            }
+            else{
+                $form->availableStartDate->setValue("");
+            }
+                
             $form->imagePromo->setOptions(array('src' => $this->user->getBranch()->getLogo()));
             $form->promoCode->setValue($this->getAutoPromoCode());
+            
             
             //TODO En la descripcion larga cambiar el estilo
             //TODO Descripcion larga no permite puntos.

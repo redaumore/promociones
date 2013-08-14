@@ -50,7 +50,8 @@ protected $_dbTable;
                   ->setName($row->name)
                   ->setProvinceId($row->province_id)
                   ->setLatitude($row->latitude)
-                  ->setLongitude($row->longitude);
+                  ->setLongitude($row->longitude)
+                  ->setKickoff($row->kickoff);
     }
  
     public function fetchAll()
@@ -61,7 +62,10 @@ protected $_dbTable;
             $entry = new PAP_Model_City();
             $entry->setId($row->city_id)
                   ->setName($row->name)
-                  ->setProvinceId($row->province_id);
+                  ->setProvinceId($row->province_id)
+                  ->setLatitude($row->latitude)
+                  ->setLongitude($row->longitude)
+                  ->setKickoff($row->kickoff);
             $entries[] = $entry;
         }
         return $entries;

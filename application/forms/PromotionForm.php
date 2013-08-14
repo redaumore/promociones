@@ -234,6 +234,7 @@ class PAP_Form_PromotionForm extends Zend_Form
         $this->addElement('hidden', 'userId');
         $this->addElement('hidden', 'promoId');
         $this->addElement('hidden', 'userInfo');
+        $this->addElement('hidden', 'availableStartDate');
         
         $this->addElement('submit', 'save', array(
             'ignore'   => true,
