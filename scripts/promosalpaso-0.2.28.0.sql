@@ -1,0 +1,1 @@
+ALTER TABLE `promosalpaso`.`city` ADD COLUMN `kickoff` DATETIME NULL  AFTER `updated` ;
