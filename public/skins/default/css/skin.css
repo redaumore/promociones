@@ -1,9 +1,10 @@
 .jcarousel-skin-ie7 .jcarousel-container {
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
+    /*-moz-border-radius: 10px;
+    -webkit-border-radius: 10px;  
     border-radius: 10px;
-    background: rgb(39, 43, 48);
-    border: 1px solid #808080;
+    background: rgb(39, 43, 48);   */
+    border-top: 1px solid #808080;
+    border-bottom: 1px solid #808080;
 }
 
 .jcarousel-skin-ie7 .jcarousel-direction-rtl {
@@ -12,7 +13,7 @@
 
 .jcarousel-skin-ie7 .jcarousel-container-horizontal {
     height: 160px;
-    width: 780px;
+    /*width: 780px; */
     padding: 20px 40px;
 }
 
@@ -39,8 +40,8 @@
 
 .jcarousel-skin-ie7 .jcarousel-item {
     /*width: 75px;
-    height: 75px;*/
-    border: 1px solid #fff;
+    height: 75px;
+    border: 1px solid #fff;*/
 }
 
 .jcarousel-skin-ie7 .jcarousel-item:hover,
@@ -72,18 +73,18 @@
  */
 .jcarousel-skin-ie7 .jcarousel-next-horizontal {
     position: absolute;
-    top: 43px;
+    top: 73px;
     right: 5px;
     width: 32px;
     height: 32px;
     cursor: pointer;
-    background: transparent url("images/next-horizontal.gif") no-repeat 0 0;
+    background: transparent url("images/next-horizontal.png") no-repeat 0 0;
 }
 
 .jcarousel-skin-ie7 .jcarousel-direction-rtl .jcarousel-next-horizontal {
     left: 5px;
     right: auto;
-    background-image: url("images/prev-horizontal.gif");
+    background-image: url("images/prev-horizontal.png");
 }
 
 .jcarousel-skin-ie7 .jcarousel-next-horizontal:hover,
@@ -105,18 +106,18 @@
 
 .jcarousel-skin-ie7 .jcarousel-prev-horizontal {
     position: absolute;
-    top: 43px;
+    top: 73px;
     left: 5px;
     width: 32px;
     height: 32px;
     cursor: pointer;
-    background: transparent url("images/prev-horizontal.gif") no-repeat 0 0;
+    background: transparent url("images/prev-horizontal.png") no-repeat 0 0;
 }
 
 .jcarousel-skin-ie7 .jcarousel-direction-rtl .jcarousel-prev-horizontal {
     left: auto;
     right: 5px;
-    background-image: url("images/next-horizontal.gif");
+    background-image: url("images/next-horizontal.png");
 }
 
 .jcarousel-skin-ie7 .jcarousel-prev-horizontal:hover,

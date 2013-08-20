@@ -94,9 +94,9 @@
         var promo_html = '<a onClick="FillPromotionById('+promo.promotion_id+');"><div class="slider_promo">';
             promo_html += '  <div class="slider_localidad">'+promo.city+'</div>';
             promo_html += '  <div><img src="'+promo.path+'" style="height:60px;"/></div>';
-            promo_html += '  <div class="">'+promo.name+'</div>';
-            promo_html += '  <div class="precio">'+promo.promo_value+'</div>';
-            promo_html += '  <div class="">'+promo.displayed_text+'</div></div></a>';;
+            promo_html += '  <div class="slider_displayed_text">'+promo.name+'</div>';
+            promo_html += '  <div class="slider_precio">'+promo.promo_value+'</div>';
+            promo_html += '  <div class="slider_displayed_text">'+promo.displayed_text+'</div></div></a>';;
 
         return promo_html;
     };

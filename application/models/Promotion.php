@@ -312,6 +312,9 @@ class PAP_Model_Promotion
         if(count($branches) == 0)
             return array();
         
+        /*Si alguna de las categorias es raiz, incluyo tambien a las categorias hijas.*/
+        $categories = $this->getExpandedCategories($categories);
+        
         $promotions = $promomapper->getPromotionsByBranches($branches, $categories);
         
         $i = 0;
@@ -596,6 +599,38 @@ class PAP_Model_Promotion
             return rmdir($dir);
         }
         catch(Exception $ex){}
+    }
+    
+    private function getExpandedCategories($categories){
+        $expandedcat = '';
+        if($categories <> ''){
+            $pos = strrpos($categories, ",");
+            if ($pos === false) { // nota: tres signos de igual
+                if($categories %10 != 0)
+                    $expandedcat = $categories;     
+                else{
+                    $expandedcat = $categories.',';
+                    for($i=1; $i<=9; $i++)
+                            $expandedcat = $expandedcat.($categories+$i).',';
+                    $expandedcat = substr($expandedcat, 0, strlen($expandedcat)-1);    
+                }
+            }
+            else{
+                $incat = explode(',', $categories);
+                foreach($incat as $item){
+                    $expandedcat = $expandedcat.$item.',';
+                    if($item %10 == 0){
+                        for($i=1; $i<=9; $i++)
+                            $expandedcat = $expandedcat.($item+$i).',';        
+                    }    
+                }
+                $expandedcat = substr($expandedcat, 0, strlen($expandedcat)-1);    
+            }
+        }
+        else{
+            $expandedcat = $categories;
+        }
+        return $expandedcat;
     }
 }
 

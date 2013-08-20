@@ -175,10 +175,10 @@ class BranchController extends Zend_Controller_Action
                         $this->user->setCategories($values['tree']);
                         if($this->user->getStatus() == 'charged'){
                             $this->user->setStatus('active');
-                            $this->user->update();    
+                            $this->user->update();
                         }
+                        $this->loadUserCategories($this->user, $form);    
                     }
-                        
                 }
             }
             else{

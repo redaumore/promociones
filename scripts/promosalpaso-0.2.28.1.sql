@@ -1,0 +1,1 @@
+﻿ALTER TABLE `promosalpaso`.`category` MODIFY COLUMN `name` VARCHAR(45);

@@ -120,27 +120,28 @@ function getPromotions(){
         categoriesString = categoriesString.substring(0, categoriesString.length-1);
     var _url = _baseUri + '/promotion/search/city/' + city + '/categories/' + categoriesString;
     if (!firstClick){
-        jQuery("#list2").jqGrid('setGridParam', { url: _url }).trigger("reloadGrid");
+        jQuery('#list2').jqGrid('clearGridData');
+        jQuery("#list2").jqGrid('setGridParam', { url: _url, datatype: "json" }).trigger("reloadGrid");
     }
-    else{
+    else{ 
         firstClick = false;
         jQuery("#gbox_list2").hide();
         jQuery("#list2").jqGrid({url: _url, datatype: "json",
              colNames:['Imagen', 'Comercio','Promoción', 'Dirección', 'Precio'],
              colModel:[ {name:'img',index:'path', width:50,sortable:false},
-                        {name:'Comercio',index:'name', width:150}, 
-                        {name:'Promoción',index:'displayed_text', width:200},
-                        {name:'Dirección',index:'short_description', width:250},
+                        {name:'Comercio',index:'name', width:170}, 
+                        {name:'Promoción',index:'displayed_text', width:230},
+                        {name:'Dirección',index:'short_description', width:300},
                         {name:'Valor',index:'promo_value', width:45},
                         /*{name:'Mts.',index:'distance', width:30},*/
              ],
-             rowNum:5,
-             rowList:[10,20,30],
+             rowNum:20,
+             rowList:[20,30,40],
              pager: '#pager2',
              sortname: 'starts',
              viewrecords: true,
              sortorder: "desc",
-             height: "287px",
+             height: "100%",
              mtype:"POST",
              caption:"Promociones encontradas",
              gridComplete: function(){
@@ -157,7 +158,7 @@ function getPromotions(){
                      jQuery("#list2").jqGrid('setRowData',ids[i],{img:be});
                  }
                  jQuery("#gbox_list2").show();
-             }
+             },
         })
      //jQuery("#list2").trigger('reloadGrid');
      //jQuery("#list2").jqGrid('GridNav','#pager2',{edit:false,add:false,del:false});

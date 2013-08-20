@@ -311,9 +311,16 @@ class PAP_Model_PromotionMapper
         
         $incat = '';
         if($categories <> ''){
-            $incat = implode(',', $categories);     
+            $incat = $categories;
+            /*
+            $pos = strrpos($categories, ",");
+            if ($pos === false) { // nota: tres signos de igual
+                $incat = $categories;     
+            }
+            else{
+                $incat = implode(',', $categories);    
+            } */
         }
-        
         
         $adapter = Zend_Db_Table::getDefaultAdapter();
         //$statement = (($origin=='')?"SELECT DISTINCT b.name, b.latitude, b.longitude, p.*, i.path FROM promotion p ":
