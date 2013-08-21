@@ -216,6 +216,7 @@ label[for=branches]{
 </form>
 <script>
 $(document).ready(function(){
+   
    $("#starts").datepicker({
       showOn: 'both',
       buttonImage: '/images/calendar-icon.png',
@@ -232,7 +233,6 @@ $(document).ready(function(){
         showPromoTotalCost();   
       }
    });
-   $("#starts" ).datepicker( "setDate", new Date() );
    
    $("#ends").datepicker({
       showOn: 'both',
@@ -245,7 +245,21 @@ $(document).ready(function(){
          showPromoTotalCost();
       }
    });
-   $( "#ends" ).datepicker( "setDate", new Date() );
+   
+   var today = new Date();
+   var kickoff = parseStringToDate(jQuery('#availableStartDate').val());
+   
+   if(kickoff > today){
+       $("#starts").datepicker( "setDate", kickoff );
+       $("#ends").datepicker( "setDate", kickoff );
+       $("#starts").datepicker('option', 'minDate', kickoff);
+       $("#ends").datepicker('option', 'minDate', kickoff);
+   }
+   else{
+       $("#starts" ).datepicker( "setDate", today );
+       $("#ends" ).datepicker( "setDate", today );    
+   }
+    
    
    showPromoTotalCost(); 
 })

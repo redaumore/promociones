@@ -527,6 +527,12 @@ function resetPassword(){
     );    
 }
 
+function parseStringToDate(strDate){
+    var arrDate = strDate.split("-");
+    var returnDate = new Date(arrDate[2], arrDate[1]-1, arrDate[0]);
+    return returnDate;
+}
+
 
 
 

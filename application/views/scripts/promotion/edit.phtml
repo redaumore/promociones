@@ -244,6 +244,14 @@ label[for=branches]{
          showPromoTotalCost();
       }
    });
+   var today = new Date();
+   var kickoff = parseStringToDate(jQuery('#availableStartDate').val());
+   
+   if(kickoff > today){
+       $("#starts").datepicker('option', 'minDate', kickoff);
+       $("#ends").datepicker('option', 'minDate', kickoff);
+   }
+   
    if(jQuery("#starts").val() == "")
         jQuery("#ends").datepicker( "setDate", new Date() );
    if(jQuery("#starts").datepicker("getDate") < getToday())
