@@ -50,13 +50,13 @@ class PAP_Form_PromotionForm extends Zend_Form
         
         $control = new Zend_Form_Element_TextArea('longDescription');
         $control->setLabel('Desc. larga ')
-            ->setOptions(array('rows' => '6','cols' => '45'))
+            ->setOptions(array('rows' => '5','cols' => '50'))
             ->setRequired(true)
             ->addFilter('StripTags')
             ->addFilter('StringTrim')
             ->addValidator('NotEmpty', true)
             ->addDecorators($decorators);
-        $control->addValidator('stringLength', true, array(0, 500));
+        $control->addValidator('stringLength', true, array(0, 250));
         $this->addElement($control);
         
         

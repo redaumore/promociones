@@ -333,7 +333,7 @@ class PAP_Model_PromotionMapper
                      (($categories == '')?'':"INNER JOIN category_user cu ON (b.user_id = cu.user_id) ").
                      "WHERE p.starts <= '".date('Y-m-d')."' AND p.ends >= '".date('Y-m-d')."' AND pb.branch_id IN ".$in. " ".
                      (($incat == '')?'':"AND cu.category_id IN (".$incat.") ").
-                     "ORDER BY p.promo_cost DESC ".(($limit == 0)?'':"LIMIT ".$limit." ");
+                     "ORDER BY 1 DESC ".(($limit == 0)?'':"LIMIT ".$limit." ");
                      
         $results = $adapter->fetchAll($statement);
         return $results;
@@ -376,6 +376,24 @@ class PAP_Model_PromotionMapper
                       "ORDER BY p.user_id, p.promo_cost;";
         $results = $adapter->fetchAll($statement);
         return $results;
+    }
+    
+    public function setCategories(PAP_Model_Promotion $promo, $categories){
+        $this->deleteAllCategories($promo);
+        $categoryUserTable = new PAP_Model_DbTable_CategoryPromotion();
+        foreach($categories as $cat){
+           $row = array(
+                'category_id' => $cat->getId(),
+                'promotion_id' => $promo->getId(),
+           );
+           $categoryUserTable->insert($row);
+        }
+    }
+    
+     private function deleteAllCategories(PAP_Model_Promotion $promo){
+        $categoryUserTable = new PAP_Model_DbTable_CategoryPromotion();
+        $where = 'promotion_id = '.$promo->getId();;
+        $categoryUserTable->delete($where);
     }
 }
 

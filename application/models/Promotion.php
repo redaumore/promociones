@@ -632,6 +632,12 @@ class PAP_Model_Promotion
         }
         return $expandedcat;
     }
+    
+    public function setCategories($arrCats){
+        $mapper = new PAP_Model_PromotionMapper();
+        $mapper->setCategories($this, $arrCats);
+        return;
+    }
 }
 
 

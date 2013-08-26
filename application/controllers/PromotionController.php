@@ -30,6 +30,8 @@
                     $data['branches'] = $_POST['branches'];
                     $newPromotion = new PAP_Model_Promotion();
                     $newPromotion->insert($data);
+                    /*TODO 6: Selecctión de categorías por promoción. Se asignan las categorias del usuario por ahora.*/
+                    $newPromotion->setCategories($this->user->getCategories());
                     $this->saveImages($data, $newPromotion);
                     $this->_redirect('promotion/index'); 
                 }
@@ -101,6 +103,7 @@
                     if ($form->save->isChecked()){
                         $newPromotion = new PAP_Model_Promotion();
                         $newPromotion->update($data);
+                        $newPromotion->setCategories($this->user->getCategories());
                         $this->saveImages($data, $newPromotion);
                     }
                     
@@ -165,7 +168,7 @@
             }
             else{
                 $page = 0; // get the requested page
-                $limit = 10; // get how many rows we want to have into the grid
+                $limit = 20; // get how many rows we want to have into the grid
                 $sidx = 0; // get index row - i.e. user click to sort
                 $sord =  'starts';
             }
