@@ -48,4 +48,18 @@ class PAP_Helper_Config extends Zend_Controller_Action_Helper_Abstract{
         $config = new Zend_Config_Xml(APPLICATION_PATH.'/configs/config.xml', 'updates');
         return new DateTime($config->category);    
     }
+    
+    public static function getPageSize(){
+        $cache = Zend_Registry::get('cache');
+        $pagesize = $cache->load("pagesize");
+        if($pagesize == null ) {
+            $config = new Zend_Config_Xml(APPLICATION_PATH.'/configs/config.xml', 'pagesize');
+            $pagesize = $config->all;
+            $cache->save("pagesize", $pagesize);    
+        }
+        else{
+            $pagesize = $cache->load('pagesize');    
+        }
+        return $pagesize;          
+    }
 }

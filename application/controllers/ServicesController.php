@@ -40,40 +40,43 @@ class servicesController extends Zend_Controller_Action
             $lng = $this->_getParam('lng'); //$_GET['lng'];
             $categories = $this->_getParam('cat').'';
             $page = $this->_getParam('page').'';
-            $uuid = $this->_getParam('uuid').'';
-            if($categories <> ""){
-                $categories = explode(',', $categories);
-                $finalcategories = array();
-                for($i=0; $i<count($categories); $i=$i+1){
-                    $finalcategories[] = $categories[$i];
-                    if($categories[$i]%10 == 0){
-                        for($y=1;$y<10;$y=$y+1){
-                            $finalcategories[] = $categories[$i]+$y;
-                        }
-                    }    
-                } 
+            $uuid = $this->_getParam('mobile_uuid').'';
+            
+            if($this->newSessionRequired($uuid, $categories, $lat, $lng)){
+                if($categories <> ""){
+                    $categories = explode(',', $categories);
+                    $finalcategories = array();
+                    for($i=0; $i<count($categories); $i=$i+1){
+                        $finalcategories[] = $categories[$i];
+                        if($categories[$i]%10 == 0){
+                            for($y=1;$y<10;$y=$y+1){
+                                $finalcategories[] = $categories[$i]+$y;
+                            }
+                        }    
+                    } 
+                }
+                else{
+                    $finalcategories = '';
+                }
+                $promotion = new PAP_Model_Promotion();
+                $data = $promotion->getPromotionsByCoords($lat, $lng, $finalcategories);
+                
+                $i = 0;
+                foreach($data as $item){
+                    $image = $this->getDataURI(".".$this->getThumb($item["path"]));
+                    if($image == "NOPIC")
+                        $data[$i]["path"] = $this->getDataURI(".".$item["logo"]);
+                    else
+                        $data[$i]["path"] = $this->getDataURI(".".$this->getThumb($item["path"]));
+                    $i = $i + 1;
+                }
+                
+                $this->setNewSession($uuid, $categories, $lat, $lng, $data);
             }
             else{
-                $finalcategories = '';
-            }
-            $promotion = new PAP_Model_Promotion();
-            $data = $promotion->getPromotionsByCoords($lat, $lng, $finalcategories);
-            
-            $i = 0;
-            foreach($data as $item){
-                $image = $this->getDataURI(".".$this->getThumb($item["path"]));
-                if($image == "NOPIC")
-                    $data[$i]["path"] = $this->getDataURI(".".$item["logo"]);
-                else
-                    $data[$i]["path"] = $this->getDataURI(".".$this->getThumb($item["path"]));
-                $i = $i + 1;
+               $data = $this->getSessionPage($uuid, $page);     
             }
             
-            //header('Content-Type: application/json');
-            /*$data = array();
-            $data['latitud'] = $lat;
-            $data['longitud'] = $lng;
-            */
             $response = $this->getFrontController()->getResponse();
             $response->appendBody($callback.'('.json_encode($data).')');
             $this->getFrontController()->setResponse($response);
@@ -587,4 +590,75 @@ class servicesController extends Zend_Controller_Action
             $this->getFrontController()->setResponse($response);
         }
     }
+    
+    /**
+    * Devuelve verdadero si se necesita renovar la sesión para el dispositivo uuid.
+    * Compara las categorias de la anterior sesión y si la diferencia entre puntos es mayor a 200 mts.
+    * 
+    * @param mixed $uuid
+    * @param mixed $categories
+    * @param mixed $lat
+    * @param mixed $lng
+    */
+    private function newSessionRequired($uuid, $categories, $lat, $lng){
+        $needNewSession = false;
+        $session_id = 'mobile_'.$uuid;
+        if(Zend_Session::namespaceIsset($session_id)){
+            $session = new Zend_Session_Namespace($session_id);
+            $oldcat = $session->categories;
+            if($categories != $oldcat)
+                $needNewSession = true;
+            
+            $oldlat = $session->lat;
+            $oldlng = $session->lng;
+            $diference = PAP_Helper_Tools::getDistance($lat, $lng, $oldlat, $oldlng);
+            if($diference > 200)
+                $needNewSession = true;    
+            
+            if($needNewSession){
+                Zend_Session:: namespaceUnset($session_id);
+            }         
+        }
+        else
+            $needNewSession = true;     
+        return $needNewSession;    
+    }
+    
+    /**
+    * Guarda la sesión de la ultima búsqueda para el mobile uuid
+    * 
+    * @param mixed $uuid
+    * @param mixed $categories
+    * @param mixed $lat
+    * @param mixed $lng
+    * @param mixed $data
+    */
+    private function setNewSession($uuid, $categories, $lat, $lng, $data){
+        $session_id = 'mobile_'.$uuid;
+        $session = new Zend_Session_Namespace($session_id);
+        $session->categories = $categories;
+        $session->lat = $lat;
+        $session->lng = $lng;
+        $session->data = $data;    
+    }
+    
+    private function getSessionPage($uuid, $page){
+         $session_id = 'mobile_'.$uuid;
+         $session = new Zend_Session_Namespace($session_id);
+         $fulldata = $session->data;
+         $pagesize = PAP_Helper_Config::getPageSize();
+         if(isset($fulldata)){
+            $lastItem = count($fulldata) - 1;
+            $subset = array();
+            $from = $page * $pagesize;
+            $to = $page * $pagesize + $pagesize;
+            if($to > $lastItem)
+                $to = $lastItem;
+            for($i = $from; $i < $to; $i++){
+                $subset[] = $fulldata[$i];   
+            }
+            return $subset;       
+         }
+         return null;
+    }  
 }

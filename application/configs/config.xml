@@ -6,4 +6,7 @@
   <updates>
     <category>2013-07-29</category>
   </updates>
+  <pagesize>
+    <all>4</all>
+  </pagesize>
 </zend-config>

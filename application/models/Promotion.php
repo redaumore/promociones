@@ -320,11 +320,14 @@ class PAP_Model_Promotion
         $i = 0;
         
         foreach($promotions as $promo){
-            $plat = $promo['latitude'];
+            /*
             $deltalat = (($lat-$plat)*1000)/$kmlat;
-            $plng = $promo['longitude'];
             $deltalng = (($lng-$plng)*1000)/$kmlng;
             $distance = round(sqrt(pow($deltalat, 2) + pow($deltalng, 2)));
+            */
+            $plat = $promo['latitude'];
+            $plng = $promo['longitude'];
+            $distance = PAP_Helper_Tools::getDistance($lat, $lng, $plat, $plng);
             $valor = substr($promo['promo_cost'], strrpos($promo['promo_cost'], '-')+1);
             $valor = ($valor == '0.00')?1.00:floatval($valor);
             $indiceord = abs(($distance*$valor*1000)/(1-$distance)+(($valor -1)*1000))-1000;
@@ -374,11 +377,14 @@ class PAP_Model_Promotion
         $i = 0;
         
         foreach($promotions as $promo){
-            $plat = $promo['latitude'];
+            /*$plat = $promo['latitude'];
             $deltalat = (($lat-$plat)*1000)/$kmlat;
             $plng = $promo['longitude'];
             $deltalng = (($lng-$plng)*1000)/$kmlng;
-            $distance = round(sqrt(pow($deltalat, 2) + pow($deltalng, 2)));
+            $distance = round(sqrt(pow($deltalat, 2) + pow($deltalng, 2))); */
+            $plat = $promo['latitude'];
+            $plng = $promo['longitude'];
+            $distance = PAP_Helper_Tools::getDistance($lat, $lng, $plat, $plng);
             $valor = substr($promo['promo_cost'], strrpos($promo['promo_cost'], '-')+1);
             $valor = ($valor == '0.00')?1.00:floatval($valor);
             $indiceord = abs(($distance*$valor*1000)/(1-$distance)+(($valor -1)*1000))-1000;
@@ -412,11 +418,14 @@ class PAP_Model_Promotion
         $i = 0;
         
         foreach($promotions as $promo){
-            $plat = $promo['latitude'];
+            /*$plat = $promo['latitude'];
             $deltalat = (($lat-$plat)*1000)/$kmlat;
             $plng = $promo['longitude'];
             $deltalng = (($lng-$plng)*1000)/$kmlng;
-            $distance = round(sqrt(pow($deltalat, 2) + pow($deltalng, 2)));
+            $distance = round(sqrt(pow($deltalat, 2) + pow($deltalng, 2)));*/
+            $plat = $promo['latitude'];
+            $plng = $promo['longitude'];
+            $distance = PAP_Helper_Tools::getDistance($lat, $lng, $plat, $plng);
             $valor = substr($promo['promo_cost'], strrpos($promo['promo_cost'], '-')+1);
             $valor = ($valor == '0.00')?1.00:floatval($valor);
             $indiceord = abs(($distance*$valor*1000)/(1-$distance)+(($valor -1)*1000))-1000;
@@ -449,7 +458,7 @@ class PAP_Model_Promotion
         $promo = $promomapper->getPromotionById($promotion_id);
         if(isset($promo[0])){
             $promo = $promo[0];
-            $distance = $this->getDistance($lat, $lng, $promo['latitude'], $promo['longitude']);
+            $distance = PAP_Helper_Tools::getDistance($lat, $lng, $promo['latitude'], $promo['longitude']);
             $valor = substr($promo['promo_cost'], strrpos($promo['promo_cost'], '-')+1);
             $valor = ($valor == '0.00')?1.00:floatval($valor);
             $promo['distance'] = $distance;
@@ -482,7 +491,7 @@ class PAP_Model_Promotion
         array_multisort($indice, SORT_DESC, $promotions);
         return $promotions;    
     }
-    
+    /*
     private function getDistance($lat1, $lng1, $lat2, $lng2){
         $kmlat = 0.009003753;
         $kmlng = 0.01093571;
@@ -491,7 +500,7 @@ class PAP_Model_Promotion
         $deltalng = (($lng1-$lng2)*1000)/$kmlng;
         $distance = round(sqrt(pow($deltalat, 2) + pow($deltalng, 2)));
         return $distance;
-    }
+    } */
     
     private function getBranchImage($promotion_id){
         //devuelve el path de la imagen

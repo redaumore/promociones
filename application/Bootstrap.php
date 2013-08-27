@@ -27,6 +27,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     protected function _initSessions()
     {
         Zend_Session::start();
+        Zend_Session::rememberMe(60*60*1); /*Las sesiones duran 1 hora*/
     }
 
     
