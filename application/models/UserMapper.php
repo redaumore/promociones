@@ -41,6 +41,7 @@ protected $_dbTable;
             unset($data['user_id']);
             $this->getDbTable()->insert($data);
         } else {
+            unset($data['created']);
             $this->getDbTable()->update($data, array('user_id = ?' => $id));
         }
     }
@@ -148,6 +149,30 @@ protected $_dbTable;
         $categoryUserTable = new PAP_Model_DbTable_CategoryUser();
         $where = 'user_id = '.$user->getId();;
         $categoryUserTable->delete($where);
+    }
+    
+    public function getUsersByAntiquity($days){
+        $users = array();
+        $select = $this->getDbTable()->select();
+        $select->where('DATEDIFF(NOW(), created) > '.$days);
+        $stmt = $select->query();
+        $result = $stmt->fetchAll();
+        foreach($result as $row){
+            $users[] = new PAP_Model_User($row);
+        }
+        if(count($users)==0)
+            return null;
+        return $users;
+    }
+    
+    public function changePriceRulesToUsers($fromPR, $toPR, $users = null){
+        $where = array();
+        $table = $this->getDbTable();
+        $data = array('price_rule_id' => $toPR);
+        if($users != null) 
+            $where[] = $table->getAdapter()->quoteInto('user_id IN (?)', implode(',', $users));
+        $where[] = $table->getAdapter()->quoteInto('price_rule_id = ?', $fromPR);
+        $table->update($data, $where);
     }
     
     

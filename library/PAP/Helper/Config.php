@@ -62,4 +62,9 @@ class PAP_Helper_Config extends Zend_Controller_Action_Helper_Abstract{
         }
         return $pagesize;          
     }
+    
+    public static function getDaysAsNew(){
+        $config = new Zend_Config_Xml(APPLICATION_PATH.'/configs/config.xml', 'users');
+        return $config->daysAsNew;    
+    }
 }

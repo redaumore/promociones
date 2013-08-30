@@ -9,4 +9,7 @@
   <pagesize>
     <all>4</all>
   </pagesize>
+  <users>
+    <daysAsNew>15</daysAsNew>
+  </users>
 </zend-config>

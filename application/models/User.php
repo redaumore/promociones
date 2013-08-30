@@ -12,6 +12,8 @@ class PAP_Model_User
     protected $_created;
     protected $_status;
     protected $_billingAddress;
+    protected $_customer_list;
+    
     
     public function __construct(array $options = null)
     {
@@ -77,6 +79,12 @@ class PAP_Model_User
             if (in_array($method, $methods)) {
                 $this->$method($value);
             }
+            if($key == 'user_id')
+                $this->setId($value);
+            if($key == 'price_rule_id')
+                $this->setPriceRuleId($value);
+            if($key == 'customer_list')
+                $this->setCustomerList($value);
         }
         return $this;
     }
@@ -233,10 +241,20 @@ class PAP_Model_User
         $this->_status = (string) $text;
         return $this;
     }
- 
     public function getStatus()
     {
         return $this->_status;
+    }
+    
+     public function setCustomerList($text)
+    {
+        $this->_customer_list = (string) $text;
+        return $this;
+    }
+    public function getCustomerList()
+    {
+        //TODO 5: Devolver objeto y no id. 
+        return $this->_customer_list;
     }
     
     public function setRol($text)
@@ -313,6 +331,34 @@ class PAP_Model_User
         if($this->getPassword() == $password)
             return true;
         return false;
+    }
+    
+    public static function getUsersByAntiquity($days){
+        $mapper = new PAP_Model_UserMapper();
+        $users = $mapper->getUsersByAntiquity($days);
+        return $users;    
+    }
+    
+    public static function changePriceRulesToUsers($fromPR, $toPR, $users = null){
+        $usersArr = array();
+        foreach($users as $user){
+            $usersArr[] = $user->getId();
+        }
+        $mapper = new PAP_Model_UserMapper();
+        $pricerule = new PAP_Model_PriceRule();
+        $pricerule->loadByCode($fromPR);
+        $fromPR = $pricerule->getId();
+        $pricerule->loadByCode($toPR);
+        $toPR = $pricerule->getId();
+        
+        $mapper->changePriceRulesToUsers($fromPR, $toPR, $usersArr);        
+    }
+    
+    public static function changePriceRulesToNewUsers(){
+        $days = PAP_Helper_Config::getDaysAsNew();
+        $users = PAP_Model_User::getUsersByAntiquity($days);
+        if($users != null)
+            PAP_Model_User::changePriceRulesToUsers("C1", "C2", $users);        
     }
 }
 

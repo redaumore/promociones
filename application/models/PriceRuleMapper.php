@@ -67,6 +67,27 @@ protected $_dbTable;
         }
         return $entries;
     }
+    
+    public function loadByCode($code, $pricerule){
+        $select = $this->getDbTable()->select();
+        $select->where('price_rule_code = "'.$code.'"');
+        $stmt = $select->query();
+        $result = $stmt->fetchAll();
+        foreach($result as $row){
+            $pricerule->setId($row['price_rule_id'])
+            ->setCode($row['price_rule_code'])
+            ->setCreated($row['created'])
+            ->setValue1($row['value1'])
+            ->setValue2($row['value2'])
+            ->setValue3($row['value3'])
+            ->setValue4($row['value4'])
+            ->setValue5($row['value5'])
+            ->setValue6($row['value6'])
+            ->setValue7($row['value7'])
+            ->setValue8($row['value8'])
+            ->setValue9($row['value9']);
+        }
+    }
 
 }
 
