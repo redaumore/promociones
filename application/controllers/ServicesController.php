@@ -26,21 +26,29 @@ class servicesController extends Zend_Controller_Action
     
     public function getpromolistAction(){
         try{
+            $responseArr = array();
+            
             $this->_helper->layout->setLayout('json');  
 
             $callback = $this->getRequest()->getParam('jsoncallback');
             if ($callback != "")
-            {
-                // strip all non alphanumeric elements from callback
                 $callback = preg_replace('/[^a-zA-Z0-9_]/', '', $callback);
-            }  
+            else
+                $callback = "jsoncallback";
+                  
             $this->view->callback = $callback;
 
             $lat  = $this->_getParam('lat'); //$_GET['lat'];
             $lng = $this->_getParam('lng'); //$_GET['lng'];
             $categories = $this->_getParam('cat').'';
-            $page = $this->_getParam('page').'';
+            $retrieve = $this->_getParam('retrieve').'';
+            $retrieved = $this->_getParam('retrieved').'';
+            $offset = $this->_getParam('offset').'';
             $uuid = $this->_getParam('mobile_uuid').'';
+            if($retrieve == '')
+                $page = 0;
+            else
+                $page = floor($retrieved/$retrieve);
             
             if($this->newSessionRequired($uuid, $categories, $lat, $lng)){
                 if($categories <> ""){
@@ -68,7 +76,10 @@ class servicesController extends Zend_Controller_Action
                         $data[$i]["path"] = $this->getDataURI(".".$item["logo"]);
                     else
                         $data[$i]["path"] = $this->getDataURI(".".$this->getThumb($item["path"]));
+                    if($data[$i]["value_since"] == "0")
+                        unset($data[$i]["value_since"]);
                     $i = $i + 1;
+                    
                 }
                 
                 $this->setNewSession($uuid, $categories, $lat, $lng, $data);
@@ -77,8 +88,17 @@ class servicesController extends Zend_Controller_Action
                $data = $this->getSessionPage($uuid, $page);     
             }
             
+            
+            //$responseArr = array('data'=>array('count'=>count($data), 'json'=>$data));
             $response = $this->getFrontController()->getResponse();
-            $response->appendBody($callback.'('.json_encode($data).')');
+            if($retrieve != ''){
+                $dataArr = array();
+                $dataArr[] = array('count'=>count($data), 'json'=>$data);
+                $responseArr = array('data'=>$dataArr);
+                $response->appendBody($callback.'('.json_encode($responseArr).')');
+            }
+            else
+                $response->appendBody($callback.'('.json_encode($data).')');
             $this->getFrontController()->setResponse($response);
         }
         catch(Exception $e){
@@ -202,7 +222,7 @@ class servicesController extends Zend_Controller_Action
             $_callback = $this->getRequest()->getParam('jsoncallback');
             if ($_callback != ""){
                 // strip all non alphanumeric elements from callback
-                $_callback = preg_replace('/[^a-zA-Z0-9_]/', '', $callback);
+                $_callback = preg_replace('/[^a-zA-Z0-9_]/', '', $_callback);
             }  
             $this->view->callback = $_callback; 
             
@@ -520,8 +540,7 @@ class servicesController extends Zend_Controller_Action
                 $this->getFrontController()->setResponse($response); 
         }    
     }
-
-
+    
     public function edituserinfoAction(){
         try{
             $jsonmsg = "";
@@ -648,7 +667,7 @@ class servicesController extends Zend_Controller_Action
          $fulldata = $session->data;
          $pagesize = PAP_Helper_Config::getPageSize();
          if(isset($fulldata)){
-            $lastItem = count($fulldata) - 1;
+            $lastItem = count($fulldata);
             $subset = array();
             $from = $page * $pagesize;
             $to = $page * $pagesize + $pagesize;

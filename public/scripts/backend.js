@@ -308,8 +308,7 @@ function sendPayment(){
                 contentType: "application/json; charset=utf-8",
                 timeout: 5000,
                 success: function(data, status){
-                        if(data.length == 0)
-                            alert(data);
+                    alert(data.message);
                 },
                 error: function(jqXHR, textStatus, errorThrown){
                     alert(textStatus);    

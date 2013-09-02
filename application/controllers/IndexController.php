@@ -50,6 +50,9 @@ class IndexController extends Zend_Controller_Action
                     array_push($mainMenu, array('title'=>'Mis Promos', 'url'=>$this->view->url(array('controller'=>'promotion', 'action'=>'index'),null, true)));
                     array_push($mainMenu, array('title'=>'Mis Costos', 'url'=>$this->view->url(array('controller'=>'payment', 'action'=>'index'),null, true)));
                 }
+                if($this->user->Status == 'debtor' ){
+                    array_push($mainMenu, array('title'=>'Mis Costos', 'url'=>$this->view->url(array('controller'=>'payment', 'action'=>'index'),null, true)));
+                }
                 array_push($mainMenu, array('title'=>'Ayuda', 'url'=>$this->view->url(array('controller'=>'index', 'action'=>'help'),null, true)));
             }
             $this->view->menu = $mainMenu;
