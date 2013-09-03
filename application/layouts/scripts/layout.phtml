@@ -22,14 +22,14 @@
 <script type="text/javascript" src="/scripts/promosalpaso.js"></script>
 </head>
 <body>
-    <div id="pageWrapper">
+    <div id="pageWrapper" style="height: 100%;">
         <?php echo $this->partial("_header.phtml"); ?>    
         
-        <div id="content" class="container">
+        <div id="content" class="container" style="height: 100%;">
             <div id="main_menu">
                 <?php echo $this->layout()->menu; ?>
             </div>
-            <div id="main" class="well" style="min-height: 370px; height: auto !important; height: 370px;">
+            <div id="main" class="well" style="min-height: 370px; height: auto !important;">
                 <?php echo $this->layout()->content;?>&nbsp;
             </div>
         </div>

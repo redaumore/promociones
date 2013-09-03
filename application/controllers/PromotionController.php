@@ -476,6 +476,16 @@
             $comboPrices->addMultioption($rule['price_rule_code'].'-'.$rule['value2'], $rule['value2']);
             $comboPrices->addMultioption($rule['price_rule_code'].'-'.$rule['value3'], $rule['value3']);
             $comboPrices->addMultioption($rule['price_rule_code'].'-'.$rule['value4'], $rule['value4']);
+            if($rule['value5']!= '-1')
+                $comboPrices->addMultioption($rule['price_rule_code'].'-'.$rule['value5'], $rule['value5']);
+            if($rule['value6']!= '-1')
+                $comboPrices->addMultioption($rule['price_rule_code'].'-'.$rule['value6'], $rule['value6']);
+            if($rule['value7']!= '-1')
+                $comboPrices->addMultioption($rule['price_rule_code'].'-'.$rule['value7'], $rule['value7']);
+            if($rule['value8']!= '-1')
+                $comboPrices->addMultioption($rule['price_rule_code'].'-'.$rule['value8'], $rule['value8']);
+            if($rule['value9']!= '-1')
+                $comboPrices->addMultioption($rule['price_rule_code'].'-'.$rule['value9'], $rule['value9']);
         }    
     }
     

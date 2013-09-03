@@ -170,7 +170,7 @@ protected $_dbTable;
         $table = $this->getDbTable();
         $data = array('price_rule_id' => $toPR);
         if($users != null) 
-            $where[] = $table->getAdapter()->quoteInto('user_id IN ('.implode(',', $users).')');
+            $where[] = $table->getAdapter()->quoteInto('user_id IN (?)', $users);
         $where[] = $table->getAdapter()->quoteInto('price_rule_id = ?', $fromPR);
         $table->update($data, $where);
     }
