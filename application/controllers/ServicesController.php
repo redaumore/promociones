@@ -84,10 +84,8 @@ class servicesController extends Zend_Controller_Action
                 
                 $this->setNewSession($uuid, $categories, $lat, $lng, $data);
             }
-            else{
-               $data = $this->getSessionPage($uuid, $page);     
-            }
             
+            $data = $this->getSessionPage($uuid, $page);     
             
             //$responseArr = array('data'=>array('count'=>count($data), 'json'=>$data));
             $response = $this->getFrontController()->getResponse();
