@@ -269,7 +269,17 @@ label[for=branches]{
  
  $("form").submit(function() {
     $("#starts").removeAttr("disabled", "disabled");
-}); 
+});
+
+    $("#displayedText").charCount({
+        allowed: 25,        
+        warning: 20,
+    });
+    
+    $("#shortDescription").charCount({
+        allowed: 60,        
+        warning: 50,
+    }); 
 
  </script>
 <?php echo $this->partial("promotion/_promobody.phtml"); ?>

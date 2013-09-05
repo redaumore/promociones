@@ -93,10 +93,10 @@
     {
         var promo_html = '<a onClick="FillPromotionById('+promo.promotion_id+');"><div class="slider_promo">';
             promo_html += '  <div class="slider_localidad">'+promo.city+'</div>';
-            promo_html += '  <div><img src="'+promo.path+'" style="height:60px;"/></div>';
+            promo_html += '  <div><img src="'+promo.path+'" style="height:60px;" class="img-polaroid"/></div>';
             promo_html += '  <div class="slider_displayed_text">'+promo.name+'</div>';
             promo_html += '  <div class="slider_precio">'+promo.promo_value+'</div>';
-            promo_html += '  <div class="slider_displayed_text">'+promo.displayed_text+'</div></div></a>';;
+            promo_html += '  <div class="slider_displayed_text" style="font-weight: bold; color: #42962F">'+promo.displayed_text+'</div></div></a>';;
 
         return promo_html;
     };
@@ -130,8 +130,9 @@
             initCallback: mycarousel_initCallback,
             itemLoadCallback: {onBeforeAnimation: mycarousel_itemLoadCallback},
             animation: 2000,
-            wrap: "last",
             auto: 2,
+            scroll: 1,
+            wrap: 'circular',
         });
         jQuery('#mycarousel').hide();
     });
