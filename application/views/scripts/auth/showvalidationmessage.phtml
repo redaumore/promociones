@@ -10,5 +10,16 @@
         <p>En breve recibirás un email que te permitirá activar tu cuenta.</p>
         <p>Si no lo encuentras en tu bandeja de entrada, fíjate en la carpeta de span..</p>
     </div>
+    <?php echo $this->partial("/auth/_registrationsteps.phtml"); ?> 
+    <div class="row-fluid">
+        <div class="span2 offset5 pagination-centered">
+            <a href="../promotion/search"><img src="/images/backend/goto-search.png"/></a>
+            &nbsp;
+            <a href="../auth/login"><img src="/images/backend/goto-login.png"/></a>
+        </div>
+    </div>
 </div>
+<script type="text/javascript">
+    highlightStep(2);
+</script>
 
