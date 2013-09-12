@@ -29,6 +29,7 @@ class AuthController extends Zend_Controller_Action
                                 ->setCredential($data['password']);
                     $result = $auth->authenticate($authAdapter);
                     if($result->isValid()){
+                        PAP_Helper_Logger::writeLog(Zend_Log::INFO, 'AuthController', "User logged in as: " . Zend_Auth::getInstance()->getIdentity(), var_export(Zend_Auth::getInstance()));
                         $user = new PAP_Model_User();
                         $user->loadByEmail($data['email']);
                         $this->_helper->Session->setUserSession($user);

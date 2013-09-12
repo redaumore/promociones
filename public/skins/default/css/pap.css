@@ -152,10 +152,19 @@ form .exceeded{color:#FF6A15;}
 /*REGISTRATION STEPS*/
 
 .stepname{
-    text-align: center;    
+    text-align: center;
+    font-size: 11px; 
+    line-height: 10px;   
 }
 .stepnamehighlighted{
     color: yellow;    
+}
+
+.copete{
+    font-size: 12px;
+    text-align: center;
+    color: #DADADA;
+    margin: 0;
 }
 
 /*

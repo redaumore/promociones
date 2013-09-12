@@ -1,27 +1,27 @@
-<div class="row-fluid">
+<div class="row-fluid pagination-centered" style="margin-top: 50px;">
     <div class="span1 offset1">
         <img id="img-step-1" src="/images/backend/step-1-icon.png"/>
-        <span id="span-step1" class="stepname">Registración</span>
+        <span id="span-step-1" class="stepname">Registración</span>
     </div>
     <div class="span1"><img src="/images/backend/arrows-right-icon.png"/></div>
     <div class="span1">
         <img id="img-step-2" src="/images/backend/step-2-icon.png"/>
-        <span id="span-step2" class="stepname">Validación Email</span>
+        <span id="span-step-2" class="stepname">Validación Email</span>
     </div>
     <div class="span1"><img src="/images/backend/arrows-right-icon.png"/></div>
     <div class="span1">
         <img id="img-step-3" src="/images/backend/step-3-icon.png"/>
-        <span id="span-step3" class="stepname">Datos de Comercio</span>
+        <span id="span-step-3" class="stepname">Datos de Comercio</span>
     </div>
     <div class="span1"><img src="/images/backend/arrows-right-icon.png"/></div>
     <div class="span1">
         <img id="img-step-4" src="/images/backend/step-4-icon.png"/>
-        <span id="span-step4" class="stepname">Categorías Comercio</span>
+        <span id="span-step-4" class="stepname">Categorías Comercio</span>
     </div>
     <div class="span1"><img src="/images/backend/arrows-right-icon.png"/></div>
     <div class="span1">
         <img id="img-step-5" src="/images/backend/step-5-icon.png"/>
-        <span id="span-step5" class="stepname">Creación Promociones</span>
+        <span id="span-step-5" class="stepname">Creación Promociones</span>
     </div>
 </div>
 <script type="text/javascript">
@@ -30,13 +30,13 @@
         for(var i = 1; i <= 5; i++){
             if(step == i){
                 $("#img-step-"+i).attr('src', '/images/backend/step-'+i+'-icon-highlight.png');
-                $("#span-step-"+i).removeClass('stepname');
-                $("#span-step-"+i).removeClass('stepnamehighlighted');
+                //$("#span-step-"+i).removeClass('stepname');
+                $("#span-step-"+i).addClass('stepnamehighlighted');
             }
             else{
                 $("#img-step-"+i).attr('src', '/images/backend/step-'+i+'-icon.png');    
                 $("#span-step-"+i).removeClass('stepnamehighlighted');
-                $("#span-step-"+i).removeClass('stepname');
+                //$("#span-step-"+i).addClass('stepname');
             }
         }
     }    

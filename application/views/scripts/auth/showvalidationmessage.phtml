@@ -1,23 +1,25 @@
 <div class="row-fluid">
     <div class="row">
         <div class="pagination-centered" id="titulo">
-                <h1>Proceso de Activación</h1>
+                <h3>Gracias por registrarte!!!</h3>
         </div>
     </div>
     <hr class="hr-subtitle"/>
     <div class="row pagination-centered">
-        <h3>Gracias por registrarte!!!</h3>
-        <p>En breve recibirás un email que te permitirá activar tu cuenta.</p>
-        <p>Si no lo encuentras en tu bandeja de entrada, fíjate en la carpeta de span..</p>
+        <p class="copete">En breve recibirás un email que te permitirá activar tu cuenta.</p>
+        <p class="copete">Si no lo encuentras en tu bandeja de entrada, fíjate en la carpeta de span..</p>
+        <p class="copete">Ya has completado el segundo paso necesario para poder publicar en Promos al Paso.
+        El tercer paso consiste en ingresar los datos de tu comercio para que tus clientes puedan encontrarte.</p>
     </div>
-    <?php echo $this->partial("/auth/_registrationsteps.phtml"); ?> 
     <div class="row-fluid">
-        <div class="span2 offset5 pagination-centered">
-            <a href="../promotion/search"><img src="/images/backend/goto-search.png"/></a>
-            &nbsp;
-            <a href="../auth/login"><img src="/images/backend/goto-login.png"/></a>
+        <div class="span2 offset4">
+            <a href="../promotion/search" title="Buscar Promos"><img src="/images/backend/goto-search.png"/></a>
+        </div>
+        <div class="span2 pagination-centered">
+            <a href="../auth/login" title="Publicar Promos"><img src="/images/backend/goto-login.png"/></a>
         </div>
     </div>
+    <?php echo $this->partial("/auth/_registrationsteps.phtml"); ?>
 </div>
 <script type="text/javascript">
     highlightStep(2);

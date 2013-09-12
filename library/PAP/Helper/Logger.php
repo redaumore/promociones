@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 class PAP_Helper_Logger{
     public static function writeLog($priority, $context, $message, $params = ""){
         $log = Zend_Registry::get("logDB");
@@ -14,10 +14,23 @@ class PAP_Helper_Logger{
                 ->setEventItem('params', $params)
                 ->setEventItem('message', $message)
                 ->setEventItem('timestamp', date( 'Y-m-d H:i:s'));
-            $log->log($message, $priority);    
+            if(getenv('LOG_VERBOSE') == 'on')
+                $log->log($message, $priority);
+            else{
+                if(getenv('APPLICATION_ENV') == 'production'){
+                    if($priority <= Zend_Log::WARN)
+                        $log->log($message, $priority);
+                }
+                else
+                    $log->log($message, $priority);        
+            }    
         }
         else{
             Zend_Log::log($message, $priority);
+        }
+        
+        if(getenv('LOG_VERBOSE') == 'on'){
+            Zend_Registry::get("logFirebug")->log('CONTEXT: '.$context.'/n/rMESSAGE: '.$message.'/n/rPARAMS: '.$params, $priority);    
         }
     }
     

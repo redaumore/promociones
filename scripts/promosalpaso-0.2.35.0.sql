@@ -1,0 +1,1 @@
+ALTER TABLE `promosalpaso`.`promotion` MODIFY COLUMN `long_description` VARCHAR(500) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;

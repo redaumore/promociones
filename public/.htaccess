@@ -7,4 +7,5 @@ RewriteRule ^.*$ - [NC,L]
 RewriteRule ^.*$ index.php [NC,L]
 RewriteRule .* index.php
 RewriteRule !\.(js|ico|txt|gif|jpg|png|css)$ index.php
-
+SetEnv APPLICATION_ENV development
+SetEnv LOG_VERBOSE on

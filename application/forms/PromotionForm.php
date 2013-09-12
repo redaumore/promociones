@@ -56,7 +56,7 @@ class PAP_Form_PromotionForm extends Zend_Form
             ->addFilter('StringTrim')
             ->addValidator('NotEmpty', true)
             ->addDecorators($decorators);
-        $control->addValidator('stringLength', true, array(0, 250));
+        $control->addValidator('stringLength', true, array(0, 500));
         $this->addElement($control);
         
         

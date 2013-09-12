@@ -5306,6 +5306,7 @@ input[type="submit"].btn.btn-mini {
   opacity: 0;
   filter: alpha(opacity=0);
   visibility: visible;
+  max-width: 250px;
 }
 
 .tooltip.in {

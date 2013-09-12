@@ -104,6 +104,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $writer = new Zend_Log_Writer_Db($db->getDbAdapter(), 'log', $columnMapping);
         $logger = new Zend_Log($writer);
         Zend_Registry::set("logDB", $logger);
+        
+        if(getenv('LOG_VERBOSE') == 'on'){
+            $writer = new Zend_Log_Writer_Firebug();
+            $logger = new Zend_Log( $writer );
+            Zend_Registry::set('logFirebug', $logger );
+        }
     }
     
     protected function _initCache(){

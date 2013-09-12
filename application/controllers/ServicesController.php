@@ -629,7 +629,7 @@ class servicesController extends Zend_Controller_Action
             $oldlat = $session->lat;
             $oldlng = $session->lng;
             $diference = PAP_Helper_Tools::getDistance($lat, $lng, $oldlat, $oldlng);
-            if($diference > 200)
+            if($diference > 100)
                 $needNewSession = true;    
             
             if($needNewSession){
