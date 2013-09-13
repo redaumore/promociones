@@ -127,13 +127,13 @@ function getPromotions(){
         firstClick = false;
         jQuery("#gbox_list2").hide();
         jQuery("#list2").jqGrid({url: _url, datatype: "json",
-             colNames:['Imagen', 'Comercio','Promoción', 'Dirección', 'Precio'],
-             colModel:[ {name:'img',index:'path', width:50,sortable:false},
+             colNames:['Imagen', 'Comercio','Promoción', 'Dirección', 'Valor', ''],
+             colModel:[ {name:'img',index:'path', width:54,sortable:false},
                         {name:'Comercio',index:'name', width:170}, 
                         {name:'Promoción',index:'displayed_text', width:230},
                         {name:'Dirección',index:'short_description', width:300},
-                        {name:'Valor',index:'promo_value', width:45},
-                        /*{name:'Mts.',index:'distance', width:30},*/
+                        {name:'value',index:'promo_value', width:45, align:'center'},
+                        {name:'is_percentage',index:'is_percentage', hidden: true},
              ],
              rowNum:20,
              rowList:[20,30,40],
@@ -154,8 +154,9 @@ function getPromotions(){
                  for(var i=0;i < ids.length;i++){
                      var cl = ids[i];
                      var row = jQuery("#list2").jqGrid('getRowData',cl); 
-                     be = "<img src='"+row["img"]+"' height='50px' width='50px' onClick='loadPromotion("+cl+")'/>"; //"<a href='/promotion/edit/id/"+cl+"'><span class='ui-icon ui-icon-pencil'></span></a>"; 
-                     jQuery("#list2").jqGrid('setRowData',ids[i],{img:be});
+                     be = "<img src='"+row["img"]+"' height='50px' width='50px' style='margin:2px' onClick='loadPromotion("+cl+")'/>"; //"<a href='/promotion/edit/id/"+cl+"'><span class='ui-icon ui-icon-pencil'></span></a>"; 
+                     val = (row["is_percentage"] == "1")?cutDecimals(row["value"])+"%":"$"+cutDecimals(row["value"]);
+                     jQuery("#list2").jqGrid('setRowData',ids[i],{img:be,value:val});
                  }
                  jQuery("#gbox_list2").show();
              },

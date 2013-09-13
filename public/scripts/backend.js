@@ -532,6 +532,12 @@ function parseStringToDate(strDate){
     return returnDate;
 }
 
+function cutDecimals(valor){
+    if(valor.indexOf(".00") != -1)
+        return valor.substring(0, valor.indexOf(".00"));
+    return valor;
+}
+
 
 
 

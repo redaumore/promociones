@@ -36,15 +36,16 @@
 </div>
 <script type="text/javascript">
     jQuery("#list2").jqGrid({url:_baseUri + 'promotion/datos',datatype: "json",
-         colNames:['Acción', 'Código','Inicio', 'Fin', 'Descripción', 'Valor', 'Estado', 'Visitas'],
+         colNames:['Acción', 'Código','Inicio', 'Fin', 'Descripción', 'Valor', 'Estado', 'Visitas', ''],
          colModel:[ {name:'act',index:'act', width:50,sortable:false},
                     {name:'Código',index:'promo_code', width:95}, 
-                    {name:'Inicio',index:'starts', width:95},
-                    {name:'Fin',index:'ends', width:95},
+                    {name:'Inicio',index:'starts', width:95, align: 'center'},
+                    {name:'Fin',index:'ends', width:95, align: 'center'},
                     {name:'Descripción',index:'short_description', width:450},
-                    {name:'Valor',index:'promo_value', width:70},
-                    {name:'Estado',index:'state', width:50},
-                    {name:'Visitas',index:'visited', width:50},
+                    {name:'value',index:'promo_value', width:70, align: 'center'},
+                    {name:'Estado',index:'state', width:50, align: 'center'},
+                    {name:'Visitas',index:'visited', width:50, align: 'center'},
+                    {name:'is_percentage',index:'is_percentage', hidden: true},
          ],
          rowNum:20,
          rowList:[20,30,40],
@@ -66,6 +67,7 @@
             for(var i=0;i < ids.length;i++){
                 var cl = ids[i];
                 var today = new Date();
+                var row = jQuery("#list2").jqGrid('getRowData',cl);
                 var _data_row = jQuery("#list2").getRowData(cl).Inicio.split("/");
                 var start = new Date(_data_row[2], parseInt(_data_row[1])-1, _data_row[0]);
                 start.setDate(start.getDate()+ 1);
@@ -74,7 +76,8 @@
                     se = "";
                 else 
                     se = "<div style='float:left;'><a href='/promotion/delete/id/"+cl+"'><span class='ui-icon ui-icon-trash'></span></a></div>"; 
-                jQuery("#list2").jqGrid('setRowData',ids[i],{act:be+se});
+                val = (row["is_percentage"] == "1")?cutDecimals(row["value"])+"%":"$"+cutDecimals(row["value"]);
+                jQuery("#list2").jqGrid('setRowData',ids[i],{act:be+se,value:val});
             }    
     },
      })
