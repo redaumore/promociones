@@ -20,6 +20,17 @@
     <hr class="hr-subtitle"/>
     <?php echo $this->errorMessage($this->form, $messages); ?>
     <?php echo $this->partial("index/_alert.phtml"); ?>
+    <div class="span4 offset2">
+        <h4>Promociones Activas</h4>
+        <span>Cantidad de promociones activas: <?php echo $this->cant_activas; ?></span>
+        <h6>Distribución</h6>
+            <?php
+                 foreach($this->promos_activas as $distri_info){
+                    echo "<span>".$distri_info->promos_cant." promo/s con costo $".$distri_info->promo_cost." y ".$distri_info->visited." visitas.</span>";        
+                 }
+             ?>
+    </div>
+    <div class="span4"></div>
     <div id="div_grid_container" class="row-fluid pagination-centered">
             <table width="100%">
                 <tr><td align="center">
