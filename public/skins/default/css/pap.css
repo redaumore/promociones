@@ -190,6 +190,32 @@ form .exceeded{color:#FF6A15;}
     margin: 0 0 5px 0; 
 }
 
+/*HOME*/
+.home-text{
+    display: inline;
+    float: right;
+    max-width: 50%;
+    line-height: 17px;
+    font-size: 12px;
+    text-align: center;
+    color: #9C9C9C;
+    text-shadow: 0 0 1px #9C9C9C;
+    margin-top: auto;
+    margin-bottom: auto;
+    
+}
+.home-link:link{
+    text-decoration: none;    
+}
+.home-link:visited{
+    text-decoration: none;    
+}
+
+.platform-icon{
+    height: 50px;
+    margin: 0 20px 0 20px;
+}
+
 /*
 html{ font-size: 125%; }
 

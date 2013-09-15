@@ -8,15 +8,42 @@
 <hr class="hr-subtitle"/>-->
 <?php echo $this->partial("index/_alert.phtml"); ?>
 <div class="row-fluid">
-    <div class="span10 offset1 well">
-        <p>Promos al paso es un sistema que comunica a los comercios con los clientes para hacerle llegar a éstos las promociones vigentes.</p>
-        <p>El sistema está compuesto por dos módulos. Uno es una aplicación para teléfonos inteligentes (smartphones) y el otro es una aplicación web que le permite a los comercios administrar los anuncios de las distintas promociones.</p>
-        <p>Promos al Paso se caracteriza por ser simple tanto para los clientes finales como para los anunciantes. Con el objetivo de que ingresando pocos datos éstos últimos pueden hacer llegar las promociones a los celulares de los clientes finales.</p>
+    <div class="span4 well">
+        <a href="<?php echo $this->url(array('controller'=>'promotion','action'=>'search'));?>" class="home-link">
+            <div style="display: inline; float: left;">
+                <img src="/images/backend/goto-search.png" alt="Buscar Promociones"/>
+            </div>
+            <div class="home-text">Busca promociones por ciudad. Encuentra las mejores ofertas en todos los rubros
+            en todas las ciudades en las que esté Promos al Paso presente.</div>
+        </a>
+    </div>
+    <div class="span4 well">
+        <a href="<?php echo $this->url(array('controller'=>'auth','action'=>'login'));?>" class="home-link">
+            <img src="/images/backend/goto-login.png" alt="Buscar Promociones">
+            <p class="home-text">¿Sos un comercio y tenes promociones y ofertas para ofrecer?. Regístrate e ingresa
+            al sistema publicador de Promos al Paso. Es muy facil y rápido!!</p>
+        </a>
+    </div>
+    <div class="span4 well">
+        <a href="<?php echo $this->url(array('controller'=>'index','action'=>'help'));?>" class="home-link">
+            <img src="/images/backend/goto-help.png" alt="Buscar Promociones">
+            <p class="home-text">¿Qué es Promos al Paso?. ¿Como encuentro promociones?. ¿Qué es lo que tengo que 
+            hacer para publicar?. ¿En que medios serán vistas mis promociones?.</p>
+        </a>
     </div>
 </div>
 <div class="row-fluid">
-    <div class="span4 offset4" align="center">
-        <a class="btn" href="<?php echo 'auth/signup'; ?>">Registrarme como Anunciante</a>
+    <div class="span10 offset1 well pagination-centered">
+        <p>Promos al Paso te permitirá ahorrar dinero y tiempo mostrandote en tu celular las mejores promociones cerca de donde te encuentres.</p>
+        <h5>Disponible para</h5>
+        <div style="display: inline">
+            <a href="#"><img title="Android" class="platform-icon" src="/images/backend/android-icon.png"/></a>
+            <a href="#"><img title="Windows Phone" class="platform-icon" src="/images/backend/wp-icon.png"/></a>
+            <a href="#"><img title="BlackBerry" class="platform-icon" src="/images/backend/blackberry-icon.png"/></a>
+            <a href="#"><img title="Symbian" class="platform-icon" src="/images/backend/symbian-icon.png"/></a>
+            <a href="#"><img title="iPhone" class="platform-icon" src="/images/backend/apple-icon.png"/></a>
+            <a href="#"><img title="Cualquier browser HTML5" class="platform-icon" src="/images/backend/html5-icon.png"/></a>
+        </div>
     </div>
 </div>
 <a id="a_carousel"/>
