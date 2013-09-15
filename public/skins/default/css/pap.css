@@ -152,12 +152,28 @@ form .exceeded{color:#FF6A15;}
 /*REGISTRATION STEPS*/
 
 .stepname{
+    display: block;
     text-align: center;
     font-size: 11px; 
-    line-height: 10px;   
+    line-height: 14px;   
 }
 .stepnamehighlighted{
     color: yellow;    
+}
+
+.steplarge{
+    width: 80px;
+    max-width: none;
+}
+
+.arrowsteplarge{
+    width: 40px;
+    max-width: none;
+}
+
+.stepsmall{
+    width: 40px;
+    max-width: none;
 }
 
 .copete{
@@ -165,6 +181,13 @@ form .exceeded{color:#FF6A15;}
     text-align: center;
     color: #DADADA;
     margin: 0;
+}
+
+/*INFO DE PROMOCIONES*/
+.textinfo{
+    font-size: 12px;
+    line-height: 12px;
+    margin: 0 0 5px 0; 
 }
 
 /*

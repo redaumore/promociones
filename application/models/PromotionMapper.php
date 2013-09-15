@@ -395,5 +395,25 @@ class PAP_Model_PromotionMapper
         $where = 'promotion_id = '.$promo->getId();;
         $categoryUserTable->delete($where);
     }
+    
+    public function getCurrentPromoInfo($user_id){
+        $adapter = Zend_Db_Table::getDefaultAdapter();
+        $statement = "SELECT count(*) as cant, SUM(visited) as visited, promo_cost 
+                      FROM promotion
+                      WHERE NOW() > starts AND NOW() < ends AND user_id = ".$user_id." AND state = 'A'
+                      GROUP BY promo_cost;";
+        $results = $adapter->fetchAll($statement);
+        return $results;    
+    }
+    
+    public function getHistoricalPromoInfo($user_id){
+        $adapter = Zend_Db_Table::getDefaultAdapter();
+        $statement = "SELECT count(*) as cant, SUM(visited) as visited, promo_cost 
+                      FROM promotion
+                      WHERE user_id = ".$user_id." AND state = 'A'
+                      GROUP BY promo_cost;";
+        $results = $adapter->fetchAll($statement);
+        return $results;    
+    }
 }
 

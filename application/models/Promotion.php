@@ -349,7 +349,7 @@ class PAP_Model_Promotion
         return $promotions;
     }
     
-     public static function getPromotionsForWeb(PAP_Model_City $city, $categories = ''){
+    public static function getPromotionsForWeb(PAP_Model_City $city, $categories = ''){
         
         $promomapper = new PAP_Model_PromotionMapper();
         $branchmapper = new PAP_Model_BranchMapper();  
@@ -646,6 +646,20 @@ class PAP_Model_Promotion
         $mapper = new PAP_Model_PromotionMapper();
         $mapper->setCategories($this, $arrCats);
         return;
+    }
+    
+    public static function getCurrentPromoInfo(PAP_Model_User $user){
+        $result = array();
+        $mapper = new PAP_Model_PromotionMapper();
+        $result = $mapper->getCurrentPromoInfo($user->getId());
+        return $result;
+    }
+    
+    public static function getHistoricalPromoInfo(PAP_Model_User $user){
+        $result = array();
+        $mapper = new PAP_Model_PromotionMapper();
+        $result = $mapper->getHistoricalPromoInfo($user->getId());
+        return $result;
     }
 }
 

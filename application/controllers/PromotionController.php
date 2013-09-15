@@ -9,6 +9,29 @@
     }
     
     public function indexAction(){
+        $this->checkLogin();
+        $cant_activas = 0;
+        $cant_historical = 0;
+        $currentInfo = PAP_Model_Promotion::getCurrentPromoInfo($this->user);
+        $i = 0;
+        foreach($currentInfo as $row){
+            $currentInfo[$i]["promo_cost"] = substr($row["promo_cost"], strrpos($row["promo_cost"], "-")+1);
+            $i=$i+1;
+            $cant_activas = $cant_activas + $row["cant"]; 
+        }
+        $this->view->cant_activas = $cant_activas;
+        
+        $historicalInfo = PAP_Model_Promotion::getHistoricalPromoInfo($this->user); 
+        $i = 0;
+        foreach($historicalInfo as $row){
+            $historicalInfo[$i]["promo_cost"] = substr($row["promo_cost"], strrpos($row["promo_cost"], "-")+1);
+            $i=$i+1;
+            $cant_historical = $cant_historical + $row["cant"];
+        }
+        $this->view->cant_activas = $cant_activas;
+        $this->view->cant_historical = $cant_historical;
+        $this->view->currentInfo = $currentInfo;
+        $this->view->historicalInfo = $historicalInfo; 
     }
     
     private function checkLogin(){

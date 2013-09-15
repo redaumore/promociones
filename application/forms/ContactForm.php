@@ -36,7 +36,7 @@ class PAP_Form_ContactForm extends Zend_Form
             'label'      => 'Email',
             'required'   => true,
             'filters'    => array('StringTrim'),
-            'size' => 50,
+            'size' => 40,
             'maxlength' => 50,
             'validators' => array(
                 'EmailAddress', 
