@@ -116,14 +116,16 @@ class PaymentController extends Zend_Controller_Action
 
     public function createchargesAction(){
     try{
+        $executionLog =  "Inicio ejecución: ".date("Y-m-d H:i:s")."\n\r";
+        $payments = null;
+        
         $this->_helper->layout->disableLayout();
-        $this->_helper->viewRenderer->setNoRender(TRUE);
+        $this->_helper->viewRenderer->setNoRender(true);
         $config = new PAP_Helper_Config();
         $lastPeriod = $config->getLastPeriod();
         $currentPeriod = $this->getCurrentPeriodCode();
         if($lastPeriod <> $currentPeriod){
             if($lastPeriod <> ""){
-                $payments = null;
                 $promos = PAP_Model_Promotion::getPromotionsByPeriod($lastPeriod);
                 
                 $period = new PAP_Model_Period();
@@ -147,6 +149,9 @@ class PaymentController extends Zend_Controller_Action
             }
             $config->setLastPeriod($currentPeriod);
         }
+        $executionLog = $executionLog . "Fin ejecución: ".date("Y-m-d H:i:s").". Periodos (last/current) = (".$lastPeriod."/".$currentPeriod.") Se crearon ".count($payments)." cargos.";
+        echo $executionLog; 
+        PAP_Helper_Logger::writeLog(Zend_Log::INFO, 'PaymentController->createchargesAction', $executionLog, $_SERVER['REQUEST_URI']); 
     }
      catch(Exception $e){
         PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'PaymentController->createchargesAction',$e, $_SERVER['REQUEST_URI']);    
