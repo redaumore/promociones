@@ -155,11 +155,12 @@
 
             // itemVisibleOutCallback: {onAfterAnimation: function(carousel, item, i, state, evt) { carousel.remove(i); }},
             initCallback: mycarousel_initCallback,
-            itemLoadCallback: {onBeforeAnimation: mycarousel_itemLoadCallback},
+            itemLoadCallback: mycarousel_itemLoadCallback, //{onBeforeAnimation: mycarousel_itemLoadCallback},
             animation: 2000,
-            auto: 2,
+            auto: 6,
             scroll: 1,
-            wrap: 'circular',
+            size: 6,
+            wrap: 'last',
         });
         jQuery('#mycarousel').hide();
     });

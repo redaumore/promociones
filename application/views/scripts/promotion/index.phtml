@@ -11,7 +11,6 @@
 <script type="text/javascript" src='/scripts/grid.locale-es.js'></script>
 <script type="text/javascript" src='/scripts/jquery.jqGrid.min.js'></script>
 <script type="text/javascript" src="/scripts/promosalpaso.js"></script>
-<div class="row-fluid">
     <div class="row">
         <div class="pagination-centered" id="titulo">
             <h1>Mis Promociones</h1>
@@ -20,6 +19,7 @@
     <hr class="hr-subtitle"/>
     <?php echo $this->errorMessage($this->form, $messages); ?>
     <?php echo $this->partial("index/_alert.phtml"); ?>
+<div class="row-fluid">
     <div class="span2 pagination-centered">
         <h4 style="margin-top: 0;">Publicaciones Activas</h4>
     </div>
@@ -37,7 +37,6 @@
             }
             echo "</div>"; 
         ?>
-    </div>
     <div class="span2 pagination-centered">
         <h4 style="margin-top: 0;">Histórico Publicaciones </h4>
     </div>
@@ -108,9 +107,9 @@
                 var today = new Date();
                 var row = jQuery("#list2").jqGrid('getRowData',cl);
                 var _data_row = jQuery("#list2").getRowData(cl).Inicio.split("/");
-                var start = new Date(_data_row[2], parseInt(_data_row[1])-1, _data_row[0]);
+                var start = new Date(_data_row[2], parseInt(_data_row[1])-1, _data_row[0]);       
                 start.setDate(start.getDate()+ 1);
-                be = "<div style='float:left;'><a href='/promotion/edit/id/"+cl+"'><span class='ui-icon ui-icon-pencil'></span></a></div>";
+                be = "<div style='float:left; display: inline;'><a href='/promotion/edit/id/"+cl+"'><span class='ui-icon ui-icon-pencil'></span></a></div>";
                 if(start <= today)
                     se = "";
                 else 

@@ -49,8 +49,9 @@ class servicesController extends Zend_Controller_Action
                 $page = 0;
             else
                 $page = floor($retrieved/$retrieve);
-            
+            error_log($retrieve.'|'.$retrieved.'|'.$offset.'|'.$page);
             if($this->newSessionRequired($uuid, $categories, $lat, $lng)){
+                error_log("Se requiere nueva session");
                 if($categories <> ""){
                     $categories = explode(',', $categories);
                     $finalcategories = array();
@@ -78,6 +79,8 @@ class servicesController extends Zend_Controller_Action
                         $data[$i]["path"] = $this->getDataURI(".".$this->getThumb($item["path"]));
                     if($data[$i]["value_since"] == "0")
                         unset($data[$i]["value_since"]);
+                    if($data[$i]["is_percentage"] == "0")
+                        unset($data[$i]["is_percentage"]);
                     $i = $i + 1;
                     
                 }
@@ -86,7 +89,7 @@ class servicesController extends Zend_Controller_Action
             }
             
             $data = $this->getSessionPage($uuid, $page);     
-            
+            error_log("datos pagina:".count($data));
             //$responseArr = array('data'=>array('count'=>count($data), 'json'=>$data));
             $response = $this->getFrontController()->getResponse();
             if($retrieve != ''){
