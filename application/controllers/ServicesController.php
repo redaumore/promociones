@@ -216,6 +216,9 @@ class servicesController extends Zend_Controller_Action
     
     public function sendpaymentAction(){
         try{
+            $payment_info = array();
+            $total_amount = 0;
+            
             $this->_helper->layout->setLayout('json');  
             $_callback = $this->getRequest()->getParam('jsoncallback');
             if ($_callback != ""){
@@ -249,8 +252,19 @@ class servicesController extends Zend_Controller_Action
                     $charge->setStatus('in_process');
                     $charge->save();
                     $user = new PAP_Model_User();
-                    $user->loadById($charge->getId());
-                    $user->refreshStatus();                             
+                    $user->loadById($charge->getUserId());
+                    $user->refreshStatus();
+                    
+                    /*Datos para el email*/
+                    $item_info_payment = array();
+                    $period = $charge->getPeriodObj();
+                    $item_payment_info["period"] = $period->getCode();                             
+                    $item_payment_info["from"] = DateTime::createFromFormat('Y-m-d H:i:s', $period->getFrom())->format("Y-m-d");
+                    $item_payment_info["to"] = DateTime::createFromFormat('Y-m-d H:i:s', $period->getTo())->format("Y-m-d");
+                    $item_payment_info["amount"] = $payment->getAmount();
+                    $payment_info[] = $item_payment_info; 
+                    $total_amount = $total_amount + $payment->getAmount();
+        
                 }
                 
                 $data = array();
@@ -258,7 +272,10 @@ class servicesController extends Zend_Controller_Action
                 $data['result_message'] = 'Información del pago informada guardada con éxito.';        
                 $response = $this->getFrontController()->getResponse();
                 $response->appendBody($_callback.'('.json_encode($data).')');
-                $this->getFrontController()->setResponse($response);   
+                $this->getFrontController()->setResponse($response);
+                
+                $this->sendPaymentReceivedNotification($payment_info, $total_amount, $user);
+                   
             }
             catch(Exception $ex){
                 PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'ServiceController->sendpaymentAction(foreach)',$ex, $_SERVER['REQUEST_URI']);
@@ -678,4 +695,32 @@ class servicesController extends Zend_Controller_Action
          }
          return null;
     }  
+    
+    private function sendPaymentReceivedNotification($info_payments, $total_amount, $user){
+        
+        // create view object
+        $html = new Zend_View();
+        $html->setScriptPath(APPLICATION_PATH . '/views/emails/');
+        $totalamount = 0;
+        foreach($info_payments as $pay){
+            $totalamount = $totalamount + $pay["amount"];
+        }
+        // assign valeues
+        $html->assign('payments', $info_payments);
+        $html->assign('name', $user->getName());
+        $html->assign('totalamount', $total_amount);
+
+        // create mail object
+        $mail = new Zend_Mail('utf-8');
+
+        // render view
+        $bodyText = $html->render('payment-received.phtml');
+
+        // configure base stuff
+        $mail->addTo($user->getEmail());
+        $mail->setSubject('Recibimos tu aviso de pago.');
+        $mail->setFrom('administracion@promosalpaso.com', "Promos al Paso");
+        $mail->setBodyHtml($bodyText);
+        $mail->send();    
+    }
 }

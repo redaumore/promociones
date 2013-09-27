@@ -32,6 +32,15 @@ class PAP_Model_Charge
     public function getPeriod(){
         return $this->_period;}
         
+    public function getPeriodObj(){
+        if(isset($this->_period)){
+            $period = new PAP_Model_Period();
+            $period->loadByCode($this->_period);
+            return $period;
+        }
+        return null;    
+    }
+        
     public function setAmount($text){
         $this->_amount = (string) $text;
         return $this;}
