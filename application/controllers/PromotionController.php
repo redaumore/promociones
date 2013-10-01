@@ -147,6 +147,16 @@
                  }
             }
             $this->loadUserBranches($this->user);
+            
+            $city = new PAP_Model_City();
+            $city->loadById($this->user->getBranch()->getCity());
+            if($city->getKickoff() != ""){
+                $kickoff = new DateTime($city->getKickoff());
+                $form->availableStartDate->setValue($kickoff->format("d-m-Y"));
+            }
+            else{
+                $form->availableStartDate->setValue("");
+            }
         }
         catch(Exception $ex){
             PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'PromotionController->editAction()',$ex, $_SERVER['REQUEST_URI']);

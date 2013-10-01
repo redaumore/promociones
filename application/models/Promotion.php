@@ -395,13 +395,14 @@ class PAP_Model_Promotion
             unset($promotions[$i]['promo_cost']);
             $i += 1;
         }
-        if(count($promotions)!=0)
+        if(count($promotions)!=0){
             $promotions = PAP_Model_Promotion::sortPromotions($promotions);
-        else{
+        /* Se elimina este else porque la consulta del home de promos tiene un radio de 10km
+            else{
             if($this->_radius != 4){
                 $this->_radius = 4;
                 $promotions = $this->getPromotionsByCoords($lat, $lng, $categories);
-            }
+            }*/
         }
         return $promotions;
     }
