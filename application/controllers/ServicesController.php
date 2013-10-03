@@ -41,15 +41,9 @@ class servicesController extends Zend_Controller_Action
             $lat  = $this->_getParam('lat'); //$_GET['lat'];
             $lng = $this->_getParam('lng'); //$_GET['lng'];
             $categories = $this->_getParam('cat').'';
-            $retrieve = $this->_getParam('retrieve').'';
-            $retrieved = $this->_getParam('retrieved').'';
-            $offset = $this->_getParam('offset').'';
+            $page = $this->_getParam('page').'';
             $uuid = $this->_getParam('mobile_uuid').'';
-            if($retrieve == '')
-                $page = 0;
-            else
-                $page = floor($retrieved/$retrieve);
-            error_log($retrieve.'|'.$retrieved.'|'.$offset.'|'.$page);
+            
             if($this->newSessionRequired($uuid, $categories, $lat, $lng)){
                 error_log("Se requiere nueva session");
                 if($categories <> ""){
@@ -87,19 +81,15 @@ class servicesController extends Zend_Controller_Action
                 
                 $this->setNewSession($uuid, $categories, $lat, $lng, $data);
             }
-            
-            $data = $this->getSessionPage($uuid, $page);     
+            $totalitems = 0;
+            $data = $this->getSessionPage($uuid, $page, &$totalitems);     
             error_log("datos pagina:".count($data));
-            //$responseArr = array('data'=>array('count'=>count($data), 'json'=>$data));
+  
             $response = $this->getFrontController()->getResponse();
-            if($retrieve != ''){
-                $dataArr = array();
-                $dataArr[] = array('count'=>count($data), 'json'=>$data);
-                $responseArr = array('data'=>$dataArr);
-                $response->appendBody($callback.'('.json_encode($responseArr).')');
-            }
-            else
-                $response->appendBody($callback.'('.json_encode($data).')');
+            $dataArr = array();
+            $dataArr[] = array('count'=>count($data), 'total'=>$totalitems, 'pagesize'=>PAP_Helper_Config::getPageSize(), 'json'=>$data);
+            $responseArr = array('data'=>$dataArr);
+            $response->appendBody($callback.'('.json_encode($responseArr).')');
             $this->getFrontController()->setResponse($response);
         }
         catch(Exception $e){
@@ -679,10 +669,11 @@ class servicesController extends Zend_Controller_Action
         $session->data = $data;    
     }
     
-    private function getSessionPage($uuid, $page){
+    private function getSessionPage($uuid, $page, $totalitems = 0){
          $session_id = 'mobile_'.$uuid;
          $session = new Zend_Session_Namespace($session_id);
          $fulldata = $session->data;
+         $totalitems = count($fulldata);
          $pagesize = PAP_Helper_Config::getPageSize();
          if(isset($fulldata)){
             $lastItem = count($fulldata);

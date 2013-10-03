@@ -216,6 +216,19 @@ form .exceeded{color:#FF6A15;}
     margin: 0 20px 0 20px;
 }
 
+/* HELP */
+
+.plain-text{
+    font-size: 12px;
+    color: #B4B4B4;
+    text-shadow: 0 0 1px #B4B4B4;
+}
+
+.plain-title{
+    font-size: 14px;
+    font-weight: bold;
+}
+
 /*
 html{ font-size: 125%; }
 
