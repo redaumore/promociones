@@ -2,6 +2,17 @@ var _holidays = null;
 var _baseServUri = _baseUri + "services/";
 var _urlMPiFrame = "";
 
+/*Binding de eventos al cargar la página*/
+jQuery(document).ready(function(){
+    jQuery("#promoCost").change(function(){
+        var kickoff = parseStringToDate(jQuery('#availableStartDate').val());
+        var dateAsNew = parseStringToDate(jQuery('#dateAsNew').val());
+        var promocost = getPriceFromPromocost(jQuery("#promoCost option:selected").text());       
+        setupPromoDates(kickoff, dateAsNew, promocost);
+    });
+});    
+
+
 function showMessage(messageType, message){
     if(jQuery("#div_message")){
         jQuery("#p_message").text(message);
@@ -527,8 +538,13 @@ function resetPassword(){
 }
 
 function parseStringToDate(strDate){
+    var returnDate;
     var arrDate = strDate.split("-");
-    var returnDate = new Date(arrDate[2], arrDate[1]-1, arrDate[0]);
+    
+    if(arrDate[0] > 1900)
+        returnDate = new Date(arrDate[0], arrDate[1]-1, arrDate[2]);
+    else
+        returnDate = new Date(arrDate[2], arrDate[1]-1, arrDate[0]);
     return returnDate;
 }
 
@@ -536,6 +552,28 @@ function cutDecimals(valor){
     if(valor.indexOf(".00") != -1)
         return valor.substring(0, valor.indexOf(".00"));
     return valor;
+}
+
+function getPriceFromPromocost(value){
+    var aPrice = value.split("-");
+    if(aPrice.length == 1)
+        return parseFloat(aPrice[0]);
+    else
+        return parseFloat(aPrice[1]);
+}
+
+function setupPromoDates(kickoff, dateAsNew, promocost){
+    if(promocost == 0){
+       var untilDay = new Date();
+       if(kickoff > dateAsNew)
+            untilDay.setDate(kickoff.getDate() + 15);    
+       else
+            untilDay = dateAsNew;
+       $("#ends").datepicker('option', 'maxDate', untilDay);
+   }
+   else{
+    $("#ends").datepicker('option', 'maxDate', null);     
+   }
 }
 
 

@@ -78,6 +78,8 @@
             $form->imagePromo->setOptions(array('src' => $this->user->getBranch()->getLogo()));
             $form->promoCode->setValue($this->getAutoPromoCode());
             
+            $form->dateAsNew->setValue($this->user->getDateAsNew());
+            
             
             //TODO En la descripcion larga cambiar el estilo
             //TODO Descripcion larga no permite puntos.
@@ -519,6 +521,7 @@
                 $comboPrices->addMultioption($rule['price_rule_code'].'-'.$rule['value8'], $rule['value8']);
             if($rule['value9']!= '-1')
                 $comboPrices->addMultioption($rule['price_rule_code'].'-'.$rule['value9'], $rule['value9']);
+            $comboPrices->setValue($rule['price_rule_code'].'-'.$rule['value1']);
         }    
     }
     

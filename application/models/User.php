@@ -360,5 +360,11 @@ class PAP_Model_User
         if($users != null)
             PAP_Model_User::changePriceRulesToUsers("C1", "C2", $users);        
     }
+    
+    public function getDateAsNew(){
+         $days = PAP_Helper_Config::getDaysAsNew();
+         $dateAsNew = date('Y-m-d', strtotime($this->getCreated(). ' + '.$days.' days')); 
+         return $dateAsNew;     
+    }
 }
 

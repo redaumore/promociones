@@ -29,9 +29,23 @@ class PAP_Helper_Config extends Zend_Controller_Action_Helper_Abstract{
     }
     
     public function setLastPeriod($periodcode){
-        $config = array('payments'=>array('last_period'=>$periodcode));
+        /*$config = array('payments'=>array('last_period'=>$periodcode));
         $writer = new Zend_Config_Writer_Xml();
-        $writer->write(APPLICATION_PATH.'/configs/config.xml', new Zend_Config($config));
+        $writer->write(APPLICATION_PATH.'/configs/config.xml', new Zend_Config($config));     */
+        
+            // Load all sections from an existing config file, while skipping the extends.
+            $config = new Zend_Config_Xml(APPLICATION_PATH.'/configs/config.xml',
+                                          null,
+                                          array('skipExtends'        => true,
+                                                'allowModifications' => true));
+             
+            // Modify a value
+            $config->payments->last_period = $periodcode;
+             
+            // Write the config file
+            $writer = new Zend_Config_Writer_Xml(array('config'   => $config,
+                                                       'filename' => APPLICATION_PATH.'/configs/config.xml'));
+            $writer->write();
     }
     
     public function getMPConfig(){

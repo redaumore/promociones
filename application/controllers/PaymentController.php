@@ -233,7 +233,7 @@ class PaymentController extends Zend_Controller_Action
     $code = "";
     $date = getdate();
     ($date['mday']<16)?$code = '1':$code = '2';
-    $month_mini = array("","ENE", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SEP", "DIC");
+    $month_mini = array("","ENE", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SEP", "OCT", "NOV", "DIC");
     $code =$code.$month_mini[$date['mon']];
     $code =$code.substr($date['year'], -2);
     return $code;

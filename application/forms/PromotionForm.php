@@ -232,9 +232,15 @@ class PAP_Form_PromotionForm extends Zend_Form
                 ->setAttrib('class', 'invisible');
         
         $this->addElement('hidden', 'userId');
+        $this->userId->removeDecorator('label')->removeDecorator('HtmlTag');
         $this->addElement('hidden', 'promoId');
+        $this->promoId->removeDecorator('label')->removeDecorator('HtmlTag');
         $this->addElement('hidden', 'userInfo');
+        $this->userInfo->removeDecorator('label')->removeDecorator('HtmlTag');
         $this->addElement('hidden', 'availableStartDate');
+        $this->availableStartDate->removeDecorator('label')->removeDecorator('HtmlTag');
+        $this->addElement('hidden', 'dateAsNew');
+        $this->dateAsNew->removeDecorator('label')->removeDecorator('HtmlTag');
         
         $this->addElement('submit', 'save', array(
             'ignore'   => true,

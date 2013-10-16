@@ -296,7 +296,7 @@ class servicesController extends Zend_Controller_Action
             $payment_json = $data['data'][0];
             $charges = $payment_json['charges_ids'];
             $charges = explode(',', $charges);
-            $today = date("d-m-Y", date());
+            $today = date("d-m-Y");
             foreach($charges as $charge_id){
                 $charge = new PAP_Model_Charge();
                 $charge->loadById($charge_id);
