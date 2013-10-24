@@ -563,12 +563,30 @@ function getPriceFromPromocost(value){
 }
 
 function setupPromoDates(kickoff, dateAsNew, promocost){
-    if(promocost == 0){
+    var today = new Date();
+    
+    if(kickoff > today){
+       $("#starts").datepicker( "setDate", kickoff );
+       $("#ends").datepicker( "setDate", kickoff );
+       $("#starts").datepicker('option', 'minDate', kickoff);
+       $("#ends").datepicker('option', 'minDate', kickoff);
+   }
+   else{
+       $("#starts" ).datepicker( "setDate", today );
+       $("#ends" ).datepicker( "setDate", today );    
+   }
+   
+   if(promocost == 0){
        var untilDay = new Date();
-       if(kickoff > dateAsNew)
-            untilDay.setDate(kickoff.getDate() + 15);    
-       else
+       if(kickoff > dateAsNew){
+            if(kickoff > today)
+                untilDay.setDate(kickoff.getDate() + 15);    
+            else
+                untilDay.setDate(today.getDate() + 15);    
+       }
+       else{
             untilDay = dateAsNew;
+       }
        $("#ends").datepicker('option', 'maxDate', untilDay);
    }
    else{

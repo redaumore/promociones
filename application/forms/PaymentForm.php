@@ -25,14 +25,14 @@
         $control = new Zend_Form_Element_Radio('reportType');
         $control->setLabel('Tipo de Reporte')
                 ->setMultiOptions(array(
-                'actual' => ' Período Actual',
                 'pendientes' => ' Cargos Pendientes',
+                'actual' => ' Período Actual',
                 'ultimos' => ' Últimos 6 períodos'
                 ))
                 ->setOptions(array('id' => 'reportType'))
                 ->setAttrib('label_class', 'leftalign ui-button-text')
                 ->setDecorators($decorators)
-                ->setValue('actual');
+                ->setValue('pendientes');
                 
         $this->addElement($control);
         

@@ -44,6 +44,10 @@ class AuthController extends Zend_Controller_Action
                         if($user->getStatus() == 'charged'){
                             $this->_redirect('branch/categories');
                             return;    
+                        }
+                        if($user->getStatus() == 'debtor'){
+                            $this->_redirect('payment/index');
+                            return;
                         }                    
                             
                         $this->_redirect('promotion/index');

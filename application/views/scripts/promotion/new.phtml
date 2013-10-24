@@ -247,32 +247,11 @@ $(document).ready(function(){
       }
    });
    
-   var today = new Date();
    var kickoff = parseStringToDate(jQuery('#availableStartDate').val());
    var dateAsNew = parseStringToDate(jQuery('#dateAsNew').val());
    var promocost = getPriceFromPromocost(jQuery("#promoCost option:selected").text());
    
-    
-   if(kickoff > today){
-       $("#starts").datepicker( "setDate", kickoff );
-       $("#ends").datepicker( "setDate", kickoff );
-       $("#starts").datepicker('option', 'minDate', kickoff);
-       $("#ends").datepicker('option', 'minDate', kickoff);
-   }
-   else{
-       $("#starts" ).datepicker( "setDate", today );
-       $("#ends" ).datepicker( "setDate", today );    
-   }
-   
-   if(promocost == 0){
-       var untilDay = new Date();
-       if(kickoff > dateAsNew)
-            untilDay.setDate(kickoff.getDate() + 15);    
-       else
-            untilDay = dateAsNew;
-       $("#ends").datepicker('option', 'maxDate', untilDay);
-   }
-   
+   setupPromoDates(kickoff, dateAsNew, promocost)
     
    showPromoTotalCost(); 
    

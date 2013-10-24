@@ -17,12 +17,13 @@ class PaymentController extends Zend_Controller_Action
             $this->checkLogin();
             $form = new PAP_Form_PaymentForm();
             $this->view->form = $form; 
+            $user = $this->_helper->Session->getUserSession();
+            $paymentMethods = $user->getPaymentMethods();
             if($this->getRequest()->isPost()){
                 //$this->_helper->viewRenderer->setNoRender();
                 //$this->_helper->getHelper('layout')->disableLayout();
                 if($form->isValid($_POST)){
                     $data = $this->getParam('reportType');
-                    $user = $this->_helper->Session->getUserSession();
                     switch($data){
                         case 'actual':
                             //true: corta en el día de hoy
@@ -37,7 +38,6 @@ class PaymentController extends Zend_Controller_Action
                             break;
                     }
                     
-                    $paymentMethods = $user->getPaymentMethods();
                     $data = array();
                     $data['payments'] = $payments;
                     $data['payment_methods'] = $paymentMethods; 
@@ -45,6 +45,18 @@ class PaymentController extends Zend_Controller_Action
                     $valor = json_encode($data);
                     $control->setValue($valor);
                     //echo $this->_helper->json($payments);
+                }
+            }
+            else{
+                $payments = $this->getPendingPayments($user);
+                if(count($payments) > 0){
+                    $paymentMethods = $user->getPaymentMethods();
+                    $data = array();
+                    $data['payments'] = $payments;
+                    $data['payment_methods'] = $paymentMethods; 
+                    $control = $form->getElement('data');
+                    $valor = json_encode($data);
+                    $control->setValue($valor);    
                 }
             }
         }
