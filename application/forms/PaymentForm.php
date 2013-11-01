@@ -63,6 +63,7 @@
                     ->setDecorators($decoratorsButton);
             
         $this->addElement('hidden', 'data');
+        $this->addElement('hidden', 'popUpMessage');
         $this->data->setDecorators($decorators);
         
       }

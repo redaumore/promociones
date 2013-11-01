@@ -594,6 +594,28 @@ function setupPromoDates(kickoff, dateAsNew, promocost){
    }
 }
 
+function showPopUpModalMessage(vtitle, vmessage){
+    var smessage;
+    var stitle;
+    if(vmessage.indexOf("|")){
+        arr = vmessage.split("|");
+        stitle = arr[0];
+        smessage = arr[1]; 
+    }
+    else{
+        stitle = vtitle;
+        smessage = vmessage;
+    }
+    
+    bootbox.alert(vmessage, function() {
+        console.log("Deudor");    
+    });
+    /*bootbox.alert("Hemos encontrado que tienes pendientes cargos más allá del cupo que tienes asignado.\n\rTe invitamos a regularizar tu situación 
+    para de esa forma seguir anunciando en Promos al Paso. Ante cualquier duda por favor contactate con administración@promosalpaso.com. \n\r Gracias!", function() {
+        
+    }); */
+}
+
 
 
 

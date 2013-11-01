@@ -44,10 +44,15 @@ class PaymentController extends Zend_Controller_Action
                     $control = $form->getElement('data');
                     $valor = json_encode($data);
                     $control->setValue($valor);
+                    $form->popUpMessage->setValue("");
                     //echo $this->_helper->json($payments);
                 }
             }
             else{
+                if($user->getStatus() == "debtor"){
+                    $form->popUpMessage->setValue("Hemos encontrado que tienes pendientes cargos más allá del cupo que tienes asignado. Te invitamos a regularizar tu situación 
+    para de esa forma seguir anunciando en Promos al Paso. Ante cualquier duda por favor contactate con administracion@promosalpaso.com.");
+                }
                 $payments = $this->getPendingPayments($user);
                 if(count($payments) > 0){
                     $paymentMethods = $user->getPaymentMethods();

@@ -1,5 +1,5 @@
 <?php
-    $messages = $this->errorMessage;
+    $messages = $this->errorMessages;
     $this->form->setAction($this->url());
     $form = $this->form;
 ?>
@@ -59,6 +59,7 @@
     </div>
     
 <?php echo $form->data->renderViewHelper(); ?>
+<?php echo $form->popUpMessage->renderViewHelper(); ?>
 <script type="text/javascript">
     $(document).ready(function(){
         $("#pay").hide();
@@ -69,6 +70,10 @@
         $("#div_MP").hide();
         if($('input#data').val() != ""){
             getPayments();
+        }
+        
+        if($("#popUpMessage").val() != ""){
+            showPopUpModalMessage("Mi Cuenta", $("#popUpMessage").val());
         }         
     });
 </script>
