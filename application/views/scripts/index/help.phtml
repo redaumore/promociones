@@ -1,8 +1,52 @@
  <script>
     $(function() {
         $( "#accordion" ).accordion({
-            collapsible: true
+            collapsible: true,
+            autoHeight: false,
+            navigation: true, 
         });
+        $( "#tabs-reg" ).tabs();
+        $( "#tabs-promos" ).tabs();
+        $("a.lightbox-0").lightBox({
+            imageLoading: '/skins/default/css/images/lightbox-ico-loading.gif',
+            imageBtnClose:'/skins/default/css/images/lightbox-btn-close.gif',
+            imageBtnPrev: '/skins/default/css/images/lightbox-btn-prev.gif',
+            imageBtnNext: '/skins/default/css/images/lightbox-btn-next.gif',
+            txtImage: 'Imagen',
+            txtOf: 'de',
+        });
+        $("a.lightbox-1").lightBox({
+            imageLoading: '/skins/default/css/images/lightbox-ico-loading.gif',
+            imageBtnClose:'/skins/default/css/images/lightbox-btn-close.gif',
+            imageBtnPrev: '/skins/default/css/images/lightbox-btn-prev.gif',
+            imageBtnNext: '/skins/default/css/images/lightbox-btn-next.gif',
+            txtImage: 'Imagen',
+            txtOf: 'de'
+            }
+        );
+        $("a.lightbox-2").lightBox({
+            imageLoading: '/skins/default/css/images/lightbox-ico-loading.gif',
+            imageBtnClose:'/skins/default/css/images/lightbox-btn-close.gif',
+            imageBtnPrev: '/skins/default/css/images/lightbox-btn-prev.gif',
+            imageBtnNext: '/skins/default/css/images/lightbox-btn-next.gif',
+            txtImage: 'Imagen',
+            txtOf: 'de',
+            }
+        );
+        $("a.lightbox-3").lightBox({
+            imageLoading: '/skins/default/css/images/lightbox-ico-loading.gif',
+            imageBtnClose:'/skins/default/css/images/lightbox-btn-close.gif',
+            imageBtnPrev: '/skins/default/css/images/lightbox-btn-prev.gif',
+            imageBtnNext: '/skins/default/css/images/lightbox-btn-next.gif',
+            }
+        );
+        $("a.lightbox-4").lightBox({
+            imageLoading: '/skins/default/css/images/lightbox-ico-loading.gif',
+            imageBtnClose:'/skins/default/css/images/lightbox-btn-close.gif',
+            imageBtnPrev: '/skins/default/css/images/lightbox-btn-prev.gif',
+            imageBtnNext: '/skins/default/css/images/lightbox-btn-next.gif',
+            }
+        );
     });
 </script>
 
@@ -10,80 +54,165 @@
 <p class="plain-text">bla bla bla bla</p>
 
 <div id="accordion">
-    <h3>Registración</h3>
+    <h3>Buscar promociones</h3>
     <div>
+        <div style="width: 75%; float: left;">
+            <p class="plain-text">Promos al Paso fue creado pensando principalmente para darle a los usuario de dispositivos móbiles
+            inteligentes (smart phones) la posibilidad de encontrar promociones que se encuentren cerca de donde la persona se encuentra
+            situada.</p>
+            <p class="plain-text">Pero Promos al Paso también te permite encontrar promociones en una localidad determinada por intermedio
+            de cualquier computadora conectada a internet.</p>
+            <p class="plain-text">Para ello en la página principal de Promos al Paso pulsa en el botón Buscar Promos en la barra superior.
+            Esto te llevará a la página de búsqueda que te permitirá hacer búsqueda de promociones en las ciudades en la que se encuentre 
+            presente Promos al Paso. Debajo de las listas desplegables de selección de ciudad se encuentra la lista de categorías que te 
+            permite filtrar las promociones que coincidan con tu selección.</p>
+            <p class="plain-text">Una vez que seleccionas la ciudad y pulsas en el botón buscar, se te mostrará una lista con las promociones
+            encontradas. En esta lista puedes ver los datos de portada del aviso y para ver los detalles solo debes pulsar en la imagen de la 
+            promoción que quieras ver.</p>
+        </div>
+        <div style="width: 25%; float: right; text-align: center;">
+            <div class="help-menu help-menu-buscar-promos"></div><br/>
+            <a class="lightbox-0" href="/images/backend/help/buscar-promos.png">
+                <img style="margin: auto;" src="/images/backend/help/s-buscar-promos.png"/>
+            </a><br/><br/>
+            <a class="lightbox-0" href="/images/backend/help/buscar-promos-detalle.png">
+                <img style="margin: auto;" src="/images/backend/help/s-buscar-promos-detalle.png"/>
+            </a>
+        </div>
+    </div>
+    <h3>Pasos para publicar</h3>
+    <div>
+        <div style="width: 100%;">
+            <p class="plain-text">Para empezar a publicar tus promociones en Promos al Paso solo tienes que completar 5 simples pasos. 
+            La descripción de cada uno de éstos la puedes encontrar en las siguientes solapas. </p>
+        </div>
         <?php echo $this->partial("auth/_registrationsteps.phtml"); ?>
-        <ul>
-            <li>
-                <p class="plain-text plain-title">Registración</p>
-                <div style="width: 80%; margin: auto;">
-                    <div style="width: 75%;">
-                        <p class="plain-text">La registración es el primer paso que debe realizar el comercio anunciante.
-                    En este paso se deben ingresar nombre del usuario/comercio, email que servirá para ingresar al sistema de administración, 
-                    cuit para realizar la facturación y la contraseña del usuario.</p>
-                    </div>
-                    <img style="margin: auto;" src="/images/backend/help/s-registration.jpg"/>
+        <div style="width: 100%;">
+            <p class="plain-text">A continuación se detallan cada uno de estos pasos. A medida que vayas completandolos distintas
+            opciones de menú se irán habilitando en el Menú de Comercio.</p>
+        </div>
+        <div style="width: 100%; text-align: center;">
+            <img style="margin: auto;" src="/images/backend/help/menues-backend.png"/><br/><br/>    
+        </div>
+        <div id="tabs-reg" style="height: 250px;">
+            <ul>
+                <li><a href="#tabs-reg-1">Registración de Usuario</a></li>
+                <li><a href="#tabs-reg-2">Validación de Email</a></li>
+                <li><a href="#tabs-reg-3">Cargar datos de comercio</a></li>
+                <li><a href="#tabs-reg-4">Administrar Categorías</a></li>
+                <li><a href="#tabs-reg-5">Administrar promociones</a></li>
+            </ul>
+            <div id="tabs-reg-1" style="width: 80%; margin: auto; display: block;">
+                <div style="width: 75%; float: left;">
+                    <p class="plain-text">La registración es el primer paso que debe realizar el comercio anunciante.
+                En este paso se deben ingresar nombre del usuario/comercio, email que servirá para ingresar al sistema de administración, 
+                cuit para realizar la facturación y la contraseña del usuario.</p>
                 </div>
-            </li>
-            <li>
-                <p class="plain-text plain-title">Validación de Email</p>
-                <div style="width: 80%; margin: auto;">
-                    <div style="width: 75%;">
-                        <p class="plain-text">Una vez terminado el paso de registración el sistema te enviará un email para que 
-                        confirmes la creación del usuario. En este email vas a encontrar un link que permitirá validar el email
-                        del usuario en el sistema de administración.</p>
-                    </div>
+                <div style="width: 25%; float: right; text-align: center;">
+                    <a class="lightbox-1" href="/images/backend/help/registration.jpg" title="Registración del Usuario">
+                        <img style="margin: auto;" src="/images/backend/help/s-registration.jpg"/>
+                    </a>
                 </div>
-            </li>
-            <li>
-                <p class="plain-text plain-title">Cargar datos de comercio</p>
-                <div style="width: 80%; margin: auto;">
-                    <div style="width: 75%;">
-                        <p class="plain-text">Este paso consta de cargar los datos del comercio. Entre ellos están el nombre, 
-                        teléfono, email, sitio web y dirección. Es muy importante que cargues tu dirección correctamente, dado que
-                        con ella es que la aplicación mobile de Promos al Paso localiza tus promociones.</p>
-                        <p class="plain-text">Una vez que hayas cargado la calle, número y la localidad de tu comercio tienes que 
-                        ubicar la misma en el mapa pulsando sobre el botón "Localizarme" y validando la misma pulsando en el botón
-                        "Confirmar Localización" en la ventana emergente. 
-                        </p>
-                        <p class="plain-text">Otro elemento importante que debes cargar en este paso es la imagen o logo de tu 
-                        comercio. La imagen debe ser preferentemente cuadrada de a lo sumo 1.2 MB de tamaño. Para seleccionar la imagen
-                        debes pulsar en el botón "Cargar Imagen" y seleccionar el archivo correspondiente.</p>
-                    </div>
-                    <img style="margin: auto;" src="/images/backend/help/s-branch.jpg"/>
+            </div>
+            <div id="tabs-reg-2" style="width: 80%; margin: auto;">
+                <div style="width: 100%;">
+                    <p class="plain-text">Una vez terminado el paso de registración el sistema te enviará un email para que 
+                    confirmes la creación del usuario. En este email vas a encontrar un link que permitirá validar el email
+                    del usuario en el sistema de administración.</p>
                 </div>
-            </li>
-            <li>
-                <p class="plain-text plain-title">Cargar categorías del comercio</p>
-                <div style="width: 80%; margin: auto;">
-                    <div style="width: 75%;">
-                        <p class="plain-text">Todos los comercios deben tener asignada al menos una categoría. A partir de ella
-                        los clientes pueden realizar búsquedas puntuales por rubro y de esa forma tu anuncio será mostrado. Si
-                        no existe una categoría que encaje para tu negocio envíanos un email a soporte@promosalpaso.com y nosotros
-                        te ayudaremos a seleccionar la mejor o crear una nueva.</p>
-                    </div>
-                    <img style="margin: auto;" src="/images/backend/help/s-categories.jpg"/>
+            </div>
+            <div id="tabs-reg-3" style="width: 80%; margin: auto;">
+                <div style="width: 75%; float: left;">
+                    <p class="plain-text">Se accede al formulario pulsando en el Menú de Comercio en la opción Mis Datos. 
+                    Este paso consta de cargar los datos del comercio. Entre ellos están el nombre, 
+                    teléfono, email, sitio web y dirección. Es muy importante que cargues tu dirección correctamente, dado que
+                    con ella es que la aplicación mobile de Promos al Paso localiza tus promociones.</p>
+                    <p class="plain-text">Una vez que hayas cargado la calle, número y la localidad de tu comercio tienes que 
+                    ubicar la misma en el mapa pulsando sobre el botón "Localizarme" y validando la misma pulsando en el botón
+                    "Confirmar Localización" en la ventana emergente. 
+                    </p>
+                    <p class="plain-text">Otro elemento importante que debes cargar en este paso es la imagen o logo de tu 
+                    comercio. La imagen debe ser preferentemente cuadrada de a lo sumo 1.2 MB de tamaño. Para seleccionar la imagen
+                    debes pulsar en el botón "Cargar Imagen" y seleccionar el archivo correspondiente.</p>
                 </div>
-            </li>
-            <li>
-                <p class="plain-text plain-title">Crear promociones</p>
-                <div style="width: 80%; margin: auto;">
-                    <div style="width: 75%;">
-                        <p class="plain-text">Una vez completados los 4 pasos anteriores del proceso de registración ya estas en 
-                        condiciones de publicar tus promociones en Promos al Paso!</p>
-                        <p class="plain-text">Para administrar tus promociones debes seleccionar la opción "Mis Promos" en el menú
-                        principal. Allí se te mostrará información de las promociones que actualmente se encuentran publicadas en 
-                        el apartado "Publicaciones Activas" y un resumen de las promociones anteriores en el apartado "Publicaciones
-                        Históricas".</p>
-                        <p class="plain-text">A continuación se puede ver una grilla con todas las promociones </p>
-                    </div>
-                    <img style="margin: auto;" src="/images/backend/help/s-index-promos.png"/>
+                <div style="width: 25%; float: right; text-align: center;">
+                    <div class="help-menu help-menu-datos"></div><br/>
+                    <a class="lightbox-1" href="/images/backend/help/branch.jpg" title="Datos del Comercio">
+                        <img style="margin: auto;" src="/images/backend/help/s-branch.jpg"/>    
+                    </a>
                 </div>
-            </li>
-        </ul>
+            </div>
+            <div id="tabs-reg-4" style="width: 80%; margin: auto;">
+                <div style="width: 75%; float: left;">
+                    <p class="plain-text">Se accede al formulario pulsando en el Menú de Comercio en la opción Mis Categorías.
+                    Todos los comercios deben tener asignada al menos una categoría. A partir de ella
+                    los clientes pueden realizar búsquedas puntuales por rubro y de esa forma tu anuncio será mostrado. Si
+                    no existe una categoría que encaje para tu negocio envíanos un email a soporte@promosalpaso.com y nosotros
+                    te ayudaremos a seleccionar la mejor o crear una nueva.</p>
+                </div>
+                <div style="width: 25%; float: right; text-align: center;">
+                    <div class="help-menu help-menu-categorias"></div><br/>
+                    <a class="lightbox-1" href="/images/backend/help/categories.jpg" title="Categorías del Comercio">
+                        <img style="margin: auto;" src="/images/backend/help/s-categories.jpg"/>
+                    </a>
+                </div>
+            </div>
+            <div id="tabs-reg-5" style="width: 80%; margin: auto;">
+                <div style="width: 75%; float: left;">
+                    <p class="plain-text">Una vez completados los 4 pasos anteriores del proceso de registración ya estas en 
+                    condiciones de publicar tus promociones en Promos al Paso!</p>
+                    <p class="plain-text">Para administrar tus promociones debes seleccionar la opción "Mis Promos" en el menú
+                    principal. Allí se te mostrará información de las promociones que actualmente se encuentran publicadas en 
+                    el apartado "Publicaciones Activas" y un resumen de las promociones anteriores en el apartado "Publicaciones
+                    Históricas".</p>
+                    <p class="plain-text">A continuación se puede ver una grilla con todas las promociones </p>
+                </div>
+                <div style="width: 25%; float: right; text-align: center;">
+                    <div class="help-menu help-menu-promos"></div><br/>
+                    <a class="lightbox-1" href="/images/backend/help/index-promos.png" title="Administración de Promociones">
+                        <img style="margin: auto;" src="/images/backend/help/s-index-promos.png"/>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
     <h3>Proceso de publicación</h3>
-    <div>bla bla bla bla</div>
+    <div>
+        <div id="tabs-promos" style="height: 250px;">
+            <ul>
+                <li><a href="#tabs-promo-1">Panel de Promociones</a></li>
+                <li><a href="#tabs-promo-2">Portada de Promoción</a></li>
+                <li><a href="#tabs-promo-3">Cuerpo de Promoción</a></li>
+            </ul>
+            <div id="tabs-promo-1" style="width: 80%; margin: auto; display: block;">
+                <div style="width: 75%; float: left;">
+                    <p class="plain-text">El panel de promociones sirve para tener un vistazo de las promociones que has publicado en el transcurso
+                    del tiempo. En el mismo se puede ver un resumen de las promociones actuales, un histórico y la grilla que contiene todas las
+                    promos que has publicado.</p>
+                    <p class="plain-text">Las Publicaciones Acuales muestran información acerca de las promociones que actualmente están activas.
+                    Se consideran promociones activas a aquellas que se encuentren es estado Activo y que el día de la fecha esté comprendido entre
+                    la fecha de inicio y fin de la promoción.</p>
+                    <p class="plain-text">El Histórico de Publicaciones muestra un resumen cuantitativo de las promociones que se han publicado desde
+                    que te has registrado. Se puede ver la cantidad de promos publicadas, la cantidad de promos agrupadas por su valor y las visitas 
+                    recibidas por cada valor de promo.</p>
+                    <p class="plain-text">Para crear una nueva promo solo tiene que pulsar en el botón nueva promo que se encuentra a la derecha y 
+                    el sistema te llevará al formulario de creación de promoción.</p>
+                </div>
+                <div style="width: 25%; float: right; text-align: center;">
+                    <a class="lightbox-2" href="/images/backend/help/portal-resumen-promos.png" title="Resumen de Promos">
+                        <img style="margin: auto;" src="/images/backend/help/s-portal-resumen-promos.png"/>
+                    </a><br/><br/>
+                    <a class="lightbox-2" href="/images/backend/help/portal-grilla-promos.png" title="Grilla de Promociones">
+                        <img style="margin: auto;" src="/images/backend/help/s-portal-grilla-promos.png"/>
+                    </a>
+                </div>    
+            </div>
+            <div id="tabs-promo-2" style="width: 80%; margin: auto; display: block;">
+            </div>
+            <div id="tabs-promo-3" style="width: 80%; margin: auto; display: block;">
+            </div>
+        </div>
+    </div>
 
     <!-- los siguientes puntos se muestran si el usuario está registrado.-->
     <h3>Proceso de contabilización</h3>

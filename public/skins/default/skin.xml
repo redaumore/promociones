@@ -12,6 +12,7 @@
         <stylesheet>bootstrap-responsive.css</stylesheet>
         <stylesheet>pap.css</stylesheet>
         <stylesheet>skin.css</stylesheet>
+        <stylesheet>jquery.lightbox-0.5.css</stylesheet>
         <!--<stylesheet>bootstrap.css</stylesheet>
         <stylesheet>bootstrap-responsive.css</stylesheet>
         <stylesheet>bootswatch.css</stylesheet>

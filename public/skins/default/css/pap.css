@@ -80,7 +80,8 @@ html, body { height: 100%; }
 }
 
 .slider_promo{
-    border: 0px;
+    border: 3px;
+    border-color: #FF6A15;
     text-align: center;
     width: 136px; 
     min-height: 160px; 
@@ -227,6 +228,32 @@ form .exceeded{color:#FF6A15;}
 .plain-title{
     font-size: 14px;
     font-weight: bold;
+}
+
+.help-menu { background-image: url(/images/backend/help/menues-backend.png); }
+.help-menu-datos{
+    margin: auto; 
+    background-position: -236px -76px;
+    width: 97px;
+    height: 39px;
+}
+.help-menu-categorias{
+    margin: auto; 
+    background-position: -333px -76px;
+    width: 132px;
+    height: 39px;
+}
+.help-menu-promos{
+    margin: auto; 
+    background-position: -465px -76px;
+    width: 107px;
+    height: 39px;
+}
+.help-menu-buscar-promos{
+    margin: auto; 
+    background-position: -553px 0;
+    width: 139px;
+    height: 39px;
 }
 
 /*
