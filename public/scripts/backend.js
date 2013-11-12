@@ -212,9 +212,21 @@ function showMercadoPago(){
 }
 
 function showPromoTotalCost(){
+    
+    
     if(jQuery("#starts").val() == "" ||jQuery("#ends").val() == ""){
         jQuery("#totalPromoCost").text("0");
         return;    
+    }
+    
+    $("#promoCost option").attr("disabled","disabled");
+    if(checkOnlyWeekend()){
+        bootbox.alert("Los días seleccinados solo incluye sábado y/o domingo. La promo solo puede tomar costo mínimo.");
+        $("#promoCost option[value='"+$("#promoCost :selected").text()+"']").attr("disabled","disabled");
+        $("#promoCost").prop('selectedIndex', 0);
+    }
+    else{
+        $("#promoCost option").removeAttr("disabled");    
     }
         
     from = jQuery("#starts").val().split("-");
@@ -610,10 +622,39 @@ function showPopUpModalMessage(vtitle, vmessage){
     bootbox.alert(vmessage, function() {
         console.log("Deudor");    
     });
-    /*bootbox.alert("Hemos encontrado que tienes pendientes cargos más allá del cupo que tienes asignado.\n\rTe invitamos a regularizar tu situación 
-    para de esa forma seguir anunciando en Promos al Paso. Ante cualquier duda por favor contactate con administración@promosalpaso.com. \n\r Gracias!", function() {
+}
+
+/*Valida si starts y ends incluyen solo días de fin de semana. Si es así, solo deja el costo mínimo como opción.*/
+function checkOnlyWeekend(){
+    var millisecondsPerDay = 86400 * 1000;
+    var week = [0,0,0,0,0,0,0];
+    if($("#starts").datepicker('getDate') == null)
+        return;
+    var start = $("#starts").datepicker('getDate');    
+    var ends = getEndsDate23hr();
+    var diff = ends - start;  // Milliseconds between datetime objects    
+    var days = Math.ceil(diff / millisecondsPerDay);
+    var counter = start; 
+    days = (days > 7)?7:days;
+    
+    for(i=0;i<days;i++){
+        week[counter.getDay()] = 1;
+        counter.setDate(counter.getDate() + 1);
+    }
+    if(week[0]==1 || week[6]==1){
+        for(k=1;k<6;k++){
+            if(week[k]==1)
+                return false;
+        }
+        return true;
+    }
+    return false;
         
-    }); */
+}
+
+function getEndsDate23hr(){
+    var ends = $("#ends").datepicker('getDate');
+    return new Date(ends.getTime() + 86399000);    
 }
 
 
