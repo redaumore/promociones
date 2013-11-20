@@ -142,7 +142,7 @@
                 if(isset($promotion)){
                      $this->loadForm($promotion, 'update');
                       //TODO Modificar la carga de Branches cuando sean màs de uno.
-                     //$this->_helper->Session->setBranchSession($branch);
+                     $this->_helper->Session->setBranchSession($branch);
                  }
                  else{
                     //@todo Mostrar mensaje de que no se encontrò la promo.
