@@ -82,7 +82,7 @@ class servicesController extends Zend_Controller_Action
                 $this->setNewSession($uuid, $categories, $lat, $lng, $data);
             }
             $totalitems = 0;
-            $data = $this->getSessionPage($uuid, $page, &$totalitems);     
+            $data = $this->getSessionPage($uuid, $page, $totalitems);     
             error_log("datos pagina:".count($data));
   
             $response = $this->getFrontController()->getResponse();
@@ -669,7 +669,7 @@ class servicesController extends Zend_Controller_Action
         $session->data = $data;    
     }
     
-    private function getSessionPage($uuid, $page, $totalitems = 0){
+    private function getSessionPage($uuid, $page, &$totalitems = 0){
          $session_id = 'mobile_'.$uuid;
          $session = new Zend_Session_Namespace($session_id);
          $fulldata = $session->data;
