@@ -24,50 +24,53 @@
         if(count($this->currentInfo) > 0 || count($this->historicalInfo) > 0){   
      ?>
     <div class="row-fluid">
-        <div class="span2 pagination-centered">
-            <h4 style="margin-top: 0;">Publicaciones Activas</h4>
-        </div>
-        <div class="span3" style="margin-bottom: 10px;">
-                
-            <?php
-                echo "<div>"; 
-                if(count($this->currentInfo) > 0){
-                echo "<p class='textinfo'><b>Cantidad: </b><b><span style='font-size: 17.5px; color: #FF6A15'>".$this->cant_activas."</b></span></p>";
-                echo "<p class='textinfo'><b>Distribución de promociones:</b><p>";
-                    foreach($this->currentInfo as $distri_info){
-                        echo "<p class='textinfo'  style='margin:10px;'>".$distri_info["cant"]." promo/s de costo $".$distri_info["promo_cost"]." con ".$distri_info["visited"]." visitas.</p>";        
-                    }   
-                }
-                else{
-                    echo "<p class='textinfo'  style='margin:10px;'><b>No tienes promos activas en este momento.</b></p><p class='textinfo'><b>¿Qué esperas para dar a conocer tus promos?.</b><p>";
-                }
-                echo "</div>";
-            ?>
-        </div>
-        <div class="span2 pagination-centered">
-            <h4 style="margin-top: 0;">Histórico Publicaciones </h4>
-        </div>
-        <div class="span3" style="margin-bottom: 10px;">
-            <?php if(count($this->historicalInfo) > 0){
-                echo "<div>";
-                echo "<p class='textinfo'><b>Cantidad: </b><b><span style='font-size: 17.5px; color: #FF6A15'>".$this->cant_historical."</b></span></p>";
-                echo "<p class='textinfo'><b>Distribución de promociones:</b><p>";
-                    foreach($this->historicalInfo as $distri_info){
-                        echo "<p class='textinfo'  style='margin:10px;'>".$distri_info["cant"]." promo/s de costo $".$distri_info["promo_cost"]." con ".$distri_info["visited"]." visitas.</p>";        
-                    }   
-                }
-                else{
-                    echo "<p>No tienes promos activas en este momento. ¿Qué esperas para dar a conocer tus promos?.<p>";
-                }
-                echo "</div>"; 
-            ?>
-        </div>
-        <div class="span2">
-            <?php echo $this->partial("promotion/_botonera.phtml"); ?>
-        </div>
         <?php
-        } //Cierre del if de hay información de activas o históricas.
+             if($this->cant_activas > 0 || $this->cant_cant_historical > 0 ){
          ?>
+            <div class="span2 pagination-centered">
+                <h4 style="margin-top: 0;">Publicaciones Activas</h4>
+            </div>
+            <div class="span3" style="margin-bottom: 10px;">
+                    
+                <?php
+                    echo "<div>"; 
+                    if(count($this->currentInfo) > 0){
+                    echo "<p class='textinfo'><b>Cantidad: </b><b><span style='font-size: 17.5px; color: #FF6A15'>".$this->cant_activas."</b></span></p>";
+                    echo "<p class='textinfo'><b>Distribución de promociones:</b><p>";
+                        foreach($this->currentInfo as $distri_info){
+                            echo "<p class='textinfo'  style='margin:10px;'>".$distri_info["cant"]." promo/s de costo $".$distri_info["promo_cost"]." con ".$distri_info["visited"]." visitas.</p>";        
+                        }   
+                    }
+                    else{
+                        echo "<p class='textinfo'  style='margin:10px;'><b>No tienes promos activas en este momento.</b></p><p class='textinfo'><b>¿Qué esperas para dar a conocer tus promos?.</b><p>";
+                    }
+                    echo "</div>";
+                ?>
+            </div>
+            <div class="span2 pagination-centered">
+                <h4 style="margin-top: 0;">Histórico Publicaciones </h4>
+            </div>
+            <div class="span3" style="margin-bottom: 10px;">
+                <?php if(count($this->historicalInfo) > 0){
+                    echo "<div>";
+                    echo "<p class='textinfo'><b>Cantidad: </b><b><span style='font-size: 17.5px; color: #FF6A15'>".$this->cant_historical."</b></span></p>";
+                    echo "<p class='textinfo'><b>Distribución de promociones:</b><p>";
+                        foreach($this->historicalInfo as $distri_info){
+                            echo "<p class='textinfo'  style='margin:10px;'>".$distri_info["cant"]." promo/s de costo $".$distri_info["promo_cost"]." con ".$distri_info["visited"]." visitas.</p>";        
+                        }   
+                    }
+                    else{
+                        echo "<p>No tienes promos activas en este momento. ¿Qué esperas para dar a conocer tus promos?.<p>";
+                    }
+                    echo "</div>"; 
+                ?>
+            </div>
+            <div class="span2">
+                <?php echo $this->partial("promotion/_botonera.phtml"); ?>
+            </div>
+         <?php
+             }
+          ?>
     </div>
     <div id="div_grid_container" class="row-fluid pagination-centered">
             <table width="100%">

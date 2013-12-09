@@ -142,7 +142,7 @@
                 if(isset($promotion)){
                      $this->loadForm($promotion, 'update');
                       //TODO Modificar la carga de Branches cuando sean màs de uno.
-                     //$this->_helper->Session->setBranchSession($branch);
+                     $this->_helper->Session->setBranchSession($branch);
                  }
                  else{
                     //@todo Mostrar mensaje de que no se encontrò la promo.
@@ -358,7 +358,23 @@
         $control->setValue($promo->getState());
         
         $control = $form->getElement('promoCost');
-        $control->setValue($promo->getPromoCost());
+        $options = $control->getMultiOptions();
+        $selected_option = $options[$promo->getPromoCost()];
+        if(array_key_exists($promo->getPromoCost(), $options)){
+            $control->setValue($promo->getPromoCost());    
+        }
+        else{
+            $promocost =  substr($promo->getPromoCost(), -4);
+            foreach($options as $key=>$value){
+                if($value == $promocost){
+                    $control->setValue($key);
+                    break;
+                }
+                else{
+                    $control->setValue(key($options));    
+                }
+            }   
+        }
         
         $control = $form->getElement('visited');
         $control->setValue($promo->getVisited());
