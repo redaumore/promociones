@@ -137,7 +137,9 @@
                     se = "<div style='float:left;'><a href='/promotion/delete/id/"+cl+"'><span class='ui-icon ui-icon-trash'></span></a></div>"; 
                 val = (row["is_percentage"] == "1")?cutDecimals(row["value"])+"%":"$"+cutDecimals(row["value"]);
                 jQuery("#list2").jqGrid('setRowData',ids[i],{act:be+se,value:val});
-            }    
+            }
+            //Setear min-height, pero queda agrandada la barra de títulos.
+            //$("#list2").parents('div.ui-jqgrid-bdiv').css("min-height","300px");    
     },
      })
      //jQuery("#list2").jqGrid('GridNav','#pager2',{edit:false,add:false,del:false});
