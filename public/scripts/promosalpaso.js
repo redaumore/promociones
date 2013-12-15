@@ -211,18 +211,24 @@ function loadPromoDetail(item){
     jQuery("#det-distance").html(item.distance);
     jQuery("#det-direccion").html(item.street + ' ' + item.number + ' - ' + item.city);
     jQuery("#det-img-comercio").attr("src",item.logo);
-    if(item.branch_website != null && item.branch_website != "" )
-        jQuery("#det-link").attr("href", item.website);
+    if(item.branch_website != null && item.branch_website != "" ){
+        jQuery("#det-link").attr("href", item.website);    
+        jQuery("#det-web").show();
+    }
     else
         jQuery("#det-web").hide();
     
-    if(item.phone != null && item.phone != "")
-        jQuery("#det-phone").attr("onclick", "makeacall('"+item.phone+"')");
+    if(item.phone != null && item.phone != ""){
+        jQuery("#det-phone").attr("alt", "Teléfono: "+item.phone);
+        jQuery("#det-phone").show();    
+    }
     else
         jQuery("#det-tel").hide();
     
-    if(item.branch_email != null && item.branch_email != "")
+    if(item.branch_email != null && item.branch_email != ""){
         jQuery("#det-msg").attr("onclick", "sendamessage('"+item.branch_email+"')");
+        jQuery("#det-msg").show();    
+    }
     else
         jQuery("#det-email").hide();
     

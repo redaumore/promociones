@@ -19,7 +19,7 @@ jQuery('#valueSince').tooltip({
         title: 'Muestra la palabra "desde" encima del valor. Sirve para promocionar rangos inferiores de precios o descuentos. Por ejemplo "Remeras desde $70"',
       });
 jQuery('#imagePromo').tooltip({
-        placement: 'right',
+        placement: 'left',
         title: 'Imagen del producto o cualquier otra imagen que el anunciante quiera mostrar en el detalle de la promoción.',
       });
 jQuery('#promoCode').tooltip({
@@ -43,15 +43,15 @@ jQuery('#quantity').tooltip({
         title: 'Indica cuantas unidades quedan disponibles bajo los términos de la promoción. Es opcional si visualización en la promoción',
       });
 jQuery('#longDescription').tooltip({
-        placement: 'right',
+        placement: 'left',
         title: 'Descripción detallada de la promoción.',
       });
 jQuery('#state').tooltip({
-        placement: 'right',
+        placement: 'left',
         title: 'Dependiendo el estado de la promoción, la misma será mostrada o no en los dispositivos de los clientes. Sirve para desactivar la promoción sin tener que cambiarle las fechas de Inicio o Fin. No afecta al costo de la promoción que es determinado por los campos Inicio y Fin.',
       });
 jQuery('#promoCost').tooltip({
-        placement: 'right',
+        placement: 'left',
         title: 'Monto que se desea pagar por el anuncio por día. Este valor influye en la posición donde se mostrará el anuncio con respecto a los otros anuncios mostrados en los dispositivos de los usuarios finales.',
       });
 jQuery('#visited').tooltip({
