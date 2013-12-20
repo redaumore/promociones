@@ -588,6 +588,10 @@ function parseStringToDate(strDate){
 function cutDecimals(valor){
     if(valor.indexOf(".00") != -1)
         return valor.substring(0, valor.indexOf(".00"));
+    if(valor.indexOf("$") != -1)
+        return valor.substring(valor.indexOf("$")+1, valor.length );
+    if(valor.indexOf("%") != -1)
+        return valor.substring(0, valor.indexOf("%"));
     return valor;
 }
 

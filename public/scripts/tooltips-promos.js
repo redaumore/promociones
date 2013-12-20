@@ -55,6 +55,6 @@ jQuery('#promoCost').tooltip({
         title: 'Monto que se desea pagar por el anuncio por día. Este valor influye en la posición donde se mostrará el anuncio con respecto a los otros anuncios mostrados en los dispositivos de los usuarios finales.',
       });
 jQuery('#visited').tooltip({
-        placement: 'right',
+        placement: 'left',
         title: 'Cantidad de visitas recibidas a la promoción.',
       });

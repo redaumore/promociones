@@ -152,7 +152,7 @@ class PAP_Model_User
     
     private function loadBillingAddress(){
         $mainBranch = $this->getBranch();
-        if($mainBranch->getId() == NULL){
+        if(is_numeric($mainBranch->getId())){
             $this->_billingAddress = $mainBranch->getAddress();
             return true;
         }
