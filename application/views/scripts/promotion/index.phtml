@@ -23,7 +23,7 @@
     <?php
         if(count($this->currentInfo) > 0 || count($this->historicalInfo) > 0){   
      ?>
-    <div class="row-fluid">
+        <div class="row-fluid">
         <?php
              if($this->cant_activas > 0 || $this->cant_cant_historical > 0 ){
          ?>
@@ -71,7 +71,8 @@
          <?php
              }
           ?>
-    </div>
+          </div>
+          
     <div id="div_grid_container" class="row-fluid pagination-centered">
             <table width="100%">
                 <tr><td align="center">
@@ -82,6 +83,9 @@
         </br>
         </br>
     </div>
+    <?php
+        }
+    ?>
     <div class="row-fluid pagination-centered">
         <?php echo $this->partial("promotion/_botonera.phtml"); ?> 
     </div>
@@ -139,12 +143,11 @@
                 jQuery("#list2").jqGrid('setRowData',ids[i],{act:be+se,value:val});
             }    
     },
-     })
+     });
      //jQuery("#list2").jqGrid('GridNav','#pager2',{edit:false,add:false,del:false});
      
      $(window).bind('resize', function() {
         //$('#list2').setGridWidth(width, true); //Back to original width
         $('#list2').setGridWidth($('#div_grid_container').width(), true); //Resized to new width as per window
      }).trigger('resize');
-</script>
- 
+</script> 
