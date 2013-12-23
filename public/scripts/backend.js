@@ -451,9 +451,34 @@ function FillPromotion(promotion){
         jQuery('#det-alarm_type').text('unids.');
         jQuery('#det-alarma').show();
     }
+    
+    if(promotion.branch_website != null && promotion.branch_website != "" ){
+        jQuery("#det-link").attr("href", promotion.branch_website);    
+        jQuery("#det-web").show();
+    }
+    else
+        jQuery("#det-web").hide();
+    
+    if(promotion.phone != null && promotion.phone != ""){
+        jQuery("#img-tel-icon").attr("title", "Teléfono: "+promotion.phone);
+        jQuery("#det-phone").show();    
+    }
+    else
+        jQuery("#det-tel").hide();
+    
+    if(promotion.branch_email != null && promotion.branch_email != ""){
+        jQuery("#det-msg").attr("href", "mailto:"+promotion.branch_email);
+        jQuery("#det-msg").show();    
+    }
+    else
+        jQuery("#det-email").hide();
+        
     jQuery("#hidden_latitude").val(promotion.latitude);
     jQuery("#hidden_longitude").val(promotion.longitude);
+    var left = (window.innerWidth - 400)/2
     jQuery("#btnpromobody").click();
+    //jQuery("#promobody").attr("style", "left: "+left);
+    
     //alert(data.responseText);    
 }
 
@@ -563,6 +588,10 @@ function parseStringToDate(strDate){
 function cutDecimals(valor){
     if(valor.indexOf(".00") != -1)
         return valor.substring(0, valor.indexOf(".00"));
+    if(valor.indexOf("$") != -1)
+        return valor.substring(valor.indexOf("$")+1, valor.length );
+    if(valor.indexOf("%") != -1)
+        return valor.substring(0, valor.indexOf("%"));
     return valor;
 }
 

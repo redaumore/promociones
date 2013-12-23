@@ -117,7 +117,7 @@ class IndexController extends Zend_Controller_Action
     }
     
     function browsernotsuportedAction(){
-        echo $_SERVER['HTTP_USER_AGENT'];
+    //echo $_SERVER['HTTP_USER_AGENT'];
          PAP_Helper_Logger::writeLog(Zend_Log::INFO, 'IndexController->browsernotsuportedAction()',$_SERVER['HTTP_USER_AGENT']);        
     }
 }

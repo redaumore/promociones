@@ -37,7 +37,7 @@ class BranchController extends Zend_Controller_Action
             }
             else{
                  
-                 if(isset($branch)){
+                 if(is_numeric($branch->getId())){
                      $this->loadProvinces($comboProvinces, $branch->getProvince());
                      $this->loadCities($comboCities, $branch->getProvince(), $branch->getCity());
                      $this->loadForm($branch, 'update');

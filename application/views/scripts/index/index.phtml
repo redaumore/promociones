@@ -9,26 +9,40 @@
 <?php echo $this->partial("index/_alert.phtml"); ?>
 <div class="row-fluid">
     <div class="span4 well">
+        <a href="<?php echo $this->url(array('controller'=>'auth','action'=>'login'));?>" class="home-link">
+            <div style="display: inline; float: left;">
+                <img src="/images/backend/goto-login.png" alt="Buscar Promociones">
+            </div>
+            <div display: inline; float: right;>
+                <span class="home-title-section">Anunciar</span>
+                <span class="home-text">¿Sos un comercio y tenes promociones y ofertas para ofrecer?. Regístrate e ingresa
+                al sistema publicador de Promos al Paso. Es muy facil y rápido!!</span>
+            </div>
+        </a>
+    </div>
+    <div class="span4 well">
         <a href="<?php echo $this->url(array('controller'=>'promotion','action'=>'search'));?>" class="home-link">
             <div style="display: inline; float: left;">
                 <img src="/images/backend/goto-search.png" alt="Buscar Promociones"/>
             </div>
-            <div class="home-text">Busca promociones por ciudad. Encuentra las mejores ofertas en todos los rubros
-            en todas las ciudades en las que esté Promos al Paso presente.</div>
-        </a>
-    </div>
-    <div class="span4 well">
-        <a href="<?php echo $this->url(array('controller'=>'auth','action'=>'login'));?>" class="home-link">
-            <img src="/images/backend/goto-login.png" alt="Buscar Promociones">
-            <p class="home-text">¿Sos un comercio y tenes promociones y ofertas para ofrecer?. Regístrate e ingresa
-            al sistema publicador de Promos al Paso. Es muy facil y rápido!!</p>
+            <div display: inline; float: right;>
+                <span class="home-title-section">Buscar</span>
+                <span class="home-text">
+                    Busca promociones por ciudad. Encuentra las mejores ofertas en todos los rubros
+            en todas las ciudades en las que esté Promos al Paso presente.
+                </span>
+            </div>
         </a>
     </div>
     <div class="span4 well">
         <a href="<?php echo $this->url(array('controller'=>'index','action'=>'help'));?>" class="home-link">
-            <img src="/images/backend/goto-help.png" alt="Buscar Promociones">
-            <p class="home-text">¿Qué es Promos al Paso?. ¿Como encuentro promociones?. ¿Qué es lo que tengo que 
-            hacer para publicar?. ¿En que medios serán vistas mis promociones?.</p>
+            <div style="display: inline; float: left;">
+                <img src="/images/backend/goto-help.png" alt="Buscar Promociones">
+            </div>
+            <div display: inline; float: right;>
+                <span class="home-title-section">Ayuda</span>
+                <span class="home-text">¿Qué es Promos al Paso?. ¿Como encuentro promociones?. ¿Cómo hago para publicar?. ¿En donde se verán mis promociones?.</span>
+            </div>
         </a>
     </div>
 </div>

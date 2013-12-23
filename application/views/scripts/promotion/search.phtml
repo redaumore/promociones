@@ -21,9 +21,10 @@ function loadCities()
             {
                 method:'get',
                 parameters: {province_id: selectedValue},
-                onSuccess: FillForm
+                onSuccess: FillForm,
+                async: false
         });
- 
+        console.log("loadCities");
 }
 
 function loadProvinces()
@@ -31,7 +32,8 @@ function loadProvinces()
         "<?=$this->url(array('controller'=>'Backendajax','action'=>'getprovinces'))?>",
             {
                 method:'get',
-                onSuccess: FillFormProvinces
+                onSuccess: FillFormProvinces,
+                async: false
         });
         
  
@@ -43,7 +45,9 @@ function FillForm(data)
         var cities = eval('(' + data.responseText + ')');
         for (var i = 0; i < cities.length; i++){
             select.options[select.options.length] = new Option(cities[i].name, cities[i].city_id); 
-        } 
+        }
+        console.log("FillForm"); 
+        getPromotions();
 }
 
 function FillFormProvinces(data)
@@ -53,7 +57,7 @@ function FillFormProvinces(data)
         for (var i = 0; i < provinces.length; i++){
             select.options[select.options.length] = new Option(provinces[i].name, provinces[i].province_id); 
         }
-        
+        console.log("FillFromProvinces");
         loadCities(); 
 }
 </script>
@@ -141,6 +145,7 @@ function getPromotions(){
              sortname: 'starts',
              viewrecords: true,
              sortorder: "desc",
+             sortable: true,
              height: "100%",
              mtype:"POST",
              caption:"Promociones encontradas",

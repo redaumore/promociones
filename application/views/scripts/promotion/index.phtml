@@ -25,13 +25,12 @@
      ?>
         <div class="row-fluid">
         <?php
-             if($this->cant_activas > 0 || $this->cant_cant_historical > 0 ){
+             if($this->cant_activas > 0 || $this->cant_historical > 0 ){
          ?>
             <div class="span2 pagination-centered">
                 <h4 style="margin-top: 0;">Publicaciones Activas</h4>
             </div>
             <div class="span3" style="margin-bottom: 10px;">
-                    
                 <?php
                     echo "<div>"; 
                     if(count($this->currentInfo) > 0){
@@ -42,7 +41,7 @@
                         }   
                     }
                     else{
-                        echo "<p class='textinfo'  style='margin:10px;'><b>No tienes promos activas en este momento.</b></p><p class='textinfo'><b>¿Qué esperas para dar a conocer tus promos?.</b><p>";
+                        echo "<p class='textinfo'  style='margin:10px;'><b>No tienes promos activas en este momento.</b></p><p class='textinfo' style='margin:10px;'><b>¿Qué esperas para dar a conocer tus promos?.</b><p>";
                     }
                     echo "</div>";
                 ?>
@@ -73,6 +72,9 @@
           ?>
           </div>
           
+    <?php
+        }
+     ?>
     <div id="div_grid_container" class="row-fluid pagination-centered">
             <table width="100%">
                 <tr><td align="center">
@@ -107,10 +109,12 @@
          rowList:[20,30,40],
          pager: '#pager2',
          sortname: 'starts',
+         sortable: true,
          viewrecords: true,
          sortorder: "desc",
          mtype:"POST",
          autowidth: true,
+         loadonce: true,
          height: "300px",
          caption:"Promociones",
          gridComplete: function(){
@@ -141,7 +145,9 @@
                     se = "<div style='float:left;'><a href='/promotion/delete/id/"+cl+"'><span class='ui-icon ui-icon-trash'></span></a></div>"; 
                 val = (row["is_percentage"] == "1")?cutDecimals(row["value"])+"%":"$"+cutDecimals(row["value"]);
                 jQuery("#list2").jqGrid('setRowData',ids[i],{act:be+se,value:val});
-            }    
+            }
+            //Setear min-height, pero queda agrandada la barra de títulos.
+            //$("#list2").parents('div.ui-jqgrid-bdiv').css("min-height","300px");    
     },
      });
      //jQuery("#list2").jqGrid('GridNav','#pager2',{edit:false,add:false,del:false});

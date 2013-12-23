@@ -25,7 +25,7 @@
                 
         $this->addElement('text', 'name', array(
             'label'      => 'Nombre Comercio',
-            'size' => 50,
+            'size' => 45,
             'maxlength' => 50,
             'required'   => true,
             'filters'    => array('StripTags', 'StringTrim'),
@@ -35,7 +35,7 @@
         
         $this->addElement('text', 'street', array(
             'label'      => 'Calle',
-            'size' => 50,
+            'size' => 45,
             'maxlength' => 50,
             'required'   => true,
             'filters'    => array('StripTags', 'StringTrim'),
