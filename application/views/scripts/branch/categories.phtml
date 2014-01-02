@@ -30,11 +30,16 @@
 </div>
 
     <div class="row pagination-centered">
+        <div class="span10">
         <p>Selecciona tus categorías. Es importante establecer las mismas para que tus potenciales clientes puedan encontrar rapidamente tus promociones.</p>
         <p>Esta selecciòn aplica a nivel de Comercio. Oséa que todas las promociones que publiques estarán asociadas a estas categorías.</p>
+        </div>
+        <div class="span1">
+            <img src="/images/backend/goto-help.png" width="32px" onclick="loadHelp('Selección de Categorías', 'tabs-reg-4');" title="Ayuda de Categorías" style="float: right;"/>
+        </div>
     </div>
     <div class="row pagination-centered">
-        <table width="100%">
+        <table width="100%" style="background-color: transparent;">
             <tr>
                 <td align="center">
                     <?php echo $this->form; ?>        
@@ -50,6 +55,7 @@ jQuery(document).ready(function(){
         cookieId: "treeview-black"
     });
     jQuery("#div_message").hide();
+    jQuery("form table").css("background-color", "transparent");
 });
 
 function someCategoryChecked(){
@@ -60,3 +66,6 @@ function someCategoryChecked(){
     }    
 }
 </script>
+<?php 
+    echo $this->partial("index/_contextual-help.phtml"); 
+?>

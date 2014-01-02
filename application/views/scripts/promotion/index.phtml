@@ -66,6 +66,7 @@
             </div>
             <div class="span2">
                 <?php echo $this->partial("promotion/_botonera.phtml"); ?>
+                <img src="/images/backend/goto-help.png" width="32px" onclick="loadHelp('Administración de Promos', 'tabs-promo-1');" title="Ayuda de panel de Promos" style="float: right;"/>
             </div>
          <?php
              }
@@ -153,4 +154,6 @@
         $('#list2').setGridWidth($('#div_grid_container').width(), true); //Resized to new width as per window
      }).trigger('resize');
 </script>
- 
+<?php 
+    echo $this->partial("index/_contextual-help.phtml"); 
+?>

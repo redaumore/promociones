@@ -1,0 +1,18 @@
+<script type="text/javascript">
+    function loadHelp(title, element){
+        jQuery("#modal-body-help").load("/index/help #"+element);
+        jQuery("#help-title").html("Ayuda - "+title);
+        jQuery("#btn_help").click();
+    }
+</script>
+<button id="btn_help" type="button" data-toggle="modal" data-target="#webpageDialog" style="display: none;"></button>
+<div id="webpageDialog" class="modal hide fade" style="display: none; width: 50%;">
+    <div class="modal-header">
+        <div style="display: inline-block;float:left;width: 90%;"><h3 id="help-title">Ayuda</h3></div>
+        <div style="display: inline-block;float:right; width: 10%"><a class="close" data-dismiss="modal" style="float: right; margin-top: 5px;margin-bottom: 5px;">X</a></div>
+    </div>
+    <div id="modal-body-help" class="modal-body"></div>
+    <div class="model-footer">
+        <a href="#" class="btn btn-primary" id="btnCancelLoc" onclick="jQuery('.close').click();" style="float: right; margin-top: 5px;margin-bottom: 5px; margin-right: 10px;">Cerrar</a>
+    </div>
+</div>

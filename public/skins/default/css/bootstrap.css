@@ -7025,7 +7025,8 @@ a.thumbnail:hover {
 }
 
 .modal-body {
-  border-bottom: 1px solid #1C1E22;
+  border-bottom: 1px solid #BCBCBC;
+  border-top: 1px solid #BCBCBC;
 }
 
 .modal-footer {

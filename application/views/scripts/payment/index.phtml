@@ -17,7 +17,12 @@
         <?php echo $this->errorMessage($this->form, $messages); ?>
     </div>
     <div class="row-fluid pagination-centered">
+        <div class="span11">
             <p>En esta sección encontrarás información acerca de tu historial de anuncios y también te permitirá ver, pagar o informar el pago de los cargos que adeudas.</p>
+        </div>
+        <div class="span1">
+            <img src="/images/backend/goto-help.png" width="32px" onclick="loadHelp('Cargos del servicio', 'tabs-costos-2');" title="Ayuda de cargos del servicio" style="float: right;"/>    
+        </div>
     </div>
     <div class="container-fluid">
         <div class="row-fluid">
@@ -82,3 +87,4 @@
      echo $this->partial("payment/_frameMP.phtml"); 
 ?>
 </form>
+<?php echo $this->partial("index/_contextual-help.phtml");?>

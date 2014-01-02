@@ -239,7 +239,7 @@ form .exceeded{color:#FF6A15;}
 /* HELP */
 
 .plain-text{
-    font-size: 12px;
+    font-size: 0.95em;
     color: #B4B4B4;
     text-shadow: 0 0 1px #B4B4B4;
 }

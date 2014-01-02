@@ -147,5 +147,10 @@ div[data-role="header"]{
 ul[id="promolist"] > li:nth-child(odd) { background-color:#eee; }
 ul[id="promolist"] > li:nth-child(even) { background-color:#fff; }
 
+.img-help{
+    margin: auto; 
+    border: #DDDDDD solid 2px;
+}
+
 
 
