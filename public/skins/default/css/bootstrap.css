@@ -2006,7 +2006,7 @@ legend + .control-group {
 table {
   max-width: 100%;
   /*background-color: transparent;*/
-  background-color: #141414;
+  background-color: #242220;
   border-collapse: collapse;
   border-spacing: 0;
 }
@@ -3115,7 +3115,8 @@ table th[class*="span"],
   min-height: 20px;
   padding: 19px;
   /*margin-bottom: 20px;*/
-  background-color: #202328;
+  /*background-color: #202328;*/
+  background-color: #242220;
   border: 1px solid #101214;
   -webkit-border-radius: 4px;
      -moz-border-radius: 4px;
@@ -6200,10 +6201,11 @@ hr {
 .navbar .navbar-inner {
   background-color: #3a3f44;
   background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#52575c), color-stop(70%, #3a3f44), to(#3a3f44));
-  background-image: -webkit-linear-gradient(#52575c, #3a3f44 70%, #3a3f44);
-  background-image: -moz-linear-gradient(top, #52575c, #3a3f44 70%, #3a3f44);
-  background-image: -o-linear-gradient(#52575c, #3a3f44 70%, #3a3f44);
-  background-image: linear-gradient(#52575c, #3a3f44 70%, #3a3f44);
+  background-image: -webkit-linear-gradient(#2E2D2C, #242220 70%, #3a3f44);
+  background-image: -moz-linear-gradient(#2E2D2C, #242220 70%, #3a3f44);
+  background-image: -o-linear-gradient(#2E2D2C, #242220 70%, #3a3f44);
+  /*background-image: linear-gradient(#52575c, #3a3f44 70%, #3a3f44);*/
+  background-image: linear-gradient(#2E2D2C, #242220 70%, #3a3f44);
   background-repeat: no-repeat;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff52575c', endColorstr='#ff3a3f44', GradientType=0);
 }
@@ -6331,10 +6333,11 @@ div.subnav {
   margin: 0 1px;
   background-color: #3a3f44;
   background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#52575c), color-stop(70%, #3a3f44), to(#3a3f44));
-  background-image: -webkit-linear-gradient(#52575c, #3a3f44 70%, #3a3f44);
-  background-image: -moz-linear-gradient(top, #52575c, #3a3f44 70%, #3a3f44);
-  background-image: -o-linear-gradient(#52575c, #3a3f44 70%, #3a3f44);
-  background-image: linear-gradient(#52575c, #3a3f44 70%, #3a3f44);
+  background-image: -webkit-linear-gradient(#2E2D2C, #242220 70%, #3a3f44);
+  background-image: -moz-linear-gradient(#2E2D2C, #242220 70%, #3a3f44);
+  background-image: -o-linear-gradient(#2E2D2C, #242220 70%, #3a3f44);
+  /*background-image: linear-gradient(#52575c, #3a3f44 70%, #3a3f44);*/
+  background-image: linear-gradient(#2E2D2C, #242220 70%, #3a3f44);
   background-repeat: no-repeat;
   border: 1px solid transparent;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff52575c', endColorstr='#ff3a3f44', GradientType=0);
@@ -6413,10 +6416,10 @@ div.subnav.subnav-fixed .nav > li:first-child > a:hover {
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
   background-color: #3a3f44;
   background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#52575c), color-stop(70%, #3a3f44), to(#3a3f44));
-  background-image: -webkit-linear-gradient(#52575c, #3a3f44 70%, #3a3f44);
-  background-image: -moz-linear-gradient(top, #52575c, #3a3f44 70%, #3a3f44);
-  background-image: -o-linear-gradient(#52575c, #3a3f44 70%, #3a3f44);
-  background-image: linear-gradient(#52575c, #3a3f44 70%, #3a3f44);
+  background-image: -webkit-linear-gradient(#2E2D2C, #242220 70%, #3a3f44);
+  background-image: -moz-linear-gradient(#2E2D2C, #242220 70%, #3a3f44);
+  background-image: -o-linear-gradient(#2E2D2C, #242220 70%, #3a3f44);
+  background-image: linear-gradient(#2E2D2C, #242220 70%, #3a3f44);
   background-repeat: no-repeat;
   border: none;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff52575c', endColorstr='#ff3a3f44', GradientType=0);
@@ -7017,7 +7020,7 @@ a.thumbnail:hover {
 }
 
 .modal {
-  background-color: #2e3236;
+  background-color: #242220;
 }
 
 .modal-header {
@@ -7030,7 +7033,7 @@ a.thumbnail:hover {
 }
 
 .modal-footer {
-  background-color: #272b30;
+  background-color: #242220;
   border-top: none;
   -webkit-box-shadow: none;
      -moz-box-shadow: none;

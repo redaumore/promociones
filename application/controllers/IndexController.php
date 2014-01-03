@@ -115,4 +115,9 @@ class IndexController extends Zend_Controller_Action
             PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'IndexController->contactadmAction()',$ex, $_SERVER['REQUEST_URI']);
         }    
     }
+    
+    function browsernotsuportedAction(){
+    //echo $_SERVER['HTTP_USER_AGENT'];
+         PAP_Helper_Logger::writeLog(Zend_Log::INFO, 'IndexController->browsernotsuportedAction()',$_SERVER['HTTP_USER_AGENT']);        
+    }
 }
