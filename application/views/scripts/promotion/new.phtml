@@ -264,8 +264,8 @@ $(document).ready(function(){
    var dateAsNew = parseStringToDate(jQuery('#dateAsNew').val());
    var promocost = getPriceFromPromocost(jQuery("#promoCost option:selected").text());
    
-   setupPromoDates(kickoff, dateAsNew, promocost)
-    
+   setupPromoDates(kickoff, dateAsNew, promocost);
+   $("#ends" ).datepicker( "setDate", new Date() ); 
    showPromoTotalCost(); 
    
    $("#displayedText").charCount({

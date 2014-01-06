@@ -28,6 +28,7 @@
         $("#img-promos-ordenamiento").elevateZoom({zoomWindowPosition: 10, zoomWindowHeight:292, zoomWindowWidth:611});
         $("#img-promo-metodos-pago").elevateZoom({zoomWindowPosition: 10, zoomWindowHeight:384, zoomWindowWidth:500});
         $("#img-metodo-pago-transferencia").elevateZoom({zoomWindowPosition: 10, zoomWindowHeight:467, zoomWindowWidth:503});
+        $("#img-pago-efectivo").elevateZoom({zoomWindowPosition: 10, zoomWindowHeight:148, zoomWindowWidth:390});
     });
 </script>
 
@@ -52,7 +53,7 @@
                 encontradas. En esta lista puedes ver los datos de portada del aviso y para ver los detalles solo debes pulsar en la imagen de la 
                 promoción que quieras ver.</p>
             </div>
-            <div style="width: 25%; float: right; text-align: center;">
+            <div class="div-img-container">
                 <div class="help-menu help-menu-buscar-promos"></div><br/>
                 <img id="img-buscar-promos" class="img-help" src="/images/backend/help/s-buscar-promos.png" data-zoom-image="/images/backend/help/buscar-promos.png" />
                 <br/><br/>
@@ -88,7 +89,7 @@
                 En este paso se deben ingresar nombre del usuario/comercio, email que servirá para ingresar al sistema de administración, 
                 cuit para realizar la facturación y la contraseña del usuario.</p>
                 </div>
-                <div style="width: 25%; float: right; text-align: center;">
+                <div class="div-img-container">
                     <img id="img-registracion" class="img-help" src="/images/backend/help/s-registration.jpg" data-zoom-image="/images/backend/help/registration.jpg" title="Registración del Usuario"/>
                 </div>
             </div>
@@ -113,7 +114,7 @@
                     comercio. La imagen debe ser preferentemente cuadrada de a lo sumo 1.2 MB de tamaño. Para seleccionar la imagen
                     debes pulsar en el botón "Cargar Imagen" y seleccionar el archivo correspondiente.</p>
                 </div>
-                <div style="width: 25%; float: right; text-align: center;">
+                <div class="div-img-container">
                     <div class="help-menu help-menu-datos"></div><br/>
                     <img id="img-branch" class="img-help" src="/images/backend/help/s-branch.jpg" data-zoom-image="/images/backend/help/branch.jpg" title="Datos del Comercio"/>
                 </div>
@@ -126,7 +127,7 @@
                     no existe una categoría que encaje para tu negocio envíanos un email a soporte@promosalpaso.com y nosotros
                     te ayudaremos a seleccionar la mejor o crear una nueva.</p>
                 </div>
-                <div style="width: 25%; float: right; text-align: center;">
+                <div class="div-img-container">
                     <div class="help-menu help-menu-categorias"></div><br/>
                 </div>
             </div>
@@ -140,7 +141,7 @@
                     Históricas".</p>
                     <p class="plain-text">A continuación se puede ver una grilla con todas las promociones </p>
                 </div>
-                <div style="width: 25%; float: right; text-align: center;">
+                <div class="div-img-container">
                     <div class="help-menu help-menu-promos"></div><br/>
                     <img id="img-index-promos" class="img-help" src="/images/backend/help/s-index-promos.png" data-zoom-image="/images/backend/help/index-promos.png" title="Administración de Promociones"/>
                 </div>
@@ -149,7 +150,7 @@
     </div>
     <h3>Proceso de publicación</h3>
     <div>
-        <div id="tabs-promos" style="height: 380px;">
+        <div id="tabs-promos" style="height: 500px;">
             <ul>
                 <li><a href="#tabs-promo-1">Panel de Promociones</a></li>
                 <li><a href="#tabs-promo-2">Portada de Promoción</a></li>
@@ -169,7 +170,7 @@
                     <p class="plain-text">Para crear una nueva promo solo tiene que pulsar en el botón nueva promo que se encuentra a la derecha y 
                     el sistema te llevará al formulario de creación de promoción.</p>
                 </div>
-                <div style="width: 25%; float: right; text-align: center;">
+                <div class="div-img-container">
                     <img id="img-portal-resumen-promos" class="img-help" src="/images/backend/help/s-portal-resumen-promos.png" data-zoom-image="/images/backend/help/portal-resumen-promos.png" title="Resumen de Promos"/>
                     <br/><br/>
                     <img id="img-portal-grilla-promos" class="img-help" src="/images/backend/help/s-portal-grilla-promos.png" data-zoom-image="/images/backend/help/portal-grilla-promos.png" title="Grilla de Promociones"/>
@@ -191,7 +192,7 @@
                     <p class="plain-text">Por último se ingresa la imagen de la Promo, la cual debe ser representativa y preferentemente de
                     proporciones cuadradas.</p>
                 </div>
-                <div style="width: 25%; float: right; text-align: center;">
+                <div class="div-img-container">
                     <img style="margin: auto;" width="100%" src="/images/backend/help/portada-promo-item.png"/><br/><br/>
                     <img id="img-portada-promo" class="img-help" src="/images/backend/help/s-portada-promo.png" data-zoom-image="/images/backend/help/portada-promo.png" title="Portada de Promo"/>
                 </div>
@@ -214,7 +215,7 @@
                     <p class="plain-text">Costo total de la promo nos indica cuanto es el costo que debemos pagar por la publicación de la promoción en función de
                     los días de vigencia de la misma.</p>
                 </div>
-                <div style="width: 25%; float: right; text-align: center;">
+                <div class="div-img-container">
                     <img id="img-detalle-promo" class="img-help" src="/images/backend/help/s-detalle-promo.png" data-zoom-image="/images/backend/help/detalle-promo.png" title="Detalle de Promo"/>
                     <br/><br/>
                     <img id="img-promo-mobile" class="img-help" src="/images/backend/help/s-promo-mobile.png" data-zoom-image="/images/backend/help/promo-mobile.png" title="Promo en mobile"/>
@@ -229,7 +230,7 @@
         <div style="width: 100%;">
             <p class="plain-text">En esta sección encontrarás toda la información acerca del costo del servicio, como pagar el mismo y en que afecta la elección del precio que eliges para tus promos. En las siguientes solapas encontraras la explicación de cada uno de estos puntos. Si tiene alguna duda con respecto al costo del servicio no dudes en comunicarte a soporte@promosalpaso.com</p>
         </div><br/><br/>
-        <div id="tabs-costos" style="height: 500px;">
+        <div id="tabs-costos" style="height: 680px;">
             <ul>
                 <li><a href="#tabs-costos-3">Posicionamiento</a></li>
                 <li><a href="#tabs-costos-1">Costo de promoción</a></li>
@@ -243,7 +244,7 @@
                         El costo que pagues por día por la promo influye directamente en el posicionamiento de la misma en la lista de promos que se le muestra a los usuarios de la aplicación movil de Promos al Paso.
                         </p>
                     </div>
-                    <div style="width: 25%; float: right; display: table-cell;">
+                    <div class="div-img-container">
                         <img id="img-promo-costo" class="img-help" src="/images/backend/help/s-promo-costo.png" data-zoom-image="/images/backend/help/promo-costo.png" title="Costo de la Promo"/>
                     </div>
                 </div><br/>
@@ -253,7 +254,7 @@
                         Por lo tanto, si publicas una promo que vaya de un lunes al siguiente domingo el anuncio aparecerá 7 días pero pagarás 5!!.<br/>
                         Si la promo que estás creando solo está comprendida por el día sábado o domingo, el sistema solo te permitirá seleccionar el menor costo posible.</p>
                     </div>
-                    <div style="width: 25%; float: right; display: table-cell;">
+                    <div class="div-img-container">
                         <img id="img-promo-costo-total" class="img-help" src="/images/backend/help/s-promo-costo-total.png" data-zoom-image="/images/backend/help/promo-costo-total.png" title="Costo Total de la Promo"/>
                     </div>
                 </div>
@@ -267,7 +268,7 @@
                         <strong>Últimos 6 Períodos: </strong> Este reporte te muestra los gastos incurridos en los últimos 6 períodos (3 meses). Este te permite ver como evolucionaron tus gastos en el mediano tiempo.
                         </p>
                     </div>
-                    <div style="width: 25%; float: right; display: table-cell;">
+                    <div class="div-img-container">
                         <img id="img-promos-cargos" class="img-help" src="/images/backend/help/s-promos-cargos.png" data-zoom-image="/images/backend/help/promos-cargos.png" title="Cargos de la Promo"/>
                     </div>
                 </div>
@@ -276,7 +277,7 @@
                         <p class="plain-text">De cada <i>Período</i> se muestra su código, sus fechas límites y el total de costos incurridos en el mismo. Mientras que dentro de cada uno de ellos se puede ver un detalle de dichos costos.<br/>
                         En este datalle se puede ver la cantidad de promos publicadas agrupadas por el <i>Costo</i> de cada una, la cantidad de días anunciados y el subtotal de costos generados por este tipo de promociones.</p>    
                     </div>
-                    <div style="width: 25%; float: right; display: table-cell;">
+                    <div class="div-img-container">
                         <img id="img-promo-costos-detalle" class="img-help" src="/images/backend/help/s-promo-costos-detalle.png" data-zoom-image="/images/backend/help/promo-costos-detalle.png" title="Detalle de cargos"/>
                     </div>
                 </div>
@@ -288,7 +289,7 @@
                         Promos al Paso ha creado un sistema de ordenamiento que surge de la relación entre el <strong>Costo de la Promo</strong> y la distancia que existe entre el dispositivo que consulta y el comercio que publica el anuncio. De esta forma se creo un sistema equilibrado en la que la distancia y el <strong>Costo de la Promo</strong> influyen en partes iguales en el ordenamiento de las promos.<br/><br/>
                         En la imagen puedes ver que hay anuncios de CotiStore a 715mts que están por encima de la promo de Leather San Justo que está a 308 mts. Esto se debe a que el anunciante CotiStore asignó un <strong>Costo de Promo</strong> mayor que el de Leather San Justo.</p>
                     </div>
-                    <div style="width: 25%; float: right;">
+                    <div class="div-img-container">
                         <img id="img-mobile-promolist" class="img-help" src="/images/backend/help/s-mobile-promolist.png" data-zoom-image="/images/backend/help/mobile-promolist.png" title="Lista de Promos en dispositivo"/>
                     </div>
                 </div>
@@ -299,7 +300,7 @@
                         Por otro lado con el ejemplo verde podemos ver que a distancias cortas, una promo que pagó de costo $1 va a estar posicionada antes que una que pago $4 pero se encuentra a 4 veces la distancia (200mts).<br/>
                         Esto permite que los negocios que se encuentren lejos de una via de transito concurrida, pueda competir en posicionamiento con comercios que se encuentren cerca de la misma vía.</p>
                     </div>
-                    <div style="width: 25%; float: right;">
+                    <div class="div-img-container">
                         <img id="img-promos-ordenamiento" class="img-help" src="/images/backend/help/s-promos-ordenamiento.png" data-zoom-image="/images/backend/help/promos-ordenamiento.png" title="Tabla de ordenamiento"/>
                     </div>
                 </div>
@@ -310,40 +311,42 @@
                     <div style="width: 75%; float: left;">
                         <p class="plain-text">Dependiendo de la ciudad en la que te encuentre tendrás la posibilidad de pagar tus gastos mediante distintos métodos de pago. A lo sumo dispondrás de hasta 3 métodos de pago que describiremos a continuación.</p>
                     </div>
-                    <div style="width: 25%; float: right;">
+                    <div class="div-img-container">
                         <img id="img-promo-metodos-pago" class="img-help" src="/images/backend/help/s-promo-metodos-pago.png" data-zoom-image="/images/backend/help/promo-metodos-pago.png" title="Métodos de Pago"/>
                     </div>
                 </div>
                 <div style="display: table-row;">
                     <div style="width: 75%; float: left;">
-                        <p class="plain-text"><strong>Depósito/Transferencia Bancaria</strong></p>
+                        <p class="plain-text"><strong>Efectivo</strong></p>
+                        <p class="plain-text">Solo algunas ciudades tendrán la opción de pago en efectivo. Este método de pago consiste en avisar a Promos al Paso que tienes intenciones se pagar los períodos seleccionados en efectivo. Cuando pulsas en el botón "Efectivo", el sistema te muestra un mensaje indicando que personal del staff de Promos al Paso pasarán por la dirección cargada en el comercio en una fecha a coordinar via email para concretar el pago.</p>
+                        <p class="plain-text">Si tu estado de cuenta es deudor, indicando tu intención de pagar en efectivo te permite seguir operando normalmente el sistema por 15 días.</p>
                     </div>
-                    <div style="width: 25%; float: right;">
+                    <div class="div-img-container">
+                         <br/><br/>
+                        <img id="img-pago-efectivo" class="img-help" src="/images/backend/help/s-pago-efectivo.png" data-zoom-image="/images/backend/help/pago-efectivo.png" title="Pago en efectivo"/>
+                    </div>
+                </div>
+                <div style="display: table-row;">
+                    <div style="width: 75%; float: left;">
+                        <p class="plain-text"><strong>Depósito/Transferencia Bancaria</strong></p>
+                        <p class="plain-text">Este método de pago consiste en dos pasos. Por un lado obtener la información para efectuar la transferencia y luego de realizada la misma, informarla en Promos al Paso.</p>
+                        <p class="plain-text">Para obtener la información tienes que seleccionar los períodos a pagar. Luego pulsa el botón "Depósito/Transferencia Bancaria" y en el popup que se despliega pulsa en el botón "Imprimir Info". Al hacer esto se abrirá una nueva ventana que contiene todos los datos para realizar el depósito o transferencia.</p>
+                        <p class="plain-text">Luego de efectuado el depósito o transferencia repite nuevamente los pasos anteriores, selecciona los períodos pagados, pulsa el botón "Depósito/Transferencia Bancaria" y en la ventana emergente carga los datos de la operación realizada. Debes ingresar tipo de operación, banco, fecha y número de control de corresponder. Una vez cargados estos datos pulsa en el botón "Informar Pago" para terminar el procedimiento.</p>
+                        <p class="plain-text">Al realizar esta operación, el pago queda pendiente de validación y puedes utilizar el sistema normalmente mientras tanto. Cualquier duda o inconveniente no dudes en enviar un email a administracion@promosalpaso.com.</p>
+                    </div>
+                    <div class="div-img-container">
                         <img id="img-metodo-pago-transferencia" class="img-help" src="/images/backend/help/s-metodo-pago-transferencia.png" data-zoom-image="/images/backend/help/metodo-pago-transferencia.png" title="Transferencia/Depósito"/>
                     </div>
                 </div>
                 <div style="display: table-row;">
                     <div style="width: 75%; float: left;">
                         <p class="plain-text"><strong>Mercado Pago</strong></p>
+                        <p class="plain-text">Para pagar por MP debes tener una cuenta en esta pasarela de pagos. Una vez que hayas seleccionado los períodos que deseas pagar y pulsa en el botón "Mercado Pago". Esto te llevará a una ventana emergente de MP que te permitirá pagar como desees. Una vez terminada la operación la ventana emergente se cierra e informa automaticamente al sistema de tu pago.</p>
                     </div>
-                    <div style="width: 25%; float: right;">
-                        <a class="lightbox-4" href="/images/backend/help/promos-ordenamiento.png" title="Tabla de ordenamiento"><br/>
-                            <img style="margin-left: 40px; border: #DDDDDD solid 2px; width: 120px;" width="75%" src="/images/backend/help/s-promos-ordenamiento.png"/>
-                        </a>
-                    </div>
-                </div>
-                <div style="display: table-row;">
-                    <div style="width: 75%; float: left;">
-                        <p class="plain-text"><strong>Efectivo</strong></p>
-                    </div>
-                    <div style="width: 25%; float: right;">
-                        <a class="lightbox-4" href="/images/backend/help/promos-ordenamiento.png" title="Tabla de ordenamiento"><br/>
-                            <img style="margin-left: 40px; border: #DDDDDD solid 2px; width: 120px;" width="75%" src="/images/backend/help/s-promos-ordenamiento.png"/>
-                        </a>
+                    <div class="div-img-container">
+                        <img id="img-metodo-pago-transferencia" class="img-help" src="/images/backend/help/MercadoPago.png" title="Mercado Pago"/>
                     </div>
                 </div>
-
-
             </div>
         </div>                      
     </div>

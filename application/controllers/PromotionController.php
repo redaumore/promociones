@@ -130,6 +130,7 @@
                         $newPromotion->update($data);
                         $newPromotion->setCategories($this->user->getCategories());
                         $this->saveImages($data, $newPromotion);
+                        $this->loadForm($newPromotion, 'update');
                     }
                     
                 }                
@@ -159,6 +160,7 @@
             else{
                 $form->availableStartDate->setValue("");
             }
+            $form->dateAsNew->setValue($this->user->getDateAsNew());
         }
         catch(Exception $ex){
             PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'PromotionController->editAction()',$ex, $_SERVER['REQUEST_URI']);

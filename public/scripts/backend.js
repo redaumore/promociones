@@ -8,7 +8,7 @@ jQuery(document).ready(function(){
         var kickoff = parseStringToDate(jQuery('#availableStartDate').val());
         var dateAsNew = parseStringToDate(jQuery('#dateAsNew').val());
         var promocost = getPriceFromPromocost(jQuery("#promoCost option:selected").text());       
-        setupPromoDates(kickoff, dateAsNew, promocost);
+        //setupPromoDates(kickoff, dateAsNew, promocost);
     });
 });    
 
@@ -241,8 +241,21 @@ function showPromoTotalCost(){
           total = days * cost;
           jQuery("#totalPromoCost").text(total);
     }
-    else
-        jQuery("#totalPromoCost").text("0");    
+    else{
+        jQuery("#totalPromoCost").text("0");
+    }
+        
+    if(cost == 0){
+        var untilDay = new Date();
+        var endDate = $("#ends").datepicker('getDate');
+        untilDay.setDate($("#starts").datepicker('getDate').getDate() + 15);    
+        $("#ends").datepicker('option', 'maxDate', untilDay);
+        if(endDate > untilDay)
+            $("#ends").datepicker('setDate', untilDay);    
+    }
+    else{
+        $("#ends").datepicker('option', 'maxDate', null);     
+    }
 }
 
 function getWorkingDays(startDate, endDate){
@@ -537,7 +550,7 @@ function preregister(){
 
 function getToday(){
     var now = new Date();
-    var today = new Date(now.getFullYear(), now.getMonth(), now.getDay());
+    var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     return today;
 }
 
@@ -614,7 +627,7 @@ function setupPromoDates(kickoff, dateAsNew, promocost){
    }
    else{
        $("#starts" ).datepicker( "setDate", today );
-       $("#ends" ).datepicker( "setDate", today );    
+       //$("#ends" ).datepicker( "setDate", today );    
    }
    
    if(promocost == 0){
@@ -686,6 +699,12 @@ function getEndsDate23hr(){
     return new Date(ends.getTime() + 86399000);    
 }
 
+function fixZeroCostDate(){
+    var kickoff = parseStringToDate(jQuery('#availableStartDate').val());
+    var dateAsNew = parseStringToDate(jQuery('#dateAsNew').val());
+    var promocost = getPriceFromPromocost(jQuery("#promoCost option:selected").text());       
+        //setupPromoDates(kickoff, dateAsNew, promocost);    
+}
 
 
 

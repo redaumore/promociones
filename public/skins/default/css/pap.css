@@ -301,6 +301,13 @@ form .exceeded{color:#FF6A15;}
   color: #FFFFFF;
 }
 
+.div-img-container{
+    width: 25%; 
+    float: right; 
+    text-align: center;
+}
+
+
 /*
 html{ font-size: 125%; }
 
