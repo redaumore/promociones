@@ -6,12 +6,12 @@
             $u_agent = $_SERVER['HTTP_USER_AGENT'];
 
             if(preg_match('/MSIE/i', $u_agent)) {
-                //if(!preg_match('/MSIE 10/i', $u_agent)){
+                if(!preg_match('/MSIE 10/i', $u_agent)){
                     $pathInfo= $request->getPathInfo();
                     if(!($pathInfo == "/index/browsernotsuported" || $pathInfo =! "/Backendajax/getfeatured")){
                         Zend_Controller_Front::getInstance()->getResponse()->setRedirect('http://promosalpaso.local/not-supported.html');     
                     }
-                //}
+                }
             }    
         }
         catch(Exception $ex){
