@@ -239,11 +239,7 @@ $(document).ready(function(){
       minDate: 0,
       numberOfMonths: 1,
       onSelect: function(textoFecha, objDatepicker){
-        var dateParts = textoFecha.split("-");
-        var dateSelected = new Date(dateParts[2], (dateParts[1] - 1), dateParts[0]);
-        if(dateSelected > $("#ends").datepicker('getDate'))
-            $("#ends").datepicker('setDate', dateSelected);
-        $("#ends").datepicker('option', 'minDate', $("#starts").datepicker('getDate'));
+        setLimitsDates();
         showPromoTotalCost();   
       }
    });
@@ -278,7 +274,30 @@ $(document).ready(function(){
     warning: 50,
     });
 })
- </script>
+
+function changeCost(){
+     showPromoTotalCost();
+     setLimitsDates();   
+}
+
+function setLimitsDates(){
+    var cost = getPriceFromPromocost(jQuery("#promoCost option:selected").text());
+    if(cost == 0){
+        var _untilDay = $("#starts").datepicker('getDate'); 
+        _untilDay.setDate(_untilDay.getDate()+15);   
+        var endDate = $("#ends").datepicker('getDate');
+        $("#ends").datepicker('option', 'maxDate', _untilDay);
+        if(endDate > _untilDay)
+            $("#ends").datepicker('setDate', _untilDay);    
+        else
+            $("#ends").datepicker('setDate', endDate);
+    }
+    else{
+        $("#ends").datepicker('option', 'maxDate', '');
+    }
+}
+
+</script>
  <?php 
     echo $this->partial("index/_contextual-help.phtml"); 
 ?>

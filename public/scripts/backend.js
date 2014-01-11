@@ -213,7 +213,6 @@ function showMercadoPago(){
 
 function showPromoTotalCost(){
     
-    
     if(jQuery("#starts").val() == "" ||jQuery("#ends").val() == ""){
         jQuery("#totalPromoCost").text("0");
         return;    
@@ -243,18 +242,6 @@ function showPromoTotalCost(){
     }
     else{
         jQuery("#totalPromoCost").text("0");
-    }
-        
-    if(cost == 0){
-        var untilDay = new Date();
-        var endDate = $("#ends").datepicker('getDate');
-        untilDay.setDate($("#starts").datepicker('getDate').getDate() + 15);    
-        $("#ends").datepicker('option', 'maxDate', untilDay);
-        if(endDate > untilDay)
-            $("#ends").datepicker('setDate', untilDay);    
-    }
-    else{
-        $("#ends").datepicker('option', 'maxDate', null);     
     }
 }
 
@@ -697,6 +684,10 @@ function checkOnlyWeekend(){
 function getEndsDate23hr(){
     var ends = $("#ends").datepicker('getDate');
     return new Date(ends.getTime() + 86399000);    
+}
+
+function getRemainingHours(_date){
+    return new Date(_date.getTime() + 86399000);    
 }
 
 function fixZeroCostDate(){

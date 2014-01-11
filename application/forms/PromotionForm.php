@@ -176,7 +176,7 @@ class PAP_Form_PromotionForm extends Zend_Form
             'required'   => true,
         ));
         $control = $this->getElement('promoCost');
-        $control->setAttrib("onChange", "showPromoTotalCost();");
+        $control->setAttrib("onChange", "changeCost();");
         $control->setRegisterInArrayValidator(false);
         $control->setDecorators($decorators);
         

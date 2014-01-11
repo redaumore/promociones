@@ -236,11 +236,7 @@ label[for=branches]{
       minDate: 0,
       numberOfMonths: 1,
       onSelect: function(textoFecha, objDatepicker){
-        var dateParts = textoFecha.split("-");
-        var dateSelected = new Date(dateParts[2], (dateParts[1] - 1), dateParts[0]);
-        if(dateSelected > $("#ends").datepicker('getDate'))
-            $("#ends").datepicker('setDate', dateSelected);
-        $("#ends").datepicker('option', 'minDate', $("#starts").datepicker('getDate'));
+        setLimitsDates();
         showPromoTotalCost();   
       }
    });
@@ -258,7 +254,7 @@ label[for=branches]{
          showPromoTotalCost();
       }
    });
-   
+   /*
    var today = new Date();
    var kickoff = parseStringToDate(jQuery('#availableStartDate').val());
    
@@ -270,9 +266,9 @@ label[for=branches]{
    if(jQuery("#starts").val() == "")
         jQuery("#ends").datepicker( "setDate", new Date() );
    if(jQuery("#starts").datepicker("getDate") < getToday())
-        jQuery("#starts").datepicker("disable"); 
+        jQuery("#starts").datepicker("disable"); */
         //jQuery("#starts").datepicker({minDate:-1,maxDate:-2}).attr('readonly','readonly');
-   
+   setLimitsDates();
    showPromoTotalCost(); 
 })
  
@@ -284,6 +280,7 @@ label[for=branches]{
  
  $("form").submit(function() {
     $("#starts").removeAttr("disabled", "disabled");
+    $("#ends").removeAttr("disabled", "disabled");
 });
 
     $("#displayedText").charCount({
@@ -296,6 +293,52 @@ label[for=branches]{
         warning: 50,
     }); 
 
+    function changeCost(){
+         showPromoTotalCost();
+         setLimitsDates();   
+    }
+    
+    function setLimitsDates(){
+        var cost = getPriceFromPromocost(jQuery("#promoCost option:selected").text());
+        var _startDate = $("#starts").datepicker('getDate');
+        var _today = getToday();
+        var _endDate = getEndsDate23hr(); //$("#ends").datepicker('getDate');
+        
+        if(_startDate > _endDate){
+            $("#ends").datepicker('setDate', getRemainingHours(_startDate));
+            _endDate = getEndsDate23hr();
+        }
+            
+            
+        
+            
+        if(_startDate < _today){
+            $("#starts").datepicker('option', 'minDate', _startDate);
+            $("#starts").datepicker("disable");     
+        }
+        else{
+            $("#starts").datepicker('option', 'minDate', _today); 
+        }
+        
+        if(_endDate < _today){
+            $("#ends").datepicker('option', 'minDate', _endDate);
+            $("#ends").datepicker("disable");     
+        }
+        else{
+            if(cost == 0){
+                var _untilDay = $("#starts").datepicker('getDate'); 
+                _untilDay.setDate(_untilDay.getDate()+15);   
+                $("#ends").datepicker('option', 'maxDate', _untilDay);
+                if(_endDate > _untilDay)
+                    $("#ends").datepicker('setDate', _untilDay);    
+                else
+                    $("#ends").datepicker('setDate', _endDate);
+            }
+            else{
+                $("#ends").datepicker('option', 'maxDate', '');
+            }    
+        }
+    }
  </script>
 <?php echo $this->partial("promotion/_promobody.phtml");?>
 <?php echo $this->partial("index/_contextual-help.phtml");?>
