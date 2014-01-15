@@ -56,6 +56,10 @@ jQuery(document).ready(function(){
     });
     jQuery("#div_message").hide();
     jQuery("form table").css("background-color", "transparent");
+    if($("#popUpMessage").val() != ""){
+            showPopUpModalMessage("Mis Categorías", $("#popUpMessage").val());
+            $("#popUpMessage").val("");
+    }
 });
 
 function someCategoryChecked(){

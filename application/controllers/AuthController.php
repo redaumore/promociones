@@ -26,7 +26,7 @@ class AuthController extends Zend_Controller_Action
                     $authAdapter->setIdentityColumn('email')
                                 ->setCredentialColumn('password');
                     $authAdapter->setIdentity($data['email'])
-                                ->setCredential($data['password']);
+                                ->setCredential(strtoupper($data['password'])); //Se convierte todo a upper para un ingreso más laxo.
                     $result = $auth->authenticate($authAdapter);
                     if($result->isValid()){
                         PAP_Helper_Logger::writeLog(Zend_Log::INFO, 'AuthController', "User logged in as: " . Zend_Auth::getInstance()->getIdentity(), var_export(Zend_Auth::getInstance()));

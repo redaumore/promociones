@@ -177,7 +177,8 @@ class BranchController extends Zend_Controller_Action
                             $this->user->setStatus('active');
                             $this->user->update();
                         }
-                        $this->loadUserCategories($this->user, $form);    
+                        $this->loadUserCategories($this->user, $form); 
+                        $form->popUpMessage->setValue("Tus categorías han sido actualizadas correctamente.");   
                     }
                 }
             }

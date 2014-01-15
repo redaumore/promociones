@@ -33,7 +33,8 @@ function clickFile(){
 function sub(obj){
     var file = obj.value;
     var fileName = file.split("\\");
-    document.getElementById("yourFile").innerHTML = "<p>" + fileName[fileName.length-1] + "</p>";
+    document.getElementById("yourFile").innerHTML = "<p style='font-size:0.8em'>" + fileName[fileName.length-1] + "</p>";
+    jQuery("#logo").attr('src', '/images/backend/upload.png');
 }
 
 function clearCoord(){
@@ -191,8 +192,7 @@ function clearCoord(){
                             <tr>
                                 <td width="75%">
                                     <div class="well">
-                                        <p>La imagen del Comercio es de suma importancia. Aparte de ser tu presentación en tu página de negocio, será 
-                                        la imagen por defecto de todas aquellas promociones sin foto que publiques.</p>
+                                        <p>La imagen del Comercio es de suma importancia. Aparte de ser tu presentación en tu página de negocio, será la imagen por defecto de todas aquellas promociones sin foto que publiques. El tamaño de la imagen no debe superar los 1.2MB.</p>
                                     </div>
                                 </td>
                                 <td width="15%" align="center">

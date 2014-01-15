@@ -162,9 +162,9 @@
         
         $this->addElement('img', 'logo', array(
             'ignore'   => true,
-            'width' => '90', 
-            'height' => '90',
-            'src' => '/images/backend/img-comercio.png',
+            'width' => '80', 
+            'height' => '80',
+            'src' => '/images/backend/photo.png',
             'class' => 'img-polaroid',
         ));
         

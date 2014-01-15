@@ -52,6 +52,7 @@ class PAP_Form_Treeview extends Zend_Form
         $this->setDecorators(array('FormElements',
                                     array(array('data'=>'HtmlTag'),array('tag'=>'table', 'width' => '740px')),
                                     'Form',));                                       
+        $this->addElement('hidden', 'popUpMessage');
     }
  //TODO Agregar Agencias de viaje.
 }

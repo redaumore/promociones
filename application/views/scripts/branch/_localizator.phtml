@@ -1,5 +1,5 @@
 <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
-<div id="gmapmodal" class="modal hide fade">
+<div id="gmapmodal" class="modal hide fade" style="width: 700px; margin-left: -350px;">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h3>Confirma la localización de tu Comercio</h3>
@@ -8,7 +8,7 @@
         <table style="width: 100%; background-color: transparent;">
             <tr>
                 <td colspan="2">
-                    <p id="smallfont" style="margin: 5px;">
+                    <p id="smallfont" style="margin: 5px; font-size: 0.9em;">
                     Recuerda que es muy importante que tu localización sea la correcta. Con ella tus clientes podrán encontrarte.
                     Si el mapa no te indica tu dirección correctamente intenta cambiando alguno de los datos que cargaste para el comercio.
                     Si aún así sigues sin encontrar tu dirección avísanos por email y nosotros lo resolveremos. 
@@ -43,7 +43,7 @@ function SearchLocation(){
     localaddress2 = localaddress2.replace(" ","+");
     //localaddress2 = encodeURI(localaddress2);
     var zoom="16";
-    var size="350x350";
+    var size="350x280";
     var sensor="false";
     
     var urlGoogleMaps = "";
