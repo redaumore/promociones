@@ -22,7 +22,7 @@ class Zend_View_Helper_ProfileLink extends Zend_View_Helper_Abstract {
 
             $auth = Zend_Auth::getInstance();
 
-            if ($auth->hasIdentity()) { 
+            if ($auth->getIdentity() != NULL) { 
                 // here have to make amendments to what you have 
                 // in your identity.
                 /*$identity = $auth->getIdentity();                        
