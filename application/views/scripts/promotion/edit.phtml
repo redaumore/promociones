@@ -310,22 +310,11 @@ label[for=branches]{
         }
             
             
-        
-            
-        if(_startDate < _today){
-            $("#starts").datepicker('option', 'minDate', _startDate);
-            $("#starts").datepicker("disable");     
-        }
-        else{
-            $("#starts").datepicker('option', 'minDate', _today); 
-        }
-        
-        if(_endDate < _today){
-            $("#ends").datepicker('option', 'minDate', _endDate);
-            $("#ends").datepicker("disable");     
-        }
-        else{
-            if(cost == 0){
+       var kickoff = parseStringToDate(jQuery('#availableStartDate').val());
+   
+       if(kickoff > _today){
+           $("#starts").datepicker('option', 'minDate', kickoff);
+           if(cost == 0){
                 var _untilDay = $("#starts").datepicker('getDate'); 
                 _untilDay.setDate(_untilDay.getDate()+15);   
                 $("#ends").datepicker('option', 'maxDate', _untilDay);
@@ -336,7 +325,36 @@ label[for=branches]{
             }
             else{
                 $("#ends").datepicker('option', 'maxDate', '');
-            }    
+            } 
+       }
+       else
+       {
+            if(_startDate < _today){
+                $("#starts").datepicker('option', 'minDate', _startDate);
+                $("#starts").datepicker("disable");     
+            }
+            else{
+                $("#starts").datepicker('option', 'minDate', _today); 
+            }
+            
+            if(_endDate < _today){
+                $("#ends").datepicker('option', 'minDate', _endDate);
+                $("#ends").datepicker("disable");     
+            }
+            else{
+                if(cost == 0){
+                    var _untilDay = $("#starts").datepicker('getDate'); 
+                    _untilDay.setDate(_untilDay.getDate()+15);   
+                    $("#ends").datepicker('option', 'maxDate', _untilDay);
+                    if(_endDate > _untilDay)
+                        $("#ends").datepicker('setDate', _untilDay);    
+                    else
+                        $("#ends").datepicker('setDate', _endDate);
+                }
+                else{
+                    $("#ends").datepicker('option', 'maxDate', '');
+                }    
+            }
         }
     }
  </script>

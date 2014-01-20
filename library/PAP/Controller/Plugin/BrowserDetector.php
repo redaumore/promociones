@@ -4,6 +4,16 @@
     public function preDispatch(Zend_Controller_Request_Abstract $request) {
         try{
             $u_agent = $_SERVER['HTTP_USER_AGENT'];
+            
+            $detector = new PAP_Helper_MobileDetect();
+            
+            if($detector->isMobile()){
+                if($_SERVER['HTTP_HOST'] == 'promosalpaso.local')
+                    Zend_Controller_Front::getInstance()->getResponse()->setRedirect('http://localhost:8080/m.web.promosalpaso');
+                else
+                    Zend_Controller_Front::getInstance()->getResponse()->setRedirect('http://mobile.'.$_SERVER['HTTP_HOST']);
+                return;    
+            }
 
             if(preg_match('/MSIE/i', $u_agent)) {
                 if(!preg_match('/MSIE 10/i', $u_agent)){

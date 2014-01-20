@@ -259,9 +259,35 @@ $(document).ready(function(){
    var kickoff = parseStringToDate(jQuery('#availableStartDate').val());
    var dateAsNew = parseStringToDate(jQuery('#dateAsNew').val());
    var promocost = getPriceFromPromocost(jQuery("#promoCost option:selected").text());
+   var cost = getPriceFromPromocost(jQuery("#promoCost option:selected").text());
+   var _today = getToday();
    
-   setupPromoDates(kickoff, dateAsNew, promocost);
-   $("#ends" ).datepicker( "setDate", new Date() ); 
+   /*setupPromoDates(kickoff, dateAsNew, promocost);*/
+   //setLimitsDates();
+   //$("#ends" ).datepicker( "setDate", new Date() );
+   if(kickoff > _today){
+       $("#starts").datepicker('setDate', kickoff);
+       $("#ends").datepicker('setDate', kickoff);
+       $("#starts").datepicker('option', 'minDate', kickoff);
+       if(cost == 0){
+            var _untilDay = $("#starts").datepicker('getDate'); 
+            var _endDate = $("#ends").datepicker('getDate'); 
+            _untilDay.setDate(_untilDay.getDate()+15);   
+            $("#ends").datepicker('option', 'maxDate', _untilDay);
+            if(_endDate > _untilDay)
+                $("#ends").datepicker('setDate', _untilDay);    
+            else
+                $("#ends").datepicker('setDate', _endDate);
+        }
+        else{
+            $("#ends").datepicker('option', 'maxDate', '');
+        } 
+   }
+   else{
+    $("#starts").datepicker('setDate', _today);
+    $("#ends").datepicker('setDate', _today);    
+   }
+   
    showPromoTotalCost(); 
    
    $("#displayedText").charCount({
@@ -282,6 +308,8 @@ function changeCost(){
 
 function setLimitsDates(){
     var cost = getPriceFromPromocost(jQuery("#promoCost option:selected").text());
+    var _today = getToday();
+    
     if(cost == 0){
         var _untilDay = $("#starts").datepicker('getDate'); 
         _untilDay.setDate(_untilDay.getDate()+15);   
@@ -295,6 +323,7 @@ function setLimitsDates(){
     else{
         $("#ends").datepicker('option', 'maxDate', '');
     }
+   
 }
 
 </script>
