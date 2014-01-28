@@ -94,7 +94,7 @@
         // Add an email element
         $this->addElement('text', 'email', array(
             'label'      => 'Email contacto:',
-            'required'   => true,
+            'required'   => false,
             'filters'    => array('StripTags', 'StringTrim'),
             'size'      => 30,
             'maxlength' => 100,

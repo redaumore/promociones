@@ -626,12 +626,15 @@ class PAP_Model_Promotion
                 }
             }
             else{
-                $incat = explode(',', $categories);
+                $incat = array_map('intval', explode(',', $categories));
                 foreach($incat as $item){
                     $expandedcat = $expandedcat.$item.',';
                     if($item %10 == 0){
-                        for($i=1; $i<=9; $i++)
-                            $expandedcat = $expandedcat.($item+$i).',';        
+                        for($i=1; $i<=9; $i++){
+                            if(strrpos($expandedcat, strval($item+$i))===false){
+                                $expandedcat = $expandedcat.strval($item+$i).',';
+                            }
+                        }
                     }    
                 }
                 $expandedcat = substr($expandedcat, 0, strlen($expandedcat)-1);    

@@ -312,6 +312,7 @@ class PAP_Model_PromotionMapper
         $incat = '';
         if($categories <> ''){
             $incat = $categories;
+            //$incat = implode(',', $categories);
             /*
             $pos = strrpos($categories, ",");
             if ($pos === false) { // nota: tres signos de igual
@@ -331,7 +332,7 @@ class PAP_Model_PromotionMapper
                      "INNER JOIN city c ON b.city_id = c.city_id ".
                      "LEFT JOIN image i ON (p.promotion_id = i.parent_id AND i.parent_type = 'P') ".
                      (($categories == '')?'':"INNER JOIN category_user cu ON (b.user_id = cu.user_id) ").
-                     "WHERE p.starts <= '".date('Y-m-d')."' AND p.ends >= '".date('Y-m-d')."' AND pb.branch_id IN ".$in. " ".
+                     "WHERE p.state = 'A' AND p.starts <= '".date('Y-m-d')."' AND p.ends >= '".date('Y-m-d')."' AND pb.branch_id IN ".$in. " ".
                      (($incat == '')?'':"AND cu.category_id IN (".$incat.") ").
                      "ORDER BY 1 DESC ".(($limit == 0)?'':"LIMIT ".$limit." ");
                      

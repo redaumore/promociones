@@ -4,7 +4,14 @@
     public function preDispatch(Zend_Controller_Request_Abstract $request) {
         try{
             $u_agent = $_SERVER['HTTP_USER_AGENT'];
-            
+            if(isset($_SERVER['REDIRECT_URL']))
+                $qs = $_SERVER['REDIRECT_URL']."";
+            else 
+                $qs = "";
+            $method1 = strpos(strtolower($qs), 'backendajax');
+            $method2 = strpos(strtolower($qs), 'services');
+            if(!($method1 === false && $method2 === false))
+                return;
             $detector = new PAP_Helper_MobileDetect();
             
             if($detector->isMobile() && !$detector->isTablet() ){

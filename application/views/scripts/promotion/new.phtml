@@ -261,6 +261,7 @@ $(document).ready(function(){
    var promocost = getPriceFromPromocost(jQuery("#promoCost option:selected").text());
    var cost = getPriceFromPromocost(jQuery("#promoCost option:selected").text());
    var _today = getToday();
+   var _untilDay;
    
    /*setupPromoDates(kickoff, dateAsNew, promocost);*/
    //setLimitsDates();
@@ -270,7 +271,7 @@ $(document).ready(function(){
        $("#ends").datepicker('setDate', kickoff);
        $("#starts").datepicker('option', 'minDate', kickoff);
        if(cost == 0){
-            var _untilDay = $("#starts").datepicker('getDate'); 
+            _untilDay = $("#starts").datepicker('getDate'); 
             var _endDate = $("#ends").datepicker('getDate'); 
             _untilDay.setDate(_untilDay.getDate()+15);   
             $("#ends").datepicker('option', 'maxDate', _untilDay);
@@ -284,8 +285,19 @@ $(document).ready(function(){
         } 
    }
    else{
-    $("#starts").datepicker('setDate', _today);
-    $("#ends").datepicker('setDate', _today);    
+        $("#starts").datepicker('setDate', _today);
+        $("#ends").datepicker('setDate', _today);
+        _untilDay = $("#starts").datepicker('getDate'); 
+        if(promocost == 0){
+            if(_today > dateAsNew){
+                _untilDay.setDate(_today.getDate()+15);            
+            }
+            else{
+                _untilDay.setDate(dateAsNew);                
+            }
+                
+            $("#ends").datepicker('option', 'maxDate', _untilDay);    
+        }
    }
    
    showPromoTotalCost(); 

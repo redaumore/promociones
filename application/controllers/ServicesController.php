@@ -46,23 +46,24 @@ class servicesController extends Zend_Controller_Action
             
             if($this->newSessionRequired($uuid, $categories, $lat, $lng)){
                 error_log("Se requiere nueva session");
-                if($categories <> ""){
-                    $categories = explode(',', $categories);
-                    $finalcategories = array();
+                if($categories <> ''){
+                    $finalcategories = array_map('intval', explode(',', $categories));
+                    /*$finalcategories = array();
                     for($i=0; $i<count($categories); $i=$i+1){
                         $finalcategories[] = $categories[$i];
                         if($categories[$i]%10 == 0){
                             for($y=1;$y<10;$y=$y+1){
-                                $finalcategories[] = $categories[$i]+$y;
+                                if(!in_array($categories[$i]+$y,$finalcategories))
+                                    $finalcategories[] = $categories[$i]+$y;
                             }
                         }    
-                    } 
+                    } */
                 }
                 else{
                     $finalcategories = '';
                 }
                 $promotion = new PAP_Model_Promotion();
-                $data = $promotion->getPromotionsByCoords($lat, $lng, $finalcategories);
+                $data = $promotion->getPromotionsByCoords($lat, $lng, $categories);
                 
                 $i = 0;
                 foreach($data as $item){
@@ -621,7 +622,10 @@ class servicesController extends Zend_Controller_Action
             $category = new PAP_Model_Category();
             $categories = $category->getFrom($lastupdate);
             $response = $this->getFrontController()->getResponse();
-            $response->appendBody($callback.'('.json_encode($categories).')');
+            if(count($categories) == 0)
+                $response->appendBody($callback.'()');
+            else
+                $response->appendBody($callback.'('.json_encode($categories).')');
             $this->getFrontController()->setResponse($response);
         }
         catch(Exception $ex){
