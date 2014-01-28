@@ -439,7 +439,7 @@ function FillPromotion(promotion){
         jQuery("#det-promo_value").addClass("precio");
     }
     
-    if(promotion.alert_type == 'N')
+    if(promotion.alert_type == 'N' || promotion.alert_type == null)
         jQuery('#det-alarma').hide();
     if(promotion.alert_type == 'D'){
         jQuery('#det-alarm_num').text(getDaysTo(promotion.ends));
