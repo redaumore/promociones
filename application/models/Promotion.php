@@ -23,7 +23,7 @@ class PAP_Model_Promotion
     protected $_updated;
     protected $_images;
     protected $_ispercentaje;
-    protected $_radius = 2;
+    protected $_radius = 6;
     
     public function __construct(array $options = null)
     {
