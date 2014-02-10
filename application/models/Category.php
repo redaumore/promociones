@@ -125,6 +125,16 @@ class PAP_Model_Category
                             array('id'=>2203, 'title'=>'Celulares y Telefonía', 'children'=>array()),
                             array('id'=>2204, 'title'=>'Computación y Consolas', 'children'=>array()),
                         )),
+                        array('id'=>2300, 'title'=>'Fiestas y Eventos', 'children'=>array(    
+                            array('id'=>2301, 'title'=>'Realización de Eventos', 'children'=>array()),
+                            array('id'=>2302, 'title'=>'Disfraces y Cotillón', 'children'=>array()),
+                            )),
+                        array('id'=>2400, 'title'=>'Servicios', 'children'=>array(
+                            array('id'=>2401, 'title'=>'Jurídicos', 'children'=>array()),
+                            array('id'=>2402, 'title'=>'Inmobiliarios', 'children'=>array()),
+                            array('id'=>2403, 'title'=>'Transporte', 'children'=>array()),
+                            array('id'=>2404, 'title'=>'Para el Hogar', 'children'=>array()),
+                        )),
         );
         return $arrCategories;
     }
@@ -216,6 +226,16 @@ class PAP_Model_Category
                             2202 => array('title'=>'Cámaras y Accesorios', 'children'=>array()),
                             2203 => array('title'=>'Celulares y Telefonía', 'children'=>array()),
                             2204 => array('title'=>'Computación y Consolas', 'children'=>array()),
+                        )),
+                        2300 => array('title'=>'Fiestas y Eventos', 'children'=>array(    
+                            2301 => array('title'=>'Realización de Eventos', 'children'=>array()),
+                            2302 => array('title'=>'Disfraces y Cotillón', 'children'=>array()),
+                            )),
+                        2400 => array('title'=>'Servicios', 'children'=>array(
+                            2401 => array('title'=>'Jurídicos', 'children'=>array()),
+                            2402 => array('title'=>'Inmobiliarios', 'children'=>array()),
+                            2403 => array('title'=>'Transporte', 'children'=>array()),
+                            2404 => array('title'=>'Para el Hogar', 'children'=>array()),
                         )),
         );
         return $arrCategories;    

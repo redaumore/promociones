@@ -217,8 +217,8 @@ class PAP_Model_PromotionMapper
         $select = $this->getDbTable()->select();
         $select->distinct()
                ->where('user_id = ?', $user_id)
-               ->order($colord, $ord)
-               ->limit($limit,$start);
+               ->order($colord, $ord);
+               //->limit($limit,$start);
         $result = $this->getDbTable()->fetchAll($select);
         $i=0;
         foreach ($result as $r) {

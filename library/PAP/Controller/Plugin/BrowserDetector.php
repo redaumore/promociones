@@ -3,6 +3,10 @@
   {
     public function preDispatch(Zend_Controller_Request_Abstract $request) {
         try{
+             
+            if(!(strpos(strtolower($_SERVER['HTTP_HOST']),'www')=== false)){
+                Zend_Controller_Front::getInstance()->getResponse()->setRedirect('http://promosalpaso.com');    
+            }
             $u_agent = $_SERVER['HTTP_USER_AGENT'];
             if(isset($_SERVER['REDIRECT_URL']))
                 $qs = $_SERVER['REDIRECT_URL']."";
@@ -12,6 +16,7 @@
             $method2 = strpos(strtolower($qs), 'services');
             if(!($method1 === false && $method2 === false))
                 return;
+            
             $detector = new PAP_Helper_MobileDetect();
             
             if($detector->isMobile() && !$detector->isTablet() ){
@@ -26,7 +31,7 @@
                 if(!preg_match('/MSIE 10/i', $u_agent)){
                     $pathInfo= $request->getPathInfo();
                     if(!($pathInfo == "/index/browsernotsuported" || $pathInfo =! "/Backendajax/getfeatured")){
-                        Zend_Controller_Front::getInstance()->getResponse()->setRedirect('http://promosalpaso.local/not-supported.html');     
+                        Zend_Controller_Front::getInstance()->getResponse()->setRedirect('http://promosalpaso.com/not-supported.html');     
                     }
                 }
             }    
