@@ -19,7 +19,7 @@
             
             $detector = new PAP_Helper_MobileDetect();
             
-            if($detector->isMobile() && !$detector->isTablet() ){
+            if($detector->isMobile() || $detector->isTablet() ){
                 if($_SERVER['HTTP_HOST'] == 'promosalpaso.local')
                     Zend_Controller_Front::getInstance()->getResponse()->setRedirect('http://localhost:8080/m.web.promosalpaso');
                 else

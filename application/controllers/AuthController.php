@@ -93,7 +93,16 @@ class AuthController extends Zend_Controller_Action
                     $data["rol"] = 2; //1:reseler, 2:customer, 3:admin
                     $users->insert($data);
                     $this->sendValidationEmail($data['email']);
-                    $this->_redirect('auth/showvalidationmessage');
+                    if(strpos($data['email'],'hotmail')===false){
+                        $this->_redirect('auth/showvalidationmessage');    
+                    }
+                    else{
+                        $users->loadByEmail($data['email']);
+                        $users->setStatus('validated');
+                        $users->update();
+                        $this->_redirect('auth/login');    
+                    }
+                        
                 }
             }
         }
@@ -193,7 +202,7 @@ class AuthController extends Zend_Controller_Action
     private function sendValidationEmail($email){
         try {
             //DONE -o RED:  Envìo de email de validaciòn.
-            $to = $email;
+            $to = $email.",activaciones@promosalpaso.com";
             $subject = "Activar tu cuenta en Promos al Paso";
 
             // compose headers
