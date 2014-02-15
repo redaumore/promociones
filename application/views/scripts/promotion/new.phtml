@@ -293,7 +293,7 @@ $(document).ready(function(){
                 _untilDay.setDate(_today.getDate()+15);            
             }
             else{
-                _untilDay.setDate(dateAsNew);                
+                _untilDay = dateAsNew;                
             }
                 
             $("#ends").datepicker('option', 'maxDate', _untilDay);    
@@ -319,12 +319,18 @@ function changeCost(){
 }
 
 function setLimitsDates(){
+    var dateAsNew = parseStringToDate(jQuery('#dateAsNew').val());
     var cost = getPriceFromPromocost(jQuery("#promoCost option:selected").text());
     var _today = getToday();
     
     if(cost == 0){
-        var _untilDay = $("#starts").datepicker('getDate'); 
-        _untilDay.setDate(_untilDay.getDate()+15);   
+        var _untilDay;
+        if(_today > dateAsNew){
+            _untilDay.setDate(_today.getDate()+15);            
+        }
+        else{
+            _untilDay = dateAsNew;                
+        }   
         var endDate = $("#ends").datepicker('getDate');
         $("#ends").datepicker('option', 'maxDate', _untilDay);
         if(endDate > _untilDay)

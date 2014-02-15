@@ -361,7 +361,7 @@
         
         $control = $form->getElement('promoCost');
         $options = $control->getMultiOptions();
-        $selected_option = $options[$promo->getPromoCost()];
+        //$selected_option = $options[$promo->getPromoCost()];
         if(array_key_exists($promo->getPromoCost(), $options)){
             $control->setValue($promo->getPromoCost());    
         }

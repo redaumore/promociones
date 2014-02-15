@@ -126,9 +126,10 @@ class servicesController extends Zend_Controller_Action
             foreach($data as $item){
                 $image = $this->getDataURI(".".$this->getThumb($item["path"]));
                 if($image == "NOPIC")
-                    $data[$i]["path"] = $this->getDataURI(".".$item["logo"]);
+                    $data[$i]["path"] = "http://".$_SERVER['SERVER_NAME'].$item["logo"]; 
                 else
-                    $data[$i]["path"] = $this->getDataURI(".".$this->getThumb($item["path"]));
+                    $data[$i]["path"] = "http://".$_SERVER['SERVER_NAME'].$this->getThumb($item["path"]);
+                $data[$i]["logo"] = "http://".$_SERVER['SERVER_NAME'].$item["logo"];
                 $i = $i + 1;
             }
             

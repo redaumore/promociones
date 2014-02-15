@@ -299,6 +299,7 @@ label[for=branches]{
     }
     
     function setLimitsDates(){
+        var dateAsNew = parseStringToDate(jQuery('#dateAsNew').val());
         var cost = getPriceFromPromocost(jQuery("#promoCost option:selected").text());
         var _startDate = $("#starts").datepicker('getDate');
         var _today = getToday();
@@ -343,8 +344,13 @@ label[for=branches]{
             }
             else{
                 if(cost == 0){
-                    var _untilDay = $("#starts").datepicker('getDate'); 
-                    _untilDay.setDate(_untilDay.getDate()+15);   
+                    var _untilDay;
+                    if(_today > dateAsNew){
+                        _untilDay.setDate(_today.getDate()+15);            
+                    }
+                    else{
+                        _untilDay = dateAsNew;                
+                    }
                     $("#ends").datepicker('option', 'maxDate', _untilDay);
                     if(_endDate > _untilDay)
                         $("#ends").datepicker('setDate', _untilDay);    

@@ -27,7 +27,7 @@ Class PAP_Model_Config{
         $data = array();
         $provinceTable = new PAP_Model_DbTable_Province();
         $query = $provinceTable->select();
-        $query->where('updated > ? ', $from);
+        //$query->where('updated > ? ', $from);
         $query->where('status = ?', 'A');
         $result = $provinceTable->fetchAll($query);
         $data = array();
@@ -38,7 +38,7 @@ Class PAP_Model_Config{
 
         $cityTable = new PAP_Model_DbTable_City();
         $query = $cityTable->select();
-        $query->where('updated > ? ', $from);
+        //$query->where('updated > ? ', $from);
         $query->where('status = ?', 'A');
         $result = $cityTable->fetchAll($query);
         foreach ($result as $row) {

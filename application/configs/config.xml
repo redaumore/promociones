@@ -10,6 +10,6 @@
     <all>7</all>
   </pagesize>
   <users>
-    <daysAsNew>15</daysAsNew>
+    <daysAsNew>45</daysAsNew>
   </users>
 </zend-config>
