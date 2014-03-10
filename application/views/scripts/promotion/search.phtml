@@ -160,9 +160,10 @@ function getPromotions(){
                  for(var i=0;i < ids.length;i++){
                      var cl = ids[i];
                      var row = jQuery("#list2").jqGrid('getRowData',cl); 
-                     be = "<img src='"+row["img"]+"' height='50px' width='50px' style='margin:2px' onClick='loadPromotion("+cl+")'/>"; //"<a href='/promotion/edit/id/"+cl+"'><span class='ui-icon ui-icon-pencil'></span></a>"; 
+                     be = "<img src='"+row["img"]+"' height='50px' width='50px' style='margin:2px'/>"; //"<a href='/promotion/edit/id/"+cl+"'><span class='ui-icon ui-icon-pencil'></span></a>"; 
                      val = (row["is_percentage"] == "1")?cutDecimals(row["value"])+"%":"$"+cutDecimals(row["value"]);
                      jQuery("#list2").jqGrid('setRowData',ids[i],{img:be,value:val});
+                     jQuery("#"+cl).click(function(event){loadPromotion(cl);});
                  }
                  jQuery("#gbox_list2").show();
              },
