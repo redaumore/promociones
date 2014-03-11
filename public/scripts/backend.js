@@ -433,10 +433,17 @@ function FillPromotion(promotion){
     if(promotion.is_percentage == "1"){
         jQuery("#det-promo_value").removeClass("precio");
         jQuery("#det-promo_value").addClass("porcentaje");
+        jQuery("#price_container").show();
     }
     else{
-        jQuery("#det-promo_value").removeClass("porcentaje");
-        jQuery("#det-promo_value").addClass("precio");
+        if(promotion.promo_value == -396){
+            jQuery("#price_container").hide();        
+        }
+        else{
+            jQuery("#price_container").show();
+            jQuery("#det-promo_value").removeClass("porcentaje");
+            jQuery("#det-promo_value").addClass("precio");    
+        }
     }
     
     if(promotion.alert_type == 'N' || promotion.alert_type == null)
