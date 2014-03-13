@@ -232,6 +232,11 @@
             $i=0;
             
             foreach ($row as $r) {
+                if(floatval($r['promo_value']) == -396){
+                    if(PAP_Model_Promotion::isWithinRange($r['promotion_id'])){
+                        $r['displayed_text'] = "-->>DE TURNO<<--";    
+                    }
+                }
                 $response['rows'][$i]['id']=$r['promotion_id']; //id
                 $response['rows'][$i]['cell']=array('',$r['promo_code'],$r['starts'],$r['ends'],$r['short_description'],$r['promo_value'],$r['state'],$r['visited'],$r['is_percentage']);
                 $i++;
@@ -297,6 +302,11 @@
             $i=0;
             
             foreach ($promotions as $r) {
+                if(floatval($r['promo_value']) == -396){
+                    if(PAP_Model_Promotion::isWithinRange($r['promotion_id'])){
+                        $r['displayed_text'] = "-->>DE TURNO<<--";    
+                    }
+                }
                 $response['rows'][$i]['id']=$r['promotion_id']; //id
                 $response['rows'][$i]['cell']=array($r['path'],$r['name'],$r['displayed_text'],$r['street'].' '.$r['number'].', '.$r['city'],$r['promo_value'],$r['is_percentage'],isset($r['distance'])?(string)$r['distance']:'N/D');
                 $i++;

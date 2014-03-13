@@ -49,7 +49,7 @@ class PAP_Form_SearchForm extends Zend_Form
                 ->addMultiOption(1201, '└─Optica')
                 ->addMultiOption(1202, '└─Perfumería y Cosmética')
                 ->addMultiOption(1203, '└─Peluquería')
-                ->addMultiOption(1204, '└─Salud')
+                ->addMultiOption(1204, '└─Farmacias')
                 ->addMultiOption(1205, '└─Servicios para Ella y Él')
                 ->addMultiOption(1206, '└─Tratamientos')
                 ->addMultiOption(1300, 'Calzados')    

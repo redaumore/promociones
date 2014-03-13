@@ -416,5 +416,16 @@ class PAP_Model_PromotionMapper
         $results = $adapter->fetchAll($statement);
         return $results;    
     }
+    
+    public function isWithinRange($promotion_id){
+        $adapter = Zend_Db_Table::getDefaultAdapter();
+        $statement = "SELECT COUNT(*) AS isWithin FROM promotion p
+                        INNER JOIN promotion_group pg ON (p.promo_code = pg.promo_code)
+                        INNER JOIN group_date_range gdr ON (pg.group_id = gdr.group_id)
+                        INNER JOIN date_range dr ON (gdr.date_range_id = dr.date_range_id)
+                        WHERE p.promotion_id = ".$promotion_id." AND CAST('".date_format(new DateTime(), 'Y-m-d H:i:s')."' AS DATETIME) BETWEEN dr.date_from AND dr.date_to;";
+        $results = $adapter->fetchAll($statement);
+        return (bool)$results[0]['isWithin'];        
+    }
 }
 

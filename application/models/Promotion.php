@@ -665,6 +665,12 @@ class PAP_Model_Promotion
         $result = $mapper->getHistoricalPromoInfo($user->getId());
         return $result;
     }
+    
+    public static function isWithinRange($promotion_id){
+        $mapper = new PAP_Model_PromotionMapper();
+        $result = $mapper->isWithinRange($promotion_id);
+        return $result;        
+    }
 }
 
 
