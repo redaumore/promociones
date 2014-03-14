@@ -349,7 +349,8 @@ class PAP_Model_Promotion
         return $promotions;
     }
     
-    public static function getPromotionsForWeb(PAP_Model_City $city, $categories = ''){
+    public static function getPromotionsForWeb(PAP_Model_City $city, $categories = '-1204')/*1204: le sacamos las farmacias*/
+    {
         
         $promomapper = new PAP_Model_PromotionMapper();
         $branchmapper = new PAP_Model_BranchMapper();  

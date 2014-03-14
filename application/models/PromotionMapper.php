@@ -310,8 +310,15 @@ class PAP_Model_PromotionMapper
         $in = '('.substr($in, 0, strlen($in)-1).')';
         
         $incat = '';
+        $noincat = '';
         if($categories <> ''){
-            $incat = $categories;
+            $pos = strrpos($categories, "-");
+            if($pos === false){
+                $incat = $categories;
+            }
+            else{
+                $noincat = substr($categories,1);    
+            }
             //$incat = implode(',', $categories);
             /*
             $pos = strrpos($categories, ",");
@@ -334,6 +341,7 @@ class PAP_Model_PromotionMapper
                      (($categories == '')?'':"INNER JOIN category_user cu ON (b.user_id = cu.user_id) ").
                      "WHERE p.state = 'A' AND p.starts <= '".date('Y-m-d')."' AND p.ends >= '".date('Y-m-d')."' AND pb.branch_id IN ".$in. " ".
                      (($incat == '')?'':"AND cu.category_id IN (".$incat.") ").
+                     (($noincat == '')?'':"AND cu.category_id NOT IN (".$noincat.") ").
                      "ORDER BY 1 DESC ".(($limit == 0)?'':"LIMIT ".$limit." ");
                      
         $results = $adapter->fetchAll($statement);

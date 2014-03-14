@@ -8,20 +8,6 @@
 <hr class="hr-subtitle"/>-->
 <?php echo $this->partial("index/_alert.phtml"); ?>
 <div class="row-fluid">
-    <div class="span4 well" style="background-color: #333333;">
-        <div style="float: left; width: 25%;"><a href="https://www.facebook.com/PromosAlPaso" target="_blank"><img src="/images/backend/me_gusta.png" width="70px" alt=""></a></div>
-        <div style="float: right; width: 75%;">Para mantenerte informado, dale "Me Gusta" a Promos al Paso. Ahí te iremos informando de nuestros pasos.</div>
-    </div>
-    <div class="span4 well" style="background-color: #333333;">
-        <div style="float: left; width: 20%;"><img src="/images/backend/mobile.pap.png" width="45px" alt=""></div>
-        <div style="float: right; width: 80%;">Si entras a Promos al Paso por un celular, el sistema te lleva directamente a la aplicación móvil.</div>
-    </div>
-    <div class="span4 well" style="background-color: #333333;">
-        <div style="float: left; width: 25%;"><a href="http://www.youtube.com/channel/UCKV6rVTtx2ny_mRWoEp6D4A" target="_blank"><img src="/images/backend/youtube.png" width="70px" alt=""></a></div>
-        <div style="float: right; width: 75%;">En nuestro canal de YouTube podes ver videos de como registrarte y crear promos. Mirá los videos y verás que es muy facil!</div>
-    </div>
-</div>
-<div class="row-fluid">
     <div class="span4 well">
         <a href="<?php echo $this->url(array('controller'=>'auth','action'=>'signup'));?>" class="home-link">
             <div style="display: inline; float: left;">
@@ -42,8 +28,8 @@
             <div display: inline; float: right;>
                 <span class="home-title-section">Buscar</span>
                 <span class="home-text">
-                    Busca promociones por ciudad. Encuentra las mejores ofertas en todos los rubros
-            en todas las ciudades en las que esté Promos al Paso presente.
+                    Busca promociones que tengas cerca. Encuentra las mejores ofertas en todos los rubros
+            en Ramos Mejía, San Justo y alrededores.
                 </span>
             </div>
         </a>
@@ -60,6 +46,21 @@
         </a>
     </div>
 </div>
+<div class="row-fluid">
+    <div class="span4 well" style="background-color: #333333;">
+        <div style="float: left; width: 25%;"><a href="https://www.facebook.com/PromosAlPaso" target="_blank"><img src="/images/backend/me_gusta.png" width="70px" alt=""></a></div>
+        <div style="float: right; width: 75%; font-size: 12px;">Para mantenerte informado, dale "Me Gusta" a Promos al Paso en Facebook. Ahí te iremos informando de nuestros pasos.</div>
+    </div>
+    <div class="span4 well" style="background-color: #333333;">
+        <div style="float: left; width: 20%;"><img src="/images/backend/mobile.pap.png" width="33px" alt=""></div>
+        <div style="float: right; width: 80%; font-size: 12px;">Entrá desde tu teléfono móvil a Promos al Paso y busca todas las ofertas y promociones que haya cerca de donde quieras buscar.</div>
+    </div>
+    <div class="span4 well" style="background-color: #333333;">
+        <div style="float: left; width: 25%;"><a href="http://www.youtube.com/channel/UCKV6rVTtx2ny_mRWoEp6D4A" target="_blank"><img src="/images/backend/youtube.png" width="70px" alt=""></a></div>
+        <div style="float: right; width: 75%; font-size: 12px;">En nuestro canal de YouTube podes ver videos de como registrarte y crear promos. Mirá los videos y verás que es muy facil!</div>
+    </div>
+</div>
+
 <div class="row-fluid">
     <div class="span10 offset1 well pagination-centered">
         <p>Promos al Paso te permitirá ahorrar dinero y tiempo mostrandote en tu celular las mejores promociones cerca de donde te encuentres.</p>
@@ -151,7 +152,7 @@
             promo_html += '  <div><img src="'+promo.path+'" style="height:60px;" class="img-polaroid"/></div>';
             promo_html += '  <div class="slider_displayed_text">'+promo.name+'</div>';
             promo_html += '  <div class="slider_precio">'+promo.promo_value+'</div>';
-            promo_html += '  <div class="slider_displayed_text" style="font-weight: bold; color: #42962F">'+promo.displayed_text+'</div></div></a>';;
+            promo_html += '  <div class="slider_displayed_text" style="font-weight: bold; color: #42962F; font-size: 1em;">'+promo.displayed_text+'</div></div></a>';;
 
         return promo_html;
     };
