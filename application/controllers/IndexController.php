@@ -22,6 +22,9 @@ class IndexController extends Zend_Controller_Action
     
     public function indexAction()
     {
+        $keywords = 'promos,promociones,ofertas,san justo,ramos mejía,ofertas,descuentos,regalos,farmacias,farmacias de turno,anunciar gratis,comercios';
+        $this->view->headMeta($keywords,'keywords','name',array(),'SET');
+        $this->view->headMeta("Promos al Paso es un localizador de promociones pensado para celulares. Es una especie de GPS de promociones en donde las personas que entren a la aplicación podrán encontrar anuncios de ofertas y promociones que se encuentren en las inmediaciones (3 km a la redonda)", "description");
     }
     
     public function menuAction(){
