@@ -300,15 +300,21 @@
             $response['total'] = $total_pages;
             $response['records'] = $count;
             $i=0;
-            
+            $y=0;
             foreach ($promotions as $r) {
-                if(floatval($r['promo_value']) == -396){
-                    if(PAP_Model_Promotion::isWithinRange($r['promotion_id'])){
-                        $r['displayed_text'] = "-->>DE TURNO<<--";    
+                if($i>=$start && $i<($start+$limit)){
+                    if(floatval($r['promo_value']) == -396){
+                        if(PAP_Model_Promotion::isWithinRange($r['promotion_id'])){
+                            $r['displayed_text'] = "-->>DE TURNO<<--";    
+                        }
                     }
+                    $response['rows'][$y]['id']=$r['promotion_id']; //id
+                    $response['rows'][$y]['cell']=array($r['path'],$r['name'],$r['displayed_text'],$r['street'].' '.$r['number'].', '.$r['city'],$r['promo_value'],$r['is_percentage'],isset($r['distance'])?(string)$r['distance']:'N/D');
+                    $y++;
                 }
-                $response['rows'][$i]['id']=$r['promotion_id']; //id
-                $response['rows'][$i]['cell']=array($r['path'],$r['name'],$r['displayed_text'],$r['street'].' '.$r['number'].', '.$r['city'],$r['promo_value'],$r['is_percentage'],isset($r['distance'])?(string)$r['distance']:'N/D');
+                else{
+                    $y = 0;
+                }
                 $i++;
             }
             echo $this->_helper->json($response);
