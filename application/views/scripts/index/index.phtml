@@ -140,7 +140,7 @@
      */
     function mycarousel_getItemHTML(promo)
     {
-        var promo_html = '<a onClick="FillPromotionById('+promo.promotion_id+');"><div class="slider_promo">';
+        var promo_html = '<a onClick="FillPromotionById('+promo.promotion_id+');" rel="nofollow"><div class="slider_promo">';
             promo_html += '  <div class="slider_localidad">'+promo.city+'</div>';
             promo_html += '  <div><img src="'+promo.path+'" style="height:60px;" class="img-polaroid"/></div>';
             promo_html += '  <div class="slider_displayed_text">'+promo.name+'</div>';
