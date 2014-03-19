@@ -77,6 +77,12 @@ class servicesController extends Zend_Controller_Action
                         //$data[$i]["path"] = $this->getDataURI(".".$this->getThumb($item["path"])); SE ENVIABA IMAGEN ENCODEADA
                     }
                     $data[$i]["logo"] = "http://".$_SERVER['SERVER_NAME'].$item["logo"];
+                    
+                    if(floatval($item['promo_value']) == -396){
+                        if(PAP_Model_Promotion::isWithinRange($item['promotion_id'])){
+                            $data[$i]['displayed_text'] = "-->>DE TURNO<<--";    
+                        }
+                    }
                         
                     if($data[$i]["value_since"] == "0")
                         unset($data[$i]["value_since"]);
