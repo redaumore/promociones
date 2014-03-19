@@ -176,6 +176,12 @@ class servicesController extends Zend_Controller_Action
                 $data["path"] = $this->getDataURI(".".$data["logo"]);
             $data["promo_photo"] = ".".$data["path"];
             
+            if(floatval($data['promo_value']) == -396){
+                if(PAP_Model_Promotion::isWithinRange($data['promotion_id'])){
+                    $data['displayed_text'] = "-->>DE TURNO<<--";    
+                }
+            }
+                    
             $response = $this->getFrontController()->getResponse();
             $response->appendBody($callback.'('.json_encode($data).')');
             $this->getFrontController()->setResponse($response);
