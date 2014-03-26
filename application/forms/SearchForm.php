@@ -119,6 +119,11 @@ class PAP_Form_SearchForm extends Zend_Form
         ));
         $this->search->setAttrib('onClick', 'getPromotions();')
             ->setAttrib('class', 'btn');
+            
+        $this->addElement('hidden', 'reqcity');
+        $this->reqcity->removeDecorator('label')->removeDecorator('HtmlTag');
+        $this->addElement('hidden', 'reqcategory');
+        $this->reqcategory->removeDecorator('label')->removeDecorator('HtmlTag');
         
         /*CATEGORIAS*/
         }

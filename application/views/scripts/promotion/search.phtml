@@ -47,6 +47,18 @@ function FillForm(data)
             select.options[select.options.length] = new Option(cities[i].name, cities[i].city_id); 
         }
         console.log("FillForm"); 
+        
+        var city = jQuery('#reqcity').val();
+        if(city != ''){
+            jQuery('#city option[value='+ city +']').attr('selected',true);
+        }
+        
+        var category = jQuery('#reqcategory').val();
+        if(category != ''){
+            jQuery("#category option[value='"+category+"']").attr("selected", "selected");    
+            //TODO: Hacerlo para varias categorías
+        }
+        
         getPromotions();
 }
 
@@ -109,7 +121,10 @@ function FillFormProvinces(data)
                 <div id="pager2"></div>    
             </div>
         </div>
-    
+        <?php 
+            echo $form->reqcity;
+            echo $form->reqcategory;
+         ?>
 </form>
 <script type="text/javascript">
 var firstClick = true;

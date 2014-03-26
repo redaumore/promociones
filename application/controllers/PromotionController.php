@@ -258,6 +258,7 @@
     
     public function searchAction(){
         try{
+            $isDirectSearch = false;
             $form = new PAP_Form_SearchForm();
             $this->view->form = $form;
             
@@ -276,8 +277,20 @@
                 $limit = 10; // get how many rows we want to have into the grid
                 $sidx = 0; // get index row - i.e. user click to sort
                 $sord =  'starts';
-                $city_id = 150;
+                $city_id = $this->getParam('city');
+                if(isset($city_id)){
+                    //$this->_redirect('/promotion/search/city/1742');
+                    $isDirectSearch = true;
+                    $reqCity = $this->view->form->getElement('reqcity');
+                    $reqCategory = $this->view->form->getElement('reqcategory');
+                    $reqCity->setValue($this->getParam('city'));    
+                    $reqCategory->setValue($this->getParam('categories'));    
+                }
+                else{
+                    $city_id = 150;
+                }
                 return;
+                
             }
             
             if(!$sidx) $sidx =1;
@@ -317,7 +330,7 @@
                 }
                 $i++;
             }
-            echo $this->_helper->json($response);
+            echo $this->_helper->json($response);    
         }
         catch(Exception $ex){
             PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'PromotionController->searchAction()',$ex, $_SERVER['REQUEST_URI']);
