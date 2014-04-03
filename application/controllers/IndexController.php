@@ -25,6 +25,7 @@ class IndexController extends Zend_Controller_Action
         $keywords = 'promos,promociones,san justo,ramos mejía,ofertas,descuentos,regalos,farmacias,farmacias de turno,anunciar gratis,comercios,regalos, anuncios';
         $this->view->headMeta($keywords,'keywords','name',array(),'SET');
         $this->view->headMeta("Promos al Paso es un localizador de promociones para teléfonos celulares. Las promociones pueden ser de indumentaria, mascotas, calzados, deportes, restaurants, delivery, farmacias, belleza, hogar, tecnología, alimentos, indumentaria femenina y masculina, regalos. ", "description");
+        $this->view->headTitle()->append(' - Todas las promos y ofertas en tu celular');
     }
     
     public function menuAction(){
@@ -68,6 +69,8 @@ class IndexController extends Zend_Controller_Action
     
     function contactAction(){
         try{
+            $this->view->headTitle()->append(' - Contacto');
+            
             $form = new PAP_Form_ContactForm();
             $this->view->form = $form;
             if($this->getRequest()->isPost()){
@@ -103,7 +106,7 @@ class IndexController extends Zend_Controller_Action
     
     function helpAction(){
          try{
-            
+            $this->view->headTitle()->append(' - Ayuda y Consejos');    
         }
         catch(Exception $ex){
             PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'IndexController->helpAction()',$ex, $_SERVER['REQUEST_URI']);
@@ -112,7 +115,7 @@ class IndexController extends Zend_Controller_Action
     
     function conditionsAction(){
          try{
-            
+            $this->view->headTitle()->append(' - Términos y condiciones del servicio');    
         }
         catch(Exception $ex){
             PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'IndexController->contactadmAction()',$ex, $_SERVER['REQUEST_URI']);
@@ -121,6 +124,7 @@ class IndexController extends Zend_Controller_Action
     
     function newsAction(){
          try{
+             $this->view->headTitle()->append(' - Novedades');
             
         }
         catch(Exception $ex){

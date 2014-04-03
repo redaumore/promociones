@@ -6,6 +6,7 @@
     {
         /*$session = new Zend_Session_Namespace('PAP');
         echo $session->user->getName();*/
+        
     }
     
     public function indexAction(){
@@ -261,6 +262,7 @@
             $isDirectSearch = false;
             $form = new PAP_Form_SearchForm();
             $this->view->form = $form;
+            $this->view->headTitle()->append(' - Buscar Promos');
             
             if($this->getRequest()->isPost()){
                 $this->_helper->viewRenderer->setNoRender();
