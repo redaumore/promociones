@@ -28,5 +28,23 @@ class PAP_Helper_Tools extends Zend_Controller_Action_Helper_Abstract
      
         return ($miles ? ($km * 0.621371192) : round($km * 1000));
     }
+    
+    public static function getCoordinates($street, $city, $province){
+        $address = $street.','.$city.','.$province.','.'Argentina';
+        $address = str_replace(" ", "+", $address); // replace all the white space with "+" sign to match with google search pattern
+         
+        $url = "http://maps.google.com/maps/api/geocode/json?sensor=false&address=$address";
+         
+        $response = file_get_contents($url);
+        
+        $json = json_decode($response,TRUE); //generate array object from the response from the web
+        
+        $arr['lat'] = $json['results'][0]['geometry']['location']['lat'];  
+        $arr['lng'] = $json['results'][0]['geometry']['location']['lng'];   
+        
+        return $arr; 
+        //return ($json['results'][0]['geometry']['location']['lat'].",".$json['results'][0]['geometry']['location']['lng']);
+         
+        }
         
  }

@@ -83,44 +83,70 @@ function FillFormProvinces(data)
         <hr class="hr-subtitle"/>
         <?php echo $this->errorMessage($this->form, $messages); ?>
     </div>
-        <div class="row-fluid">
-            <div class="span3 well">
-                <div class="row-fluid">
-                    <div class="span7">
-                        <span>Filtros</span>
-                    </div>
-                    <div class="span5 pagination-right">
-                        <?php echo $form->search->renderViewHelper(); ?>
-                    </div>
-                </div>
-                <div class="row-fluid pagination-left">
-                    <div class="control-group">
-                        <?php echo $form->province->renderLabel(); ?>
-                        <div class="controls">
-                            <?php echo $form->province->renderViewHelper(); ?>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <?php echo $form->city->renderLabel(); ?>
-                        <div class="controls">
-                            <?php echo $form->city->renderViewHelper(); ?>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <?php echo $form->category->renderLabel(); ?>
-                        <div class="controls">
-                            <?php echo $form->category->renderViewHelper(); ?>
-                        </div>
-                    </div>
-                    <div class="control-label optional" style="font-size: 0.8em; color: #BCBCBC">Para seleccionar más de una categoría mantén la tecla "Ctrl" presionada.</div>
+    <div class="row-fluid">
+        <div class="span4">
+            <div class="control-group">
+                <?php echo $form->street->renderLabel(); ?>
+                <div class="controls">
+                    <?php echo $form->street->renderViewHelper(); ?>
                 </div>
             </div>
-            <div class="span9 pagination-centered">
+        </div>
+        <div class="span1" style="margin-left:0">
+            <div class="control-group">
+                <?php echo $form->number->renderLabel(); ?>
+                <div class="controls">
+                    <?php echo $form->number->renderViewHelper(); ?>
+                </div>
+            </div>
+        </div>
+        <div class="span3">
+            <div class="control-group">
+                <?php echo $form->province->renderLabel(); ?>
+                <div class="controls">
+                    <?php echo $form->province->renderViewHelper(); ?>
+                </div>
+            </div>
+        </div>
+        <div class="span3">
+            <div class="control-group">
+                <?php echo $form->city->renderLabel(); ?>
+                <div class="controls">
+                    <?php echo $form->city->renderViewHelper(); ?>
+                </div>
+            </div>
+        </div>
+        <div class="span1" style="margin-left:0">
+            <div class="control-group">
+                <div class="controls">&nbsp;
+                    <?php echo $form->search->renderViewHelper(); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span3 well">
+            <div class="row-fluid pagination-left">
+                <div class="control-group">
+                    <?php echo $form->category->renderLabel(); ?>
+                    <div class="controls">
+                        <?php echo $form->category->renderViewHelper(); ?>
+                    </div>
+                </div>
+                <div class="control-label optional" style="font-size: 0.8em; color: #BCBCBC">Para seleccionar más de una categoría mantén la tecla "Ctrl" presionada.</div>
+            </div>
+        </div>
+        <div class="span9 pagination-centered">
+            <div class="row-fluid">
                 <?php echo $this->partial("index/_alert.phtml"); ?>
+                <div id="search_message"><br/><h3 id="text_search_message" class="info_message">Estas buscando.....</h3></div>
+            </div>
+            <div class="row-fluid">
                 <table id="list2"></table>
                 <div id="pager2"></div>    
             </div>
         </div>
+    </div>
         <?php 
             echo $form->reqcity;
             echo $form->reqcategory;
@@ -129,16 +155,29 @@ function FillFormProvinces(data)
 <script type="text/javascript">
 var firstClick = true;
 function getPromotions(){
+    jQuery("#div_message").hide();
     var city = document.getElementById('city').options[document.getElementById('city').selectedIndex].value;
     var categories = document.getElementById('category').options;
-    var categoriesString = '';
+    var categoriesString = address = categoriesNames = '';
+    
     for (x=0; x<categories.length; x++){
-      if(categories[x].selected)
+      if(categories[x].selected){
         categoriesString += categories[x].value + ",";   
+        categoriesNames += categories[x].text + ", ";
+        categoriesNames = categoriesNames.replace('└─', '');  
+      }
     }
-    if(categoriesString != '')
-        categoriesString = categoriesString.substring(0, categoriesString.length-1);
-    var _url = _baseUri + '/promotion/search/city/' + city + '/categories/' + categoriesString;
+    if(categoriesString != ''){
+        categoriesString = '/categories/' + categoriesString.substring(0, categoriesString.length-1);
+        categoriesNames = categoriesNames.substring(0, categoriesNames.length-2);
+    }
+    if (jQuery('#street').val() != '' && jQuery('#number').val()!=''){
+        address = '/address/'+jQuery('#street').val()+'+'+jQuery('#number').val()    
+    }
+    jQuery("#text_search_message").html("Estas buscando "+(categoriesNames==''?'todas las categorías':categoriesNames)+" en "+jQuery("#city option:selected").text()+".");
+    jQuery("#search_message").show();
+    
+    var _url = _baseUri + '/promotion/search/city/' + city + categoriesString + address;
     if (!firstClick){
         jQuery('#list2').jqGrid('clearGridData');
         jQuery("#list2").jqGrid('setGridParam', { url: _url, datatype: "json" }).trigger("reloadGrid");
@@ -169,8 +208,13 @@ function getPromotions(){
                  var ids = jQuery("#list2").jqGrid('getDataIDs');
                  if(ids.length == 0 ){
                      showMessage("info", "No se encontraron promos para los filtros de búsqueda seleccionados.");
+                     jQuery("#search_message").hide();
                      jQuery("#gbox_list2").hide();
                      return;
+                 }
+                 else{
+                     jQuery("#div_message").hide();
+                     jQuery("#search_message").show();
                  }
                  for(var i=0;i < ids.length;i++){
                      var cl = ids[i];

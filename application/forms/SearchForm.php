@@ -7,7 +7,7 @@ class PAP_Form_SearchForm extends Zend_Form
         $this->setAttrib('enctype', Zend_Form::ENCTYPE_MULTIPART);
         //'multipart/form-data'
         $this->addDecorators(array('FormElements', 'Form'));
-        
+                
         $decorators = array(
                 array('ViewHelper'),
                 array('Label', array(
@@ -112,6 +112,30 @@ class PAP_Form_SearchForm extends Zend_Form
                 ->addMultiOption(2204, '└─Computación y Consolas');
         
         $this->category->setAttrib("height", "100px");
+        
+        $control = $this->addElement('text', 'street', array(
+            'label'      => 'Calle ',      //2x1, Liquidación, etc
+            'required'   => false,
+            'size' => 50,
+            'maxlength' => 50, 
+            'validators' => array(
+                'StringLength',
+            ),
+        ));
+        $control = $this->getElement('street');
+        $control->setDecorators($decorators);
+        
+        $control = $this->addElement('text', 'number', array(
+            'label'      => 'Nro ',      //2x1, Liquidación, etc
+            'required'   => false,
+            'size' => 6,
+            'maxlength' => 6, 
+            'validators' => array(
+                'StringLength',
+            ),
+        ));
+        $control = $this->getElement('number');
+        $control->setDecorators($decorators);
                 
         $this->addElement('button', 'search', array(
             'ignore'   => true,

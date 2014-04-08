@@ -6,9 +6,8 @@
     {
         /*$session = new Zend_Session_Namespace('PAP');
         echo $session->user->getName();*/
-        
     }
-    
+ 
     public function indexAction(){
         $this->checkLogin();
         $cant_activas = 0;
@@ -109,8 +108,6 @@
                         $this->_redirect('promotion/edit/id/'.$clonedPromoId);
                         return true;
                     }
-                     
-                    
                     /*Validación de fecha por las dudas*/
                     $promo = new PAP_Model_Promotion();
                     $promo->loadById($data['promoId']);
@@ -133,7 +130,6 @@
                         $this->saveImages($data, $newPromotion);
                         $this->loadForm($newPromotion, 'update');
                     }
-                    
                 }                
             }
             else{
@@ -273,6 +269,7 @@
                 $sord = $_POST['sord'];
                 $city_id = $this->getParam('city');
                 $categories = ''.$this->getParam('categories');
+                $address = ''.$this->getParam('address');
             }
             else{
                 $page = 0; // get the requested page
@@ -292,12 +289,21 @@
                     $city_id = 150;
                 }
                 return;
-                
             }
             
             if(!$sidx) $sidx =1;
-            $promo = new PAP_Model_Promotion(); 
-            $promotions = $promo->getPromotionsByCity($city_id, $categories);
+            $promo = new PAP_Model_Promotion();
+            if($address != ''){
+                $objCity = new PAP_Model_City();
+                $objCity->loadById($city_id);
+                $objProvince = new PAP_Model_Province();
+                $objProvince->loadById($objCity->getProvinceid());
+                $coordinates = PAP_Helper_Tools::getCoordinates($address, $objCity->getName(), $objProvince->getName());
+                $promotions = $promo->getPromotionsByCoords($coordinates['lat'], $coordinates['lng'], $categories);
+            }
+            else{
+                $promotions = $promo->getPromotionsByCity($city_id, $categories);    
+            } 
             $count = count($promotions);
             if( $count > 0 ) {$total_pages = ceil($count/$limit);} 
             else{$total_pages = 0;}
