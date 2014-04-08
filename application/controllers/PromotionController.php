@@ -299,7 +299,10 @@
                 $objProvince = new PAP_Model_Province();
                 $objProvince->loadById($objCity->getProvinceid());
                 $coordinates = PAP_Helper_Tools::getCoordinates($address, $objCity->getName(), $objProvince->getName());
-                $promotions = $promo->getPromotionsByCoords($coordinates['lat'], $coordinates['lng'], $categories);
+                if(count($coordinates) > 0 )
+                    $promotions = $promo->getPromotionsByCoords($coordinates['lat'], $coordinates['lng'], $categories);
+                else
+                    $promotions = $promo->getPromotionsByCity($objCity->getId(), $categories);    
             }
             else{
                 $promotions = $promo->getPromotionsByCity($city_id, $categories);    

@@ -704,6 +704,19 @@ function fixZeroCostDate(){
         //setupPromoDates(kickoff, dateAsNew, promocost);    
 }
 
+function changeTitle(cat, city){
+    var title = document.title.split("-")[0];
+    if(cat.length > 50)
+        cat = cat.substring(0,50)+"...";
+    else{
+        if(cat.length == 0)
+            cat = "Todas las promos y ofertas";
+    }
+        
+    var text = cat + " en " + city;
+    document.title = title +'- '+text;
+}
+
 
 
 

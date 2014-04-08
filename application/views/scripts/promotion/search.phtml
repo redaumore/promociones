@@ -176,6 +176,7 @@ function getPromotions(){
     }
     jQuery("#text_search_message").html("Estas buscando "+(categoriesNames==''?'todas las categorías':categoriesNames)+" en "+jQuery("#city option:selected").text()+".");
     jQuery("#search_message").show();
+    changeTitle(categoriesNames, jQuery("#city option:selected").text());
     
     var _url = _baseUri + '/promotion/search/city/' + city + categoriesString + address;
     if (!firstClick){

@@ -30,21 +30,25 @@ class PAP_Helper_Tools extends Zend_Controller_Action_Helper_Abstract
     }
     
     public static function getCoordinates($street, $city, $province){
-        $address = $street.','.$city.','.$province.','.'Argentina';
-        $address = str_replace(" ", "+", $address); // replace all the white space with "+" sign to match with google search pattern
-         
-        $url = "http://maps.google.com/maps/api/geocode/json?sensor=false&address=$address";
-         
-        $response = file_get_contents($url);
-        
-        $json = json_decode($response,TRUE); //generate array object from the response from the web
-        
-        $arr['lat'] = $json['results'][0]['geometry']['location']['lat'];  
-        $arr['lng'] = $json['results'][0]['geometry']['location']['lng'];   
-        
-        return $arr; 
-        //return ($json['results'][0]['geometry']['location']['lat'].",".$json['results'][0]['geometry']['location']['lng']);
-         
+        try{
+            $address = $street.','.$city.','.$province.','.'Argentina';
+            $address = str_replace(" ", "+", $address); // replace all the white space with "+" sign to match with google search pattern
+             
+            $url = "http://maps.google.com/maps/api/geocode/json?sensor=false&address=$address";
+             
+            $response = file_get_contents($url);
+            
+            $json = json_decode($response,TRUE); //generate array object from the response from the web
+            
+            $arr['lat'] = $json['results'][0]['geometry']['location']['lat'];  
+            $arr['lng'] = $json['results'][0]['geometry']['location']['lng'];   
+            
+            return $arr; 
+            //return ($json['results'][0]['geometry']['location']['lat'].",".$json['results'][0]['geometry']['location']['lng']);
         }
-        
- }
+        catch(Exception $ex){
+            PAP_Helper_Logger::writeLog(Zend_Log::NOTICE, 'Tools->getCoordinates()', 'Error obteniendo coordenadas desde Google');
+            return array(); 
+        }
+    }
+}
