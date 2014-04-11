@@ -129,4 +129,18 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
         Zend_Registry::set('cache',$cache);
     }
+    
+    protected function _initRoute() {
+    
+        $router = Zend_Controller_Front::getInstance()->getRouter();
+        $router->addRoute('buscar', //key of route !
+            new Zend_Controller_Router_Route(
+                'buscar/:categoria/:ciudad', //this is url(www.url.com/login) that you want to rewrite, you can set whatever you want
+                array(
+                    'module' => 'default',
+                    'controller' => 'promotion',
+                    'action' => 'search',
+                )
+        ));
+}
 }

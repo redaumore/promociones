@@ -253,6 +253,10 @@
         }
     }
     
+    public function directsearchAction(){
+        
+    }
+    
     public function searchAction(){
         try{
             $isDirectSearch = false;
