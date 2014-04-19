@@ -239,7 +239,7 @@ function getPromotions(){
 
 function loadPromotion(promotion_id){
     var myAjax = new Ajax.Request(
-        "<?=$this->url(array('controller'=>'Backendajax','action'=>'getPromotion'))?>",
+        "<?=$this->url(array('controller'=>'Backendajax','action'=>'getPromotion'),'default', true)?>",
             {
                 method:'get',
                 parameters: {promotion_id: promotion_id},
