@@ -17,7 +17,7 @@ function loadCities()
 {
         var selectedValue = document.getElementById('province').options[document.getElementById('province').selectedIndex].value;
         var myAjax = new Ajax.Request(
-        "<?=$this->url(array('controller'=>'Backendajax','action'=>'getCities'))?>",
+        "<?=$this->url(array('controller'=>'Backendajax','action'=>'getCities'),'default', true)?>",
             {
                 method:'get',
                 parameters: {province_id: selectedValue},
@@ -29,7 +29,7 @@ function loadCities()
 
 function loadProvinces()
 {       var myAjax = new Ajax.Request(
-        "<?=$this->url(array('controller'=>'Backendajax','action'=>'getprovinces'))?>",
+        "<?=$this->url(array('controller'=>'Backendajax','action'=>'getprovinces'),'default', true)?>",
             {
                 method:'get',
                 onSuccess: FillFormProvinces,

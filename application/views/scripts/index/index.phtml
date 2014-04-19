@@ -2,7 +2,7 @@
 <?php echo $this->partial("index/_alert.phtml"); ?>
 <div class="row-fluid">
     <div class="span4 well">
-        <a href="<?php echo $this->url(array('controller'=>'auth','action'=>'signup'));?>" class="home-link">
+        <a href="<?php echo $this->url(array('controller'=>'auth','action'=>'signup'), 'default', true);?>" class="home-link">
             <div style="display: inline; float: left;">
                 <img src="/images/backend/goto-login.png" alt="Registrarse">
             </div>
@@ -14,7 +14,7 @@
         </a>
     </div>
     <div class="span4 well">
-        <a href="<?php echo $this->url(array('controller'=>'promotion','action'=>'search'));?>" class="home-link">
+        <a href="<?php echo $this->url(array('controller'=>'promotion','action'=>'search'), 'default', true);?>" class="home-link">
             <div style="display: inline; float: left;">
                 <img src="/images/backend/goto-search.png" alt="Buscar Promociones"/>
             </div>
@@ -28,7 +28,7 @@
         </a>
     </div>
     <div class="span4 well">
-        <a href="<?php echo $this->url(array('controller'=>'index','action'=>'help'));?>" class="home-link">
+        <a href="<?php echo $this->url(array('controller'=>'index','action'=>'help'), 'default', true);?>" class="home-link">
             <div style="display: inline; float: left;">
                 <img src="/images/backend/goto-help.png" alt="Buscar Promociones">
             </div>
@@ -41,7 +41,7 @@
 </div>
 <div class="row-fluid">
     <div class="span4 well" style="background-color: #333333;">
-        <div style="float: left; width: 25%;"><a href="<?php echo $this->url(array('controller'=>'promotion','action'=>'search')).'/city/150/categories/1204';?>" ><img src="/images/backend/logo-promosalpaso-farmacias-150.png" width="70px" title="Farmacias" alt=""></a></div>
+        <div style="float: left; width: 25%;"><a href="<?php echo $this->baseUrl().'/buscar/farmacias/san-justo';?>" ><img src="/images/backend/logo-promosalpaso-farmacias-150.png" width="70px" title="Farmacias" alt=""></a></div>
         <div style="float: right; width: 75%; font-size: 12px;">Información actualizada de las Farmacias de San Justo y Ramos Mejía. Encontrá las farmacias de turno más cercanas!!.</div>
     </div>
     <div class="span4 well" style="background-color: #333333;">

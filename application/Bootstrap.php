@@ -137,10 +137,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             new Zend_Controller_Router_Route(
                 'buscar/:categoria/:ciudad', //this is url(www.url.com/login) that you want to rewrite, you can set whatever you want
                 array(
-                    'module' => 'default',
+                    //'module' => 'default',
                     'controller' => 'promotion',
                     'action' => 'search',
                 )
         ));
-}
+    }
 }

@@ -254,7 +254,23 @@
     }
     
     public function directsearchAction(){
-        
+        $categoria = $this->getParam('categoria');
+        $ciudad = $this->getParam('ciudad');
+        $city_id = $category_id = $title = '';
+        if($categoria == 'farmacias'){
+            $category_id = 1204;
+            $title = ' - Farmacias en ';    
+        }
+        if($ciudad == 'san-justo'){
+            $city_id = 150;
+            $title = $title.'San Justo';
+        }
+        elseif($ciudad == 'ramos-mejia'){
+            $city_id = 1742;
+            $title = $title.'Ramos Mejía';
+        }
+        if($city_id != '' and $category_id != ''){
+        }    
     }
     
     public function searchAction(){
@@ -262,7 +278,6 @@
             $isDirectSearch = false;
             $form = new PAP_Form_SearchForm();
             $this->view->form = $form;
-            $this->view->headTitle()->append(' - Buscar Promos');
             
             if($this->getRequest()->isPost()){
                 $this->_helper->viewRenderer->setNoRender();
@@ -275,8 +290,7 @@
                 $categories = ''.$this->getParam('categories');
                 $address = ''.$this->getParam('address');
             }
-            else{
-                $page = 0; // get the requested page
+            else{                $page = 0; // get the requested page
                 $limit = 10; // get how many rows we want to have into the grid
                 $sidx = 0; // get index row - i.e. user click to sort
                 $sord =  'starts';
@@ -290,7 +304,36 @@
                     $reqCategory->setValue($this->getParam('categories'));    
                 }
                 else{
-                    $city_id = 150;
+                    $categoria = $this->getParam('categoria');
+                    $ciudad = $this->getParam('ciudad');
+                    if(isset($categoria) && isset($ciudad)){
+                        $city_id = $category_id = $title = '';
+                        if($categoria == 'farmacias'){
+                            $category_id = 1204;
+                            $title = ' - Farmacias en ';    
+                        }
+                        if($ciudad == 'san-justo'){
+                            $city_id = 150;
+                            $title = $title.'San Justo';
+                        }
+                        elseif($ciudad == 'ramos-mejia'){
+                            $city_id = 1742;
+                            $title = $title.'Ramos Mejía';
+                        }
+                        if($city_id != '' and $category_id != ''){
+                            $this->view->headTitle()->append($title);
+                            $this->view->form->category->setValue($category_id);
+                            $this->view->form->city->setValue($city_id);
+                            $reqCity = $this->view->form->getElement('reqcity');
+                            $reqCategory = $this->view->form->getElement('reqcategory');
+                            $reqCity->setValue($this->getParam('city'));    
+                            $reqCategory->setValue($this->getParam('categories')); 
+                        }    
+                    }
+                    else{
+                        $this->view->headTitle()->append(' - Buscar Promos');
+                        $city_id = 150;    
+                    }
                 }
                 return;
             }

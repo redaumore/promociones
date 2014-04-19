@@ -127,7 +127,9 @@ class PAP_Model_City
         $this->_kickoff = (string) $text;
         return $this;
     }
-    
+    public static function getByName($name){
+        $name = str_replace('-', ' ', $name);
+    }
 
 }
 

@@ -288,6 +288,29 @@ class PAP_Model_Category
     {
         return $this->_parent_id;
     }
+    
+    public static function getByName($name){
+        $categories = new PAP_Model_Category();
+        $arr = $categories->getAll();
+        $item = PAP_Model_Category::search_in_array($name, $arr);
+        if(isset($item)){
+            
+        }
+            
+    }
+    
+    private static function search_in_array ( $item, $haystack, $strict = true ) 
+    {
+        foreach ($haystack as $item => $value ) 
+        {
+            if (( $strict ? $item === $needle : $item == $needle ) || ( is_array ( $item ) && search_in_array( $needle, $item, $strict ))) 
+            {
+                return $item;
+            }
+        }
+
+        return null;
+    }
 
 }
 
