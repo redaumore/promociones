@@ -316,9 +316,13 @@
                             $city_id = 150;
                             $title = $title.'San Justo';
                         }
-                        elseif($ciudad == 'ramos-mejia'){
+                        if($ciudad == 'ramos-mejia'){
                             $city_id = 1742;
                             $title = $title.'Ramos Mejía';
+                        }
+                        if($ciudad == 'villa-luzuriaga'){
+                            $city_id = 777;
+                            $title = $title.'Villa Luzuriaga';
                         }
                         if($city_id != '' and $category_id != ''){
                             $this->view->headTitle()->append($title);
@@ -326,8 +330,8 @@
                             $this->view->form->city->setValue($city_id);
                             $reqCity = $this->view->form->getElement('reqcity');
                             $reqCategory = $this->view->form->getElement('reqcategory');
-                            $reqCity->setValue($this->getParam('city'));    
-                            $reqCategory->setValue($this->getParam('categories')); 
+                            $reqCity->setValue($city_id);    
+                            $reqCategory->setValue($category_id); 
                         }    
                     }
                     else{
