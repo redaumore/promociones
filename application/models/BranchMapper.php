@@ -110,10 +110,10 @@ class PAP_Model_BranchMapper
                   ->setZipcode($row->zip_code)
                   ->setCreated($row->created)
                   ->setUpdated($row->updated);
+        $branch->setDescription($this->getDescription($row->branch_id));
     }
  
-    public function fetchAll()
-    {
+    public function fetchAll(){
         $resultSet = $this->getDbTable()->fetchAll();
         $entries   = array();
         foreach ($resultSet as $row) {
@@ -137,11 +137,12 @@ class PAP_Model_BranchMapper
                   ->setCreated($row->created)
                   ->setUpdated($row->updated);
             $entries[] = $entry;
+            $branch->setDescription($this->getDescription($row->branch_id));
         }
         return $entries;
     }
     
-     public function getBranchesByRange($latE, $latO, $lngN, $lngS){
+    public function getBranchesByRange($latE, $latO, $lngN, $lngS){
         $branches = array();
         $select = $this->getDbTable()->select();
         $select->where('latitude > ?', $latO)
@@ -156,5 +157,14 @@ class PAP_Model_BranchMapper
         }
         return $branches;
      }
+    
+    public function getDescription($id){
+        $ads = new PAP_Model_Promotion();
+        $ads->loadAdsBranch($id);
+        if(isset($ads))
+            return $ads->getLongDescription().'';    
+        else
+            return '';    
+    } 
 }
 

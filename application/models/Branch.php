@@ -20,6 +20,7 @@ class PAP_Model_Branch
     protected $_zip_code;
     protected $_created;
     protected $_updated;
+    protected $_description;
     
     public function __construct(array $options = null)
     {
@@ -59,10 +60,14 @@ class PAP_Model_Branch
     }
     
     public function insert(array $options){
-        
+        $branches = array();
+        $branches[] = $this;
         $this->setOptions($options);
         $branchMapper = new PAP_Model_BranchMapper();
         $branchMapper->save($this);
+        $adsBranch = new PAP_Model_Promotion();
+        $adsBranch->setAsAdsBranch($this);
+        $adsBranch->save($branches);
     }
     
     public function getCategories(){
@@ -286,6 +291,17 @@ class PAP_Model_Branch
     public function getLogo()
     {
         return $this->_logo;
+    }
+    
+    public function getDescription()
+    {
+        return $this->_description;
+    }
+    
+    public function setDescription($text)
+    {
+        $this->_description = (string) $text;
+        return $this;
     }
 
 }

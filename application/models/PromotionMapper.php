@@ -435,5 +435,17 @@ class PAP_Model_PromotionMapper
         $results = $adapter->fetchAll($statement);
         return (bool)$results[0]['isWithin'];        
     }
+    
+    public function getPromotionIdByBranchId($branch_id){
+        $adapter = Zend_Db_Table::getDefaultAdapter();
+        $statement = "SELECT DISTINCT p.promotion_id FROM promotion p ".
+                     "INNER JOIN promotion_branch pb ON pb.promotion_id = p.promotion_id ".
+                     "WHERE pb.branch_id = ".$branch_id." AND p.promo_type = 'C'";
+        $results = $adapter->fetchAll($statement);
+        if(isset($results))
+            return (int)$results[0]['promotion_id'];
+        else
+            return null;
+    }
 }
 

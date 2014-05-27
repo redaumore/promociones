@@ -23,7 +23,7 @@ class PAP_Model_Promotion
     protected $_updated;
     protected $_images;
     protected $_ispercentaje;
-    protected $_radius = 6;
+    protected $_radius = 4;
     
     public function __construct(array $options = null)
     {
@@ -73,6 +73,12 @@ class PAP_Model_Promotion
     public function update(array $options){
         $this->setId($options['promoId']);
         $this->insert($options);
+    }
+    
+    public function save(array $branches){
+        $promoMapper = new PAP_Model_PromotionMapper();
+        $id = $promoMapper->save($this, $branches);
+        $this->setId($id);
     }
     
     public function cloneMe(array $options){
@@ -671,6 +677,36 @@ class PAP_Model_Promotion
         $mapper = new PAP_Model_PromotionMapper();
         $result = $mapper->isWithinRange($promotion_id);
         return $result;        
+    }
+    
+    public function loadAdsBranch($branch_id){
+        $promomapper = new PAP_Model_PromotionMapper();
+        $promotion_id = $promomapper->getPromotionIdByBranchId($branch_id);
+        if(isset($promotion_id)){
+            $this->loadById($promotion_id);    
+        }
+    }
+    
+    public function setAsAdsBranch(PAP_Model_Branch $branch){
+        $address = $branch->getAddress();
+        $this->setAlertType('N')
+            ->setDisplayedText($branch->getAddress()->getCity()->getName())
+            ->setEnds('2020-01-01 00:00:00')
+            ->setStarts('2014-01-01 00:00:00')
+            ->setIsPercentaje('0')
+            ->setLongDescription($branch->getDescription())
+            ->setPromoCode('COM_'.$address->getCity()->getId().'_'.$branch->getId())
+            ->setPromoCost('C1-0.00')
+            ->setPromoType('C')
+            ->setPromoValue('-175')
+            ->setQuantity(0)
+            ->setShortDescription($address->getStreet().' '.$address->getNumber().($address->getOthers()!=''?' Local:'.$address->getOthers():''))
+            ->setState('A')
+            ->setUpdated(date("Y-m-d H:i:s"))
+            ->setCreated(date("Y-m-d H:i:s"))
+            ->setUserId($branch->getUser())
+            ->setValueSince('0')
+            ->setImages($branch->getLogo());
     }
 }
 

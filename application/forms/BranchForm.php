@@ -130,6 +130,19 @@
         ));
         $this->zipcode->setDecorators($decorators);
         
+        $control = new Zend_Form_Element_TextArea('description');
+        $control->setLabel('Descripción ')
+            ->setOptions(array('rows' => '5','cols' => '42'))
+            ->setRequired(true)
+            ->addFilter('StripTags')
+            ->addFilter('StringTrim')
+            ->addValidator('NotEmpty', true)
+            ->addDecorators($decorators);
+        $control->addValidator('stringLength', true, array(0, 500));
+        $this->addElement($control);
+        $control = $this->getElement('description');
+        $control->setDecorators($decorators);
+        
         $this->addElement('text', 'lat', array(
             'label'      => 'Lat.',
             'size' => 12,
