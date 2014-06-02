@@ -149,6 +149,7 @@ class PAP_Form_SearchForm extends Zend_Form
         $this->addElement('hidden', 'reqcategory');
         $this->reqcategory->removeDecorator('label')->removeDecorator('HtmlTag');
         
+        
         /*CATEGORIAS*/
         }
 }

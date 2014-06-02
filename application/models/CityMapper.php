@@ -51,7 +51,9 @@ protected $_dbTable;
                   ->setProvinceId($row->province_id)
                   ->setLatitude($row->latitude)
                   ->setLongitude($row->longitude)
-                  ->setKickoff($row->kickoff);
+                  ->setKickoff($row->kickoff)
+                  ->setStreet($row->street_default)
+                  ->setNumber($row->number_default);
     }
  
     public function fetchAll()
@@ -65,7 +67,9 @@ protected $_dbTable;
                   ->setProvinceId($row->province_id)
                   ->setLatitude($row->latitude)
                   ->setLongitude($row->longitude)
-                  ->setKickoff($row->kickoff);
+                  ->setKickoff($row->kickoff)
+                  ->setStreet($row->street_default)
+                  ->setNumber($row->number_default);
             $entries[] = $entry;
         }
         return $entries;

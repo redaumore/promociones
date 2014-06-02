@@ -217,6 +217,7 @@ class PAP_Model_PromotionMapper
         $select = $this->getDbTable()->select();
         $select->distinct()
                ->where('user_id = ?', $user_id)
+               ->where('promo_type <> "C"')
                ->order($colord, $ord);
                //->limit($limit,$start);
         $result = $this->getDbTable()->fetchAll($select);
@@ -442,7 +443,7 @@ class PAP_Model_PromotionMapper
                      "INNER JOIN promotion_branch pb ON pb.promotion_id = p.promotion_id ".
                      "WHERE pb.branch_id = ".$branch_id." AND p.promo_type = 'C'";
         $results = $adapter->fetchAll($statement);
-        if(isset($results))
+        if(count($results)!=0)
             return (int)$results[0]['promotion_id'];
         else
             return null;

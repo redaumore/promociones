@@ -10,6 +10,8 @@ class PAP_Model_City
     protected $_status;
     protected $_kickoff;
     protected $_payment_methods = array();
+    protected $_street;
+    protected $_number;
     
     public function __construct(array $options = null)
     {
@@ -130,6 +132,19 @@ class PAP_Model_City
     public static function getByName($name){
         $name = str_replace('-', ' ', $name);
     }
-
+    public function getStreet(){
+        return $this->_street;
+    }
+    public function setStreet($text){
+        $this->_street = (string) $text;
+        return $this;
+    }
+    public function getNumber(){
+        return $this->_number;
+    }
+    public function setNumber($text){
+        $this->_number = (string) $text;
+        return $this;
+    }
 }
 

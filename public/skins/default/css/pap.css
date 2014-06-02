@@ -314,7 +314,7 @@ form .exceeded{color:#FF6A15;}
     text-align: center;
 }
 
-.ui-row-ltr tr:hover {
+.ui-jqgrid-btable tr:hover {
     cursor: pointer;
 }
 

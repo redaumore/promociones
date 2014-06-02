@@ -179,6 +179,7 @@ function getPromotions(){
     changeTitle(categoriesNames, jQuery("#city option:selected").text());
     
     var _url = _baseUri + '/promotion/search/city/' + city + categoriesString + address;
+    jQuery("#div_message").hide();
     if (!firstClick){
         jQuery('#list2').jqGrid('clearGridData');
         jQuery("#list2").jqGrid('setGridParam', { url: _url, datatype: "json" }).trigger("reloadGrid");
@@ -187,13 +188,14 @@ function getPromotions(){
         firstClick = false;
         jQuery("#gbox_list2").hide();
         jQuery("#list2").jqGrid({url: _url, datatype: "json",
-             colNames:['Imagen', 'Comercio','Promoción', 'Dirección', 'Valor', ''],
+             colNames:['Imagen', 'Comercio','Descripción', 'Dirección', '', '', ''],
              colModel:[ {name:'img',index:'path', width:54,sortable:false},
                         {name:'Comercio',index:'name', width:170}, 
-                        {name:'Promoción',index:'displayed_text', width:230},
-                        {name:'Dirección',index:'short_description', width:300},
+                        {name:'Descripción',index:'displayed_text', width:180},
+                        {name:'Dirección',index:'short_description', width:285},
                         {name:'value',index:'promo_value', width:45, align:'center'},
                         {name:'is_percentage',index:'is_percentage', hidden: true},
+                        {name:'distance',index:'distance', width:55, align:'center'},
              ],
              //rowNum:20,
              rowList:[20,30,40],
@@ -220,13 +222,14 @@ function getPromotions(){
                  for(var i=0;i < ids.length;i++){
                      var cl = ids[i];
                      var row = jQuery("#list2").jqGrid('getRowData',cl);
-                     var val; 
+                     var val, dist; 
                      be = "<img src='"+row["img"]+"' height='50px' width='50px' style='margin:2px'/>";
-                     if(parseFloat(row["value"]) == -396)
-                        val = "[N/A]"
+                     if(parseFloat(row["value"]) == -396 || parseFloat(row["value"]) == -175 )
+                        val = "Local"
                      else
                         val = (row["is_percentage"] == "1")?cutDecimals(row["value"])+"%":"$"+cutDecimals(row["value"]);
-                     jQuery("#list2").jqGrid('setRowData',ids[i],{img:be,value:val});
+                     dist = row["distance"]+'mts';
+                     jQuery("#list2").jqGrid('setRowData',ids[i],{img:be,value:val,distance:dist});
                      jQuery("#"+cl).click(function(event){loadPromotion(jQuery(this).attr("id"));});
                  }
                  jQuery("#gbox_list2").show();

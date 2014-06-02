@@ -68,7 +68,7 @@ class BackendajaxController extends Zend_Controller_Action
             $data = $promotion->getViewRecord($promotion_id);
             if(floatval($data[0]['promo_value']) == -396){
                     if(PAP_Model_Promotion::isWithinRange($promotion_id)){
-                        $data[0]['displayed_text'] = "-->>DE TURNO<<--";    
+                        $data[0]['displayed_text'] = "-->>FARMACIA DE TURNO<<--";    
                     }
             }
             //RED$data[0]['path'] = '/images'.$data[0]['path'];
@@ -174,5 +174,12 @@ class BackendajaxController extends Zend_Controller_Action
         catch(Exception $ex){
             PAP_Helper_Logger::writeLog(Zend_Log::ERR, 'BackendAjaxController->getfeaturedAction()',$ex, $_SERVER['REQUEST_URI']);
         }
+    }
+    
+    public function getcityaddressAction(){
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        
+                
     }
 }

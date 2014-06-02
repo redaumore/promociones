@@ -80,7 +80,7 @@ class servicesController extends Zend_Controller_Action
                     
                     if(floatval($item['promo_value']) == -396){
                         if(PAP_Model_Promotion::isWithinRange($item['promotion_id'])){
-                            $data[$i]['displayed_text'] = "-->>DE TURNO<<--";    
+                            $data[$i]['displayed_text'] = "-->>FARMACIA DE TURNO<<--";    
                         }
                     }
                         
@@ -178,7 +178,7 @@ class servicesController extends Zend_Controller_Action
             
             if(floatval($data['promo_value']) == -396){
                 if(PAP_Model_Promotion::isWithinRange($data['promotion_id'])){
-                    $data['displayed_text'] = "-->>DE TURNO<<--";    
+                    $data['displayed_text'] = "-->>FARMACIA DE TURNO<<--";    
                 }
             }
                     

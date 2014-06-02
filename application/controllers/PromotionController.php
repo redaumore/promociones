@@ -231,7 +231,7 @@
             foreach ($row as $r) {
                 if(floatval($r['promo_value']) == -396){
                     if(PAP_Model_Promotion::isWithinRange($r['promotion_id'])){
-                        $r['displayed_text'] = "-->>DE TURNO<<--";    
+                        $r['displayed_text'] = "-->>FARMACIA DE TURNO<<--";    
                     }
                 }
                 $response['rows'][$i]['id']=$r['promotion_id']; //id
@@ -379,10 +379,13 @@
             foreach ($promotions as $r) {
                 if($i>=$start && $i<($start+$limit)){
                     if(floatval($r['promo_value']) == -396){
-                        if(PAP_Model_Promotion::isWithinRange($r['promotion_id'])){
-                            $r['displayed_text'] = "-->>DE TURNO<<--";    
-                        }
+                        if(PAP_Model_Promotion::isWithinRange($r['promotion_id']))
+                            $r['displayed_text'] = "-->>FARMACIA DE TURNO<<--";
+                        else
+                            $r['displayed_text'] = 'Farmacia en '.$r['displayed_text'];
                     }
+                    if(floatval($r['promo_value']) == -175)
+                        $r['displayed_text'] = 'Comercio en '.$r['displayed_text'];
                     $response['rows'][$y]['id']=$r['promotion_id']; //id
                     $response['rows'][$y]['cell']=array($r['path'],$r['name'],$r['displayed_text'],$r['street'].' '.$r['number'].', '.$r['city'],$r['promo_value'],$r['is_percentage'],isset($r['distance'])?(string)$r['distance']:'N/D');
                     $y++;

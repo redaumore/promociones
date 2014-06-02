@@ -325,7 +325,7 @@ class PAP_Model_Promotion
         
         $i = 0;
         
-        foreach($promotions as $promo){
+        foreach($promotions as $promo_id => $promo){
             /*
             $deltalat = (($lat-$plat)*1000)/$kmlat;
             $deltalng = (($lng-$plng)*1000)/$kmlng;
@@ -337,12 +337,22 @@ class PAP_Model_Promotion
             $valor = substr($promo['promo_cost'], strrpos($promo['promo_cost'], '-')+1);
             $valor = ($valor == '0.00')?1.00:floatval($valor);
             $indiceord = abs(($distance*$valor*1000)/(1-$distance)+(($valor -1)*1000))-1000;
+            if($promo['promo_value']=='-396')
+                $indiceord = $indiceord - 0.5;
+            if($promo['promo_value']=='-175')
+                $indiceord = $indiceord - 0.25;
+            
             $promotions[$i]['distance'] = $distance;
             $promotions[$i]['ord'] = $indiceord;
             if(!isset($promo['path']))
                 $promotions[$i]['path'] = $this->getBranchImage($promo['promotion_id']);
             unset($promotions[$i]['promo_cost']);
             $i += 1;
+        }
+        foreach($promotions as $key => $promo){
+            /*Remuevo todas las farmacias que estén por debajo del ord 0.*/
+            if($promo['ord'] < 0)
+                unset($promotions[$key]);
         }
         if(count($promotions)!=0)
             $promotions = PAP_Model_Promotion::sortPromotions($promotions);
@@ -395,12 +405,21 @@ class PAP_Model_Promotion
             $valor = substr($promo['promo_cost'], strrpos($promo['promo_cost'], '-')+1);
             $valor = ($valor == '0.00')?1.00:floatval($valor);
             $indiceord = abs(($distance*$valor*1000)/(1-$distance)+(($valor -1)*1000))-1000;
+            if($promo['promo_value']=='-396')
+                $indiceord = $indiceord - 0.5;
+            if($promo['promo_value']=='-175')
+                $indiceord = $indiceord - 0.25;
             $promotions[$i]['distance'] = $distance;
             $promotions[$i]['ord'] = $indiceord;
             if(!isset($promo['path']))
                 $promotions[$i]['path'] = PAP_Model_Promotion::getBranchLogo($promo['promotion_id']);
             unset($promotions[$i]['promo_cost']);
             $i += 1;
+        }
+        foreach($promotions as $key => $promo){
+            /*Remuevo todas las farmacias que estén por debajo del ord 0.*/
+            if($promo['ord'] < 0)
+                unset($promotions[$key]);
         }
         if(count($promotions)!=0){
             $promotions = PAP_Model_Promotion::sortPromotions($promotions);

@@ -436,7 +436,7 @@ function FillPromotion(promotion){
         jQuery("#price_container").show();
     }
     else{
-        if(promotion.promo_value == -396){
+        if(promotion.promo_value == -396 || promotion.promo_value == -175){
             jQuery("#price_container").hide();        
         }
         else{
