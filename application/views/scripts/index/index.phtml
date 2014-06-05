@@ -142,10 +142,16 @@
     {
         var promo_html = '<a onClick="FillPromotionById('+promo.promotion_id+');" rel="nofollow"><div class="slider_promo">';
             promo_html += '  <div class="slider_localidad">'+promo.city+'</div>';
-            promo_html += '  <div><img src="'+promo.path+'" style="height:60px;" class="img-polaroid"/></div>';
+            promo_html += '  <div><img src="'+promo.path+'" style="height:'+((promo.promo_value=='-175.00')?'80px':'60px;')+'" class="img-polaroid"/></div>';
             promo_html += '  <div class="slider_displayed_text">'+promo.name+'</div>';
-            promo_html += '  <div class="slider_precio">'+promo.promo_value+'</div>';
-            promo_html += '  <div class="slider_displayed_text" style="font-weight: bold; color: #42962F; font-size: 1em;">'+promo.displayed_text+'</div></div></a>';;
+            if(promo.promo_value != "-175.00"){
+                promo_html += '  <div class="slider_precio">'+promo.promo_value+'</div>';    
+                promo_html += '  <div class="slider_displayed_text" style="font-weight: bold; color: #42962F; font-size: 1em;">'+promo.displayed_text+'</div></div></a>';
+            }
+            else{
+                promo_html += '  <div class="slider_displayed_text" style="font-weight: bold; color: #42962F; font-size: 1em;">Comercio</div></div></a>';    
+            }
+            
 
         return promo_html;
     };
