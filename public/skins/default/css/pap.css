@@ -318,6 +318,20 @@ form .exceeded{color:#FF6A15;}
     cursor: pointer;
 }
 
+.link-home{
+    font-size: 14px;
+    color: #FF6A15;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    line-height: 21px;
+    text-align: center;
+}
+.link-home:hover{
+    font-size: 15px;
+    font-weight: bold;
+    color: #FF6A15;
+    text-decoration: none !important;
+}
+
 /*
 html{ font-size: 125%; }
 
